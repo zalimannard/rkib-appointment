@@ -1,11 +1,52 @@
 \documentclass[a4paper]{article}
 
+\usepackage[14pt]{extsizes}
+\usepackage[left=30mm, top=20mm, right=15mm, bottom=20mm]{geometry}
+\usepackage[onehalfspacing]{setspace}
 \usepackage{fontspec}
-
+\usepackage{multicol}
+\usepackage{xltabular}
 \setmainfont{Times New Roman}
 
 \begin{document}
-    \begin{center}
+    \begin{titlepage}
+        \begin{center}
+            {\bfseries Министерство науки и высшего образования Российской Федерации \\
+            Федеральное государственное автономное образовательное учреждение \\
+            высшего образования \\
+            <<Казанский (Приволжский) федеральный университет>>} \\
+            Институт вычислительной математики и информационных технологий \\
+            Кафедра анализа данных и технологий программирования \\
+            \vspace{1cm}
+            Направление подготовки: 09.03.03 — Прикладная информатика
+        \end{center}
 
-    \end{center}
+        \vspace{3cm}
+
+        \begin{center}
+            ВЫПУСКНАЯ КВАЛИФИКАЦИОННАЯ РАБОТА \\
+            {\bfseries РАЗРАБОТКА СИСТЕМЫ ЗАПИСИ В БОЛЬНИЦУ}
+        \end{center}
+
+        \vfill
+
+        \begin{xltabular}{\textwidth} {
+                >{\hsize=0.56\hsize} X
+                >{\hsize=0.44\hsize} X }
+            Обучающийся 4 курса &\\
+            Группы 09-951 & \underline{\hspace{3cm}}/Колесников Д.А. \\
+            & \\
+            Научный руководитель & \\
+            Старший преподаватель, б/с & \underline{\hspace{3cm}}/Еникеев И.А. \\
+            & \\
+            Заведующий кафедрой анализа данных & \\
+            и технологий программирования & \underline{\hspace{3cm}}/Бандеров В.В. \\
+        \end{xltabular}
+
+        \vspace{1cm}
+
+        \begin{center}
+            Казань — 2023
+        \end{center}
+    \end{titlepage}
 \end{document}
