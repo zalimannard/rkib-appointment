@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="er-model-source" id="6A634A05-6054-F057-099D-C6C5BFF00EB7" version="3.5">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 12:19:46 UTC</createdTime>
+<ownerDesignName>bachelor-thesis</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>6A634A05-6054-F057-099D-C6C5BFF00EB7</designId>
+</OSDM_Design>

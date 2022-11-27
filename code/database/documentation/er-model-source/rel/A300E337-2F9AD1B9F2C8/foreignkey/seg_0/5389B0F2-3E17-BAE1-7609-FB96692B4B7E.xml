@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="5389B0F2-3E17-BAE1-7609-FB96692B4B7E" containerWithKeyObject="BD465F89-B946-4FA6-B4FE-DC62B0F6C7F9" localFKIndex="64864A55-64DB-74C2-556B-1A2963C17B7F" name="employees_access_rights_access_rights_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 17:15:25 UTC</createdTime>
+<generatorID>63E5F4D1-7D90-B218-14CC-1499863C954B</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<referredTableLongName>access_rights</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>4B8C76FD-B8B5-FFF7-617B-4FF923A1B514</referredTableID>
+<keyObject>2745FE95-FF30-CC5B-67C7-A146580D277C</keyObject>
+<referredKeyID>2745FE95-FF30-CC5B-67C7-A146580D277C</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>access_right_id</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

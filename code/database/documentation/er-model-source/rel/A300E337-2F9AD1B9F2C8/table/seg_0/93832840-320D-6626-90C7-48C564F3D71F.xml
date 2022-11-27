@@ -1,0 +1,49 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="93832840-320D-6626-90C7-48C564F3D71F" name="institutions">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 17:15:25 UTC</createdTime>
+<generatorID>7B430894-1CFC-D090-56E5-748D34BBA1FD</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="institution_id" id="72F96BFB-8165-EF5A-9101-D932FF21ED0C">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 17:15:25 UTC</createdTime>
+<generatorID>5AFEDAFD-FBF8-5BC9-F485-58C25700D2C0</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="institution_name" id="0A29F165-47BC-4291-CE58-B24F04C423F3">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 17:15:25 UTC</createdTime>
+<generatorID>28E75306-A77C-BF40-BE62-3C29BF6553A5</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200 CHAR</dataTypeSize>
+<ownDataTypeParameters>200 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="76FAF51F-7ABB-DF98-9557-DFD761CDF441" name="institutions_PK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 17:15:25 UTC</createdTime>
+<generatorID>B06885DB-09C8-D01D-4C84-6607442D4CDE</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="72F96BFB-8165-EF5A-9101-D932FF21ED0C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -1,0 +1,78 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="125C1276-24A5-5527-7B8C-2566E27AA54F" name="scheduled_appointments">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 13:39:41 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<synonymToDisplay>Запланированные обращения</synonymToDisplay>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id" id="C991CD31-8659-353A-AAD7-F67C1A91AAB0">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 15:04:42 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<preferredAbbreviation>scheduled_appointment_id</preferredAbbreviation>
+</Attribute>
+<Attribute name="Элемент расписания" id="372C271F-0234-6BD8-FD5F-8C57C5FBD3C3">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 15:06:13 UTC</createdTime>
+<generatorID>83B6A07D-30D4-C1F6-DD43-6FEB24DDF6A5</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
+</engineerTo>
+<referedAttribute>159A5B2F-537A-295D-C900-6D25A74855DE</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<preferredAbbreviation>schedule_item_id</preferredAbbreviation>
+</Attribute>
+<Attribute name="Обращение" id="8C9EFE5A-4402-0004-B2A2-B81804EC1225">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 15:07:30 UTC</createdTime>
+<generatorID>8C47A387-BAD5-B384-C897-ECE0FCF4F161</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
+</engineerTo>
+<referedAttribute>9A72D94A-E3D9-B036-1349-D4F0349F427D</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<preferredAbbreviation>appointment_id</preferredAbbreviation>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="BFB50D5F-A16B-9B22-7600-45188B7BCC27" name="scheduled_appointments PK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 15:04:45 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="false"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>C991CD31-8659-353A-AAD7-F67C1A91AAB0</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>
