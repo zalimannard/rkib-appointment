@@ -1,0 +1,109 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="5AD50E53-043D-5DF0-F6F5-698681415357" name="employees">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 17:15:25 UTC</createdTime>
+<generatorID>2158CD14-0E05-6EC1-E9E6-62DD42D6A420</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="employee_id" id="58623E93-27F4-EFC3-D845-C91DCF0C6224">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 17:15:25 UTC</createdTime>
+<generatorID>76313EC9-AB54-95FB-A345-40CD498E5C24</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="last_name" id="37D2B9AE-D086-D013-FAB1-250B8C60342D">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 17:15:25 UTC</createdTime>
+<generatorID>C514E36F-6EA6-A481-1BA6-28A49C4C3A21</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 CHAR</dataTypeSize>
+<ownDataTypeParameters>30 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="first_name" id="642C20EB-C315-DC69-1919-1F1A19FB7BBA">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 17:15:25 UTC</createdTime>
+<generatorID>9CD87F6B-B566-4AC4-D7C3-CA3856C6C5AA</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 CHAR</dataTypeSize>
+<ownDataTypeParameters>30 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="middle_name" id="C32414D3-B3BD-4C2E-E8BC-0918F02CF0ED">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 17:15:25 UTC</createdTime>
+<generatorID>8D6252EB-FCFB-3766-3ADC-0E74A689AA6B</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 CHAR</dataTypeSize>
+<ownDataTypeParameters>30 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="login" id="D9F55582-EC04-445E-CFBA-1A84C3F32F09">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 17:15:25 UTC</createdTime>
+<generatorID>90D02DA8-14E7-336F-C379-05FBFDC22876</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 CHAR</dataTypeSize>
+<ownDataTypeParameters>30 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="password_hash" id="09B4D75A-FA6F-7883-3664-92887E3EE28F">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 17:15:25 UTC</createdTime>
+<generatorID>162A1326-F930-EAD6-BF5B-0821B97B4E1D</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>32 CHAR</dataTypeSize>
+<ownDataTypeParameters>32 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="password_salt" id="4E171B8F-2596-57C0-A42A-8008BCC2D44F">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 17:15:25 UTC</createdTime>
+<generatorID>5E77DA8F-85B3-20CC-0D01-6FCECC11DC87</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>32 CHAR</dataTypeSize>
+<ownDataTypeParameters>32 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="F3A0AABF-703F-0A47-2A99-AFB710E672F4" name="employees_PK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 17:15:25 UTC</createdTime>
+<generatorID>0042A1E6-7AFB-704B-722A-7AAD4B22080E</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="58623E93-27F4-EFC3-D845-C91DCF0C6224"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

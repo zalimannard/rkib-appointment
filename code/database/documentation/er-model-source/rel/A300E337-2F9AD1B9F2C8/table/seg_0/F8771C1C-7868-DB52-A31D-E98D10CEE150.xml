@@ -1,0 +1,89 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="F8771C1C-7868-DB52-A31D-E98D10CEE150" name="scheduled_appointments">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 17:15:25 UTC</createdTime>
+<generatorID>125C1276-24A5-5527-7B8C-2566E27AA54F</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="scheduled_appointment_id" id="27875F64-D4FC-DC5F-716E-5041EF55E016">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 17:15:25 UTC</createdTime>
+<generatorID>C991CD31-8659-353A-AAD7-F67C1A91AAB0</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="schedule_item_id" id="5721DB10-C7E2-19D5-F7C8-14BC1DD5942F">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 17:15:25 UTC</createdTime>
+<generatorID>372C271F-0234-6BD8-FD5F-8C57C5FBD3C3</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="369B04B5-3012-CA4A-7654-2D0BC0E4CAC5" referredColumn="18C96CAB-6D14-396C-D12E-2D04125FDA37"/>
+</associations>
+</Column>
+<Column name="appointment_id" id="013D178D-FA29-8CB4-2F2A-97B4198F6BBD">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 17:15:25 UTC</createdTime>
+<generatorID>8C9EFE5A-4402-0004-B2A2-B81804EC1225</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="6311A499-C392-00CA-86B3-263F28A55D0F" referredColumn="27EAC98D-AF8C-2F16-289B-2900E258D787"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="EDE8CA69-3206-3F6E-C609-8FE8AD15B67E" name="scheduled_appointments_PK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 17:15:25 UTC</createdTime>
+<generatorID>BFB50D5F-A16B-9B22-7600-45188B7BCC27</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="27875F64-D4FC-DC5F-716E-5041EF55E016"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A09B1EAA-AF58-8C08-3878-DB7F7C21D7E8" name="scheduled_appointments_schedule_items_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 17:15:25 UTC</createdTime>
+<generatorID>83B6A07D-30D4-C1F6-DD43-6FEB24DDF6A5</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5721DB10-C7E2-19D5-F7C8-14BC1DD5942F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="2EA61BAD-2ED6-6FDC-970F-4B06F6DBD18B" name="scheduled_appointments_appointments_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 17:15:25 UTC</createdTime>
+<generatorID>8C47A387-BAD5-B384-C897-ECE0FCF4F161</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="013D178D-FA29-8CB4-2F2A-97B4198F6BBD"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

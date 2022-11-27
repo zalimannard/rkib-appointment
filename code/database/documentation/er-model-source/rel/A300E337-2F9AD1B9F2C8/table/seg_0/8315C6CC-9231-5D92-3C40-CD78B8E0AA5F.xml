@@ -1,0 +1,49 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="8315C6CC-9231-5D92-3C40-CD78B8E0AA5F" name="appointment_status_types">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 17:15:25 UTC</createdTime>
+<generatorID>D2209405-8C13-6974-AF5D-884D9CE12EF2</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="appointment_status_type_id" id="DC09654B-1550-16B5-DC58-223E830F6516">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 17:15:25 UTC</createdTime>
+<generatorID>5A6297A3-DA1A-BBEC-C19B-FA9DD4AE01D5</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="appointment_status_type_name" id="9D461B82-886E-4A5B-1BEE-C62005298230">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 17:15:25 UTC</createdTime>
+<generatorID>58671966-49B5-1DAF-3C2A-DEAB4B73DC49</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 CHAR</dataTypeSize>
+<ownDataTypeParameters>20 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="1A71B8D7-7593-07A7-030E-8B15D2434BD9" name="appointment_status_types_PK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 17:15:25 UTC</createdTime>
+<generatorID>F2B83B18-CB5A-65C5-D1B0-BFFB0D4E4E9A</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DC09654B-1550-16B5-DC58-223E830F6516"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -29,21 +29,6 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <preferredAbbreviation>si_status_id</preferredAbbreviation>
 </Attribute>
-<Attribute name="Тип статуса элемента расписания" id="D757F91A-62AC-9F0C-AD50-A05D36325CFA">
-<createdBy>zalimannard</createdBy>
-<createdTime>2022-11-27 14:55:25 UTC</createdTime>
-<generatorID>B5D1928B-842A-2139-C350-C0B4ACCC1CDC</generatorID>
-<ownerDesignName>er-model-source</ownerDesignName>
-<engineerTo>
-<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
-</engineerTo>
-<referedAttribute>9B716E75-E1F5-7A9C-2C48-D117C9AA6D91</referedAttribute>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT019</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-<preferredAbbreviation>si_status_type</preferredAbbreviation>
-</Attribute>
 <Attribute name="Название" id="BB4CB165-8A24-5DCF-1561-C65FEB54FC0A">
 <createdBy>zalimannard</createdBy>
 <createdTime>2022-11-27 14:53:20 UTC</createdTime>
@@ -57,6 +42,20 @@
 <dataTypeSize>30 CHAR</dataTypeSize>
 <ownDataTypeParameters>30 CHAR,,</ownDataTypeParameters>
 <preferredAbbreviation>si_status_name</preferredAbbreviation>
+</Attribute>
+<Attribute name="schedule_item_status_types_id" id="51C59B92-49C3-380F-5350-87083FF14367">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 17:13:53 UTC</createdTime>
+<generatorID>B5D1928B-842A-2139-C350-C0B4ACCC1CDC</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
+</engineerTo>
+<referedAttribute>9B716E75-E1F5-7A9C-2C48-D117C9AA6D91</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
