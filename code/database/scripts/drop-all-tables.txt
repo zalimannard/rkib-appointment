@@ -1,0 +1,15 @@
+DROP TABLE unscheduled_appointments;
+DROP TABLE scheduled_appointments;
+DROP TABLE appointments;
+DROP TABLE patients;
+DROP TABLE appointment_statuses;
+DROP TABLE appointment_status_types;
+DROP TABLE doctor_notes;
+DROP TABLE institutions;
+DROP TABLE schedule_items;
+DROP TABLE schedule_item_statuses;
+DROP TABLE schedule_item_status_types;
+DROP TABLE services;
+DROP TABLE employees_access_rights;
+DROP TABLE employees;
+DROP TABLE access_rights;
