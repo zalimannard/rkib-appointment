@@ -1,0 +1,62 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="D2209405-8C13-6974-AF5D-884D9CE12EF2" name="appointment_status_types">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 13:52:45 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<synonymToDisplay>Типы статусов обращений</synonymToDisplay>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id" id="5A6297A3-DA1A-BBEC-C19B-FA9DD4AE01D5">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 13:57:38 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<preferredAbbreviation>appointment_status_type_id</preferredAbbreviation>
+</Attribute>
+<Attribute name="Название" id="58671966-49B5-1DAF-3C2A-DEAB4B73DC49">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 14:26:23 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 CHAR</dataTypeSize>
+<ownDataTypeParameters>20 CHAR,,</ownDataTypeParameters>
+<preferredAbbreviation>appointment_status_type_name</preferredAbbreviation>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="F2B83B18-CB5A-65C5-D1B0-BFFB0D4E4E9A" name="appointment_status_types PK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 13:58:17 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="false"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>5A6297A3-DA1A-BBEC-C19B-FA9DD4AE01D5</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

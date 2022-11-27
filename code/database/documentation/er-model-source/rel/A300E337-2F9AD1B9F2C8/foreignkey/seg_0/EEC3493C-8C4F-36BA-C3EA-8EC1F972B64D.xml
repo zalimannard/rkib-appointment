@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="EEC3493C-8C4F-36BA-C3EA-8EC1F972B64D" containerWithKeyObject="040A1ED0-F519-6E26-796B-B351229E8733" localFKIndex="F1F8A868-0C06-03C3-878C-7B957E362C4E" name="scheduled_appointments_schedule_items_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 16:01:43 UTC</createdTime>
+<generatorID>83B6A07D-30D4-C1F6-DD43-6FEB24DDF6A5</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<referredTableLongName>schedule_items</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>553B8575-840B-A746-0FA7-9E565AC43ED0</referredTableID>
+<keyObject>876C891F-FFCF-ADCA-F599-FAFD06AD5961</keyObject>
+<referredKeyID>876C891F-FFCF-ADCA-F599-FAFD06AD5961</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>schedule_item_id</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

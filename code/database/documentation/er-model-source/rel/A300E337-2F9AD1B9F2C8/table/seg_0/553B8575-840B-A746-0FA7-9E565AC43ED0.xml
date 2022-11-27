@@ -1,0 +1,126 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="553B8575-840B-A746-0FA7-9E565AC43ED0" name="schedule_items">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 16:01:43 UTC</createdTime>
+<generatorID>506C69DD-9BF3-8555-4345-3AC0762F81EA</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="schedule_item_id" id="8CAEE62C-413A-A0FB-90AC-27B1B45A847B">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 16:01:43 UTC</createdTime>
+<generatorID>159A5B2F-537A-295D-C900-6D25A74855DE</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="employee_id" id="D9120564-4343-9FD4-C0B1-01671A6A4EB2">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 16:01:43 UTC</createdTime>
+<generatorID>4EDF33F3-C13A-1F32-ECAB-CA4851CD20FD</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="D1F667BE-9680-E702-0B1B-9589D8A884D3" referredColumn="C3FC01B8-1BF0-D891-EACB-CF9517D57E49"/>
+</associations>
+</Column>
+<Column name="service_id" id="2A93482D-CF6F-8FB1-F7EF-162C32527AAA">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 16:01:43 UTC</createdTime>
+<generatorID>7645DA1A-F573-7829-F6DD-D4BA1D675D72</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="83A177D6-0D77-9A94-EFBC-8B5CF21E25E8" referredColumn="67127250-6DEE-2400-8CDE-B6F345C02F09"/>
+</associations>
+</Column>
+<Column name="schedule_item_status_id" id="91084B17-7F75-A2C1-D7E9-FD0766C7A21D">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 16:01:43 UTC</createdTime>
+<generatorID>D5837B7D-75D0-0050-6A26-A4A06327D33E</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="24A650B1-2E5D-E0EF-3F06-61154712195E" referredColumn="848E08E7-D865-010D-4054-C927E972AE94"/>
+</associations>
+</Column>
+<Column name="time_stamp" id="018FA9D0-5964-41F2-25CC-2B138D848FE0">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 16:01:43 UTC</createdTime>
+<generatorID>6B9EEBAB-7F03-C0EC-9CAE-76E9F8F5DA50</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="876C891F-FFCF-ADCA-F599-FAFD06AD5961" name="schedule_items_PK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 16:01:43 UTC</createdTime>
+<generatorID>E4845806-620D-15F6-3DB1-E3BCE97E6E3D</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8CAEE62C-413A-A0FB-90AC-27B1B45A847B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="99981E62-752E-28DE-C9BA-D4CF1BCCF9A6" name="schedule_items_employees_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 16:01:43 UTC</createdTime>
+<generatorID>BCCD4BDC-40BD-1BC9-C7B3-3D56EED87B53</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D9120564-4343-9FD4-C0B1-01671A6A4EB2"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="32BFB80E-D553-92E0-E18F-065C130445E5" name="schedule_items_services_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 16:01:43 UTC</createdTime>
+<generatorID>D71F42A6-FC06-F6C4-A5EE-72F7B7BA8BD9</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2A93482D-CF6F-8FB1-F7EF-162C32527AAA"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="9885CA3F-BC16-EC2B-E4CF-0F3AD38146BA" name="schedule_items_schedule_item_statuses_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-11-27 16:01:43 UTC</createdTime>
+<generatorID>D603ADDA-C05F-472B-1D45-7BA0F0DE9995</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="91084B17-7F75-A2C1-D7E9-FD0766C7A21D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

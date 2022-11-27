@@ -6,7 +6,7 @@
 
 ## :diamond_shape_with_a_dot_inside: Логическая схема данных
 
-![Логическая схема данных](readme-files/logical-data-schema.png)
+![Логическая схема данных](documentation/er-model.png)
 
 ## :lock: Ограничения
 
