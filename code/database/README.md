@@ -16,8 +16,8 @@
 
 Написал несколько скриптов для работы с базой данных. Проверялись на Oracle Database 21c
 
-- [Генерация базы данных](scripts/database-generation.txt)
-- [Удаление всех таблиц](scripts/drop-all-tables.txt)
+- [Генерация базы данных](scripts/database-generation.sql)
+- [Удаление всех таблиц](scripts/drop-all-tables.sql)
 
 ## :cry: Установка Oracle XE
 
