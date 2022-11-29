@@ -29,7 +29,7 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <preferredAbbreviation>access_right_id</preferredAbbreviation>
 </Attribute>
-<Attribute name="access_right_name" id="AF77D814-C031-C0CE-7020-AA172CBC8E9C">
+<Attribute name="Название" id="AF77D814-C031-C0CE-7020-AA172CBC8E9C">
 <createdBy>zalimannard</createdBy>
 <createdTime>2022-11-27 14:37:17 UTC</createdTime>
 <ownerDesignName>er-model-source</ownerDesignName>
@@ -41,6 +41,7 @@
 <logicalDatatype>LOGDT024</logicalDatatype>
 <dataTypeSize>20 CHAR</dataTypeSize>
 <ownDataTypeParameters>20 CHAR,,</ownDataTypeParameters>
+<preferredAbbreviation>access_right_name</preferredAbbreviation>
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">

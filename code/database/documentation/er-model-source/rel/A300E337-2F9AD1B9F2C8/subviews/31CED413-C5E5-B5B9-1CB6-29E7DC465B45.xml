@@ -20,7 +20,7 @@
 </OView>
 <OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="1BD3CDB5-FD24-B842-86A7-CBEFF6415564" otype="Table" vid="A8F73EB5-3EF2-CAC3-A3E0-4A18CA06047E">
 <hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
-<bounds x="297" y="11" width="351" height="102"/>
+<bounds x="353" y="16" width="249" height="102"/>
 </OView>
 <OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="22159FD0-3484-68AB-9FEF-458F8FF0CE2A" otype="Table" vid="7CD0E4A5-A123-C741-5D8E-35AD0852E22C">
 <hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
@@ -28,7 +28,7 @@
 </OView>
 <OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="4B8C76FD-B8B5-FFF7-617B-4FF923A1B514" otype="Table" vid="DD9210E7-F8BA-70C3-4EBB-1E3763A82261">
 <hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
-<bounds x="1094" y="497" width="258" height="86"/>
+<bounds x="1113" y="497" width="211" height="85"/>
 </OView>
 <OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="520F7523-FD43-184E-50EE-1FB58F7E97FE" otype="Table" vid="D9067A7E-86A9-2A20-1F10-43E7E44280E2">
 <hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
@@ -181,7 +181,7 @@
 <lineWidth>1</lineWidth>
 <points>
 <point x="688" y="60"/>
-<point x="648" y="60"/>
+<point x="602" y="60"/>
 </points>
 </Connector>
 <Connector class="oracle.dbtools.crest.swingui.relational.TVFKRelation" oid="A1AB5505-CAFC-7E54-D864-F142A7720C31" otype="FKIndexAssociation" vid_source="7CD0E4A5-A123-C741-5D8E-35AD0852E22C" vid_target="13098988-0D5E-AB72-887D-644404102864">
@@ -207,8 +207,8 @@
 <backgroundColor>-16777216</backgroundColor>
 <lineWidth>1</lineWidth>
 <points>
-<point x="475" y="113"/>
-<point x="475" y="154"/>
+<point x="477" y="118"/>
+<point x="477" y="154"/>
 </points>
 </Connector>
 <Connector class="oracle.dbtools.crest.swingui.relational.TVFKRelation" oid="DD47B1B7-DD7B-27E8-CFBB-CD96F6CD2552" otype="FKIndexAssociation" vid_source="0C3E05B2-18DE-0379-13D9-47F5AB87103E" vid_target="13098988-0D5E-AB72-887D-644404102864">
