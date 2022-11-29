@@ -6,8 +6,12 @@ import java.util.List;
 
 public interface BaseRepository<T extends Entity> {
     void create(T entity);
-    List<T> read();
+
+    List<T> readAll();
+
     T read(int id);
-    boolean update(int id, T entity);
-    boolean delete(int id);
+
+    void update(int id, T entity);
+
+    void delete(int id);
 }

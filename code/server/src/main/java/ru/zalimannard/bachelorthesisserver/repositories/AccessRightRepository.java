@@ -28,7 +28,7 @@ public class AccessRightRepository implements BaseRepository<AccessRight> {
     }
 
     @Override
-    public List<AccessRight> read() {
+    public List<AccessRight> readAll() {
         String query = "SELECT access_right_id, access_right_name " +
                 "FROM access_rights";
         List<AccessRight> response = new ArrayList<>();
@@ -62,7 +62,7 @@ public class AccessRightRepository implements BaseRepository<AccessRight> {
     }
 
     @Override
-    public boolean update(int id, AccessRight accessRight) {
+    public void update(int id, AccessRight accessRight) {
         String query = "UPDATE access_rights " +
                 "SET access_right_name = ? " +
                 "WHERE access_right_id = ?";
@@ -73,11 +73,10 @@ public class AccessRightRepository implements BaseRepository<AccessRight> {
         if (!isSuccessfullyUpdated) {
             throw new NotModifiedException("Право доступа не было изменено");
         }
-        return true;
     }
 
     @Override
-    public boolean delete(int id) {
+    public void delete(int id) {
         String query = "DELETE FROM access_rights " +
                 "WHERE access_right_id = ? ";
         Object[] parameters = new Object[]{id};
@@ -87,6 +86,5 @@ public class AccessRightRepository implements BaseRepository<AccessRight> {
         if (!isSuccessfullyDeleted) {
             throw new ConflictException("Право доступа не было удалено");
         }
-        return false;
     }
 }

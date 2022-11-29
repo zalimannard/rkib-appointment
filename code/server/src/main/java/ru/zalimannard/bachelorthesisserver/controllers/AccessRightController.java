@@ -2,7 +2,6 @@ package ru.zalimannard.bachelorthesisserver.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import ru.zalimannard.bachelorthesisserver.entities.AccessRight;
-import ru.zalimannard.bachelorthesisserver.exceptions.NotModifiedException;
 import ru.zalimannard.bachelorthesisserver.repositories.AccessRightRepository;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public class AccessRightController {
 
     @GetMapping
     public List<AccessRight> getAll() {
-        return accessRightRepository.read();
+        return accessRightRepository.readAll();
     }
 
     @GetMapping("{id}")
