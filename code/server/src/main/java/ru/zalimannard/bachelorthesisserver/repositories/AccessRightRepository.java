@@ -52,12 +52,12 @@ public class AccessRightRepository implements BaseRepository<AccessRight> {
     }
 
     @Override
-    public AccessRight insert(AccessRight entity) {
+    public AccessRight insert(AccessRight accessRight) {
         return null;
     }
 
     @Override
-    public AccessRight update(Integer id, AccessRight entity) {
+    public AccessRight update(Integer id, AccessRight accessRight) {
         return null;
     }
 
