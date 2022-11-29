@@ -5,9 +5,9 @@ import ru.zalimannard.bachelorthesisserver.entities.Entity;
 import java.util.List;
 
 public interface BaseRepository<T extends Entity> {
-    List<T> select();
-    T select(Integer id);
-    T insert(T entity);
-    T update(Integer id, T entity);
-    T delete(Integer id);
+    void create(T entity);
+    List<T> read();
+    T read(int id);
+    boolean update(int id, T entity);
+    boolean delete(int id);
 }

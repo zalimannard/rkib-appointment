@@ -17,11 +17,11 @@ public class AccessRightController {
 
     @GetMapping
     public List<AccessRight> getAll() {
-        return accessRightRepository.select();
+        return accessRightRepository.read();
     }
 
     @GetMapping("{id}")
     public AccessRight getOne(@PathVariable Integer id) {
-        return accessRightRepository.select(id);
+        return accessRightRepository.read(id);
     }
 }

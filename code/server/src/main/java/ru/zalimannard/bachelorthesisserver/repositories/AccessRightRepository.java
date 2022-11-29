@@ -18,7 +18,11 @@ public class AccessRightRepository implements BaseRepository<AccessRight> {
     }
 
     @Override
-    public List<AccessRight> select() {
+    public void create(AccessRight accessRight) {
+    }
+
+    @Override
+    public List<AccessRight> read() {
         String query = "SELECT access_right_id, access_right_name " +
                 "FROM access_rights";
         List<AccessRight> response = new ArrayList<>();
@@ -34,7 +38,7 @@ public class AccessRightRepository implements BaseRepository<AccessRight> {
     }
 
     @Override
-    public AccessRight select(Integer id) {
+    public AccessRight read(int id) {
         String query = "SELECT access_right_id, access_right_name " +
                 "FROM access_rights " +
                 "WHERE access_right_id = ?";
@@ -52,17 +56,12 @@ public class AccessRightRepository implements BaseRepository<AccessRight> {
     }
 
     @Override
-    public AccessRight insert(AccessRight accessRight) {
-        return null;
+    public boolean update(int id, AccessRight accessRight) {
+        return false;
     }
 
     @Override
-    public AccessRight update(Integer id, AccessRight accessRight) {
-        return null;
-    }
-
-    @Override
-    public AccessRight delete(Integer id) {
-        return null;
+    public boolean delete(int id) {
+        return false;
     }
 }
