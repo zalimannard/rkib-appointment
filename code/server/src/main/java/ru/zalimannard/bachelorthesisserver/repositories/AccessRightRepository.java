@@ -4,6 +4,7 @@ import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 import ru.zalimannard.bachelorthesisserver.entities.AccessRight;
+import ru.zalimannard.bachelorthesisserver.exceptions.ConflictException;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotModifiedException;
 
@@ -77,6 +78,15 @@ public class AccessRightRepository implements BaseRepository<AccessRight> {
 
     @Override
     public boolean delete(int id) {
+        String query = "DELETE FROM access_rights " +
+                "WHERE access_right_id = ? ";
+        Object[] parameters = new Object[]{id};
+
+        int jdbcOperationsResult = jdbcOperations.update(query, parameters);
+        boolean isSuccessfullyDeleted = (jdbcOperationsResult == 1);
+        if (!isSuccessfullyDeleted) {
+            throw new ConflictException("Право доступа не было удалено");
+        }
         return false;
     }
 }

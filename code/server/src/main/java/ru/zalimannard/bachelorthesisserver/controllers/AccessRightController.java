@@ -35,4 +35,9 @@ public class AccessRightController {
     public void put(@PathVariable Integer id, @RequestBody AccessRight accessRight) {
         accessRightRepository.update(id, accessRight);
     }
+
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable Integer id) {
+        accessRightRepository.delete(id);
+    }
 }
