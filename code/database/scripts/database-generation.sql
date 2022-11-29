@@ -1,19 +1,19 @@
 CREATE TABLE access_rights (
-    access_right_id   NUMBER NOT NULL,
+    access_right_id   NUMBER GENERATED ALWAYS AS IDENTITY (START with 1 INCREMENT by 1),
     access_right_name VARCHAR2(20 CHAR) NOT NULL
 );
 
 ALTER TABLE access_rights ADD CONSTRAINT access_rights_pk PRIMARY KEY ( access_right_id );
 
 CREATE TABLE appointment_status_types (
-    appointment_status_type_id   NUMBER NOT NULL,
+    appointment_status_type_id   NUMBER GENERATED ALWAYS AS IDENTITY (START with 1 INCREMENT by 1),
     appointment_status_type_name VARCHAR2(20 CHAR) NOT NULL
 );
 
 ALTER TABLE appointment_status_types ADD CONSTRAINT appointment_status_types_pk PRIMARY KEY ( appointment_status_type_id );
 
 CREATE TABLE appointment_statuses (
-    appointment_status_id      NUMBER NOT NULL,
+    appointment_status_id      NUMBER GENERATED ALWAYS AS IDENTITY (START with 1 INCREMENT by 1),
     appointment_status_type_id NUMBER NOT NULL,
     appointment_status_name    VARCHAR2(50 CHAR) NOT NULL
 );
@@ -21,7 +21,7 @@ CREATE TABLE appointment_statuses (
 ALTER TABLE appointment_statuses ADD CONSTRAINT appointment_statuses_pk PRIMARY KEY ( appointment_status_id );
 
 CREATE TABLE appointments (
-    appointment_id        NUMBER NOT NULL,
+    appointment_id        NUMBER GENERATED ALWAYS AS IDENTITY (START with 1 INCREMENT by 1),
     parent_appointment_id NUMBER NOT NULL,
     patient_id            NUMBER NOT NULL,
     appointment_status_id NUMBER NOT NULL,
@@ -37,7 +37,7 @@ CREATE UNIQUE INDEX appointments__idx ON
 ALTER TABLE appointments ADD CONSTRAINT appointments_pk PRIMARY KEY ( appointment_id );
 
 CREATE TABLE doctor_notes (
-    doctor_note_id        NUMBER NOT NULL,
+    doctor_note_id        NUMBER GENERATED ALWAYS AS IDENTITY (START with 1 INCREMENT by 1),
     institution_id        NUMBER NOT NULL,
     preliminary_diagnosis VARCHAR2(200 CHAR) NOT NULL
 );
@@ -45,7 +45,7 @@ CREATE TABLE doctor_notes (
 ALTER TABLE doctor_notes ADD CONSTRAINT doctor_notes_pk PRIMARY KEY ( doctor_note_id );
 
 CREATE TABLE employees (
-    employee_id   NUMBER NOT NULL,
+    employee_id   NUMBER GENERATED ALWAYS AS IDENTITY (START with 1 INCREMENT by 1),
     last_name     VARCHAR2(30 CHAR) NOT NULL,
     first_name    VARCHAR2(30 CHAR) NOT NULL,
     middle_name   VARCHAR2(30 CHAR) NOT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE employees (
 ALTER TABLE employees ADD CONSTRAINT employees_pk PRIMARY KEY ( employee_id );
 
 CREATE TABLE employees_access_rights (
-    employees_access_right_id NUMBER NOT NULL,
+    employees_access_right_id NUMBER GENERATED ALWAYS AS IDENTITY (START with 1 INCREMENT by 1),
     access_right_id           NUMBER NOT NULL,
     employee_id               NUMBER NOT NULL
 );
@@ -65,14 +65,14 @@ CREATE TABLE employees_access_rights (
 ALTER TABLE employees_access_rights ADD CONSTRAINT employees_access_rights_pk PRIMARY KEY ( employees_access_right_id );
 
 CREATE TABLE institutions (
-    institution_id   NUMBER NOT NULL,
+    institution_id   NUMBER GENERATED ALWAYS AS IDENTITY (START with 1 INCREMENT by 1),
     institution_name VARCHAR2(200 CHAR) NOT NULL
 );
 
 ALTER TABLE institutions ADD CONSTRAINT institutions_pk PRIMARY KEY ( institution_id );
 
 CREATE TABLE patients (
-    patient_id   NUMBER NOT NULL,
+    patient_id   NUMBER GENERATED ALWAYS AS IDENTITY (START with 1 INCREMENT by 1),
     last_name    VARCHAR2(30 CHAR) NOT NULL,
     first_name   VARCHAR2(30 CHAR) NOT NULL,
     middle_name  VARCHAR2(30 CHAR) NOT NULL,
@@ -85,14 +85,14 @@ CREATE TABLE patients (
 ALTER TABLE patients ADD CONSTRAINT patients_pk PRIMARY KEY ( patient_id );
 
 CREATE TABLE schedule_item_status_types (
-    si_status_type_id   NUMBER NOT NULL,
+    si_status_type_id   NUMBER GENERATED ALWAYS AS IDENTITY (START with 1 INCREMENT by 1),
     si_status_type_name VARCHAR2(20 CHAR) NOT NULL
 );
 
 ALTER TABLE schedule_item_status_types ADD CONSTRAINT schedule_item_status_types_pk PRIMARY KEY ( si_status_type_id );
 
 CREATE TABLE schedule_item_statuses (
-    si_status_id                  NUMBER NOT NULL,
+    si_status_id                  NUMBER GENERATED ALWAYS AS IDENTITY (START with 1 INCREMENT by 1),
     si_status_name                VARCHAR2(30 CHAR) NOT NULL,
     schedule_item_status_types_id NUMBER NOT NULL
 );
@@ -100,7 +100,7 @@ CREATE TABLE schedule_item_statuses (
 ALTER TABLE schedule_item_statuses ADD CONSTRAINT schedule_item_statuses_pk PRIMARY KEY ( si_status_id );
 
 CREATE TABLE schedule_items (
-    schedule_item_id        NUMBER NOT NULL,
+    schedule_item_id        NUMBER GENERATED ALWAYS AS IDENTITY (START with 1 INCREMENT by 1),
     employee_id             NUMBER NOT NULL,
     service_id              NUMBER NOT NULL,
     schedule_item_status_id NUMBER NOT NULL,
@@ -110,7 +110,7 @@ CREATE TABLE schedule_items (
 ALTER TABLE schedule_items ADD CONSTRAINT schedule_items_pk PRIMARY KEY ( schedule_item_id );
 
 CREATE TABLE scheduled_appointments (
-    scheduled_appointment_id NUMBER NOT NULL,
+    scheduled_appointment_id NUMBER GENERATED ALWAYS AS IDENTITY (START with 1 INCREMENT by 1),
     schedule_item_id         NUMBER NOT NULL,
     appointment_id           NUMBER NOT NULL
 );
@@ -118,14 +118,14 @@ CREATE TABLE scheduled_appointments (
 ALTER TABLE scheduled_appointments ADD CONSTRAINT scheduled_appointments_pk PRIMARY KEY ( scheduled_appointment_id );
 
 CREATE TABLE services (
-    service_id   NUMBER NOT NULL,
+    service_id   NUMBER GENERATED ALWAYS AS IDENTITY (START with 1 INCREMENT by 1),
     service_name VARCHAR2(100 CHAR) NOT NULL
 );
 
 ALTER TABLE services ADD CONSTRAINT services_pk PRIMARY KEY ( service_id );
 
 CREATE TABLE unscheduled_appointments (
-    unscheduled_appointment_id NUMBER NOT NULL,
+    unscheduled_appointment_id NUMBER GENERATED ALWAYS AS IDENTITY (START with 1 INCREMENT by 1),
     employee_id                NUMBER NOT NULL,
     service_id                 NUMBER NOT NULL,
     appointment_id             NUMBER NOT NULL,
