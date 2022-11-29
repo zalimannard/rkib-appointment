@@ -15,6 +15,11 @@ public class AccessRightController {
         this.accessRightRepository = accessRightRepository;
     }
 
+    @PostMapping
+    public void post(@RequestBody AccessRight accessRight) {
+        accessRightRepository.create(accessRight);
+    }
+
     @GetMapping
     public List<AccessRight> getAll() {
         return accessRightRepository.read();

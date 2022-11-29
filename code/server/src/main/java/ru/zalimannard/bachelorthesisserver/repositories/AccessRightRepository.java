@@ -19,6 +19,10 @@ public class AccessRightRepository implements BaseRepository<AccessRight> {
 
     @Override
     public void create(AccessRight accessRight) {
+        String query = "INSERT INTO access_rights(access_right_name) " +
+                "VALUES(?)";
+        Object[] parameters = new Object[]{accessRight.getAccessRightName()};
+        jdbcOperations.update(query, parameters);
     }
 
     @Override
