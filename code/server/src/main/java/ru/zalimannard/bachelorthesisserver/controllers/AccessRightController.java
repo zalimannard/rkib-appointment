@@ -26,7 +26,7 @@ public class AccessRightController {
     }
 
     @GetMapping("{id}")
-    public AccessRight getOne(@PathVariable Integer id) {
+    public AccessRight get(@PathVariable Integer id) {
         return accessRightRepository.read(id);
     }
 
