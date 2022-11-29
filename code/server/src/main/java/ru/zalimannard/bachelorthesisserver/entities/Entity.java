@@ -1,13 +1,13 @@
 package ru.zalimannard.bachelorthesisserver.entities;
 
 public abstract class Entity {
-    private final Integer id;
+    private final int id;
 
-    public Entity(Integer id) {
+    public Entity(int id) {
         this.id = id;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 }

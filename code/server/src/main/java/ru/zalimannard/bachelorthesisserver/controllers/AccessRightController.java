@@ -26,17 +26,17 @@ public class AccessRightController {
     }
 
     @GetMapping("{id}")
-    public AccessRight get(@PathVariable Integer id) {
+    public AccessRight get(@PathVariable int id) {
         return accessRightRepository.read(id);
     }
 
     @PutMapping("{id}")
-    public void put(@PathVariable Integer id, @RequestBody AccessRight accessRight) {
+    public void put(@PathVariable int id, @RequestBody AccessRight accessRight) {
         accessRightRepository.update(id, accessRight);
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable Integer id) {
+    public void delete(@PathVariable int id) {
         accessRightRepository.delete(id);
     }
 }
