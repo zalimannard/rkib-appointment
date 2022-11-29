@@ -5,6 +5,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 import ru.zalimannard.bachelorthesisserver.entities.AccessRight;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
+import ru.zalimannard.bachelorthesisserver.exceptions.NotModifiedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +62,17 @@ public class AccessRightRepository implements BaseRepository<AccessRight> {
 
     @Override
     public boolean update(int id, AccessRight accessRight) {
-        return false;
+        String query = "UPDATE access_rights " +
+                "SET access_right_name = ? " +
+                "WHERE access_right_id = ?";
+        Object[] parameters = new Object[]{accessRight.getAccessRightName(), id};
+
+        int jdbcOperationsResult = jdbcOperations.update(query, parameters);
+        boolean isSuccessfullyUpdated = (jdbcOperationsResult == 1);
+        if (!isSuccessfullyUpdated) {
+            throw new NotModifiedException("Право доступа не было изменено");
+        }
+        return true;
     }
 
     @Override

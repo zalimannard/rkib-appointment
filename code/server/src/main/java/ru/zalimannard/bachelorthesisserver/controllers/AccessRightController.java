@@ -2,6 +2,7 @@ package ru.zalimannard.bachelorthesisserver.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import ru.zalimannard.bachelorthesisserver.entities.AccessRight;
+import ru.zalimannard.bachelorthesisserver.exceptions.NotModifiedException;
 import ru.zalimannard.bachelorthesisserver.repositories.AccessRightRepository;
 
 import java.util.List;
@@ -28,5 +29,10 @@ public class AccessRightController {
     @GetMapping("{id}")
     public AccessRight getOne(@PathVariable Integer id) {
         return accessRightRepository.read(id);
+    }
+
+    @PutMapping("{id}")
+    public void put(@PathVariable Integer id, @RequestBody AccessRight accessRight) {
+        accessRightRepository.update(id, accessRight);
     }
 }
