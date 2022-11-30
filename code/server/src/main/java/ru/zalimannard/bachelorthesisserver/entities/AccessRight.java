@@ -1,14 +1,18 @@
 package ru.zalimannard.bachelorthesisserver.entities;
 
-public class AccessRight extends Entity {
-    private final String accessRightName;
+import java.util.Objects;
 
-    public AccessRight(int id, String accessRightName) {
-        super(id);
-        this.accessRightName = accessRightName;
+public record AccessRight(int id, String name) implements Entity {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AccessRight that = (AccessRight) o;
+        return id == that.id;
     }
 
-    public String getAccessRightName() {
-        return accessRightName;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

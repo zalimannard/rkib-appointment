@@ -15,24 +15,24 @@ public class AccessRightController {
         this.accessRightRepository = accessRightRepository;
     }
 
+    @GetMapping("{id}")
+    public AccessRight get(@PathVariable int id) {
+        return accessRightRepository.retrieve(id);
+    }
+
+    @GetMapping
+    public List<AccessRight> getAll() {
+        return accessRightRepository.retrieveAll();
+    }
+
     @PostMapping
     public void post(@RequestBody AccessRight accessRight) {
         accessRightRepository.create(accessRight);
     }
 
-    @GetMapping
-    public List<AccessRight> getAll() {
-        return accessRightRepository.readAll();
-    }
-
-    @GetMapping("{id}")
-    public AccessRight get(@PathVariable int id) {
-        return accessRightRepository.read(id);
-    }
-
-    @PutMapping("{id}")
-    public void put(@PathVariable int id, @RequestBody AccessRight accessRight) {
-        accessRightRepository.update(id, accessRight);
+    @PutMapping
+    public void put(@RequestBody AccessRight accessRight) {
+        accessRightRepository.update(accessRight);
     }
 
     @DeleteMapping("{id}")

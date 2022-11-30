@@ -19,35 +19,18 @@ public class AccessRightRepository implements BaseRepository<AccessRight> {
         this.jdbcOperations = jdbcOperations;
     }
 
-    @Override
     public void create(AccessRight accessRight) {
         String query = "INSERT INTO access_rights(access_right_name) " +
-                "VALUES(?)";
-        Object[] parameters = new Object[]{accessRight.getAccessRightName()};
+                "VALUES(?) ";
+        Object[] parameters = new Object[]{accessRight.name()};
         jdbcOperations.update(query, parameters);
     }
 
     @Override
-    public List<AccessRight> readAll() {
-        String query = "SELECT access_right_id, access_right_name " +
-                "FROM access_rights";
-        List<AccessRight> response = new ArrayList<>();
-        SqlRowSet sqlRowSet = jdbcOperations.queryForRowSet(query);
-
-        while (sqlRowSet.next()) {
-            response.add(new AccessRight(
-                    sqlRowSet.getInt("access_right_id"),
-                    sqlRowSet.getString("access_right_name")
-            ));
-        }
-        return response;
-    }
-
-    @Override
-    public AccessRight read(int id) {
+    public AccessRight retrieve(int id) {
         String query = "SELECT access_right_id, access_right_name " +
                 "FROM access_rights " +
-                "WHERE access_right_id = ?";
+                "WHERE access_right_id = ? ";
         Object[] parameters = new Object[]{id};
         SqlRowSet sqlRowSet = jdbcOperations.queryForRowSet(query, parameters);
 
@@ -62,20 +45,35 @@ public class AccessRightRepository implements BaseRepository<AccessRight> {
     }
 
     @Override
-    public void update(int id, AccessRight accessRight) {
+    public List<AccessRight> retrieveAll() {
+        String query = "SELECT access_right_id, access_right_name " +
+                "FROM access_rights ";
+        SqlRowSet accessRights = jdbcOperations.queryForRowSet(query);
+
+        List<AccessRight> response = new ArrayList<>();
+        while (accessRights.next()) {
+            response.add(new AccessRight(
+                    accessRights.getInt("access_right_id"),
+                    accessRights.getString("access_right_name")
+            ));
+        }
+        return response;
+    }
+
+    @Override
+    public void update(AccessRight accessRight) {
         String query = "UPDATE access_rights " +
                 "SET access_right_name = ? " +
-                "WHERE access_right_id = ?";
-        Object[] parameters = new Object[]{accessRight.getAccessRightName(), id};
+                "WHERE access_right_id = ? ";
+        Object[] parameters = new Object[]{accessRight.name(), accessRight.id()};
 
         int jdbcOperationsResult = jdbcOperations.update(query, parameters);
         boolean isSuccessfullyUpdated = (jdbcOperationsResult == 1);
         if (!isSuccessfullyUpdated) {
-            throw new NotModifiedException("Право доступа не было изменено");
+            throw new NotModifiedException("Право доступа не изменено");
         }
     }
 
-    @Override
     public void delete(int id) {
         String query = "DELETE FROM access_rights " +
                 "WHERE access_right_id = ? ";
@@ -84,7 +82,7 @@ public class AccessRightRepository implements BaseRepository<AccessRight> {
         int jdbcOperationsResult = jdbcOperations.update(query, parameters);
         boolean isSuccessfullyDeleted = (jdbcOperationsResult == 1);
         if (!isSuccessfullyDeleted) {
-            throw new ConflictException("Право доступа не было удалено");
+            throw new ConflictException("Право доступа не удалено");
         }
     }
 }

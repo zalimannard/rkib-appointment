@@ -1,17 +1,15 @@
 package ru.zalimannard.bachelorthesisserver.repositories;
 
-import ru.zalimannard.bachelorthesisserver.entities.Entity;
-
 import java.util.List;
 
-public interface BaseRepository<T extends Entity> {
-    void create(T entity);
+public interface BaseRepository<Entity> {
+    void create(Entity entity);
 
-    List<T> readAll();
+    Entity retrieve(int id);
 
-    T read(int id);
+    List<Entity> retrieveAll();
 
-    void update(int id, T entity);
+    void update(Entity entity);
 
     void delete(int id);
 }
