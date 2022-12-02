@@ -1,0 +1,138 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="4E56B935-3709-23D5-5AAC-66F6A104ED1D" name="unscheduled">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:35:29 UTC</createdTime>
+<generatorID>2828BEA5-D1D0-918E-9A2F-91CD2FD68A9E</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="unscheduled_id" id="1A3971AF-ED43-4081-5EA8-11E44AE7E057">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:35:29 UTC</createdTime>
+<generatorID>5B923E34-1D59-AAA4-0509-5B5877B48E8E</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="employee_id" id="8C072CCB-8521-42B0-E335-CEAE48F9874E">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:35:29 UTC</createdTime>
+<generatorID>970C901D-7710-EFCA-FB14-AB665C8625E8</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="C54A4B53-DCC7-63A4-8B69-BEADA51675FF" referredColumn="FAE979EF-DECD-E977-3395-3D6477B3DF47"/>
+</associations>
+</Column>
+<Column name="service_id" id="6A883268-7103-A12A-8164-5501F06DEEC0">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:35:29 UTC</createdTime>
+<generatorID>8451D804-BC50-C07B-5FE7-EC5D8C96A975</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="81C15C20-0C60-4FCB-2B77-C21E4859EC71" referredColumn="540F0400-74A4-3A43-BB7E-47EC15AA6ABD"/>
+</associations>
+</Column>
+<Column name="visit_id" id="402BE93D-8DB5-1EE7-5E2E-BF145A7D58F3">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:35:29 UTC</createdTime>
+<generatorID>CC68D074-7D5C-4233-149A-1EF213A013D2</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="C904B2A3-7AF2-4E6E-9798-A23EA74CA600" referredColumn="D972F29F-0FA6-86C4-D217-2C01F0AC6839"/>
+</associations>
+</Column>
+<Column name="time_stamp" id="9BC33FEA-6EC3-5941-44F2-326B40D356A8">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:35:29 UTC</createdTime>
+<generatorID>60977AC3-45AB-84E9-50AE-433684B7F5B8</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="commentary" id="97BD39FA-0EAD-3C51-DCBE-A072FB1242FF">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:35:29 UTC</createdTime>
+<generatorID>2DE94A96-B655-CB3D-A693-B432078784B6</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200 CHAR</dataTypeSize>
+<ownDataTypeParameters>200 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="82113577-C4BE-49B8-BAF2-F791FBC278FE" name="unscheduled_PK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:35:29 UTC</createdTime>
+<generatorID>F1AB7FCD-EC18-DF12-E102-89877115101B</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1A3971AF-ED43-4081-5EA8-11E44AE7E057"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="53961135-0966-A77C-A090-FD2D08C25BD8" name="unscheduled_visits_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:35:29 UTC</createdTime>
+<generatorID>6B97291A-9F3D-F7C1-A77D-AAED8AD520CB</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="402BE93D-8DB5-1EE7-5E2E-BF145A7D58F3"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="5FE74C54-2FBE-4C82-9ED0-34D2C702454A" name="unscheduled_employees_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:35:29 UTC</createdTime>
+<generatorID>533CEBE2-2537-1382-0502-291BB80320B8</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8C072CCB-8521-42B0-E335-CEAE48F9874E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C9BCF91F-77DD-506B-6633-E959C196E260" name="unscheduled_services_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:35:29 UTC</createdTime>
+<generatorID>BA8FF2B6-AE27-C45D-9ACE-931FAB35DA6D</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="6A883268-7103-A12A-8164-5501F06DEEC0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

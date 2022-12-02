@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="D99F38BD-733E-84AC-7374-D41FA5C82D69" name="appointment_statuses">
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="D99F38BD-733E-84AC-7374-D41FA5C82D69" name="visit_statuses">
 <createdBy>zalimannard</createdBy>
 <createdTime>2022-11-27 13:41:08 UTC</createdTime>
 <ownerDesignName>er-model-source</ownerDesignName>
@@ -27,11 +27,11 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
-<preferredAbbreviation>appointment_status_id</preferredAbbreviation>
+<preferredAbbreviation>visit_status_id</preferredAbbreviation>
 </Attribute>
-<Attribute name="Тип статуса обращения" id="F11A7BCE-9734-D774-E9A1-B49FDCBABFB7">
+<Attribute name="Тип обращения" id="F9779C4C-3FDF-C774-968C-4A0780E016C6">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-11-27 14:06:30 UTC</createdTime>
+<createdTime>2022-12-02 19:01:20 UTC</createdTime>
 <generatorID>D04931EB-E1DC-04FF-4D65-AED4C3C8F5A1</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <engineerTo>
@@ -42,7 +42,7 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
-<preferredAbbreviation>appointment_status_type_id</preferredAbbreviation>
+<preferredAbbreviation>visit_type_id</preferredAbbreviation>
 </Attribute>
 <Attribute name="Название" id="75743D69-CD88-3E0F-1667-DBFF35630107">
 <createdBy>zalimannard</createdBy>
@@ -56,17 +56,16 @@
 <logicalDatatype>LOGDT024</logicalDatatype>
 <dataTypeSize>50 CHAR</dataTypeSize>
 <ownDataTypeParameters>50 CHAR,,</ownDataTypeParameters>
-<preferredAbbreviation>appointment_status_name</preferredAbbreviation>
+<preferredAbbreviation>visit_status_name</preferredAbbreviation>
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="65BF430B-4035-648B-08CD-F1309231D5A0" name="appointment_statuses PK">
+<identifier id="D1D7F876-5D66-3A69-85D2-060600A21AB5" name="visit_statuses PK">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-11-27 14:00:22 UTC</createdTime>
+<createdTime>2022-12-02 19:01:52 UTC</createdTime>
 <ownerDesignName>er-model-source</ownerDesignName>
-<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="false"/>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>

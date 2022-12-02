@@ -1,0 +1,89 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="09810CD2-710C-2642-A679-481266A7799E" name="scheduled">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:35:29 UTC</createdTime>
+<generatorID>125C1276-24A5-5527-7B8C-2566E27AA54F</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="scheduled_id" id="0696865C-8551-5022-7784-2DD4F36B4FD4">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:35:29 UTC</createdTime>
+<generatorID>C991CD31-8659-353A-AAD7-F67C1A91AAB0</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="plan_el_id" id="6DB1F1A5-A2D2-2703-0018-91B4F005DD29">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:35:29 UTC</createdTime>
+<generatorID>650E9CF8-7166-80EB-6BBC-14E7C2BE6A7E</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="D4C17189-4A18-2976-A030-48462BD219EF" referredColumn="C4BA349E-79D5-FF42-E7D2-B3914D5FA4C2"/>
+</associations>
+</Column>
+<Column name="visit_id" id="E2CEAC2F-3D27-2199-19C7-B3A6B3E7E903">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:35:29 UTC</createdTime>
+<generatorID>C079514E-15A7-599E-B07D-CEDF6B12CEC8</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="C07C96DA-09D2-C4AD-7E79-26166CAF2D4E" referredColumn="D972F29F-0FA6-86C4-D217-2C01F0AC6839"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="E35DEA2B-BB39-CC77-711A-F2A0A8715208" name="scheduled_PK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:35:29 UTC</createdTime>
+<generatorID>A72AF0F2-9EB0-CEC4-88BA-A3B8169D92F2</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="0696865C-8551-5022-7784-2DD4F36B4FD4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="57C305D4-3205-7B16-E347-49BA4CDAC6FF" name="scheduled_plan_els_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:35:29 UTC</createdTime>
+<generatorID>83B6A07D-30D4-C1F6-DD43-6FEB24DDF6A5</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="6DB1F1A5-A2D2-2703-0018-91B4F005DD29"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F3310BC1-E42D-623A-0591-174112DE6436" name="scheduled_visits_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:35:29 UTC</createdTime>
+<generatorID>A0A425A3-2B63-D6BA-180F-1C0CCEDE37F5</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="E2CEAC2F-3D27-2199-19C7-B3A6B3E7E903"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -1,0 +1,75 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="2E91E65B-F58B-F961-1F58-3E5782235318" name="doctor_notes">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:35:29 UTC</createdTime>
+<generatorID>33376E99-1867-3DE1-9FF0-F12E661F08C7</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="doctor_note_id" id="282113C0-4732-FCA7-9EA5-F0D6A51632BB">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:35:29 UTC</createdTime>
+<generatorID>414FDAC2-8001-BD94-642A-062C95E15953</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="institution_id" id="9477A4CF-5C5F-4C15-E83A-FCA960D78B26">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:35:29 UTC</createdTime>
+<generatorID>CFA80E0A-1B52-F7FB-B4A0-90183B101C1B</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="22B66BB8-59B7-F627-295A-F397D2539AAC" referredColumn="760CA5BA-4E92-223F-41E8-939F71ECFF26"/>
+</associations>
+</Column>
+<Column name="preliminary_diagnosis" id="924874A7-FBF4-2465-2560-460036E2FF76">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:35:29 UTC</createdTime>
+<generatorID>FEDCA461-F9E8-8BA9-A958-A3DC0C8DDD95</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200 CHAR</dataTypeSize>
+<ownDataTypeParameters>200 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="C786DAB0-C702-F7E0-2570-2E20A49984FB" name="doctor_notes_PK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:35:29 UTC</createdTime>
+<generatorID>E0051851-D92B-8B32-C10D-4FDE597CA9D7</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="282113C0-4732-FCA7-9EA5-F0D6A51632BB"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="81BFFCE4-1A87-B544-6E80-C49F6E12E521" name="doctor_notes_institutions_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:35:29 UTC</createdTime>
+<generatorID>A24E8726-719F-A79D-7CE0-8A985231BE6B</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="9477A4CF-5C5F-4C15-E83A-FCA960D78B26"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
