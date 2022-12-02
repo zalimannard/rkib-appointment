@@ -3,7 +3,7 @@ package ru.zalimannard.bachelorthesisserver.repositories;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
-import ru.zalimannard.bachelorthesisserver.entities.EmployeeAccessRight;
+import ru.zalimannard.bachelorthesisserver.entities.EmployeesRole;
 import ru.zalimannard.bachelorthesisserver.exceptions.ConflictException;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotModifiedException;
@@ -12,18 +12,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class EmployeeAccessRightRepository implements BaseRepository<EmployeeAccessRight> {
+public class EmployeesRoleRepository implements BaseRepository<EmployeesRole> {
     protected final JdbcOperations jdbcOperations;
 
-    public EmployeeAccessRightRepository(JdbcOperations jdbcOperations) {
+    public EmployeesRoleRepository(JdbcOperations jdbcOperations) {
         this.jdbcOperations = jdbcOperations;
     }
 
     @Override
-    public void create(EmployeeAccessRight employee) {
-        String query = "INSERT INTO employees_access_rights(employee_id, access_right_id) " +
+    public void create(EmployeesRole employee) {
+        String query = "INSERT INTO employees_roles(employee_id, role_id) " +
                 "VALUES(?, ?) ";
-        Object[] parameters = new Object[]{employee.employeeId(), employee.accessRightId()};
+        Object[] parameters = new Object[]{employee.employeeId(), employee.roleId()};
 
         try {
             jdbcOperations.update(query, parameters);
@@ -33,16 +33,16 @@ public class EmployeeAccessRightRepository implements BaseRepository<EmployeeAcc
     }
 
     @Override
-    public EmployeeAccessRight retrieve(int id) {
-        String query = "SELECT employees_access_right_id, employee_id, access_right_id " +
-                "FROM employees_access_rights " +
-                "WHERE employees_access_right_id = ? ";
+    public EmployeesRole retrieve(int id) {
+        String query = "SELECT employees_role_id, employee_id, role_id " +
+                "FROM employees_roles " +
+                "WHERE employees_role_id = ? ";
 
         Object[] parameters = new Object[]{id};
         SqlRowSet sqlRowSet = jdbcOperations.queryForRowSet(query, parameters);
 
         if (sqlRowSet.next()) {
-            return new EmployeeAccessRight(
+            return new EmployeesRole(
                     sqlRowSet.getInt("employees_access_right_id"),
                     sqlRowSet.getInt("access_right_id"),
                     sqlRowSet.getInt("employee_id")
@@ -53,14 +53,14 @@ public class EmployeeAccessRightRepository implements BaseRepository<EmployeeAcc
     }
 
     @Override
-    public List<EmployeeAccessRight> retrieveAll() {
-        String query = "SELECT employees_access_right_id, employee_id, access_right_id " +
-                "FROM employees_access_rights ";
+    public List<EmployeesRole> retrieveAll() {
+        String query = "SELECT employees_role_id, employee_id, role_id " +
+                "FROM employees_roles ";
         SqlRowSet sqlRowSet = jdbcOperations.queryForRowSet(query);
 
-        List<EmployeeAccessRight> response = new ArrayList<>();
+        List<EmployeesRole> response = new ArrayList<>();
         while (sqlRowSet.next()) {
-            response.add(new EmployeeAccessRight(
+            response.add(new EmployeesRole(
                     sqlRowSet.getInt("employees_access_right_id"),
                     sqlRowSet.getInt("access_right_id"),
                     sqlRowSet.getInt("employee_id")
@@ -70,12 +70,12 @@ public class EmployeeAccessRightRepository implements BaseRepository<EmployeeAcc
     }
 
     @Override
-    public void update(EmployeeAccessRight employeeAccessRight) {
-        String query = "UPDATE employees_access_rights " +
-                "SET employee_id = ?, access_right_id = ? " +
-                "WHERE employees_access_right_id = ? ";
-        Object[] parameters = new Object[]{employeeAccessRight.employeeId(), employeeAccessRight.accessRightId(),
-                employeeAccessRight.id()};
+    public void update(EmployeesRole employeesRole) {
+        String query = "UPDATE employees_roles " +
+                "SET employee_id = ?, role_id = ? " +
+                "WHERE employees_role_id = ? ";
+        Object[] parameters = new Object[]{employeesRole.employeeId(), employeesRole.roleId(),
+                employeesRole.id()};
 
         int jdbcOperationsResult = jdbcOperations.update(query, parameters);
         boolean isSuccessfullyUpdated = (jdbcOperationsResult == 1);
@@ -86,8 +86,8 @@ public class EmployeeAccessRightRepository implements BaseRepository<EmployeeAcc
 
     @Override
     public void delete(int id) {
-        String query = "DELETE FROM employees_access_rights " +
-                "WHERE employees_access_right_id = ? ";
+        String query = "DELETE FROM employees_roles " +
+                "WHERE employees_role_id = ? ";
         Object[] parameters = new Object[]{id};
 
         int jdbcOperationsResult = jdbcOperations.update(query, parameters);
