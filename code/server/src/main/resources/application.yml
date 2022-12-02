@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: "bachelor-thesis-server"
+  datasource:
+    url: 
+    username:
+    password:
