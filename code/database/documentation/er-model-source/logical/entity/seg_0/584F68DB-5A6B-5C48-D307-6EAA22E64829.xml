@@ -117,6 +117,7 @@
 <logicalDatatype>LOGDT024</logicalDatatype>
 <dataTypeSize>200 CHAR</dataTypeSize>
 <ownDataTypeParameters>200 CHAR,,</ownDataTypeParameters>
+<preferredAbbreviation>final_diagnosis</preferredAbbreviation>
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">

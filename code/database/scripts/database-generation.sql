@@ -56,7 +56,7 @@ ALTER TABLE plan_el_sttss ADD CONSTRAINT plan_el_sttss_pk PRIMARY KEY ( plan_el_
 
 CREATE TABLE plan_el_types (
     plan_el_type_id     NUMBER GENERATED ALWAYS AS IDENTITY (START with 1 INCREMENT by 1),
-    si_status_type_name VARCHAR2(20 CHAR) NOT NULL
+    plan_el_type_name   VARCHAR2(20 CHAR) NOT NULL
 );
 
 ALTER TABLE plan_el_types ADD CONSTRAINT plan_el_types_pk PRIMARY KEY ( plan_el_type_id );
@@ -126,7 +126,7 @@ CREATE TABLE visits (
     service_id            NUMBER NOT NULL,
     doctor_note_id        NUMBER NOT NULL,
     visit_status_id       NUMBER NOT NULL,
-    окончательный_диагноз VARCHAR2(200 CHAR) NOT NULL
+    final_diagnosis       VARCHAR2(200 CHAR) NOT NULL
 );
 
 CREATE UNIQUE INDEX visits__idx ON

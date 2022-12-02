@@ -1,0 +1,120 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="540A4F2D-EC3F-B04B-CCBA-564440913EE5" name="patients">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 22:12:38 UTC</createdTime>
+<generatorID>CCD6D5C2-A05D-081E-32FB-17E297021BE5</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="patient_id" id="2A33EF17-F2B2-FE44-F80F-85EBEDFBF12C">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 22:12:38 UTC</createdTime>
+<generatorID>0E968A90-8729-CC52-DA48-704B1DC2FD0D</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="last_name" id="B7CED6DB-C672-CE04-3C68-F4DD7CB3797C">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 22:12:38 UTC</createdTime>
+<generatorID>7C4E6B97-7918-F2BC-B7D4-8B2E0D0AB3B0</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 CHAR</dataTypeSize>
+<ownDataTypeParameters>30 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="first_name" id="ED6075C8-7CE7-1982-79E8-DE0306902F5C">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 22:12:38 UTC</createdTime>
+<generatorID>10F3794A-7EC0-3FC2-81FA-E6ED8D8DA39C</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 CHAR</dataTypeSize>
+<ownDataTypeParameters>30 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="middle_name" id="CBB06ABA-F50C-ED8E-E420-E74926A3462E">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 22:12:38 UTC</createdTime>
+<generatorID>7BE22CC2-384B-08A5-7976-9C6DD15F5D22</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 CHAR</dataTypeSize>
+<ownDataTypeParameters>30 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="phone_number" id="58CDF630-518E-A405-FE31-81292C7591E5">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 22:12:38 UTC</createdTime>
+<generatorID>C8238FF6-09A1-DEC8-8E2C-47BAA3FA51E2</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 CHAR</dataTypeSize>
+<ownDataTypeParameters>20 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="birth_date" id="AE831CB1-38E1-992C-80F4-9C2108109C58">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 22:12:38 UTC</createdTime>
+<generatorID>AD5E40DE-515E-4584-D19A-7A720B19E53D</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="address" id="051AAB1E-C9A9-BAC4-CFD0-B221C0254497">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 22:12:38 UTC</createdTime>
+<generatorID>2B8D1F03-AAF2-241F-A46E-AF5992F91D16</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200 CHAR</dataTypeSize>
+<ownDataTypeParameters>200 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="job" id="0F5819F0-E12D-83F6-E36D-40D33EDAABAE">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 22:12:38 UTC</createdTime>
+<generatorID>C43C6155-DBD1-0612-7C9F-592F47C795BB</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 CHAR</dataTypeSize>
+<ownDataTypeParameters>100 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="91C13740-6338-4C5F-85E3-C1185529A019" name="patients_PK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 22:12:38 UTC</createdTime>
+<generatorID>C9D6EBF5-451C-BF1B-7BB7-9369940CD0DB</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2A33EF17-F2B2-FE44-F80F-85EBEDFBF12C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
