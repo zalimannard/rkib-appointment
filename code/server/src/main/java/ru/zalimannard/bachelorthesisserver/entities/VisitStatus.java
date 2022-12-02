@@ -2,7 +2,7 @@ package ru.zalimannard.bachelorthesisserver.entities;
 
 import java.util.Objects;
 
-public record VisitStatus(int id, int typeId, String name) implements Entity {
+public record VisitStatus(int id, int typeId, String name) implements BaseEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

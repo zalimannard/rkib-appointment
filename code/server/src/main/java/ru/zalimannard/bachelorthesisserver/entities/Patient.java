@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.util.Objects;
 
 public record Patient(int id, String lastName, String firstName, String middleName, String phoneNumber, Date birthDate,
-                      String address, String job) implements Entity {
+                      String address, String job) implements BaseEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -3,7 +3,7 @@ package ru.zalimannard.bachelorthesisserver.entities;
 import java.util.Objects;
 
 public record Employee(int id, String lastName, String firstName, String middleName, String login,
-                       String passwordHash, String passwordSalt) implements Entity {
+                       String passwordHash, String passwordSalt) implements BaseEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -3,7 +3,7 @@ package ru.zalimannard.bachelorthesisserver.entities;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-public record PlanElement(int id, int employeeId, int serviceId, int statusId, Timestamp timeStamp) implements Entity {
+public record PlanElement(int id, int employeeId, int serviceId, int statusId, Timestamp timeStamp) implements BaseEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

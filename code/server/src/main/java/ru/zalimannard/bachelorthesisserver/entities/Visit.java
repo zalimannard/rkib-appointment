@@ -3,7 +3,7 @@ package ru.zalimannard.bachelorthesisserver.entities;
 import java.util.Objects;
 
 public record Visit(int id, int parentVisitId, int patientId, int serviceId, int doctorNoteId, int statusId,
-                    String finalDiagnosis) implements Entity {
+                    String finalDiagnosis) implements BaseEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

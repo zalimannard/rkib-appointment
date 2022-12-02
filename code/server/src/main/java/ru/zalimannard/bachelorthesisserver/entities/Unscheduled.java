@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 public record Unscheduled(int id, int employeeId, int serviceId, int visitId, Timestamp timeStamp,
-                          String commentary) implements Entity {
+                          String commentary) implements BaseEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
