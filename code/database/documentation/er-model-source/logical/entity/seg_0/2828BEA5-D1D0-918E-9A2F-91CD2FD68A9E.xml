@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="2828BEA5-D1D0-918E-9A2F-91CD2FD68A9E" name="unscheduled_appointments">
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="2828BEA5-D1D0-918E-9A2F-91CD2FD68A9E" name="unscheduled">
 <createdBy>zalimannard</createdBy>
 <createdTime>2022-11-27 13:40:09 UTC</createdTime>
 <ownerDesignName>er-model-source</ownerDesignName>
@@ -27,7 +27,7 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
-<preferredAbbreviation>unscheduled_appointment_id</preferredAbbreviation>
+<preferredAbbreviation>unscheduled_id</preferredAbbreviation>
 </Attribute>
 <Attribute name="Работник" id="DE1F479E-5E66-005A-BCE6-2CCF655DE4CE">
 <createdBy>zalimannard</createdBy>
@@ -72,7 +72,7 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
-<preferredAbbreviation>appointment_id</preferredAbbreviation>
+<preferredAbbreviation>visit_id</preferredAbbreviation>
 </Attribute>
 <Attribute name="Отметка времени" id="60977AC3-45AB-84E9-50AE-433684B7F5B8">
 <createdBy>zalimannard</createdBy>

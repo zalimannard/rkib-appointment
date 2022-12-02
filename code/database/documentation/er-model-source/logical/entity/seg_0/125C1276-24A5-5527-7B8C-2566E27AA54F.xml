@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="125C1276-24A5-5527-7B8C-2566E27AA54F" name="scheduled_appointments">
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="125C1276-24A5-5527-7B8C-2566E27AA54F" name="scheduled">
 <createdBy>zalimannard</createdBy>
 <createdTime>2022-11-27 13:39:41 UTC</createdTime>
 <ownerDesignName>er-model-source</ownerDesignName>
@@ -27,7 +27,7 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
-<preferredAbbreviation>scheduled_appointment_id</preferredAbbreviation>
+<preferredAbbreviation>scheduled_id</preferredAbbreviation>
 </Attribute>
 <Attribute name="Элемент расписания" id="372C271F-0234-6BD8-FD5F-8C57C5FBD3C3">
 <createdBy>zalimannard</createdBy>
@@ -42,7 +42,7 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
-<preferredAbbreviation>schedule_item_id</preferredAbbreviation>
+<preferredAbbreviation>plan_el_id</preferredAbbreviation>
 </Attribute>
 <Attribute name="Обращение" id="8C9EFE5A-4402-0004-B2A2-B81804EC1225">
 <createdBy>zalimannard</createdBy>
@@ -57,7 +57,7 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
-<preferredAbbreviation>appointment_id</preferredAbbreviation>
+<preferredAbbreviation>visit_id</preferredAbbreviation>
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">

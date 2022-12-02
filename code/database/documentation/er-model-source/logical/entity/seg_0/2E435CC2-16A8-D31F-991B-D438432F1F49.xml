@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="2E435CC2-16A8-D31F-991B-D438432F1F49" name="schedule_item_statuses">
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="2E435CC2-16A8-D31F-991B-D438432F1F49" name="plan_el_sttss">
 <createdBy>zalimannard</createdBy>
 <createdTime>2022-11-27 13:42:18 UTC</createdTime>
 <ownerDesignName>er-model-source</ownerDesignName>
@@ -27,7 +27,7 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
-<preferredAbbreviation>si_status_id</preferredAbbreviation>
+<preferredAbbreviation>plan_el_status_id</preferredAbbreviation>
 </Attribute>
 <Attribute name="Тип статуса" id="51C59B92-49C3-380F-5350-87083FF14367">
 <createdBy>zalimannard</createdBy>
@@ -42,7 +42,7 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
-<preferredAbbreviation>schedule_item_status_types_id</preferredAbbreviation>
+<preferredAbbreviation>plan_type_id</preferredAbbreviation>
 </Attribute>
 <Attribute name="Название" id="BB4CB165-8A24-5DCF-1561-C65FEB54FC0A">
 <createdBy>zalimannard</createdBy>
@@ -56,7 +56,7 @@
 <logicalDatatype>LOGDT024</logicalDatatype>
 <dataTypeSize>30 CHAR</dataTypeSize>
 <ownDataTypeParameters>30 CHAR,,</ownDataTypeParameters>
-<preferredAbbreviation>si_status_name</preferredAbbreviation>
+<preferredAbbreviation>plan_status_name</preferredAbbreviation>
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">

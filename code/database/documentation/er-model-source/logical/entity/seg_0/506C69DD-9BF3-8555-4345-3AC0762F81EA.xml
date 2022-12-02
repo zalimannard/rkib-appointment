@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="506C69DD-9BF3-8555-4345-3AC0762F81EA" name="schedule_items">
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="506C69DD-9BF3-8555-4345-3AC0762F81EA" name="plan_el">
 <createdBy>zalimannard</createdBy>
 <createdTime>2022-11-27 13:41:49 UTC</createdTime>
 <ownerDesignName>er-model-source</ownerDesignName>
@@ -27,7 +27,7 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
-<preferredAbbreviation>schedule_item_id</preferredAbbreviation>
+<preferredAbbreviation>plan_el_id</preferredAbbreviation>
 </Attribute>
 <Attribute name="Работник" id="4EDF33F3-C13A-1F32-ECAB-CA4851CD20FD">
 <createdBy>zalimannard</createdBy>
@@ -59,7 +59,7 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <preferredAbbreviation>service_id</preferredAbbreviation>
 </Attribute>
-<Attribute name="Статус элемента расписания" id="D5837B7D-75D0-0050-6A26-A4A06327D33E">
+<Attribute name="Статус" id="D5837B7D-75D0-0050-6A26-A4A06327D33E">
 <createdBy>zalimannard</createdBy>
 <createdTime>2022-11-27 15:02:26 UTC</createdTime>
 <generatorID>D603ADDA-C05F-472B-1D45-7BA0F0DE9995</generatorID>
@@ -72,7 +72,7 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
-<preferredAbbreviation>schedule_item_status_id</preferredAbbreviation>
+<preferredAbbreviation>plan_el_status_id</preferredAbbreviation>
 </Attribute>
 <Attribute name="Отметка времени" id="6B9EEBAB-7F03-C0EC-9CAE-76E9F8F5DA50">
 <createdBy>zalimannard</createdBy>

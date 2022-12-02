@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_1" id="D261FAF1-56A0-76F6-9B4C-3EBB6349A3A7" containerWithKeyObject="39E38762-DF48-3B6B-2CF0-DAC925B6EEFE" localFKIndex="3CAFCD1F-20B6-3501-59A7-1B82E9DE48A9" name="plan_el_plan_el_sttss_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 16:09:51 UTC</createdTime>
+<generatorID>D603ADDA-C05F-472B-1D45-7BA0F0DE9995</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<referredTableLongName>plan_el_sttss</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>CFA8C226-49A6-D7B0-4CDB-CB4C1271D425</referredTableID>
+<keyObject>4C32B837-E234-2900-A0AE-89BE4C450386</keyObject>
+<referredKeyID>4C32B837-E234-2900-A0AE-89BE4C450386</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>plan_el_status_id</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

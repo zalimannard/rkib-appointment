@@ -1,0 +1,164 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_1" id="51AEDB3B-EF53-A6FA-5C82-0F7E7265ADAB" name="visits">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 16:09:51 UTC</createdTime>
+<generatorID>9AB0FD6D-79BF-BFF2-97E3-9C24FC5B33F0</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="visit_id" id="1C271F0F-9D76-6B1B-1A09-191A7A4B7A68">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 16:09:51 UTC</createdTime>
+<generatorID>9A72D94A-E3D9-B036-1349-D4F0349F427D</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="parent_visit_id" id="8105CCDC-B891-6511-426C-65D0C7B77555">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 16:09:51 UTC</createdTime>
+<generatorID>70B328BD-6119-E12C-D528-D6809995C83E</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="C5260766-15BD-130C-06E5-8420E5888B75" referredColumn="1C271F0F-9D76-6B1B-1A09-191A7A4B7A68"/>
+</associations>
+</Column>
+<Column name="patient_id" id="AC1224D2-B66E-D34F-5215-724CB304755A">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 16:09:51 UTC</createdTime>
+<generatorID>7176DFC4-348C-79B8-9B19-F9AA25656E28</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="FFB3E4FA-473D-7E24-9417-8C789A67A4F5" referredColumn="DD150DFD-FAE9-A492-F7AF-6AD8E078A95E"/>
+</associations>
+</Column>
+<Column name="visit_status_id" id="A88410A8-DD51-013D-8652-3956CD37F367">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 16:09:51 UTC</createdTime>
+<generatorID>C31B8250-C38C-514E-5A73-FC6DC3326DE3</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="9C54553F-9295-3568-BE25-77ECD6B1364B" referredColumn="016CE8CA-C97B-DE7A-3B56-013942444295"/>
+</associations>
+</Column>
+<Column name="doctor_note_id" id="A79381D2-B0BE-7BDA-1800-1250EAFCD2BB">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 16:09:51 UTC</createdTime>
+<generatorID>19EEE5A2-AA87-B5C4-3984-7DC6B6FFF9DB</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="2633CAB3-B429-1227-64EF-32A05B8F68F7" referredColumn="FD43860F-632A-9564-089E-3B3423AE27EE"/>
+</associations>
+</Column>
+<Column name="final_diagnosis" id="0C9DFEFB-73A3-07CD-FE2A-66F3A8A0C7BF">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 16:09:51 UTC</createdTime>
+<generatorID>A423054D-D27A-51EE-DBB2-8BE3A9523514</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200 CHAR</dataTypeSize>
+<ownDataTypeParameters>200 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="8662B68A-A177-8B9A-631D-28DD2BA3D526" name="visits_PK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 16:09:51 UTC</createdTime>
+<generatorID>D1EE7EC3-0E9B-8016-3748-E81BCF221541</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1C271F0F-9D76-6B1B-1A09-191A7A4B7A68"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F8858EBA-4889-6644-5819-52F4F04A9767" name="visits__IDX">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 16:09:51 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>34FFED82-F363-F07F-0A99-50A72BCD4449</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="8105CCDC-B891-6511-426C-65D0C7B77555"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="75CB6344-F5AE-B150-0640-3F1C0836641B" name="visits_patients_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 16:09:51 UTC</createdTime>
+<generatorID>0E97185B-3FD9-7488-A992-2212FB0A2A5B</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="AC1224D2-B66E-D34F-5215-724CB304755A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="3FF4271A-1996-754E-F991-ACF87600EF0D" name="visits_visit_statuses_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 16:09:51 UTC</createdTime>
+<generatorID>DD0D0CE2-C8C5-BD8F-F766-2DDD075E920F</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A88410A8-DD51-013D-8652-3956CD37F367"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="DD007935-6DC7-F700-1D85-E8C06165AEFC" name="visits_doctor_notes_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 16:09:51 UTC</createdTime>
+<generatorID>8E4A2DEB-810C-293C-B4D1-9EFD9934A2A9</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A79381D2-B0BE-7BDA-1800-1250EAFCD2BB"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="060FF6AB-F286-5921-AF14-47AE54A025C5" name="visits_visits_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 16:09:51 UTC</createdTime>
+<generatorID>34FFED82-F363-F07F-0A99-50A72BCD4449</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8105CCDC-B891-6511-426C-65D0C7B77555"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
