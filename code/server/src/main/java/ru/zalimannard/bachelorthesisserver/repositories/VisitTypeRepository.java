@@ -2,6 +2,7 @@ package ru.zalimannard.bachelorthesisserver.repositories;
 
 import org.springframework.stereotype.Repository;
 import ru.zalimannard.bachelorthesisserver.entities.Employee;
+import ru.zalimannard.bachelorthesisserver.exceptions.NotImplementedException;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
 public class VisitTypeRepository implements BaseRepository<Employee> {
     @Override
     public void create(Employee employee) {
-
+        throw new NotImplementedException("Невозможно добавить тип обращения");
     }
 
     @Override
@@ -24,11 +25,11 @@ public class VisitTypeRepository implements BaseRepository<Employee> {
 
     @Override
     public void update(Employee employee) {
-
+        throw new NotImplementedException("Невозможно изменить тип обращения");
     }
 
     @Override
     public void delete(int id) {
-
+        throw new NotImplementedException("Невозможно удалить тип обращения");
     }
 }

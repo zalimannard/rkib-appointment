@@ -24,19 +24,4 @@ public class PlanElementTypeController {
     public List<Employee> getAll() {
         return planElementTypeRepository.retrieveAll();
     }
-
-    @PostMapping
-    public void post(@RequestBody Employee employee) {
-        planElementTypeRepository.create(employee);
-    }
-
-    @PutMapping
-    public void put(@RequestBody Employee employee) {
-        planElementTypeRepository.update(employee);
-    }
-
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable int id) {
-        planElementTypeRepository.delete(id);
-    }
 }

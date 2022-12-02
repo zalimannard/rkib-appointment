@@ -24,19 +24,4 @@ public class RoleController {
     public List<Role> getAll() {
         return roleRepository.retrieveAll();
     }
-
-    @PostMapping
-    public void post(@RequestBody Role role) {
-        roleRepository.create(role);
-    }
-
-    @PutMapping
-    public void put(@RequestBody Role role) {
-        roleRepository.update(role);
-    }
-
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable int id) {
-        roleRepository.delete(id);
-    }
 }

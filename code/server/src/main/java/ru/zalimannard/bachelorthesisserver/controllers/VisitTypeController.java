@@ -24,19 +24,4 @@ public class VisitTypeController {
     public List<Employee> getAll() {
         return visitTypeRepository.retrieveAll();
     }
-
-    @PostMapping
-    public void post(@RequestBody Employee employee) {
-        visitTypeRepository.create(employee);
-    }
-
-    @PutMapping
-    public void put(@RequestBody Employee employee) {
-        visitTypeRepository.update(employee);
-    }
-
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable int id) {
-        visitTypeRepository.delete(id);
-    }
 }
