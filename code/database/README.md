@@ -36,14 +36,6 @@ docker pull gvenzl/oracle-xe
 
 ### 3. Запуск
 
-#### Без сохранения данных между сессиями
-
-```shell
-docker run -d -p 1521:1521 -e ORACLE_PASSWORD=<ваш пароль> gvenzl/oracle-xe
-```
-
-#### С сохранением данных между сессиями
-
 ```shell
 docker run -d -p 1521:1521 -e ORACLE_PASSWORD=<ваш пароль> -v oracle-volume:/opt/oracle/oradata gvenzl/oracle-xe
 ```
