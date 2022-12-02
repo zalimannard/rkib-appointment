@@ -2,14 +2,12 @@ package ru.zalimannard.bachelorthesisserver.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import ru.zalimannard.bachelorthesisserver.entities.Employee;
-import ru.zalimannard.bachelorthesisserver.entities.Patient;
 import ru.zalimannard.bachelorthesisserver.repositories.EmployeeRepository;
-import ru.zalimannard.bachelorthesisserver.repositories.PatientRepository;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("employee")
+@RequestMapping("${application.endpoint.root}" + "${application.endpoint.employee}")
 public class EmployeeController {
     private final EmployeeRepository employeeRepository;
 
