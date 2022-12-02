@@ -20,8 +20,8 @@ ALTER TABLE employees ADD CONSTRAINT employees_pk PRIMARY KEY ( employee_id );
 
 CREATE TABLE employees_roles (
     employees_role_id NUMBER GENERATED ALWAYS AS IDENTITY (START with 1 INCREMENT by 1),
-    role_id           NUMBER NOT NULL,
-    employee_id       NUMBER NOT NULL
+    employee_id       NUMBER NOT NULL,
+    role_id           NUMBER NOT NULL
 );
 
 ALTER TABLE employees_roles ADD CONSTRAINT employees_roles_pk PRIMARY KEY ( employees_role_id );
@@ -46,19 +46,9 @@ CREATE TABLE patients (
 
 ALTER TABLE patients ADD CONSTRAINT patients_pk PRIMARY KEY ( patient_id );
 
-CREATE TABLE plan_el (
-    plan_el_id        NUMBER GENERATED ALWAYS AS IDENTITY (START with 1 INCREMENT by 1),
-    employee_id       NUMBER NOT NULL,
-    service_id        NUMBER NOT NULL,
-    plan_el_status_id NUMBER NOT NULL,
-    time_stamp        TIMESTAMP NOT NULL
-);
-
-ALTER TABLE plan_el ADD CONSTRAINT plan_el_pk PRIMARY KEY ( plan_el_id );
-
 CREATE TABLE plan_el_sttss (
     plan_el_status_id NUMBER GENERATED ALWAYS AS IDENTITY (START with 1 INCREMENT by 1),
-    plan_type_id      NUMBER NOT NULL,
+    plan_el_type_id   NUMBER NOT NULL,
     plan_status_name  VARCHAR2(30 CHAR) NOT NULL
 );
 
@@ -70,6 +60,16 @@ CREATE TABLE plan_el_types (
 );
 
 ALTER TABLE plan_el_types ADD CONSTRAINT plan_el_types_pk PRIMARY KEY ( plan_el_type_id );
+
+CREATE TABLE plan_els (
+    plan_el_id      NUMBER GENERATED ALWAYS AS IDENTITY (START with 1 INCREMENT by 1),
+    employee_id     NUMBER NOT NULL,
+    service_id      NUMBER NOT NULL,
+    plan_el_stts_id NUMBER NOT NULL,
+    time_stamp      TIMESTAMP NOT NULL
+);
+
+ALTER TABLE plan_els ADD CONSTRAINT plan_els_pk PRIMARY KEY ( plan_el_id );
 
 CREATE TABLE roles (
     role_id   NUMBER GENERATED ALWAYS AS IDENTITY (START with 1 INCREMENT by 1),
@@ -120,12 +120,13 @@ CREATE TABLE visit_types (
 ALTER TABLE visit_types ADD CONSTRAINT visit_types_pk PRIMARY KEY ( visit_type_id );
 
 CREATE TABLE visits (
-    visit_id        NUMBER GENERATED ALWAYS AS IDENTITY (START with 1 INCREMENT by 1),
-    parent_visit_id NUMBER NOT NULL,
-    patient_id      NUMBER NOT NULL,
-    visit_status_id NUMBER NOT NULL,
-    doctor_note_id  NUMBER NOT NULL,
-    final_diagnosis VARCHAR2(200 CHAR) NOT NULL
+    visit_id              NUMBER GENERATED ALWAYS AS IDENTITY (START with 1 INCREMENT by 1),
+    parent_visit_id       NUMBER NOT NULL,
+    patient_id            NUMBER NOT NULL,
+    service_id            NUMBER NOT NULL,
+    doctor_note_id        NUMBER NOT NULL,
+    visit_status_id       NUMBER NOT NULL,
+    окончательный_диагноз VARCHAR2(200 CHAR) NOT NULL
 );
 
 CREATE UNIQUE INDEX visits__idx ON
@@ -147,25 +148,25 @@ ALTER TABLE employees_roles
     ADD CONSTRAINT employees_roles_roles_fk FOREIGN KEY ( role_id )
         REFERENCES roles ( role_id );
 
-ALTER TABLE plan_el
-    ADD CONSTRAINT plan_el_employees_fk FOREIGN KEY ( employee_id )
-        REFERENCES employees ( employee_id );
-
-ALTER TABLE plan_el
-    ADD CONSTRAINT plan_el_plan_el_sttss_fk FOREIGN KEY ( plan_el_status_id )
-        REFERENCES plan_el_sttss ( plan_el_status_id );
-
-ALTER TABLE plan_el
-    ADD CONSTRAINT plan_el_services_fk FOREIGN KEY ( service_id )
-        REFERENCES services ( service_id );
-
 ALTER TABLE plan_el_sttss
-    ADD CONSTRAINT plan_el_sttss_plan_el_types_fk FOREIGN KEY ( plan_type_id )
+    ADD CONSTRAINT plan_el_sttss_plan_el_types_fk FOREIGN KEY ( plan_el_type_id )
         REFERENCES plan_el_types ( plan_el_type_id );
 
+ALTER TABLE plan_els
+    ADD CONSTRAINT plan_els_employees_fk FOREIGN KEY ( employee_id )
+        REFERENCES employees ( employee_id );
+
+ALTER TABLE plan_els
+    ADD CONSTRAINT plan_els_plan_el_sttss_fk FOREIGN KEY ( plan_el_stts_id )
+        REFERENCES plan_el_sttss ( plan_el_status_id );
+
+ALTER TABLE plan_els
+    ADD CONSTRAINT plan_els_services_fk FOREIGN KEY ( service_id )
+        REFERENCES services ( service_id );
+
 ALTER TABLE scheduled
-    ADD CONSTRAINT scheduled_plan_el_fk FOREIGN KEY ( plan_el_id )
-        REFERENCES plan_el ( plan_el_id );
+    ADD CONSTRAINT scheduled_plan_els_fk FOREIGN KEY ( plan_el_id )
+        REFERENCES plan_els ( plan_el_id );
 
 ALTER TABLE scheduled
     ADD CONSTRAINT scheduled_visits_fk FOREIGN KEY ( visit_id )
@@ -194,6 +195,10 @@ ALTER TABLE visits
 ALTER TABLE visits
     ADD CONSTRAINT visits_patients_fk FOREIGN KEY ( patient_id )
         REFERENCES patients ( patient_id );
+
+ALTER TABLE visits
+    ADD CONSTRAINT visits_services_fk FOREIGN KEY ( service_id )
+        REFERENCES services ( service_id );
 
 ALTER TABLE visits
     ADD CONSTRAINT visits_visit_statuses_fk FOREIGN KEY ( visit_status_id )

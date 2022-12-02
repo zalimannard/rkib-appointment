@@ -45,13 +45,12 @@
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="B7A6A774-F19F-993A-C1DF-F92C48BF4C19" name="access_rights PK">
+<identifier id="39266255-6B0D-27FA-7A0B-B39EEB223256" name="roles PK">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-11-27 14:38:16 UTC</createdTime>
+<createdTime>2022-12-02 19:02:58 UTC</createdTime>
 <ownerDesignName>er-model-source</ownerDesignName>
-<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="false"/>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>

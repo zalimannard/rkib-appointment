@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="506C69DD-9BF3-8555-4345-3AC0762F81EA" name="plan_el">
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="506C69DD-9BF3-8555-4345-3AC0762F81EA" name="plan_els">
 <createdBy>zalimannard</createdBy>
 <createdTime>2022-11-27 13:41:49 UTC</createdTime>
 <ownerDesignName>er-model-source</ownerDesignName>
@@ -29,9 +29,9 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <preferredAbbreviation>plan_el_id</preferredAbbreviation>
 </Attribute>
-<Attribute name="Работник" id="4EDF33F3-C13A-1F32-ECAB-CA4851CD20FD">
+<Attribute name="Работник" id="8D98F647-A687-C585-C2F1-180B16B6E7E6">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-11-27 14:59:39 UTC</createdTime>
+<createdTime>2022-12-02 19:03:13 UTC</createdTime>
 <generatorID>BCCD4BDC-40BD-1BC9-C7B3-3D56EED87B53</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <engineerTo>
@@ -44,9 +44,9 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <preferredAbbreviation>employee_id</preferredAbbreviation>
 </Attribute>
-<Attribute name="Услуга" id="7645DA1A-F573-7829-F6DD-D4BA1D675D72">
+<Attribute name="Услуга" id="1613A9BD-2CBC-C6AA-3F56-84F3FCC698D1">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-11-27 14:59:59 UTC</createdTime>
+<createdTime>2022-12-02 19:04:53 UTC</createdTime>
 <generatorID>D71F42A6-FC06-F6C4-A5EE-72F7B7BA8BD9</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <engineerTo>
@@ -59,9 +59,9 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <preferredAbbreviation>service_id</preferredAbbreviation>
 </Attribute>
-<Attribute name="Статус" id="D5837B7D-75D0-0050-6A26-A4A06327D33E">
+<Attribute name="Статус" id="79B148F9-574E-526C-4FCC-9C742F31AD20">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-11-27 15:02:26 UTC</createdTime>
+<createdTime>2022-12-02 19:04:13 UTC</createdTime>
 <generatorID>D603ADDA-C05F-472B-1D45-7BA0F0DE9995</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <engineerTo>
@@ -72,7 +72,7 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
-<preferredAbbreviation>plan_el_status_id</preferredAbbreviation>
+<preferredAbbreviation>plan_el_stts_id</preferredAbbreviation>
 </Attribute>
 <Attribute name="Отметка времени" id="6B9EEBAB-7F03-C0EC-9CAE-76E9F8F5DA50">
 <createdBy>zalimannard</createdBy>
@@ -89,15 +89,15 @@
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="E4845806-620D-15F6-3DB1-E3BCE97E6E3D" name="schedule_items PK">
+<identifier id="165DF820-9A96-32CD-021B-1F50454B3452" name="plan_els PK">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-11-27 14:59:34 UTC</createdTime>
+<createdTime>2022-12-02 19:04:21 UTC</createdTime>
 <ownerDesignName>er-model-source</ownerDesignName>
-<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="false"/>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
 </engineerTo>
 <pk>true</pk>
+<newElementsIDs>159A5B2F-537A-295D-C900-6D25A74855DE</newElementsIDs>
 <usedAttributes>
 <attributeRef>159A5B2F-537A-295D-C900-6D25A74855DE</attributeRef>
 </usedAttributes>

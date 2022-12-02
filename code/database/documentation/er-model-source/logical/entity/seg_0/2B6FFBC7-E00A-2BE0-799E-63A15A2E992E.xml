@@ -45,16 +45,14 @@
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="6C4E37FC-9EB7-5760-A289-1D64BB4CC41C" name="schedule_item_status_types PK">
+<identifier id="0AC6259C-026E-713C-3AE9-B4000A5C6FBD" name="plan_el_types PK">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-11-27 14:54:41 UTC</createdTime>
+<createdTime>2022-12-02 19:04:02 UTC</createdTime>
 <ownerDesignName>er-model-source</ownerDesignName>
-<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="false"/>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
 </engineerTo>
 <pk>true</pk>
-<newElementsIDs>9B716E75-E1F5-7A9C-2C48-D117C9AA6D91</newElementsIDs>
 <usedAttributes>
 <attributeRef>9B716E75-E1F5-7A9C-2C48-D117C9AA6D91</attributeRef>
 </usedAttributes>

@@ -6,7 +6,7 @@ DROP TABLE visit_statuses;
 DROP TABLE visit_types;
 DROP TABLE doctor_notes;
 DROP TABLE institutions;
-DROP TABLE plan_el;
+DROP TABLE plan_els;
 DROP TABLE plan_el_sttss;
 DROP TABLE plan_el_types;
 DROP TABLE services;

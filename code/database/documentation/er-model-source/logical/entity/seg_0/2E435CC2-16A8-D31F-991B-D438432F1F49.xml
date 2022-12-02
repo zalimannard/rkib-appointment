@@ -29,9 +29,9 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <preferredAbbreviation>plan_el_status_id</preferredAbbreviation>
 </Attribute>
-<Attribute name="Тип статуса" id="51C59B92-49C3-380F-5350-87083FF14367">
+<Attribute name="Тип статуса" id="081A34C5-C798-C6EF-93C1-A875FA3021BE">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-11-27 17:13:53 UTC</createdTime>
+<createdTime>2022-12-02 19:04:03 UTC</createdTime>
 <generatorID>B5D1928B-842A-2139-C350-C0B4ACCC1CDC</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <engineerTo>
@@ -42,7 +42,7 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
-<preferredAbbreviation>plan_type_id</preferredAbbreviation>
+<preferredAbbreviation>plan_el_type_id</preferredAbbreviation>
 </Attribute>
 <Attribute name="Название" id="BB4CB165-8A24-5DCF-1561-C65FEB54FC0A">
 <createdBy>zalimannard</createdBy>
@@ -60,13 +60,12 @@
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="E879AE20-3801-605A-ACF0-6572491C3D7C" name="schedule_item_statuses PK">
+<identifier id="66952A2E-3A6D-516D-64EC-1CAEAD5698F9" name="plan_el_sttss PK">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-11-27 14:53:19 UTC</createdTime>
+<createdTime>2022-12-02 19:04:12 UTC</createdTime>
 <ownerDesignName>er-model-source</ownerDesignName>
-<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="false"/>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>

@@ -45,13 +45,12 @@
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="F2B83B18-CB5A-65C5-D1B0-BFFB0D4E4E9A" name="appointment_status_types PK">
+<identifier id="04096A80-70E4-C35C-9B77-E019B9DB30E8" name="visit_types PK">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-11-27 13:58:17 UTC</createdTime>
+<createdTime>2022-12-02 19:01:18 UTC</createdTime>
 <ownerDesignName>er-model-source</ownerDesignName>
-<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="false"/>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>

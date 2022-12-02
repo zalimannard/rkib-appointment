@@ -1,0 +1,136 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="584F68DB-5A6B-5C48-D307-6EAA22E64829" name="visits">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:21:05 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<synonymToDisplay>Обращения</synonymToDisplay>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id" id="84D7D0F1-836A-42A7-58A1-9AE87C338B04">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:22:17 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<preferredAbbreviation>visit_id</preferredAbbreviation>
+</Attribute>
+<Attribute name="Родительское обращение" id="F105367C-A916-D673-9550-FFFC3BCC0E64">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:25:39 UTC</createdTime>
+<generatorID>A1DBD2A2-A62E-90D3-61EB-D8E1E7C8EA15</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>84D7D0F1-836A-42A7-58A1-9AE87C338B04</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<preferredAbbreviation>parent_visit_id</preferredAbbreviation>
+</Attribute>
+<Attribute name="Пациент" id="B2F73401-5759-63C1-DFD6-ED623A5ADE1E">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:23:59 UTC</createdTime>
+<generatorID>34225C1D-5475-8E70-3EF6-4C786A4EDACB</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
+</engineerTo>
+<referedAttribute>0E968A90-8729-CC52-DA48-704B1DC2FD0D</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<preferredAbbreviation>patient_id</preferredAbbreviation>
+</Attribute>
+<Attribute name="Услуга" id="45F77187-042F-F8CA-D3CF-F0688243A77E">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:24:20 UTC</createdTime>
+<generatorID>936041DC-0457-7D80-69D3-0A74A3370547</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
+</engineerTo>
+<referedAttribute>A288EE5D-1586-1F65-A2A0-81456D102AAD</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<preferredAbbreviation>service_id</preferredAbbreviation>
+</Attribute>
+<Attribute name="Направление" id="BDBD69A9-D54B-A981-FF82-6B2E3C7276A6">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:24:14 UTC</createdTime>
+<generatorID>A2D8D8CD-5132-8C6B-C9EA-DB8292D5AA28</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
+</engineerTo>
+<referedAttribute>414FDAC2-8001-BD94-642A-062C95E15953</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<preferredAbbreviation>doctor_note_id</preferredAbbreviation>
+</Attribute>
+<Attribute name="Статус обращения" id="ADE2D742-8010-68C6-3FAB-09DFE3410AAF">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:24:09 UTC</createdTime>
+<generatorID>6C01BDF9-887C-B3A7-AB17-4AE57262E638</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
+</engineerTo>
+<referedAttribute>7B7FB1ED-90CE-6B1C-1614-9D2726E9CD2F</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<preferredAbbreviation>visit_status_id</preferredAbbreviation>
+</Attribute>
+<Attribute name="Окончательный диагноз" id="9475404F-DB93-9EE6-6451-CF8B8384D93F">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:21:23 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200 CHAR</dataTypeSize>
+<ownDataTypeParameters>200 CHAR,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="D308167E-E0F9-A5AC-0FA0-04BBF0E788C6" name="visits PK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 19:22:31 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>84D7D0F1-836A-42A7-58A1-9AE87C338B04</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

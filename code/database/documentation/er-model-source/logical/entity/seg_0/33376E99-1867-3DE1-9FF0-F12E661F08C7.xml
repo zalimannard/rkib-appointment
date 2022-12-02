@@ -29,9 +29,9 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <preferredAbbreviation>doctor_note_id</preferredAbbreviation>
 </Attribute>
-<Attribute name="Учреждение" id="F5F9D6F7-4D5D-5E0B-9A25-E8AD72F533BD">
+<Attribute name="Учреждение" id="CFA80E0A-1B52-F7FB-B4A0-90183B101C1B">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-11-27 14:17:33 UTC</createdTime>
+<createdTime>2022-12-02 19:01:35 UTC</createdTime>
 <generatorID>A24E8726-719F-A79D-7CE0-8A985231BE6B</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <engineerTo>
@@ -60,13 +60,12 @@
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="229DFE44-A8FB-9923-45A0-4E5AD4435B4D" name="doctor_notes PK">
+<identifier id="E0051851-D92B-8B32-C10D-4FDE597CA9D7" name="doctor_notes PK">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-11-27 14:15:05 UTC</createdTime>
+<createdTime>2022-12-02 19:02:14 UTC</createdTime>
 <ownerDesignName>er-model-source</ownerDesignName>
-<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="false"/>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>

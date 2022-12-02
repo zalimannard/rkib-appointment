@@ -128,13 +128,12 @@
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="20826E78-4616-F030-DCC0-531117226046" name="patients PK">
+<identifier id="C9D6EBF5-451C-BF1B-7BB7-9369940CD0DB" name="patients PK">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-11-27 13:54:13 UTC</createdTime>
+<createdTime>2022-12-02 19:02:29 UTC</createdTime>
 <ownerDesignName>er-model-source</ownerDesignName>
-<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="false"/>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>

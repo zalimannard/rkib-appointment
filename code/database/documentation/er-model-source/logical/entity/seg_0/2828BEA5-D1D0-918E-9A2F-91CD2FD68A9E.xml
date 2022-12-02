@@ -29,9 +29,9 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <preferredAbbreviation>unscheduled_id</preferredAbbreviation>
 </Attribute>
-<Attribute name="Работник" id="DE1F479E-5E66-005A-BCE6-2CCF655DE4CE">
+<Attribute name="Работник" id="970C901D-7710-EFCA-FB14-AB665C8625E8">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-11-27 15:08:44 UTC</createdTime>
+<createdTime>2022-12-02 19:03:13 UTC</createdTime>
 <generatorID>533CEBE2-2537-1382-0502-291BB80320B8</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <engineerTo>
@@ -44,9 +44,9 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <preferredAbbreviation>employee_id</preferredAbbreviation>
 </Attribute>
-<Attribute name="Услуга" id="E6A64610-B8E3-2CFA-1E64-9F542556A596">
+<Attribute name="Услуга" id="8451D804-BC50-C07B-5FE7-EC5D8C96A975">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-11-27 15:10:25 UTC</createdTime>
+<createdTime>2022-12-02 19:04:53 UTC</createdTime>
 <generatorID>BA8FF2B6-AE27-C45D-9ACE-931FAB35DA6D</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <engineerTo>
@@ -59,15 +59,15 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <preferredAbbreviation>service_id</preferredAbbreviation>
 </Attribute>
-<Attribute name="Обращение" id="D88EDB32-B9C8-CC2D-3F64-DA81FAD36B5B">
+<Attribute name="Обращение" id="CC68D074-7D5C-4233-149A-1EF213A013D2">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-11-27 15:11:06 UTC</createdTime>
-<generatorID>7A280296-E4F3-BBEB-0292-DE2863B73FD3</generatorID>
+<createdTime>2022-12-02 19:23:19 UTC</createdTime>
+<generatorID>6B97291A-9F3D-F7C1-A77D-AAED8AD520CB</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <engineerTo>
 <item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
 </engineerTo>
-<referedAttribute>9A72D94A-E3D9-B036-1349-D4F0349F427D</referedAttribute>
+<referedAttribute>84D7D0F1-836A-42A7-58A1-9AE87C338B04</referedAttribute>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
@@ -103,13 +103,12 @@
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="D479BD3E-2A2C-7D1C-4CC6-A063C86398B1" name="unscheduled_appointments PK">
+<identifier id="F1AB7FCD-EC18-DF12-E102-89877115101B" name="unscheduled PK">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-11-27 15:09:18 UTC</createdTime>
+<createdTime>2022-12-02 19:04:40 UTC</createdTime>
 <ownerDesignName>er-model-source</ownerDesignName>
-<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="false"/>
+<item key="A300E337-0573-0843-75E5-2F9AD1B9F2C8" value="true"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>
