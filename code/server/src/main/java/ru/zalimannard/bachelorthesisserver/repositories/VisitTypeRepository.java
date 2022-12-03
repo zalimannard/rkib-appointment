@@ -2,13 +2,13 @@ package ru.zalimannard.bachelorthesisserver.repositories;
 
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.stereotype.Repository;
-import ru.zalimannard.bachelorthesisserver.entities.Employee;
+import ru.zalimannard.bachelorthesisserver.entities.VisitType;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotImplementedException;
 
 import java.util.List;
 
 @Repository
-public class VisitTypeRepository implements BaseRepository<Employee> {
+public class VisitTypeRepository implements BaseRepository<VisitType> {
     protected final JdbcOperations jdbcOperations;
 
     public VisitTypeRepository(JdbcOperations jdbcOperations) {
@@ -16,22 +16,22 @@ public class VisitTypeRepository implements BaseRepository<Employee> {
     }
 
     @Override
-    public void create(Employee employee) {
+    public void create(VisitType visitType) {
         throw new NotImplementedException("Невозможно добавить тип обращения");
     }
 
     @Override
-    public Employee retrieve(int id) {
+    public VisitType retrieve(int id) {
         return null;
     }
 
     @Override
-    public List<Employee> retrieveAll() {
+    public List<VisitType> retrieveAll() {
         return null;
     }
 
     @Override
-    public void update(Employee employee) {
+    public void update(VisitType visitType) {
         throw new NotImplementedException("Невозможно изменить тип обращения");
     }
 

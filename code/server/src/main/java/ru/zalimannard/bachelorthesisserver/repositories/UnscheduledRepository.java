@@ -2,12 +2,12 @@ package ru.zalimannard.bachelorthesisserver.repositories;
 
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.stereotype.Repository;
-import ru.zalimannard.bachelorthesisserver.entities.Employee;
+import ru.zalimannard.bachelorthesisserver.entities.Unscheduled;
 
 import java.util.List;
 
 @Repository
-public class UnscheduledRepository implements BaseRepository<Employee> {
+public class UnscheduledRepository implements BaseRepository<Unscheduled> {
     protected final JdbcOperations jdbcOperations;
 
     public UnscheduledRepository(JdbcOperations jdbcOperations) {
@@ -15,22 +15,22 @@ public class UnscheduledRepository implements BaseRepository<Employee> {
     }
 
     @Override
-    public void create(Employee employee) {
+    public void create(Unscheduled unscheduled) {
 
     }
 
     @Override
-    public Employee retrieve(int id) {
+    public Unscheduled retrieve(int id) {
         return null;
     }
 
     @Override
-    public List<Employee> retrieveAll() {
+    public List<Unscheduled> retrieveAll() {
         return null;
     }
 
     @Override
-    public void update(Employee employee) {
+    public void update(Unscheduled unscheduled) {
 
     }
 

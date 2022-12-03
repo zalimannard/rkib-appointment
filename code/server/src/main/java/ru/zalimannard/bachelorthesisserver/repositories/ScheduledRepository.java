@@ -2,12 +2,12 @@ package ru.zalimannard.bachelorthesisserver.repositories;
 
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.stereotype.Repository;
-import ru.zalimannard.bachelorthesisserver.entities.Employee;
+import ru.zalimannard.bachelorthesisserver.entities.Scheduled;
 
 import java.util.List;
 
 @Repository
-public class ScheduledRepository implements BaseRepository<Employee> {
+public class ScheduledRepository implements BaseRepository<Scheduled> {
     protected final JdbcOperations jdbcOperations;
 
     public ScheduledRepository(JdbcOperations jdbcOperations) {
@@ -15,22 +15,22 @@ public class ScheduledRepository implements BaseRepository<Employee> {
     }
 
     @Override
-    public void create(Employee employee) {
+    public void create(Scheduled scheduled) {
 
     }
 
     @Override
-    public Employee retrieve(int id) {
+    public Scheduled retrieve(int id) {
         return null;
     }
 
     @Override
-    public List<Employee> retrieveAll() {
+    public List<Scheduled> retrieveAll() {
         return null;
     }
 
     @Override
-    public void update(Employee employee) {
+    public void update(Scheduled scheduled) {
 
     }
 

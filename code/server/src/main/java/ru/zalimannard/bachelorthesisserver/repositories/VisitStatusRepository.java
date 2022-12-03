@@ -2,12 +2,12 @@ package ru.zalimannard.bachelorthesisserver.repositories;
 
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.stereotype.Repository;
-import ru.zalimannard.bachelorthesisserver.entities.Employee;
+import ru.zalimannard.bachelorthesisserver.entities.VisitStatus;
 
 import java.util.List;
 
 @Repository
-public class VisitStatusRepository implements BaseRepository<Employee> {
+public class VisitStatusRepository implements BaseRepository<VisitStatus> {
     protected final JdbcOperations jdbcOperations;
 
     public VisitStatusRepository(JdbcOperations jdbcOperations) {
@@ -15,22 +15,22 @@ public class VisitStatusRepository implements BaseRepository<Employee> {
     }
 
     @Override
-    public void create(Employee employee) {
+    public void create(VisitStatus visitStatus) {
 
     }
 
     @Override
-    public Employee retrieve(int id) {
+    public VisitStatus retrieve(int id) {
         return null;
     }
 
     @Override
-    public List<Employee> retrieveAll() {
+    public List<VisitStatus> retrieveAll() {
         return null;
     }
 
     @Override
-    public void update(Employee employee) {
+    public void update(VisitStatus visitStatus) {
 
     }
 

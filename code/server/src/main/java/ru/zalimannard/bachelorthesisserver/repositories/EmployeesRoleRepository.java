@@ -20,10 +20,10 @@ public class EmployeesRoleRepository implements BaseRepository<EmployeesRole> {
     }
 
     @Override
-    public void create(EmployeesRole employee) {
+    public void create(EmployeesRole employeesRole) {
         String query = "INSERT INTO employees_roles(employee_id, role_id) " +
                 "VALUES(?, ?) ";
-        Object[] parameters = new Object[]{employee.employeeId(), employee.roleId()};
+        Object[] parameters = new Object[]{employeesRole.employeeId(), employeesRole.roleId()};
 
         try {
             jdbcOperations.update(query, parameters);
