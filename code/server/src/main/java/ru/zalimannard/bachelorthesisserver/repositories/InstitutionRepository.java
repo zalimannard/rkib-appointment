@@ -24,11 +24,16 @@ public class InstitutionRepository implements BaseRepository<Institution> {
     public void create(Institution institution) {
         String query = """
                 INSERT INTO
-                    institutions(institution_name)
+                    institutions(
+                        institution_name
+                    )
                 VALUES
                     (?)
                 """;
-        Object[] parameters = new Object[]{institution.name()};
+        Object[] parameters = new Object[]{
+                institution.name()
+        };
+
         jdbcOperations.update(query, parameters);
     }
 
@@ -43,14 +48,15 @@ public class InstitutionRepository implements BaseRepository<Institution> {
                 WHERE
                     institution_id = ?
                 """;
+        Object[] parameters = new Object[]{
+                id
+        };
 
-        Object[] parameters = new Object[]{id};
         SqlRowSet sqlRowSet = jdbcOperations.queryForRowSet(query, parameters);
-
         if (sqlRowSet.next()) {
             return new Institution(
-                    sqlRowSet.getInt("employee_id"),
-                    sqlRowSet.getString("last_name")
+                    sqlRowSet.getInt("institution_id"),
+                    sqlRowSet.getString("institution_name")
             );
         } else {
             throw new NotFoundException("Учреждение не найдено");
@@ -66,8 +72,8 @@ public class InstitutionRepository implements BaseRepository<Institution> {
                 FROM
                     institutions
                 """;
-        SqlRowSet sqlRowSet = jdbcOperations.queryForRowSet(query);
 
+        SqlRowSet sqlRowSet = jdbcOperations.queryForRowSet(query);
         List<Institution> response = new ArrayList<>();
         while (sqlRowSet.next()) {
             response.add(new Institution(
@@ -88,7 +94,10 @@ public class InstitutionRepository implements BaseRepository<Institution> {
                 WHERE
                     institution_id = ?
                 """;
-        Object[] parameters = new Object[]{institution.name(), institution.id()};
+        Object[] parameters = new Object[]{
+                institution.name(),
+                institution.id()
+        };
 
         int jdbcOperationsResult = jdbcOperations.update(query, parameters);
         boolean isSuccessfullyUpdated = (jdbcOperationsResult == 1);
@@ -105,7 +114,9 @@ public class InstitutionRepository implements BaseRepository<Institution> {
                 WHERE
                     institution_id = ?
                 """;
-        Object[] parameters = new Object[]{id};
+        Object[] parameters = new Object[]{
+                id
+        };
 
         int jdbcOperationsResult = jdbcOperations.update(query, parameters);
         boolean isSuccessfullyDeleted = (jdbcOperationsResult == 1);

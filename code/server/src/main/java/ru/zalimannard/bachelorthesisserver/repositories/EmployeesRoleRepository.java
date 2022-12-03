@@ -21,9 +21,19 @@ public class EmployeesRoleRepository implements BaseRepository<EmployeesRole> {
 
     @Override
     public void create(EmployeesRole employeesRole) {
-        String query = "INSERT INTO employees_roles(employee_id, role_id) " +
-                "VALUES(?, ?) ";
-        Object[] parameters = new Object[]{employeesRole.employeeId(), employeesRole.roleId()};
+        String query = """
+                INSERT INTO
+                    employees_roles(
+                        employee_id,
+                        role_id
+                    )
+                VALUES
+                    (?, ?)
+                """;
+        Object[] parameters = new Object[]{
+                employeesRole.employeeId(),
+                employeesRole.roleId()
+        };
 
         try {
             jdbcOperations.update(query, parameters);
@@ -34,13 +44,21 @@ public class EmployeesRoleRepository implements BaseRepository<EmployeesRole> {
 
     @Override
     public EmployeesRole retrieve(int id) {
-        String query = "SELECT employees_role_id, employee_id, role_id " +
-                "FROM employees_roles " +
-                "WHERE employees_role_id = ? ";
+        String query = """
+                SELECT
+                    employees_role_id,
+                    employee_id,
+                    role_id
+                FROM
+                    employees_roles
+                WHERE
+                    employees_role_id = ?
+                """;
+        Object[] parameters = new Object[]{
+                id
+        };
 
-        Object[] parameters = new Object[]{id};
         SqlRowSet sqlRowSet = jdbcOperations.queryForRowSet(query, parameters);
-
         if (sqlRowSet.next()) {
             return new EmployeesRole(
                     sqlRowSet.getInt("employees_access_right_id"),
@@ -54,10 +72,16 @@ public class EmployeesRoleRepository implements BaseRepository<EmployeesRole> {
 
     @Override
     public List<EmployeesRole> retrieveAll() {
-        String query = "SELECT employees_role_id, employee_id, role_id " +
-                "FROM employees_roles ";
-        SqlRowSet sqlRowSet = jdbcOperations.queryForRowSet(query);
+        String query = """
+                SELECT
+                    employees_role_id,
+                    employee_id,
+                    role_id
+                FROM
+                    employees_roles
+                """;
 
+        SqlRowSet sqlRowSet = jdbcOperations.queryForRowSet(query);
         List<EmployeesRole> response = new ArrayList<>();
         while (sqlRowSet.next()) {
             response.add(new EmployeesRole(
@@ -71,11 +95,20 @@ public class EmployeesRoleRepository implements BaseRepository<EmployeesRole> {
 
     @Override
     public void update(EmployeesRole employeesRole) {
-        String query = "UPDATE employees_roles " +
-                "SET employee_id = ?, role_id = ? " +
-                "WHERE employees_role_id = ? ";
-        Object[] parameters = new Object[]{employeesRole.employeeId(), employeesRole.roleId(),
-                employeesRole.id()};
+        String query = """
+                UPDATE
+                    employees_roles
+                SET
+                    employee_id = ?,
+                    role_id = ?
+                WHERE
+                    employees_role_id = ?
+                """;
+        Object[] parameters = new Object[]{
+                employeesRole.employeeId(),
+                employeesRole.roleId(),
+                employeesRole.id()
+        };
 
         int jdbcOperationsResult = jdbcOperations.update(query, parameters);
         boolean isSuccessfullyUpdated = (jdbcOperationsResult == 1);
@@ -86,9 +119,15 @@ public class EmployeesRoleRepository implements BaseRepository<EmployeesRole> {
 
     @Override
     public void delete(int id) {
-        String query = "DELETE FROM employees_roles " +
-                "WHERE employees_role_id = ? ";
-        Object[] parameters = new Object[]{id};
+        String query = """
+                DELETE FROM
+                    employees_roles
+                WHERE
+                    employees_role_id = ?
+                """;
+        Object[] parameters = new Object[]{
+                id
+        };
 
         int jdbcOperationsResult = jdbcOperations.update(query, parameters);
         boolean isSuccessfullyDeleted = (jdbcOperationsResult == 1);

@@ -21,22 +21,55 @@ public class PatientRepository implements BaseRepository<Patient> {
 
     @Override
     public void create(Patient patient) {
-        String query = "INSERT INTO patients(last_name, first_name, middle_name, phone_number, birth_date, address, job) " +
-                "VALUES(?, ?, ?, ?, ?, ?, ?) ";
-        Object[] parameters = new Object[]{patient.lastName(), patient.firstName(), patient.middleName(),
-                patient.phoneNumber(), patient.birthDate(), patient.birthDate(), patient.job()};
+        String query = """
+                INSERT INTO
+                    patients(
+                    last_name,
+                    first_name,
+                    middle_name,
+                    phone_number,
+                    birth_date,
+                    address,
+                    job)
+                VALUES
+                    (?, ?, ?, ?, ?, ?, ?)
+                """;
+        Object[] parameters = new Object[]{
+                patient.lastName(),
+                patient.firstName(),
+                patient.middleName(),
+                patient.phoneNumber(),
+                patient.birthDate(),
+                patient.birthDate(),
+                patient.job()
+        };
+
         jdbcOperations.update(query, parameters);
     }
 
     @Override
     public Patient retrieve(int id) {
-        String query = "SELECT patient_id, last_name, first_name, middle_name, phone_number, birth_date, address, job " +
-                "FROM patients " +
-                "WHERE patient_id = ? ";
+        String query = """
+                SELECT
+                    patient_id,
+                    last_name,
+                    first_name,
+                    middle_name,
+                    phone_number,
+                    birth_date,
+                    address,
+                    job
+                FROM
+                    patients
+                WHERE
+                    patient_id = ?
+                """;
 
-        Object[] parameters = new Object[]{id};
+        Object[] parameters = new Object[]{
+                id
+        };
+
         SqlRowSet sqlRowSet = jdbcOperations.queryForRowSet(query, parameters);
-
         if (sqlRowSet.next()) {
             return new Patient(
                     sqlRowSet.getInt("patient_id"),
@@ -55,10 +88,21 @@ public class PatientRepository implements BaseRepository<Patient> {
 
     @Override
     public List<Patient> retrieveAll() {
-        String query = "SELECT patient_id, last_name, first_name, middle_name, phone_number, birth_date, address, job " +
-                "FROM patients ";
-        SqlRowSet sqlRowSet = jdbcOperations.queryForRowSet(query);
+        String query = """
+                SELECT
+                    patient_id,
+                    last_name,
+                    first_name,
+                    middle_name,
+                    phone_number,
+                    birth_date,
+                    address,
+                    job
+                FROM
+                    patients
+                """;
 
+        SqlRowSet sqlRowSet = jdbcOperations.queryForRowSet(query);
         List<Patient> response = new ArrayList<>();
         while (sqlRowSet.next()) {
             response.add(new Patient(
@@ -77,11 +121,29 @@ public class PatientRepository implements BaseRepository<Patient> {
 
     @Override
     public void update(Patient patient) {
-        String query = "UPDATE patients " +
-                "SET last_name = ?, first_name = ?, middle_name = ?, phone_number = ?, birth_date = ?, address = ?, job = ? " +
-                "WHERE patient_id = ? ";
-        Object[] parameters = new Object[]{patient.lastName(), patient.firstName(), patient.middleName(),
-                patient.phoneNumber(), patient.birthDate(), patient.birthDate(), patient.job(), patient.id()};
+        String query = """
+                UPDATE
+                    patients
+                SET
+                    last_name = ?,
+                    first_name = ?,
+                    middle_name = ?,
+                    phone_number = ?,
+                    birth_date = ?,
+                    address = ?,
+                    job = ?
+                WHERE
+                    patient_id = ?
+                """;
+        Object[] parameters = new Object[]{
+                patient.lastName(),
+                patient.firstName(),
+                patient.middleName(),
+                patient.phoneNumber(),
+                patient.birthDate(),
+                patient.birthDate(),
+                patient.job(),
+                patient.id()};
 
         int jdbcOperationsResult = jdbcOperations.update(query, parameters);
         boolean isSuccessfullyUpdated = (jdbcOperationsResult == 1);
@@ -92,9 +154,15 @@ public class PatientRepository implements BaseRepository<Patient> {
 
     @Override
     public void delete(int id) {
-        String query = "DELETE FROM patients " +
-                "WHERE patient_id = ? ";
-        Object[] parameters = new Object[]{id};
+        String query = """
+                DELETE FROM
+                    patients
+                WHERE
+                    patient_id = ?
+                """;
+        Object[] parameters = new Object[]{
+                id
+        };
 
         int jdbcOperationsResult = jdbcOperations.update(query, parameters);
         boolean isSuccessfullyDeleted = (jdbcOperationsResult == 1);

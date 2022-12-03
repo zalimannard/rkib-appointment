@@ -24,11 +24,18 @@ public class DoctorNoteRepository implements BaseRepository<DoctorNote> {
     public void create(DoctorNote doctorNote) {
         String query = """
                 INSERT INTO
-                    doctor_notes(institution_id, preliminary_diagnosis)
+                    doctor_notes(
+                        institution_id,
+                        preliminary_diagnosis
+                    )
                 VALUES
                     (?, ?)
                 """;
-        Object[] parameters = new Object[]{doctorNote.institutionId(), doctorNote.preliminaryDiagnosis()};
+        Object[] parameters = new Object[]{
+                doctorNote.institutionId(),
+                doctorNote.preliminaryDiagnosis()
+        };
+
         jdbcOperations.update(query, parameters);
     }
 
@@ -44,10 +51,11 @@ public class DoctorNoteRepository implements BaseRepository<DoctorNote> {
                 WHERE
                     doctor_note_id = ?
                 """;
+        Object[] parameters = new Object[]{
+                id
+        };
 
-        Object[] parameters = new Object[]{id};
         SqlRowSet sqlRowSet = jdbcOperations.queryForRowSet(query, parameters);
-
         if (sqlRowSet.next()) {
             return new DoctorNote(
                     sqlRowSet.getInt("doctor_note_id"),
@@ -69,8 +77,8 @@ public class DoctorNoteRepository implements BaseRepository<DoctorNote> {
                 FROM
                     doctor_notes
                 """;
-        SqlRowSet sqlRowSet = jdbcOperations.queryForRowSet(query);
 
+        SqlRowSet sqlRowSet = jdbcOperations.queryForRowSet(query);
         List<DoctorNote> response = new ArrayList<>();
         while (sqlRowSet.next()) {
             response.add(new DoctorNote(
@@ -93,7 +101,11 @@ public class DoctorNoteRepository implements BaseRepository<DoctorNote> {
                 WHERE
                     doctor_note_id = ?
                 """;
-        Object[] parameters = new Object[]{doctorNote.institutionId(), doctorNote.preliminaryDiagnosis(), doctorNote.id()};
+        Object[] parameters = new Object[]{
+                doctorNote.institutionId(),
+                doctorNote.preliminaryDiagnosis(),
+                doctorNote.id()
+        };
 
         int jdbcOperationsResult = jdbcOperations.update(query, parameters);
         boolean isSuccessfullyUpdated = (jdbcOperationsResult == 1);
@@ -110,7 +122,9 @@ public class DoctorNoteRepository implements BaseRepository<DoctorNote> {
                 WHERE
                     doctor_note_id = ?
                 """;
-        Object[] parameters = new Object[]{id};
+        Object[] parameters = new Object[]{
+                id
+        };
 
         int jdbcOperationsResult = jdbcOperations.update(query, parameters);
         boolean isSuccessfullyDeleted = (jdbcOperationsResult == 1);
