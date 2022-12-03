@@ -142,7 +142,7 @@ public class VisitRepository implements BaseRepository<Visit> {
         int jdbcOperationsResult = jdbcOperations.update(query, parameters);
         boolean isSuccessfullyUpdated = (jdbcOperationsResult == 1);
         if (!isSuccessfullyUpdated) {
-            throw new NotModifiedException("Направление не изменено");
+            throw new NotModifiedException("Обращение не изменено");
         }
     }
 
@@ -161,7 +161,7 @@ public class VisitRepository implements BaseRepository<Visit> {
         int jdbcOperationsResult = jdbcOperations.update(query, parameters);
         boolean isSuccessfullyDeleted = (jdbcOperationsResult == 1);
         if (!isSuccessfullyDeleted) {
-            throw new ConflictException("Направление не удалено");
+            throw new ConflictException("Обращение не удалено");
         }
     }
 }
