@@ -1,5 +1,6 @@
 package ru.zalimannard.bachelorthesisserver.repositories;
 
+import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.stereotype.Repository;
 import ru.zalimannard.bachelorthesisserver.entities.Employee;
 
@@ -7,6 +8,12 @@ import java.util.List;
 
 @Repository
 public class VisitStatusRepository implements BaseRepository<Employee> {
+    protected final JdbcOperations jdbcOperations;
+
+    public VisitStatusRepository(JdbcOperations jdbcOperations) {
+        this.jdbcOperations = jdbcOperations;
+    }
+
     @Override
     public void create(Employee employee) {
 

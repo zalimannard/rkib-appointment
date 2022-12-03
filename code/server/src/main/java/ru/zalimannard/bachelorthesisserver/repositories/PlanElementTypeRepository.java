@@ -1,5 +1,6 @@
 package ru.zalimannard.bachelorthesisserver.repositories;
 
+import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.stereotype.Repository;
 import ru.zalimannard.bachelorthesisserver.entities.Employee;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotImplementedException;
@@ -8,6 +9,12 @@ import java.util.List;
 
 @Repository
 public class PlanElementTypeRepository implements BaseRepository<Employee> {
+    protected final JdbcOperations jdbcOperations;
+
+    public PlanElementTypeRepository(JdbcOperations jdbcOperations) {
+        this.jdbcOperations = jdbcOperations;
+    }
+
     @Override
     public void create(Employee employee) {
         throw new NotImplementedException("Невозможно добавить тип элемента плана");
