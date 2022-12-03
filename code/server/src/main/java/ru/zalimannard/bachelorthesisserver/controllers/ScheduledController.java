@@ -1,7 +1,7 @@
 package ru.zalimannard.bachelorthesisserver.controllers;
 
 import org.springframework.web.bind.annotation.*;
-import ru.zalimannard.bachelorthesisserver.entities.Employee;
+import ru.zalimannard.bachelorthesisserver.entities.Scheduled;
 import ru.zalimannard.bachelorthesisserver.repositories.ScheduledRepository;
 
 import java.util.List;
@@ -16,23 +16,23 @@ public class ScheduledController {
     }
 
     @GetMapping("{id}")
-    public Employee get(@PathVariable int id) {
+    public Scheduled get(@PathVariable int id) {
         return scheduledRepository.retrieve(id);
     }
 
     @GetMapping
-    public List<Employee> getAll() {
+    public List<Scheduled> getAll() {
         return scheduledRepository.retrieveAll();
     }
 
     @PostMapping
-    public void post(@RequestBody Employee employee) {
-        scheduledRepository.create(employee);
+    public void post(@RequestBody Scheduled scheduled) {
+        scheduledRepository.create(scheduled);
     }
 
     @PutMapping
-    public void put(@RequestBody Employee employee) {
-        scheduledRepository.update(employee);
+    public void put(@RequestBody Scheduled scheduled) {
+        scheduledRepository.update(scheduled);
     }
 
     @DeleteMapping("{id}")

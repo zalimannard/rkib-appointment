@@ -1,7 +1,7 @@
 package ru.zalimannard.bachelorthesisserver.controllers;
 
 import org.springframework.web.bind.annotation.*;
-import ru.zalimannard.bachelorthesisserver.entities.Employee;
+import ru.zalimannard.bachelorthesisserver.entities.Unscheduled;
 import ru.zalimannard.bachelorthesisserver.repositories.UnscheduledRepository;
 
 import java.util.List;
@@ -16,23 +16,23 @@ public class UnscheduledController {
     }
 
     @GetMapping("{id}")
-    public Employee get(@PathVariable int id) {
+    public Unscheduled get(@PathVariable int id) {
         return unscheduledRepository.retrieve(id);
     }
 
     @GetMapping
-    public List<Employee> getAll() {
+    public List<Unscheduled> getAll() {
         return unscheduledRepository.retrieveAll();
     }
 
     @PostMapping
-    public void post(@RequestBody Employee employee) {
-        unscheduledRepository.create(employee);
+    public void post(@RequestBody Unscheduled unscheduled) {
+        unscheduledRepository.create(unscheduled);
     }
 
     @PutMapping
-    public void put(@RequestBody Employee employee) {
-        unscheduledRepository.update(employee);
+    public void put(@RequestBody Unscheduled unscheduled) {
+        unscheduledRepository.update(unscheduled);
     }
 
     @DeleteMapping("{id}")

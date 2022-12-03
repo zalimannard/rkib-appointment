@@ -1,7 +1,10 @@
 package ru.zalimannard.bachelorthesisserver.controllers;
 
-import org.springframework.web.bind.annotation.*;
-import ru.zalimannard.bachelorthesisserver.entities.Employee;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import ru.zalimannard.bachelorthesisserver.entities.PlanElementType;
 import ru.zalimannard.bachelorthesisserver.repositories.PlanElementTypeRepository;
 
 import java.util.List;
@@ -16,12 +19,12 @@ public class PlanElementTypeController {
     }
 
     @GetMapping("{id}")
-    public Employee get(@PathVariable int id) {
+    public PlanElementType get(@PathVariable int id) {
         return planElementTypeRepository.retrieve(id);
     }
 
     @GetMapping
-    public List<Employee> getAll() {
+    public List<PlanElementType> getAll() {
         return planElementTypeRepository.retrieveAll();
     }
 }

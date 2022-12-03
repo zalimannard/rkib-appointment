@@ -1,7 +1,7 @@
 package ru.zalimannard.bachelorthesisserver.controllers;
 
 import org.springframework.web.bind.annotation.*;
-import ru.zalimannard.bachelorthesisserver.entities.Employee;
+import ru.zalimannard.bachelorthesisserver.entities.Institution;
 import ru.zalimannard.bachelorthesisserver.repositories.InstitutionRepository;
 
 import java.util.List;
@@ -16,23 +16,23 @@ public class InstitutionController {
     }
 
     @GetMapping("{id}")
-    public Employee get(@PathVariable int id) {
+    public Institution get(@PathVariable int id) {
         return institutionRepository.retrieve(id);
     }
 
     @GetMapping
-    public List<Employee> getAll() {
+    public List<Institution> getAll() {
         return institutionRepository.retrieveAll();
     }
 
     @PostMapping
-    public void post(@RequestBody Employee employee) {
-        institutionRepository.create(employee);
+    public void post(@RequestBody Institution institution) {
+        institutionRepository.create(institution);
     }
 
     @PutMapping
-    public void put(@RequestBody Employee employee) {
-        institutionRepository.update(employee);
+    public void put(@RequestBody Institution institution) {
+        institutionRepository.update(institution);
     }
 
     @DeleteMapping("{id}")
