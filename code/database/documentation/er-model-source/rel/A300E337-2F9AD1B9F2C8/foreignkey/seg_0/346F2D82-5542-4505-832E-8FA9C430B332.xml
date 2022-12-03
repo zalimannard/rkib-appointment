@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="346F2D82-5542-4505-832E-8FA9C430B332" containerWithKeyObject="ADDB6443-9E3E-C165-D427-D19CDC516ADB" localFKIndex="8188B13C-F917-DF86-E746-99DAF264D9B3" name="visit_statuses_visit_types_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-02 22:12:38 UTC</createdTime>
+<generatorID>D04931EB-E1DC-04FF-4D65-AED4C3C8F5A1</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<referredTableLongName>visit_types</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>B4BFF57C-196E-287A-C23A-993C4D7ADD2A</referredTableID>
+<keyObject>F257A217-B53B-EE8E-64D0-AC8CC1F1D60B</keyObject>
+<referredKeyID>F257A217-B53B-EE8E-64D0-AC8CC1F1D60B</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>visit_type_id</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>
