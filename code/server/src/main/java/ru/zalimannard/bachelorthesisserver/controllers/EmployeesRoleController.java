@@ -7,7 +7,7 @@ import ru.zalimannard.bachelorthesisserver.repositories.EmployeesRoleRepository;
 import java.util.List;
 
 @RestController
-@RequestMapping("employeesRole")
+@RequestMapping("${application.endpoint.root}" + "${application.endpoint.employeesRole}")
 public class EmployeesRoleController {
     private final EmployeesRoleRepository employeesRoleRepository;
 

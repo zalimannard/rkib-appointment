@@ -1,15 +1,16 @@
 package ru.zalimannard.bachelorthesisserver.entities;
 
+import java.sql.Timestamp;
 import java.util.Objects;
 
-public record Employee(int id, String lastName, String firstName, String middleName, String login,
-                       String passwordHash, String passwordSalt) implements BaseEntity {
+public record Unscheduled(int id, int employeeId, int serviceId, int visitId, Timestamp timeStamp,
+                          String commentary) implements BaseEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Employee employee = (Employee) o;
-        return id == employee.id;
+        Unscheduled that = (Unscheduled) o;
+        return id == that.id;
     }
 
     @Override

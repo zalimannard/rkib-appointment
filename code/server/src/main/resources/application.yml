@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: "bachelor-thesis-server"
+  datasource:
+    url:
+    username:
+    password:
+
+application:
+  endpoint:
+    root: /api
+    doctorNote: /doctorNote
+    employee: /employee
+    employeesRole: /employeesRole
+    institution: /institution
+    patient: /patient
+    planElement: /planElement
+    planElementStatus: /planElementStatus
+    planElementType: /planElementType
+    role: /role
+    scheduled: /scheduled
+    services: /service
+    unscheduled: /unscheduled
+    visit: /visit
+    visitStatus: /visitStatus
+    visitType: /visitType

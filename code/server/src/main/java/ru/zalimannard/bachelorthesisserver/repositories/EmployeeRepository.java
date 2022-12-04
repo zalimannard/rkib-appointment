@@ -21,22 +21,52 @@ public class EmployeeRepository implements BaseRepository<Employee> {
 
     @Override
     public void create(Employee employee) {
-        String query = "INSERT INTO employees(last_name, first_name, middle_name, login, password_hash, password_salt) " +
-                "VALUES(?, ?, ?, ?, ?, ?) ";
-        Object[] parameters = new Object[]{employee.lastName(), employee.firstName(), employee.middleName(),
-                employee.login(), employee.passwordHash(), employee.passwordSalt()};
+        String query = """
+                INSERT INTO
+                    employees(
+                        last_name,
+                        first_name,
+                        middle_name,
+                        login,
+                        password_hash,
+                        password_salt
+                    )
+                VALUES
+                    (?, ?, ?, ?, ?, ?)
+                """;
+        Object[] parameters = new Object[]{
+                employee.lastName(),
+                employee.firstName(),
+                employee.middleName(),
+                employee.login(),
+                employee.passwordHash(),
+                employee.passwordSalt()
+        };
+
         jdbcOperations.update(query, parameters);
     }
 
     @Override
     public Employee retrieve(int id) {
-        String query = "SELECT employee_id, last_name, first_name, middle_name, login, password_hash, password_salt " +
-                "FROM employees " +
-                "WHERE employee_id = ? ";
+        String query = """
+                SELECT
+                    employee_id,
+                    last_name,
+                    first_name,
+                    middle_name,
+                    login,
+                    password_hash,
+                    password_salt
+                FROM
+                    employees
+                WHERE
+                    employee_id = ?
+                """;
+        Object[] parameters = new Object[]{
+                id
+        };
 
-        Object[] parameters = new Object[]{id};
         SqlRowSet sqlRowSet = jdbcOperations.queryForRowSet(query, parameters);
-
         if (sqlRowSet.next()) {
             return new Employee(
                     sqlRowSet.getInt("employee_id"),
@@ -54,10 +84,20 @@ public class EmployeeRepository implements BaseRepository<Employee> {
 
     @Override
     public List<Employee> retrieveAll() {
-        String query = "SELECT employee_id, last_name, first_name, middle_name, login, password_hash, password_salt " +
-                "FROM employees ";
-        SqlRowSet sqlRowSet = jdbcOperations.queryForRowSet(query);
+        String query = """
+                SELECT
+                    employee_id,
+                    last_name,
+                    first_name,
+                    middle_name,
+                    login,
+                    password_hash,
+                    password_salt
+                FROM
+                    employees
+                """;
 
+        SqlRowSet sqlRowSet = jdbcOperations.queryForRowSet(query);
         List<Employee> response = new ArrayList<>();
         while (sqlRowSet.next()) {
             response.add(new Employee(
@@ -75,11 +115,28 @@ public class EmployeeRepository implements BaseRepository<Employee> {
 
     @Override
     public void update(Employee employee) {
-        String query = "UPDATE employees " +
-                "SET last_name = ?, first_name = ?, middle_name = ?, login = ?, password_hash = ?, password_salt = ? " +
-                "WHERE employee_id = ? ";
-        Object[] parameters = new Object[]{employee.lastName(), employee.firstName(), employee.middleName(),
-                employee.login(), employee.passwordHash(), employee.passwordSalt(), employee.id()};
+        String query = """
+                UPDATE
+                    employees
+                SET
+                    last_name = ?,
+                    first_name = ?,
+                    middle_name = ?,
+                    login = ?,
+                    password_hash = ?,
+                    password_salt = ?
+                WHERE
+                    employee_id = ?
+                """;
+        Object[] parameters = new Object[]{
+                employee.lastName(),
+                employee.firstName(),
+                employee.middleName(),
+                employee.login(),
+                employee.passwordHash(),
+                employee.passwordSalt(),
+                employee.id()
+        };
 
         int jdbcOperationsResult = jdbcOperations.update(query, parameters);
         boolean isSuccessfullyUpdated = (jdbcOperationsResult == 1);
@@ -90,9 +147,15 @@ public class EmployeeRepository implements BaseRepository<Employee> {
 
     @Override
     public void delete(int id) {
-        String query = "DELETE FROM employees " +
-                "WHERE employee_id = ? ";
-        Object[] parameters = new Object[]{id};
+        String query = """
+                DELETE FROM
+                    employees
+                WHERE
+                    employee_id = ?
+                """;
+        Object[] parameters = new Object[]{
+                id
+        };
 
         int jdbcOperationsResult = jdbcOperations.update(query, parameters);
         boolean isSuccessfullyDeleted = (jdbcOperationsResult == 1);

@@ -7,7 +7,7 @@ import ru.zalimannard.bachelorthesisserver.repositories.PatientRepository;
 import java.util.List;
 
 @RestController
-@RequestMapping("patient")
+@RequestMapping("${application.endpoint.root}" + "${application.endpoint.patient}")
 public class PatientController {
     private final PatientRepository patientRepository;
 
