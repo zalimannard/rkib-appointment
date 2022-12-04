@@ -1,10 +1,14 @@
 package ru.zalimannard.bachelorthesisserver.repositories;
 
 import org.springframework.jdbc.core.JdbcOperations;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 import ru.zalimannard.bachelorthesisserver.entities.PlanElementType;
+import ru.zalimannard.bachelorthesisserver.entities.VisitType;
+import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotImplementedException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -22,12 +26,49 @@ public class PlanElementTypeRepository implements BaseRepository<PlanElementType
 
     @Override
     public PlanElementType retrieve(int id) {
-        return null;
+        String query = """
+                SELECT
+                    plan_el_type_id,
+                    plan_el_type_name
+                FROM
+                    plan_el_types
+                WHERE
+                    plan_el_type_id = ?
+                """;
+        Object[] parameters = new Object[]{
+                id
+        };
+
+        SqlRowSet sqlRowSet = jdbcOperations.queryForRowSet(query, parameters);
+        if (sqlRowSet.next()) {
+            return new PlanElementType(
+                    sqlRowSet.getInt("plan_el_type_id"),
+                    sqlRowSet.getString("plan_el_type_name")
+            );
+        } else {
+            throw new NotFoundException("Тип элемента плана не найден");
+        }
     }
 
     @Override
     public List<PlanElementType> retrieveAll() {
-        return null;
+        String query = """
+                SELECT
+                    plan_el_type_id,
+                    plan_el_type_name
+                FROM
+                    plan_el_types
+                """;
+
+        SqlRowSet sqlRowSet = jdbcOperations.queryForRowSet(query);
+        List<PlanElementType> response = new ArrayList<>();
+        while (sqlRowSet.next()) {
+            response.add(new PlanElementType(
+                    sqlRowSet.getInt("plan_el_type_id"),
+                    sqlRowSet.getString("plan_el_type_name")
+            ));
+        }
+        return response;
     }
 
     @Override
