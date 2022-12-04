@@ -34,7 +34,7 @@ public class DoctorNoteController {
     }
 
     @PostMapping
-    @Operation(summary = "Получение списка направлений")
+    @Operation(summary = "Создание нового направления направлений")
     public void post(@RequestBody DoctorNote doctorNote) {
         doctorNoteRepository.create(doctorNote);
     }
