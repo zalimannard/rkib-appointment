@@ -19,7 +19,7 @@ application:
     planElementType: /planElementType
     role: /role
     scheduled: /scheduled
-    services: /services
+    services: /service
     unscheduled: /unscheduled
     visit: /visit
     visitStatus: /visitStatus
