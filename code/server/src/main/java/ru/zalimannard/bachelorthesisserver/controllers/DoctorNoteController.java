@@ -1,10 +1,7 @@
 package ru.zalimannard.bachelorthesisserver.controllers;
 
-import io.micrometer.common.lang.NonNull;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.models.annotations.OpenAPI31;
 import org.springframework.web.bind.annotation.*;
 import ru.zalimannard.bachelorthesisserver.entities.DoctorNote;
 import ru.zalimannard.bachelorthesisserver.repositories.DoctorNoteRepository;
@@ -34,7 +31,7 @@ public class DoctorNoteController {
     }
 
     @PostMapping
-    @Operation(summary = "Создание нового направления направлений")
+    @Operation(summary = "Создание нового направления")
     public void post(@RequestBody DoctorNote doctorNote) {
         doctorNoteRepository.create(doctorNote);
     }
