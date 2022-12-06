@@ -1,4 +1,4 @@
-package ru.zalimannard.bachelorthesisserver.appointment.status.type;
+package ru.zalimannard.bachelorthesisserver.application.status.type;
 
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,22 +10,22 @@ import java.util.List;
 
 @RestController
 @RequestMapping("${application.endpoint.root}" + "${application.endpoint.visitType}")
-public class AppointmentStatusTypeController {
-    private final AppointmentStatusTypeRepository appointmentStatusTypeRepository;
+public class ApplicationStatusTypeController {
+    private final ApplicationStatusTypeRepository applicationStatusTypeRepository;
 
-    public AppointmentStatusTypeController(AppointmentStatusTypeRepository appointmentStatusTypeRepository) {
-        this.appointmentStatusTypeRepository = appointmentStatusTypeRepository;
+    public ApplicationStatusTypeController(ApplicationStatusTypeRepository applicationStatusTypeRepository) {
+        this.applicationStatusTypeRepository = applicationStatusTypeRepository;
     }
 
     @GetMapping("{id}")
     @Operation(summary = "Получение типа обращений")
-    public AppointmentStatusType get(@PathVariable int id) {
-        return appointmentStatusTypeRepository.retrieve(id);
+    public ApplicationStatusType get(@PathVariable int id) {
+        return applicationStatusTypeRepository.retrieve(id);
     }
 
     @GetMapping
     @Operation(summary = "Получение списка типов обращений")
-    public List<AppointmentStatusType> getAll() {
-        return appointmentStatusTypeRepository.retrieveAll();
+    public List<ApplicationStatusType> getAll() {
+        return applicationStatusTypeRepository.retrieveAll();
     }
 }

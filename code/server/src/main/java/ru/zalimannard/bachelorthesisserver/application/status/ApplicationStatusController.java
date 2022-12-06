@@ -1,4 +1,4 @@
-package ru.zalimannard.bachelorthesisserver.appointment.status;
+package ru.zalimannard.bachelorthesisserver.application.status;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -9,40 +9,40 @@ import java.util.List;
 @RestController
 @RequestMapping("${application.endpoint.root}" + "${application.endpoint.visitStatus}")
 @Tag(name = "Статусы обращений")
-public class AppointmentStatusController {
-    private final AppointmentStatusRepository appointmentStatusRepository;
+public class ApplicationStatusController {
+    private final ApplicationStatusRepository applicationStatusRepository;
 
-    public AppointmentStatusController(AppointmentStatusRepository appointmentStatusRepository) {
-        this.appointmentStatusRepository = appointmentStatusRepository;
+    public ApplicationStatusController(ApplicationStatusRepository applicationStatusRepository) {
+        this.applicationStatusRepository = applicationStatusRepository;
     }
 
     @GetMapping("{id}")
     @Operation(summary = "Получение статуса обращений")
-    public AppointmentStatus get(@PathVariable int id) {
-        return appointmentStatusRepository.retrieve(id);
+    public ApplicationStatus get(@PathVariable int id) {
+        return applicationStatusRepository.retrieve(id);
     }
 
     @GetMapping
     @Operation(summary = "Получение списка статусов обращений")
-    public List<AppointmentStatus> getAll() {
-        return appointmentStatusRepository.retrieveAll();
+    public List<ApplicationStatus> getAll() {
+        return applicationStatusRepository.retrieveAll();
     }
 
     @PostMapping
     @Operation(summary = "Создание нового статуса обращений")
-    public void post(@RequestBody AppointmentStatus appointmentStatus) {
-        appointmentStatusRepository.create(appointmentStatus);
+    public void post(@RequestBody ApplicationStatus applicationStatus) {
+        applicationStatusRepository.create(applicationStatus);
     }
 
     @PutMapping
     @Operation(summary = "Обновление существующего статуса обращений")
-    public void put(@RequestBody AppointmentStatus appointmentStatus) {
-        appointmentStatusRepository.update(appointmentStatus);
+    public void put(@RequestBody ApplicationStatus applicationStatus) {
+        applicationStatusRepository.update(applicationStatus);
     }
 
     @DeleteMapping("{id}")
     @Operation(summary = "Удаление статуса обращений")
     public void delete(@PathVariable int id) {
-        appointmentStatusRepository.delete(id);
+        applicationStatusRepository.delete(id);
     }
 }

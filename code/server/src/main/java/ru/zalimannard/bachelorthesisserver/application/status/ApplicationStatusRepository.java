@@ -1,4 +1,4 @@
-package ru.zalimannard.bachelorthesisserver.appointment.status;
+package ru.zalimannard.bachelorthesisserver.application.status;
 
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -11,14 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class AppointmentStatusRepository {
+public class ApplicationStatusRepository {
     protected final JdbcOperations jdbcOperations;
 
-    public AppointmentStatusRepository(JdbcOperations jdbcOperations) {
+    public ApplicationStatusRepository(JdbcOperations jdbcOperations) {
         this.jdbcOperations = jdbcOperations;
     }
 
-    public void create(AppointmentStatus appointmentStatus) {
+    public void create(ApplicationStatus applicationStatus) {
         String query = """
                 INSERT INTO
                     visit_statuses(
@@ -29,14 +29,14 @@ public class AppointmentStatusRepository {
                     (?, ?)
                 """;
         Object[] parameters = new Object[]{
-                appointmentStatus.typeId(),
-                appointmentStatus.name()
+                applicationStatus.typeId(),
+                applicationStatus.name()
         };
 
         jdbcOperations.update(query, parameters);
     }
 
-    public AppointmentStatus retrieve(int id) {
+    public ApplicationStatus retrieve(int id) {
         String query = """
                 SELECT
                     visit_status_id,
@@ -53,7 +53,7 @@ public class AppointmentStatusRepository {
 
         SqlRowSet sqlRowSet = jdbcOperations.queryForRowSet(query, parameters);
         if (sqlRowSet.next()) {
-            return new AppointmentStatus(
+            return new ApplicationStatus(
                     sqlRowSet.getInt("visit_status_id"),
                     sqlRowSet.getInt("visit_type_id"),
                     sqlRowSet.getString("visit_status_name")
@@ -63,7 +63,7 @@ public class AppointmentStatusRepository {
         }
     }
 
-    public List<AppointmentStatus> retrieveAll() {
+    public List<ApplicationStatus> retrieveAll() {
         String query = """
                 SELECT
                     visit_status_id,
@@ -74,9 +74,9 @@ public class AppointmentStatusRepository {
                 """;
 
         SqlRowSet sqlRowSet = jdbcOperations.queryForRowSet(query);
-        List<AppointmentStatus> response = new ArrayList<>();
+        List<ApplicationStatus> response = new ArrayList<>();
         while (sqlRowSet.next()) {
-            response.add(new AppointmentStatus(
+            response.add(new ApplicationStatus(
                     sqlRowSet.getInt("visit_status_id"),
                     sqlRowSet.getInt("visit_type_id"),
                     sqlRowSet.getString("visit_status_name")
@@ -85,7 +85,7 @@ public class AppointmentStatusRepository {
         return response;
     }
 
-    public void update(AppointmentStatus appointmentStatus) {
+    public void update(ApplicationStatus applicationStatus) {
         String query = """
                 UPDATE
                     visit_statuses
@@ -96,9 +96,9 @@ public class AppointmentStatusRepository {
                     visit_status_id = ?
                 """;
         Object[] parameters = new Object[]{
-                appointmentStatus.typeId(),
-                appointmentStatus.name(),
-                appointmentStatus.id()
+                applicationStatus.typeId(),
+                applicationStatus.name(),
+                applicationStatus.id()
         };
 
         int jdbcOperationsResult = jdbcOperations.update(query, parameters);

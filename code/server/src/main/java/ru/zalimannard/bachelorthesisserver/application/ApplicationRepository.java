@@ -1,4 +1,4 @@
-package ru.zalimannard.bachelorthesisserver.appointment;
+package ru.zalimannard.bachelorthesisserver.application;
 
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -11,14 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class AppointmentRepository {
+public class ApplicationRepository {
     protected final JdbcOperations jdbcOperations;
 
-    public AppointmentRepository(JdbcOperations jdbcOperations) {
+    public ApplicationRepository(JdbcOperations jdbcOperations) {
         this.jdbcOperations = jdbcOperations;
     }
 
-    public void create(Appointment appointment) {
+    public void create(Application application) {
         String query = """
                 INSERT INTO
                     visits(
@@ -33,18 +33,18 @@ public class AppointmentRepository {
                     (?, ?, ?, ?, ?, ?)
                 """;
         Object[] parameters = new Object[]{
-                appointment.parentVisitId(),
-                appointment.patientId(),
-                appointment.serviceId(),
-                appointment.doctorNoteId(),
-                appointment.statusId(),
-                appointment.finalDiagnosis()
+                application.parentVisitId(),
+                application.patientId(),
+                application.serviceId(),
+                application.doctorNoteId(),
+                application.statusId(),
+                application.finalDiagnosis()
         };
 
         jdbcOperations.update(query, parameters);
     }
 
-    public Appointment retrieve(int id) {
+    public Application retrieve(int id) {
         String query = """
                 SELECT
                     visit_id,
@@ -65,7 +65,7 @@ public class AppointmentRepository {
 
         SqlRowSet sqlRowSet = jdbcOperations.queryForRowSet(query, parameters);
         if (sqlRowSet.next()) {
-            return new Appointment(
+            return new Application(
                     sqlRowSet.getInt("visit_id"),
                     sqlRowSet.getInt("parent_visit_id"),
                     sqlRowSet.getInt("patient_id"),
@@ -79,7 +79,7 @@ public class AppointmentRepository {
         }
     }
 
-    public List<Appointment> retrieveAll() {
+    public List<Application> retrieveAll() {
         String query = """
                 SELECT
                     visit_id,
@@ -94,9 +94,9 @@ public class AppointmentRepository {
                 """;
 
         SqlRowSet sqlRowSet = jdbcOperations.queryForRowSet(query);
-        List<Appointment> response = new ArrayList<>();
+        List<Application> response = new ArrayList<>();
         while (sqlRowSet.next()) {
-            response.add(new Appointment(
+            response.add(new Application(
                     sqlRowSet.getInt("visit_id"),
                     sqlRowSet.getInt("parent_visit_id"),
                     sqlRowSet.getInt("patient_id"),
@@ -109,7 +109,7 @@ public class AppointmentRepository {
         return response;
     }
 
-    public void update(Appointment appointment) {
+    public void update(Application application) {
         String query = """
                 UPDATE
                     visits
@@ -124,13 +124,13 @@ public class AppointmentRepository {
                     visit_id = ?
                 """;
         Object[] parameters = new Object[]{
-                appointment.parentVisitId(),
-                appointment.patientId(),
-                appointment.serviceId(),
-                appointment.doctorNoteId(),
-                appointment.statusId(),
-                appointment.finalDiagnosis(),
-                appointment.id()
+                application.parentVisitId(),
+                application.patientId(),
+                application.serviceId(),
+                application.doctorNoteId(),
+                application.statusId(),
+                application.finalDiagnosis(),
+                application.id()
         };
 
         int jdbcOperationsResult = jdbcOperations.update(query, parameters);
