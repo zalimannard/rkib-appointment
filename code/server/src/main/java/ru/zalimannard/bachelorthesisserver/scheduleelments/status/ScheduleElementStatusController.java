@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("${application.endpoint.root}" + "${application.endpoint.planElementStatus}")
+@RequestMapping("${application.endpoint.root}" + "${application.endpoint.scheduleElementStatus}")
 @Tag(name = "Статусы элементов плана")
 public class ScheduleElementStatusController {
     private final ScheduleElementStatusRepository planElementStatusRepository;

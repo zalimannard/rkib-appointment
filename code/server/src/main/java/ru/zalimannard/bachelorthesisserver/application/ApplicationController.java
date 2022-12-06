@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("${application.endpoint.root}" + "${application.endpoint.visit}")
+@RequestMapping("${application.endpoint.root}" + "${application.endpoint.application}")
 @Tag(name = "Обращения")
 public class ApplicationController {
     private final ApplicationRepository applicationRepository;

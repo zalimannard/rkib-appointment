@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("${application.endpoint.root}" + "${application.endpoint.planElementType}")
+@RequestMapping("${application.endpoint.root}" + "${application.endpoint.scheduleElementStatusType}")
 @Tag(name = "Тип элементов плана")
 public class ScheduleElementTypeController {
     private final ScheduleElementTypeRepository scheduleElementTypeRepository;

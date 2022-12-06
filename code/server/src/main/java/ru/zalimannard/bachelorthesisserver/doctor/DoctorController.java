@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("${application.endpoint.root}" + "${application.endpoint.employee}")
+@RequestMapping("${application.endpoint.root}" + "${application.endpoint.doctor}")
 @Tag(name = "Работники")
 public class DoctorController {
     private final DoctorRepository doctorRepository;

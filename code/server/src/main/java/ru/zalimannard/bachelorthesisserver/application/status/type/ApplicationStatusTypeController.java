@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("${application.endpoint.root}" + "${application.endpoint.visitType}")
+@RequestMapping("${application.endpoint.root}" + "${application.endpoint.applicationStatusType}")
 public class ApplicationStatusTypeController {
     private final ApplicationStatusTypeRepository applicationStatusTypeRepository;
 
