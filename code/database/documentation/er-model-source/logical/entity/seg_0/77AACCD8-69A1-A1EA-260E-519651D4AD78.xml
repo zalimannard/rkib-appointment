@@ -1,0 +1,90 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="77AACCD8-69A1-A1EA-260E-519651D4AD78" name="doctors">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-05 22:49:15 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="6EF69BCC-AC26-7066-E13C-9CD5EC6D3FC4" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<synonymToDisplay>Врачи</synonymToDisplay>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id" id="159FB7CF-4ED4-1FD3-B45E-6D19EED82A64">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-05 22:52:34 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="6EF69BCC-AC26-7066-E13C-9CD5EC6D3FC4" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<preferredAbbreviation>id</preferredAbbreviation>
+</Attribute>
+<Attribute name="Фамилия" id="726546D4-0DDE-B92F-5C9B-55E3242FE16B">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-05 22:53:41 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="6EF69BCC-AC26-7066-E13C-9CD5EC6D3FC4" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 CHAR</dataTypeSize>
+<ownDataTypeParameters>30 CHAR,,</ownDataTypeParameters>
+<preferredAbbreviation>last_name</preferredAbbreviation>
+</Attribute>
+<Attribute name="Имя" id="70DCFD9E-5828-F758-9F0C-4CC4FC50DE70">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-05 22:53:43 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="6EF69BCC-AC26-7066-E13C-9CD5EC6D3FC4" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 CHAR</dataTypeSize>
+<ownDataTypeParameters>30 CHAR,,</ownDataTypeParameters>
+<preferredAbbreviation>first_name</preferredAbbreviation>
+</Attribute>
+<Attribute name="Отчество" id="3BB5C525-A9F7-33BE-F1A6-FBF37B03E184">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-05 22:53:44 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="6EF69BCC-AC26-7066-E13C-9CD5EC6D3FC4" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 CHAR</dataTypeSize>
+<ownDataTypeParameters>30 CHAR,,</ownDataTypeParameters>
+<preferredAbbreviation>middle_name</preferredAbbreviation>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="83A6B57C-9C86-DDDE-B58C-BA86A423B594" name="doctors PK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-05 22:53:38 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="6EF69BCC-AC26-7066-E13C-9CD5EC6D3FC4" value="false"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>159FB7CF-4ED4-1FD3-B45E-6D19EED82A64</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

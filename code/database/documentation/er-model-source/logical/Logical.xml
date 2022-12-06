@@ -1,7 +1,7 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<LogicalDesign class="oracle.dbtools.crest.model.design.logical.LogicalDesign" name="Logical" id="EB5C2BE4-A68C-3F4E-C5CF-19D1D9082D1E" mainViewID="ADBAEA05-9185-AC75-1137-A81D2A937D68">
+<LogicalDesign class="oracle.dbtools.crest.model.design.logical.LogicalDesign" name="Logical" id="AFF414CC-DDD8-EA61-7E93-92E654096695" mainViewID="FF8F7BFE-1547-6EA5-0755-AC38A93B4618">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-11-27 12:19:46 UTC</createdTime>
-<ownerDesignName>bachelor-thesis</ownerDesignName>
+<createdTime>2022-12-05 22:36:35 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
 <shouldBeOpen>false</shouldBeOpen>
 </LogicalDesign>
