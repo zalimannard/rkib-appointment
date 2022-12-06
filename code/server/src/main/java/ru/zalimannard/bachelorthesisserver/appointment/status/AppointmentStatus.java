@@ -1,10 +1,8 @@
 package ru.zalimannard.bachelorthesisserver.appointment.status;
 
-import ru.zalimannard.bachelorthesisserver.BaseEntity;
-
 import java.util.Objects;
 
-public record AppointmentStatus(int id, int typeId, String name) implements BaseEntity {
+public record AppointmentStatus(int id, int typeId, String name) {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

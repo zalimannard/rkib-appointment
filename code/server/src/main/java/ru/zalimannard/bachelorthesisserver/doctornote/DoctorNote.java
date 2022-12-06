@@ -1,10 +1,8 @@
 package ru.zalimannard.bachelorthesisserver.doctornote;
 
-import ru.zalimannard.bachelorthesisserver.BaseEntity;
-
 import java.util.Objects;
 
-public record DoctorNote(int id, int institutionId, String preliminaryDiagnosis) implements BaseEntity {
+public record DoctorNote(int id, int institutionId, String preliminaryDiagnosis) {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

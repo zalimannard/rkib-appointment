@@ -1,12 +1,10 @@
 package ru.zalimannard.bachelorthesisserver.unscheduledvisit;
 
-import ru.zalimannard.bachelorthesisserver.BaseEntity;
-
 import java.sql.Timestamp;
 import java.util.Objects;
 
 public record UnscheduledVisit(int id, int employeeId, int serviceId, int visitId, Timestamp timeStamp,
-                               String commentary) implements BaseEntity {
+                               String commentary) {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

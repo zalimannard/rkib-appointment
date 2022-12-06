@@ -1,10 +1,8 @@
 package ru.zalimannard.bachelorthesisserver.service;
 
-import ru.zalimannard.bachelorthesisserver.BaseEntity;
-
 import java.util.Objects;
 
-public record Service(int id, String name) implements BaseEntity {
+public record Service(int id, String name) {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,10 +1,8 @@
 package ru.zalimannard.bachelorthesisserver.scheduledvisit;
 
-import ru.zalimannard.bachelorthesisserver.BaseEntity;
-
 import java.util.Objects;
 
-public record ScheduledVisit(int id, int planElementId, int visitId) implements BaseEntity {
+public record ScheduledVisit(int id, int planElementId, int visitId) {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

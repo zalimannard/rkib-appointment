@@ -1,10 +1,8 @@
 package ru.zalimannard.bachelorthesisserver.scheduleelments.status;
 
-import ru.zalimannard.bachelorthesisserver.BaseEntity;
-
 import java.util.Objects;
 
-public record ScheduleElementStatus(int id, int typeId, String name) implements BaseEntity {
+public record ScheduleElementStatus(int id, int typeId, String name) {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

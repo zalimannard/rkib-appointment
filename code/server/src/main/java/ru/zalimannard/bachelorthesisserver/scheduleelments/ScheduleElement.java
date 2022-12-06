@@ -1,12 +1,10 @@
 package ru.zalimannard.bachelorthesisserver.scheduleelments;
 
-import ru.zalimannard.bachelorthesisserver.BaseEntity;
-
 import java.sql.Timestamp;
 import java.util.Objects;
 
 public record ScheduleElement(int id, int employeeId, int serviceId, int statusId,
-                              Timestamp timeStamp) implements BaseEntity {
+                              Timestamp timeStamp) {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
