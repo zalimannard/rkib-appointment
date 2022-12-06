@@ -6,20 +6,18 @@ import org.springframework.stereotype.Repository;
 import ru.zalimannard.bachelorthesisserver.exceptions.ConflictException;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotModifiedException;
-import ru.zalimannard.bachelorthesisserver.BaseRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class ServiceRepository implements BaseRepository<Service> {
+public class ServiceRepository {
     protected final JdbcOperations jdbcOperations;
 
     public ServiceRepository(JdbcOperations jdbcOperations) {
         this.jdbcOperations = jdbcOperations;
     }
 
-    @Override
     public void create(Service service) {
         String query = """
                 INSERT INTO
@@ -36,7 +34,6 @@ public class ServiceRepository implements BaseRepository<Service> {
         jdbcOperations.update(query, parameters);
     }
 
-    @Override
     public Service retrieve(int id) {
         String query = """
                 SELECT
@@ -62,7 +59,6 @@ public class ServiceRepository implements BaseRepository<Service> {
         }
     }
 
-    @Override
     public List<Service> retrieveAll() {
         String query = """
                 SELECT
@@ -83,7 +79,6 @@ public class ServiceRepository implements BaseRepository<Service> {
         return response;
     }
 
-    @Override
     public void update(Service service) {
         String query = """
                 UPDATE
@@ -105,7 +100,6 @@ public class ServiceRepository implements BaseRepository<Service> {
         }
     }
 
-    @Override
     public void delete(int id) {
         String query = """
                 DELETE FROM

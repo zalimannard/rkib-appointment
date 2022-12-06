@@ -5,25 +5,18 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotImplementedException;
-import ru.zalimannard.bachelorthesisserver.BaseRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class ScheduleElementTypeRepository implements BaseRepository<ScheduleElementType> {
+public class ScheduleElementTypeRepository {
     protected final JdbcOperations jdbcOperations;
 
     public ScheduleElementTypeRepository(JdbcOperations jdbcOperations) {
         this.jdbcOperations = jdbcOperations;
     }
 
-    @Override
-    public void create(ScheduleElementType scheduleElementType) {
-        throw new NotImplementedException("Невозможно добавить тип элемента плана");
-    }
-
-    @Override
     public ScheduleElementType retrieve(int id) {
         String query = """
                 SELECT
@@ -49,7 +42,6 @@ public class ScheduleElementTypeRepository implements BaseRepository<ScheduleEle
         }
     }
 
-    @Override
     public List<ScheduleElementType> retrieveAll() {
         String query = """
                 SELECT
@@ -68,15 +60,5 @@ public class ScheduleElementTypeRepository implements BaseRepository<ScheduleEle
             ));
         }
         return response;
-    }
-
-    @Override
-    public void update(ScheduleElementType scheduleElementType) {
-        throw new NotImplementedException("Невозможно изменить тип элемента плана");
-    }
-
-    @Override
-    public void delete(int id) {
-        throw new NotImplementedException("Невозможно удалить тип элемента плана");
     }
 }

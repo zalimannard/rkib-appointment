@@ -6,20 +6,18 @@ import org.springframework.stereotype.Repository;
 import ru.zalimannard.bachelorthesisserver.exceptions.ConflictException;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotModifiedException;
-import ru.zalimannard.bachelorthesisserver.BaseRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class ScheduleElementRepository implements BaseRepository<ScheduleElement> {
+public class ScheduleElementRepository {
     protected final JdbcOperations jdbcOperations;
 
     public ScheduleElementRepository(JdbcOperations jdbcOperations) {
         this.jdbcOperations = jdbcOperations;
     }
 
-    @Override
     public void create(ScheduleElement scheduleElement) {
         String query = """
                 INSERT INTO
@@ -42,7 +40,6 @@ public class ScheduleElementRepository implements BaseRepository<ScheduleElement
         jdbcOperations.update(query, parameters);
     }
 
-    @Override
     public ScheduleElement retrieve(int id) {
         String query = """
                 SELECT
@@ -74,7 +71,6 @@ public class ScheduleElementRepository implements BaseRepository<ScheduleElement
         }
     }
 
-    @Override
     public List<ScheduleElement> retrieveAll() {
         String query = """
                 SELECT
@@ -101,7 +97,6 @@ public class ScheduleElementRepository implements BaseRepository<ScheduleElement
         return response;
     }
 
-    @Override
     public void update(ScheduleElement scheduleElement) {
         String query = """
                 UPDATE
@@ -129,7 +124,6 @@ public class ScheduleElementRepository implements BaseRepository<ScheduleElement
         }
     }
 
-    @Override
     public void delete(int id) {
         String query = """
                 DELETE FROM

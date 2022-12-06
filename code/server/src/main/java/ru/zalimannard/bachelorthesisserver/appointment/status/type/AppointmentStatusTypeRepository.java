@@ -5,25 +5,18 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotImplementedException;
-import ru.zalimannard.bachelorthesisserver.BaseRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class AppointmentStatusTypeRepository implements BaseRepository<AppointmentStatusType> {
+public class AppointmentStatusTypeRepository {
     protected final JdbcOperations jdbcOperations;
 
     public AppointmentStatusTypeRepository(JdbcOperations jdbcOperations) {
         this.jdbcOperations = jdbcOperations;
     }
 
-    @Override
-    public void create(AppointmentStatusType appointmentStatusType) {
-        throw new NotImplementedException("Невозможно добавить тип обращения");
-    }
-
-    @Override
     public AppointmentStatusType retrieve(int id) {
         String query = """
                 SELECT
@@ -49,7 +42,6 @@ public class AppointmentStatusTypeRepository implements BaseRepository<Appointme
         }
     }
 
-    @Override
     public List<AppointmentStatusType> retrieveAll() {
         String query = """
                 SELECT
@@ -68,15 +60,5 @@ public class AppointmentStatusTypeRepository implements BaseRepository<Appointme
             ));
         }
         return response;
-    }
-
-    @Override
-    public void update(AppointmentStatusType appointmentStatusType) {
-        throw new NotImplementedException("Невозможно изменить тип обращения");
-    }
-
-    @Override
-    public void delete(int id) {
-        throw new NotImplementedException("Невозможно удалить тип обращения");
     }
 }

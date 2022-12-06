@@ -6,20 +6,18 @@ import org.springframework.stereotype.Repository;
 import ru.zalimannard.bachelorthesisserver.exceptions.ConflictException;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotModifiedException;
-import ru.zalimannard.bachelorthesisserver.BaseRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class ScheduleElementStatusRepository implements BaseRepository<ScheduleElementStatus> {
+public class ScheduleElementStatusRepository {
     protected final JdbcOperations jdbcOperations;
 
     public ScheduleElementStatusRepository(JdbcOperations jdbcOperations) {
         this.jdbcOperations = jdbcOperations;
     }
 
-    @Override
     public void create(ScheduleElementStatus scheduleElementStatus) {
         String query = """
                 INSERT INTO
@@ -38,7 +36,6 @@ public class ScheduleElementStatusRepository implements BaseRepository<ScheduleE
         jdbcOperations.update(query, parameters);
     }
 
-    @Override
     public ScheduleElementStatus retrieve(int id) {
         String query = """
                 SELECT
@@ -66,7 +63,6 @@ public class ScheduleElementStatusRepository implements BaseRepository<ScheduleE
         }
     }
 
-    @Override
     public List<ScheduleElementStatus> retrieveAll() {
         String query = """
                 SELECT
@@ -89,7 +85,6 @@ public class ScheduleElementStatusRepository implements BaseRepository<ScheduleE
         return response;
     }
 
-    @Override
     public void update(ScheduleElementStatus scheduleElementStatus) {
         String query = """
                 UPDATE
@@ -113,7 +108,6 @@ public class ScheduleElementStatusRepository implements BaseRepository<ScheduleE
         }
     }
 
-    @Override
     public void delete(int id) {
         String query = """
                 DELETE FROM

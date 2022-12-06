@@ -6,20 +6,18 @@ import org.springframework.stereotype.Repository;
 import ru.zalimannard.bachelorthesisserver.exceptions.ConflictException;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotModifiedException;
-import ru.zalimannard.bachelorthesisserver.BaseRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class UnscheduledVisitRepository implements BaseRepository<UnscheduledVisit> {
+public class UnscheduledVisitRepository {
     protected final JdbcOperations jdbcOperations;
 
     public UnscheduledVisitRepository(JdbcOperations jdbcOperations) {
         this.jdbcOperations = jdbcOperations;
     }
 
-    @Override
     public void create(UnscheduledVisit unscheduledVisit) {
         String query = """
                 INSERT INTO
@@ -44,7 +42,6 @@ public class UnscheduledVisitRepository implements BaseRepository<UnscheduledVis
         jdbcOperations.update(query, parameters);
     }
 
-    @Override
     public UnscheduledVisit retrieve(int id) {
         String query = """
                 SELECT
@@ -78,7 +75,6 @@ public class UnscheduledVisitRepository implements BaseRepository<UnscheduledVis
         }
     }
 
-    @Override
     public List<UnscheduledVisit> retrieveAll() {
         String query = """
                 SELECT
@@ -107,7 +103,6 @@ public class UnscheduledVisitRepository implements BaseRepository<UnscheduledVis
         return response;
     }
 
-    @Override
     public void update(UnscheduledVisit unscheduledVisit) {
         String query = """
                 UPDATE
@@ -136,7 +131,6 @@ public class UnscheduledVisitRepository implements BaseRepository<UnscheduledVis
         }
     }
 
-    @Override
     public void delete(int id) {
         String query = """
                 DELETE FROM
