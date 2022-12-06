@@ -10,39 +10,40 @@ import java.util.List;
 @RequestMapping("${application.endpoint.root}" + "${application.endpoint.institution}")
 @Tag(name = "Учреждения")
 public class InstitutionController {
-    private final InstitutionRepository institutionRepository;
+    private final InstitutionService institutionService;
 
-    public InstitutionController(InstitutionRepository institutionRepository) {
-        this.institutionRepository = institutionRepository;
+    public InstitutionController(InstitutionService institutionService) {
+        this.institutionService = institutionService;
     }
 
     @GetMapping("{id}")
     @Operation(summary = "Получение учреждения")
-    public Institution get(@PathVariable int id) {
-        return institutionRepository.retrieve(id);
+    public InstitutionDto get(@PathVariable int id,
+                              @RequestParam(required = false) Object expand) {
+        return institutionService.get(id, expand != null);
     }
 
     @GetMapping
     @Operation(summary = "Получение списка учреждений")
-    public List<Institution> getAll() {
-        return institutionRepository.retrieveAll();
+    public List<InstitutionDto> getAll(@RequestParam(required = false) Object expand) {
+        return institutionService.getAll(expand != null);
     }
 
     @PostMapping
     @Operation(summary = "Создание нового учреждения")
-    public void post(@RequestBody Institution institution) {
-        institutionRepository.create(institution);
+    public InstitutionDto post(@RequestBody InstitutionEntity institutionEntity) {
+        return institutionService.post(institutionEntity);
     }
 
     @PutMapping
     @Operation(summary = "Обновление существующего учреждения")
-    public void put(@RequestBody Institution institution) {
-        institutionRepository.update(institution);
+    public InstitutionDto put(@RequestBody InstitutionEntity institutionEntity) {
+        return institutionService.put(institutionEntity);
     }
 
     @DeleteMapping("{id}")
     @Operation(summary = "Удаление учреждения")
-    public void delete(@PathVariable int id) {
-        institutionRepository.delete(id);
+    public InstitutionDto delete(@PathVariable int id) {
+        return institutionService.delete(id);
     }
 }
