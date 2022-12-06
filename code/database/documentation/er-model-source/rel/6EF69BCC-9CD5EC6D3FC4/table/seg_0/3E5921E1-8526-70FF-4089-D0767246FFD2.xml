@@ -1,0 +1,166 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="3E5921E1-8526-70FF-4089-D0767246FFD2" name="appointments">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-06 11:46:52 UTC</createdTime>
+<generatorID>AB724801-D2DD-CF81-92F4-023106028B4E</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="658E43ED-1612-4DCF-ED7C-6BD0E2E8B760">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-06 11:46:52 UTC</createdTime>
+<generatorID>FC868CD3-4C4E-33DA-668E-3AF9655A91C7</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="parent_appointment_id" id="C7C39E93-5860-CCF8-B3F6-C87E9BA4757D">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-06 11:46:52 UTC</createdTime>
+<generatorID>64269896-A75C-081C-3700-694EE55AF7C0</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="16B4FDCE-ECB3-D3BE-3170-63A18CC86B30" referredColumn="658E43ED-1612-4DCF-ED7C-6BD0E2E8B760"/>
+</associations>
+</Column>
+<Column name="patient_id" id="9FD1B199-BCBC-4406-EAC9-2D6F39A0E5F6">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-06 11:46:52 UTC</createdTime>
+<generatorID>BC002C3C-0369-AC91-5707-FDD9EE1EC14C</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="958CC666-B5D9-890A-2B14-185AB84C3933" referredColumn="29319610-7338-AA7D-1595-95D12B290DF2"/>
+</associations>
+</Column>
+<Column name="doctor_note_id" id="CF3B1632-C483-5899-C47D-4CFDDA24A74A">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-06 11:46:52 UTC</createdTime>
+<generatorID>A29D89B5-9904-92AB-17B7-A7C61AACD9D5</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="904D4606-EE8E-3AC1-C857-EC06628DE6A0" referredColumn="AD33EC06-7434-0741-818A-868C52EEDF98"/>
+</associations>
+</Column>
+<Column name="appointment_status_id" id="2E2C94A3-7792-454E-8ECC-0DE31B500E85">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-06 11:46:52 UTC</createdTime>
+<generatorID>A3CFFAD9-219B-E21E-F778-BBFD9520B47E</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="6990C700-78A1-C848-9463-420D51DCB6B4" referredColumn="88AF9D4A-EF6E-071B-FA56-379E5F81BC01"/>
+</associations>
+</Column>
+<Column name="final_diagnosis" id="6860A039-AAD1-5EA9-E4EB-CBE437692978">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-06 11:46:52 UTC</createdTime>
+<generatorID>3595F8C1-A6FE-4268-8949-F89380199CE9</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>300 CHAR</dataTypeSize>
+<ownDataTypeParameters>300 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="12E62E29-EFAD-79FA-A551-1395AE4E85A1" name="appointments_PK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-06 11:46:52 UTC</createdTime>
+<generatorID>A33E09C8-DACD-2C53-4109-7B343D0B7FD3</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="658E43ED-1612-4DCF-ED7C-6BD0E2E8B760"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="CDFDB371-D03A-EAF4-6323-E53463351619" name="appointments__IDX">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-06 11:46:52 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>120F6A50-5AA2-B5AB-3FB2-8024AD65D89C</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="C7C39E93-5860-CCF8-B3F6-C87E9BA4757D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="7B6F3DEA-B966-419B-0F03-232E7505910A" name="appointments_appointments_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-06 11:46:52 UTC</createdTime>
+<generatorID>120F6A50-5AA2-B5AB-3FB2-8024AD65D89C</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C7C39E93-5860-CCF8-B3F6-C87E9BA4757D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="5A96A637-A65B-334B-5C76-923BDA34DBAF" name="appointments_patients_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-06 11:46:52 UTC</createdTime>
+<generatorID>66526E6F-15A9-EE31-88DF-70E2C1F8F868</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="9FD1B199-BCBC-4406-EAC9-2D6F39A0E5F6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="7572A409-E1C7-CF3B-C3A2-A2E6C378E51C" name="appointments_doctor_notes_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-06 11:46:52 UTC</createdTime>
+<generatorID>83CD3FFF-731F-F679-2E85-896C81BFD083</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="CF3B1632-C483-5899-C47D-4CFDDA24A74A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="4AD72006-373D-EA01-D71D-AF318ADE2FD8" name="appointments_appointment_statuses_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-06 11:46:52 UTC</createdTime>
+<generatorID>A1298279-C02E-2464-C66B-A2A679FB9100</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2E2C94A3-7792-454E-8ECC-0DE31B500E85"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

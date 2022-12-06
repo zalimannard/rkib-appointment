@@ -1,7 +1,7 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<ProcessModel class="oracle.dbtools.crest.model.design.process.ProcessModel" name="Process Model" id="C29C316E-3B2C-14DC-F7AF-ABD5132F4846">
+<ProcessModel class="oracle.dbtools.crest.model.design.process.ProcessModel" name="Process Model" id="FF3A4116-CEF8-C009-492A-AA92D35FC599">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-11-27 12:19:46 UTC</createdTime>
-<ownerDesignName>bachelor-thesis</ownerDesignName>
+<createdTime>2022-12-05 22:36:35 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
 <shouldBeOpen>false</shouldBeOpen>
 </ProcessModel>

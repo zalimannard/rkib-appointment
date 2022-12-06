@@ -11,13 +11,11 @@ application:
     root: /api
     doctorNote: /doctorNote
     employee: /employee
-    employeesRole: /employeesRole
     institution: /institution
     patient: /patient
     planElement: /planElement
     planElementStatus: /planElementStatus
     planElementType: /planElementType
-    role: /role
     scheduled: /scheduled
     services: /service
     unscheduled: /unscheduled

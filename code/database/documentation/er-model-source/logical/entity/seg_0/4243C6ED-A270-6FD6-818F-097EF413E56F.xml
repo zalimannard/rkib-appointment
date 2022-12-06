@@ -1,0 +1,78 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="4243C6ED-A270-6FD6-818F-097EF413E56F" name="doctor_notes">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-05 22:59:09 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="6EF69BCC-AC26-7066-E13C-9CD5EC6D3FC4" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<synonymToDisplay>Направления</synonymToDisplay>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id" id="E5E10C3E-9D83-072E-F526-A59C3708CB49">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-05 22:59:38 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="6EF69BCC-AC26-7066-E13C-9CD5EC6D3FC4" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<preferredAbbreviation>id</preferredAbbreviation>
+</Attribute>
+<Attribute name="Учреждение" id="E07C5567-2D78-CE82-2D94-880572255D73">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-05 22:59:50 UTC</createdTime>
+<generatorID>9519A32E-E52D-904A-2C23-E92D2CBD166D</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="6EF69BCC-AC26-7066-E13C-9CD5EC6D3FC4" value="true"/>
+</engineerTo>
+<referedAttribute>013B4A85-5986-C87C-3BE9-7796D063C2A0</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<preferredAbbreviation>institution_id</preferredAbbreviation>
+</Attribute>
+<Attribute name="Диагноз" id="84190A4D-2C86-7C86-9596-515A3C141842">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-05 22:59:41 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="6EF69BCC-AC26-7066-E13C-9CD5EC6D3FC4" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 CHAR</dataTypeSize>
+<ownDataTypeParameters>100 CHAR,,</ownDataTypeParameters>
+<preferredAbbreviation>diagnosis</preferredAbbreviation>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="4BA544BB-CBC9-6487-F9B0-CE33B215FA3A" name="doctor_notes PK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-05 23:00:18 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="6EF69BCC-AC26-7066-E13C-9CD5EC6D3FC4" value="false"/>
+</engineerTo>
+<pk>true</pk>
+<newElementsIDs>E5E10C3E-9D83-072E-F526-A59C3708CB49</newElementsIDs>
+<usedAttributes>
+<attributeRef>E5E10C3E-9D83-072E-F526-A59C3708CB49</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

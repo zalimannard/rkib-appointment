@@ -1,8 +1,8 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="er-model-source" id="6A634A05-6054-F057-099D-C6C5BFF00EB7" version="3.5">
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="er-model-source" id="4B8CF823-4905-4645-0C6B-3F4F4225A464" version="3.5">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-11-27 12:19:46 UTC</createdTime>
-<ownerDesignName>bachelor-thesis</ownerDesignName>
+<createdTime>2022-12-05 22:36:35 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
 <capitalNames>false</capitalNames>
-<designId>6A634A05-6054-F057-099D-C6C5BFF00EB7</designId>
+<designId>4B8CF823-4905-4645-0C6B-3F4F4225A464</designId>
 </OSDM_Design>
