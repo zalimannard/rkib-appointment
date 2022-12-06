@@ -83,7 +83,7 @@
 <logicalDatatype>LOGDT024</logicalDatatype>
 <dataTypeSize>20 CHAR</dataTypeSize>
 <ownDataTypeParameters>20 CHAR,,</ownDataTypeParameters>
-<preferredAbbreviation>phone number</preferredAbbreviation>
+<preferredAbbreviation>phone_number</preferredAbbreviation>
 </Attribute>
 <Attribute name="Дата рождения" id="20AB8A4D-7CFF-1DEA-E7D7-BFD14D613F25">
 <createdBy>zalimannard</createdBy>
@@ -132,8 +132,9 @@
 <createdBy>zalimannard</createdBy>
 <createdTime>2022-12-05 23:03:43 UTC</createdTime>
 <ownerDesignName>er-model-source</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="6EF69BCC-AC26-7066-E13C-9CD5EC6D3FC4" value="true"/>
+<item key="6EF69BCC-AC26-7066-E13C-9CD5EC6D3FC4" value="false"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>

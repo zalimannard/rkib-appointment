@@ -1,16 +1,16 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="B91C9105-7897-7CC9-E607-AEC4CC605A62" name="schedule_element_statuses">
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="D09426F9-5D7F-BC98-F01E-AA1A0934481B" name="schedule_element_statuses">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 11:46:52 UTC</createdTime>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
 <generatorID>9469C314-AAB5-83AD-A2DE-C296473C7D45</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <allowColumnReorder>false</allowColumnReorder>
 <existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
 <parsed>true</parsed>
 <columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
-<Column name="id" id="C4CAD9DD-3E63-3E40-9EB7-AA565E9ECCAC">
+<Column name="id" id="DDA73A7F-89BF-B1FD-7608-A0B48EDF5DB9">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 11:46:52 UTC</createdTime>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
 <generatorID>DFB1EA5B-53A6-9755-7650-49FE58C55CEA</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
@@ -21,9 +21,9 @@
 <identityColumn>true</identityColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="type_id" id="F79ABFEB-2FD8-9F68-BED7-2E6A95913DD1">
+<Column name="type_id" id="611D00D5-EDD2-45C8-1433-9D13F7873832">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 11:46:52 UTC</createdTime>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
 <generatorID>8CD38E63-7613-C53D-421F-E9D60770D6E0</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
@@ -33,12 +33,12 @@
 <previousColumn>false</previousColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <associations>
-<colAssociation fkAssociation="82F1D66A-E2A9-99DE-3B08-4C9F4066C066" referredColumn="9DE11866-C72C-4C49-6D79-BE0F8FC88DC6"/>
+<colAssociation fkAssociation="360B3188-3AE9-FE8E-7F42-EBEBEA4E9CB4" referredColumn="8C65BA44-38FD-9091-197C-13C211E8B9A5"/>
 </associations>
 </Column>
-<Column name="name" id="3278A27B-71C4-DBE2-EBBB-E613B3929EF3">
+<Column name="name" id="72A65902-648E-6F3E-464F-DF61FEBF8B3B">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 11:46:52 UTC</createdTime>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
 <generatorID>1A0EBAA7-9E1D-02E9-E2CA-6E1037729DE4</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
@@ -50,27 +50,27 @@
 </Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
-<ind_PK_UK id="9B48C3C1-A31F-BFF3-582F-003A821346FE" name="schedule_element_statuses_PK">
+<ind_PK_UK id="F647AD0B-4E39-5BC9-7CA5-BBEE81740606" name="schedule_element_statuses_PK">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 11:46:52 UTC</createdTime>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
 <generatorID>996192DA-F944-DAA8-1EF6-946F72B84575</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <pk>true</pk>
 <indexState>Primary Constraint</indexState>
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
-<colUsage columnID="C4CAD9DD-3E63-3E40-9EB7-AA565E9ECCAC"/>
+<colUsage columnID="DDA73A7F-89BF-B1FD-7608-A0B48EDF5DB9"/>
 </indexColumnUsage>
 </ind_PK_UK>
-<ind_PK_UK id="74DFB99A-5CC4-40F4-A641-16B5283EEE53" name="schedule_element_statuses_schedule_element_status_types_FK">
+<ind_PK_UK id="9678CF04-FF05-C127-0B9A-559B6D28A62F" name="schedule_element_statuses_schedule_element_status_types_FK">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 11:46:52 UTC</createdTime>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
 <generatorID>0DDF186E-701D-AA05-C4B9-9E72F68D845F</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <indexState>Foreign Key</indexState>
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
-<colUsage columnID="F79ABFEB-2FD8-9F68-BED7-2E6A95913DD1"/>
+<colUsage columnID="611D00D5-EDD2-45C8-1433-9D13F7873832"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>

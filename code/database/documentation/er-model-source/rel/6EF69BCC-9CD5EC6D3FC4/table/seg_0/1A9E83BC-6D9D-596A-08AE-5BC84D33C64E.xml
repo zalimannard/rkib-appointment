@@ -1,17 +1,17 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="A7C2B656-5818-5B57-D874-F594F395AF18" name="doctor_notes">
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="1A9E83BC-6D9D-596A-08AE-5BC84D33C64E" name="application_statuses">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 11:46:52 UTC</createdTime>
-<generatorID>4243C6ED-A270-6FD6-818F-097EF413E56F</generatorID>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
+<generatorID>40C87C77-FCD4-D0C0-7C1F-7A567FE8C4BD</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <allowColumnReorder>false</allowColumnReorder>
 <existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
 <parsed>true</parsed>
 <columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
-<Column name="id" id="AD33EC06-7434-0741-818A-868C52EEDF98">
+<Column name="id" id="4B82C516-AA0F-2E1B-8887-BD8FBC37C593">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 11:46:52 UTC</createdTime>
-<generatorID>E5E10C3E-9D83-072E-F526-A59C3708CB49</generatorID>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
+<generatorID>9B809AAE-830C-E044-493B-25BDEFF2F880</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
@@ -21,10 +21,10 @@
 <identityColumn>true</identityColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="institution_id" id="EE484CF6-BEBB-8295-2834-8E2FAD525C22">
+<Column name="type_id" id="ABE8E219-36DB-AC34-6281-282125C6C0EB">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 11:46:52 UTC</createdTime>
-<generatorID>E07C5567-2D78-CE82-2D94-880572255D73</generatorID>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
+<generatorID>C73BF713-2E98-BC4D-ACD5-87132955B403</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
@@ -33,13 +33,13 @@
 <previousColumn>false</previousColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <associations>
-<colAssociation fkAssociation="8BD3DB58-33DF-0C7D-6D7D-9885BB968432" referredColumn="BC1FF905-DAEB-DDDD-1586-5D8DED26048C"/>
+<colAssociation fkAssociation="CA35193E-A688-07D6-9A97-E255DEA3998F" referredColumn="AFEABCD0-8BB4-A673-B57A-A35B7C9DCF6A"/>
 </associations>
 </Column>
-<Column name="diagnosis" id="E0406458-E640-219F-0A64-5D95E548489B">
+<Column name="name" id="4C8AE2EE-A395-027F-64C6-401512CC010F">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 11:46:52 UTC</createdTime>
-<generatorID>84190A4D-2C86-7C86-9596-515A3C141842</generatorID>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
+<generatorID>C93409D1-ABE3-3016-802F-977FFE6E662E</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
@@ -50,27 +50,27 @@
 </Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
-<ind_PK_UK id="3850822B-83A4-16D4-5389-F6FEFB739A7F" name="doctor_notes_PK">
+<ind_PK_UK id="05EB1885-1957-94FB-74B7-509D034ADD33" name="application_statuses_PK">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 11:46:52 UTC</createdTime>
-<generatorID>4BA544BB-CBC9-6487-F9B0-CE33B215FA3A</generatorID>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
+<generatorID>15EC9696-A582-1DD0-1BDA-B95144E21818</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <pk>true</pk>
 <indexState>Primary Constraint</indexState>
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
-<colUsage columnID="AD33EC06-7434-0741-818A-868C52EEDF98"/>
+<colUsage columnID="4B82C516-AA0F-2E1B-8887-BD8FBC37C593"/>
 </indexColumnUsage>
 </ind_PK_UK>
-<ind_PK_UK id="4F23BC67-84E7-B352-B420-803AC68A7B3C" name="doctor_notes_institutions_FK">
+<ind_PK_UK id="4763E5E5-5084-9EF1-BEC1-AC3BDA275F9A" name="application_statuses_application_status_types_FK">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 11:46:52 UTC</createdTime>
-<generatorID>9519A32E-E52D-904A-2C23-E92D2CBD166D</generatorID>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
+<generatorID>AE313030-C9A5-0171-9305-BDC230A5602F</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <indexState>Foreign Key</indexState>
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
-<colUsage columnID="EE484CF6-BEBB-8295-2834-8E2FAD525C22"/>
+<colUsage columnID="ABE8E219-36DB-AC34-6281-282125C6C0EB"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>

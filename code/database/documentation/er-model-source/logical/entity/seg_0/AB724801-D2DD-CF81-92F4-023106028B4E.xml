@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="AB724801-D2DD-CF81-92F4-023106028B4E" name="appointments">
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="AB724801-D2DD-CF81-92F4-023106028B4E" name="applications">
 <createdBy>zalimannard</createdBy>
 <createdTime>2022-12-05 23:28:10 UTC</createdTime>
 <ownerDesignName>er-model-source</ownerDesignName>
@@ -106,7 +106,7 @@
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="A33E09C8-DACD-2C53-4109-7B343D0B7FD3" name="appointments PK">
+<identifier id="A33E09C8-DACD-2C53-4109-7B343D0B7FD3" name="applications PK">
 <createdBy>zalimannard</createdBy>
 <createdTime>2022-12-05 23:28:49 UTC</createdTime>
 <ownerDesignName>er-model-source</ownerDesignName>
@@ -115,6 +115,7 @@
 <item key="6EF69BCC-AC26-7066-E13C-9CD5EC6D3FC4" value="false"/>
 </engineerTo>
 <pk>true</pk>
+<newElementsIDs>FC868CD3-4C4E-33DA-668E-3AF9655A91C7</newElementsIDs>
 <usedAttributes>
 <attributeRef>FC868CD3-4C4E-33DA-668E-3AF9655A91C7</attributeRef>
 </usedAttributes>

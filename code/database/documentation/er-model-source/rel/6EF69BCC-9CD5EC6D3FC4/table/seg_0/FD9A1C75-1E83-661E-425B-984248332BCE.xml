@@ -1,17 +1,17 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="82479811-9A16-C87C-FD12-E754FF7EDE14" name="institutions">
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="FD9A1C75-1E83-661E-425B-984248332BCE" name="application_status_types">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 11:46:52 UTC</createdTime>
-<generatorID>3C758E69-E039-F939-8F9F-B757886BD1DB</generatorID>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
+<generatorID>E54198A7-3BC2-9535-B6FA-961E527D65E6</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <allowColumnReorder>false</allowColumnReorder>
 <existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
 <parsed>true</parsed>
 <columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
-<Column name="id" id="BC1FF905-DAEB-DDDD-1586-5D8DED26048C">
+<Column name="id" id="AFEABCD0-8BB4-A673-B57A-A35B7C9DCF6A">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 11:46:52 UTC</createdTime>
-<generatorID>013B4A85-5986-C87C-3BE9-7796D063C2A0</generatorID>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
+<generatorID>400C7CD4-DE74-DE36-943F-A3707BAB0C46</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
@@ -21,30 +21,30 @@
 <identityColumn>true</identityColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="name" id="F522D2C5-EB49-6DD1-DADA-8C1C2001FFDF">
+<Column name="name" id="CE7000BB-3432-B7C8-E780-DB3888B74A6C">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 11:46:52 UTC</createdTime>
-<generatorID>A1AE7715-6981-BBC9-0A98-A291BC8F1E8E</generatorID>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
+<generatorID>FF226440-E53D-591C-FD7F-FC4C86570A1E</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT024</logicalDatatype>
-<dataTypeSize>200 CHAR</dataTypeSize>
-<ownDataTypeParameters>200 CHAR,,</ownDataTypeParameters>
+<dataTypeSize>30 CHAR</dataTypeSize>
+<ownDataTypeParameters>30 CHAR,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
-<ind_PK_UK id="92B4F76B-BC5E-BCC9-062F-89D032EEBC85" name="institutions_PK">
+<ind_PK_UK id="293537C4-B9B0-A5BF-4E4D-E3532DE7500F" name="application_status_types_PK">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 11:46:52 UTC</createdTime>
-<generatorID>898CD4C5-82DF-E3F3-9954-F0CA4F11885C</generatorID>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
+<generatorID>8280E9AC-E390-5AB3-0D21-B66052681D05</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <pk>true</pk>
 <indexState>Primary Constraint</indexState>
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
-<colUsage columnID="BC1FF905-DAEB-DDDD-1586-5D8DED26048C"/>
+<colUsage columnID="AFEABCD0-8BB4-A673-B57A-A35B7C9DCF6A"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>

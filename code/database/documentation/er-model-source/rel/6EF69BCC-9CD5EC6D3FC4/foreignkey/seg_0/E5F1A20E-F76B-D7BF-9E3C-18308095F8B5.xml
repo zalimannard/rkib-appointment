@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="E5F1A20E-F76B-D7BF-9E3C-18308095F8B5" containerWithKeyObject="14541796-E999-892C-DAB3-10EEB790618F" localFKIndex="6E4CC90D-E6C9-665E-1AD0-A5F696FD8AB5" name="doctor_notes_institutions_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
+<generatorID>9519A32E-E52D-904A-2C23-E92D2CBD166D</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<referredTableLongName>institutions</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>374B9EF4-C5A9-4DDF-6D50-41139E7C82E9</referredTableID>
+<keyObject>340F93C1-C749-CC52-BBA9-A634FD21321E</keyObject>
+<referredKeyID>340F93C1-C749-CC52-BBA9-A634FD21321E</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>id</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

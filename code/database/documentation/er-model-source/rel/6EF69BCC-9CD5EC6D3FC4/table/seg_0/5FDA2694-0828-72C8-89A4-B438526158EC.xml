@@ -1,16 +1,16 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="A7A437D7-6417-93B4-7824-8EF9987EB08E" name="scheduled_visits">
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="5FDA2694-0828-72C8-89A4-B438526158EC" name="scheduled_visits">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 11:46:52 UTC</createdTime>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
 <generatorID>063602DF-CBE7-05D7-8885-43D0297DF812</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <allowColumnReorder>false</allowColumnReorder>
 <existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
 <parsed>true</parsed>
 <columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
-<Column name="id" id="30357696-2732-AE35-FAF1-4915207B4F99">
+<Column name="id" id="A0C7E53F-901A-C73A-8F74-F91836A4350C">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 11:46:52 UTC</createdTime>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
 <generatorID>1DD39B3F-C1D5-0E61-39A0-149973679C4B</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
@@ -21,9 +21,9 @@
 <identityColumn>true</identityColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="schedule_element_id" id="6CF70A3D-3CE4-F99A-1349-7D471B69B214">
+<Column name="schedule_element_id" id="A3B6FB54-89FA-5D26-0F46-3B6E5CBACB6C">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 11:46:52 UTC</createdTime>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
 <generatorID>6843A5BD-293A-48E0-972A-192C80E81D8C</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
@@ -33,12 +33,12 @@
 <previousColumn>false</previousColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <associations>
-<colAssociation fkAssociation="033A4C1B-A66C-A8B7-98D2-140E7532674F" referredColumn="6C252A6C-8D0E-F932-4DF6-7C190A13B91F"/>
+<colAssociation fkAssociation="E2529241-963A-D68B-D6E0-59DEA994325F" referredColumn="3C5A7C71-EAC9-0C2D-096F-AD73DD6467F1"/>
 </associations>
 </Column>
-<Column name="appointment_id" id="AC49D7AC-D2CF-CB11-1605-5741B2213D5E">
+<Column name="application_id" id="1EC1C37F-218F-C7F0-E9E8-081ED464AB3D">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 11:46:52 UTC</createdTime>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
 <generatorID>F114BC9D-9EBE-4A4A-3A97-A7A59A62C911</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
@@ -48,43 +48,43 @@
 <previousColumn>false</previousColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <associations>
-<colAssociation fkAssociation="A03692F3-4EC6-4CBD-1D17-88DF56544E97" referredColumn="658E43ED-1612-4DCF-ED7C-6BD0E2E8B760"/>
+<colAssociation fkAssociation="71C8B3DF-4C68-8B95-CAF4-20DC36ECF051" referredColumn="EDAA5C5B-675A-B5C2-42B0-FEB56849C397"/>
 </associations>
 </Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
-<ind_PK_UK id="F5CE9493-D311-D9AA-9F60-23A0AED88D77" name="scheduled_visits_PK">
+<ind_PK_UK id="BC5D1107-10A4-84F4-46B1-483CC76AB134" name="scheduled_visits_PK">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 11:46:52 UTC</createdTime>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
 <generatorID>39C73FDF-990A-835B-24E8-6A444B870A34</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <pk>true</pk>
 <indexState>Primary Constraint</indexState>
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
-<colUsage columnID="30357696-2732-AE35-FAF1-4915207B4F99"/>
+<colUsage columnID="A0C7E53F-901A-C73A-8F74-F91836A4350C"/>
 </indexColumnUsage>
 </ind_PK_UK>
-<ind_PK_UK id="E29C129B-1223-6CC4-4A06-B8D350765BD1" name="scheduled_visits_schedule_elements_FK">
+<ind_PK_UK id="0131539A-7382-BA8D-A546-42566C8C6D55" name="scheduled_visits_schedule_elements_FK">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 11:46:52 UTC</createdTime>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
 <generatorID>2B6648F2-39ED-98C8-5631-616576558B4E</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <indexState>Foreign Key</indexState>
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
-<colUsage columnID="6CF70A3D-3CE4-F99A-1349-7D471B69B214"/>
+<colUsage columnID="A3B6FB54-89FA-5D26-0F46-3B6E5CBACB6C"/>
 </indexColumnUsage>
 </ind_PK_UK>
-<ind_PK_UK id="3E2DBF1D-D79C-CBA5-C8F0-891EBDC1AE89" name="scheduled_visits_appointments_FK">
+<ind_PK_UK id="21960390-26F1-F7DB-D980-99EEF646BBFF" name="scheduled_visits_applications_FK">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 11:46:52 UTC</createdTime>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
 <generatorID>FB76EC35-9E3F-A7B5-D1D2-F7155D0BB2DD</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <indexState>Foreign Key</indexState>
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
-<colUsage columnID="AC49D7AC-D2CF-CB11-1605-5741B2213D5E"/>
+<colUsage columnID="1EC1C37F-218F-C7F0-E9E8-081ED464AB3D"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>

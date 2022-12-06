@@ -72,7 +72,7 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
-<preferredAbbreviation>appointment_id</preferredAbbreviation>
+<preferredAbbreviation>application_id</preferredAbbreviation>
 </Attribute>
 <Attribute name="Временная метка" id="557B8F79-8C2F-A93D-0643-72B70E9268EA">
 <createdBy>zalimannard</createdBy>
@@ -107,8 +107,9 @@
 <createdBy>zalimannard</createdBy>
 <createdTime>2022-12-06 11:31:26 UTC</createdTime>
 <ownerDesignName>er-model-source</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="6EF69BCC-AC26-7066-E13C-9CD5EC6D3FC4" value="true"/>
+<item key="6EF69BCC-AC26-7066-E13C-9CD5EC6D3FC4" value="false"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>

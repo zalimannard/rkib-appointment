@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="E54198A7-3BC2-9535-B6FA-961E527D65E6" name="appointment_status_types">
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="E54198A7-3BC2-9535-B6FA-961E527D65E6" name="application_status_types">
 <createdBy>zalimannard</createdBy>
 <createdTime>2022-12-05 23:17:58 UTC</createdTime>
 <ownerDesignName>er-model-source</ownerDesignName>
@@ -45,12 +45,13 @@
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="8280E9AC-E390-5AB3-0D21-B66052681D05" name="appointment_status_types PK">
+<identifier id="8280E9AC-E390-5AB3-0D21-B66052681D05" name="application_status_types PK">
 <createdBy>zalimannard</createdBy>
 <createdTime>2022-12-05 23:18:48 UTC</createdTime>
 <ownerDesignName>er-model-source</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="6EF69BCC-AC26-7066-E13C-9CD5EC6D3FC4" value="true"/>
+<item key="6EF69BCC-AC26-7066-E13C-9CD5EC6D3FC4" value="false"/>
 </engineerTo>
 <pk>true</pk>
 <newElementsIDs>400C7CD4-DE74-DE36-943F-A3707BAB0C46</newElementsIDs>
