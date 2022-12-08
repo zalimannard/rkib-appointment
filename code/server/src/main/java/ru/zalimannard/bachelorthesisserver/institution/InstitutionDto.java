@@ -1,28 +1,24 @@
 package ru.zalimannard.bachelorthesisserver.institution;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
+@Builder
 public class InstitutionDto {
+    @NotNull
     @JsonProperty("id")
-    private int id;
+    private Integer id;
     @NotNull
     @JsonProperty("name")
     private String name;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonProperty("doctorNotes")
-    private List<String> doctorNotes;
-
-    public InstitutionEntity toEntity() {
-        InstitutionEntity entity = new InstitutionEntity();
-        entity.setId(id);
-        entity.setName(name);
-        return entity;
+    public Institution toEntity() {
+        return Institution.builder()
+                .id(id)
+                .name(name)
+                .build();
     }
 }

@@ -16,49 +16,46 @@ public class InstitutionServiceImpl implements InstitutionService {
     }
 
     @Override
-    public InstitutionDto get(int id, boolean expand) {
-        Optional<InstitutionEntity> institutionEntityOptional = institutionRepository.findById(id);
-        if (institutionEntityOptional.isPresent()) {
-            InstitutionEntity institutionEntity = institutionEntityOptional.get();
-            return institutionEntity.toDto(expand);
+    public InstitutionDto get(int id) {
+        Optional<Institution> institutionOptional = institutionRepository.findById(id);
+        if (institutionOptional.isPresent()) {
+            Institution institution = institutionOptional.get();
+            return institution.toDto();
         } else {
             throw new NotFoundException("Учреждение не найдено");
         }
     }
 
     @Override
-    public List<InstitutionDto> getAll(boolean expand) {
-        Iterable<InstitutionEntity> institutionEntities = institutionRepository.findAll();
-        List<InstitutionDto> institutioDtos = new ArrayList<>();
-        institutionEntities.forEach(institutionEntity -> institutioDtos.add(institutionEntity.toDto(expand)));
-        return institutioDtos;
+    public List<InstitutionDto> getAll() {
+        Iterable<Institution> institutionEntities = institutionRepository.findAll();
+        List<InstitutionDto> institutionDtos = new ArrayList<>();
+        institutionEntities.forEach(institutionEntity -> institutionDtos.add(institutionEntity.toDto()));
+        return institutionDtos;
     }
 
     @Override
-    public InstitutionDto post(InstitutionEntity institutionEntity) {
-        InstitutionEntity createdEntity = institutionRepository.save(institutionEntity);
-        return createdEntity.toDto(true);
+    public InstitutionDto post(InstitutionDto institutionDto) {
+        Institution institutionToAdd = institutionDto.toEntity();
+        Institution createdEntity = institutionRepository.save(institutionToAdd);
+        return createdEntity.toDto();
     }
 
     @Override
-    public InstitutionDto put(InstitutionEntity institutionEntity) {
-        if (institutionRepository.existsById(institutionEntity.getId())) {
-            institutionRepository.save(institutionEntity);
-            return institutionEntity.toDto(true);
+    public InstitutionDto put(InstitutionDto institutionDto) {
+        if (institutionRepository.existsById(institutionDto.getId())) {
+            Institution institution = institutionDto.toEntity();
+            institutionRepository.save(institution);
+            return get(institutionDto.getId());
         } else {
-            throw new NotFoundException("Указанного для изменения учреждения не существует");
+            throw new NotFoundException("Изменяемого учреждения не существует");
         }
     }
 
     @Override
     public InstitutionDto delete(int id) {
-        Optional<InstitutionEntity> institutionEntityOptional = institutionRepository.findById(id);
-        if (institutionEntityOptional.isPresent()) {
-            institutionRepository.deleteById(id);
-            InstitutionEntity institutionEntity = institutionEntityOptional.get();
-            return institutionEntity.toDto(false);
-        } else {
-            throw new NotFoundException("Учреждение не найдено");
-        }
+        InstitutionDto institutionDto = get(id);
+        institutionRepository.deleteById(id);
+        return institutionDto;
     }
 }

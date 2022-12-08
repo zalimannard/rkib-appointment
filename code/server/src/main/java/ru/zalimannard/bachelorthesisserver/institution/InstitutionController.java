@@ -2,6 +2,7 @@ package ru.zalimannard.bachelorthesisserver.institution;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,31 +19,36 @@ public class InstitutionController {
 
     @GetMapping("{id}")
     @Operation(summary = "Получение учреждения")
+    @ResponseStatus(HttpStatus.OK)
     public InstitutionDto get(@PathVariable int id,
                               @RequestParam(required = false) Object expand) {
-        return institutionService.get(id, expand != null);
+        return institutionService.get(id);
     }
 
     @GetMapping
     @Operation(summary = "Получение списка учреждений")
-    public List<InstitutionDto> getAll(@RequestParam(required = false) Object expand) {
-        return institutionService.getAll(expand != null);
+    @ResponseStatus(HttpStatus.OK)
+    public List<InstitutionDto> getAll() {
+        return institutionService.getAll();
     }
 
     @PostMapping
     @Operation(summary = "Создание нового учреждения")
-    public InstitutionDto post(@RequestBody InstitutionEntity institutionEntity) {
-        return institutionService.post(institutionEntity);
+    @ResponseStatus(HttpStatus.CREATED)
+    public InstitutionDto post(@RequestBody InstitutionDto institutionDto) {
+        return institutionService.post(institutionDto);
     }
 
     @PutMapping
     @Operation(summary = "Обновление существующего учреждения")
-    public InstitutionDto put(@RequestBody InstitutionEntity institutionEntity) {
-        return institutionService.put(institutionEntity);
+    @ResponseStatus(HttpStatus.OK)
+    public InstitutionDto put(@RequestBody InstitutionDto institutionDto) {
+        return institutionService.put(institutionDto);
     }
 
     @DeleteMapping("{id}")
     @Operation(summary = "Удаление учреждения")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public InstitutionDto delete(@PathVariable int id) {
         return institutionService.delete(id);
     }

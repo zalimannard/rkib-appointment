@@ -1,40 +1,35 @@
-package ru.zalimannard.bachelorthesisserver.doctornote;
+package ru.zalimannard.bachelorthesisserver.institution;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.Hibernate;
-import ru.zalimannard.bachelorthesisserver.institution.Institution;
 
 import java.util.Objects;
 
 @Entity
-@Table(name = "doctor_notes")
+@Table(name = "institutions")
 @Builder
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class DoctorNote {
+public class Institution {
+    @NotNull
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    Integer id;
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
     @NotNull
-    @Column(name = "diagnosis")
-    String diagnosis;
+    @Column(name = "name", nullable = false)
+    private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "institution_id", nullable = false)
-    Institution institution;
-
-    public DoctorNoteDto toDto() {
-        return DoctorNoteDto.builder()
+    public InstitutionDto toDto() {
+        return InstitutionDto.builder()
                 .id(id)
-                .institutionId(institution.getId())
-                .diagnosis(diagnosis)
+                .name(name)
                 .build();
     }
 
@@ -42,7 +37,7 @@ public class DoctorNote {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        DoctorNote that = (DoctorNote) o;
+        Institution that = (Institution) o;
         return id != null && Objects.equals(id, that.id);
     }
 
@@ -51,5 +46,3 @@ public class DoctorNote {
         return getClass().hashCode();
     }
 }
-
-
