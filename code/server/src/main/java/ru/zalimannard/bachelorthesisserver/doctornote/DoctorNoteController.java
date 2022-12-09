@@ -47,7 +47,7 @@ public class DoctorNoteController {
 
     @DeleteMapping("{id}")
     @Operation(summary = "Удаление направления")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     public DoctorNoteDto delete(@PathVariable int id) {
         return doctorNoteService.delete(id);
     }

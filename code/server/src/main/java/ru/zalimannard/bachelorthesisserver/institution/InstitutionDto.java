@@ -11,14 +11,8 @@ public class InstitutionDto {
     @NotNull
     @JsonProperty("id")
     private Integer id;
+
     @NotNull
     @JsonProperty("name")
     private String name;
-
-    public Institution toEntity() {
-        return Institution.builder()
-                .id(id)
-                .name(name)
-                .build();
-    }
 }

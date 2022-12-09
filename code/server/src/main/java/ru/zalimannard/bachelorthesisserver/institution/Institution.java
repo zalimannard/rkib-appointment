@@ -16,7 +16,6 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class Institution {
-    @NotNull
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -25,13 +24,6 @@ public class Institution {
     @NotNull
     @Column(name = "name", nullable = false)
     private String name;
-
-    public InstitutionDto toDto() {
-        return InstitutionDto.builder()
-                .id(id)
-                .name(name)
-                .build();
-    }
 
     @Override
     public boolean equals(Object o) {

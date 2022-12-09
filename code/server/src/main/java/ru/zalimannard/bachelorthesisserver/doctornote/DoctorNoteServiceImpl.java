@@ -2,7 +2,7 @@ package ru.zalimannard.bachelorthesisserver.doctornote;
 
 import org.springframework.stereotype.Service;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
-import ru.zalimannard.bachelorthesisserver.institution.InstitutionRepository;
+import ru.zalimannard.bachelorthesisserver.institution.InstitutionMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,13 +10,12 @@ import java.util.Optional;
 
 @Service
 public class DoctorNoteServiceImpl implements DoctorNoteService {
+    private final DoctorNoteMapper doctorNoteMapper;
     private final DoctorNoteRepository doctorNoteRepository;
-    private final InstitutionRepository institutionRepository;
 
-    public DoctorNoteServiceImpl(DoctorNoteRepository doctorNoteRepository,
-                                 InstitutionRepository institutionRepository) {
+    public DoctorNoteServiceImpl(DoctorNoteMapper doctorNoteMapper, DoctorNoteRepository doctorNoteRepository) {
+        this.doctorNoteMapper = doctorNoteMapper;
         this.doctorNoteRepository = doctorNoteRepository;
-        this.institutionRepository = institutionRepository;
     }
 
     @Override
@@ -24,7 +23,7 @@ public class DoctorNoteServiceImpl implements DoctorNoteService {
         Optional<DoctorNote> doctorNoteOptional = doctorNoteRepository.findById(id);
         if (doctorNoteOptional.isPresent()) {
             DoctorNote doctorNote = doctorNoteOptional.get();
-            return doctorNote.toDto();
+            return doctorNoteMapper.toDto(doctorNote);
         } else {
             throw new NotFoundException("Учреждение не найдено");
         }
@@ -32,30 +31,23 @@ public class DoctorNoteServiceImpl implements DoctorNoteService {
 
     @Override
     public List<DoctorNoteDto> getAll() {
-        Iterable<DoctorNote> doctorNoteEntities = doctorNoteRepository.findAll();
+        Iterable<DoctorNote> doctorNotes = doctorNoteRepository.findAll();
         List<DoctorNoteDto> doctorNoteDtos = new ArrayList<>();
-        doctorNoteEntities.forEach(institutionEntity -> doctorNoteDtos.add(institutionEntity.toDto()));
+        doctorNotes.forEach(doctorNote -> doctorNoteDtos.add(doctorNoteMapper.toDto(doctorNote)));
         return doctorNoteDtos;
     }
 
     @Override
     public DoctorNoteDto post(DoctorNoteDto doctorNoteDto) {
-        System.out.println(") " + doctorNoteDto);
-        DoctorNote doctorNoteToAdd = DoctorNote.builder()
-                .diagnosis(doctorNoteDto.getDiagnosis())
-                .institution(institutionRepository.findById(doctorNoteDto.getInstitutionId()).get())
-                .build();
-
-        System.out.println("* " + doctorNoteToAdd);
+        DoctorNote doctorNoteToAdd = doctorNoteMapper.toEntity(doctorNoteDto);
         DoctorNote doctorNoteCreated = doctorNoteRepository.save(doctorNoteToAdd);
-        System.out.println("& " + doctorNoteCreated);
-        return doctorNoteCreated.toDto();
+        return doctorNoteMapper.toDto(doctorNoteCreated);
     }
 
     @Override
     public DoctorNoteDto put(DoctorNoteDto doctorNoteDto) {
         if (doctorNoteRepository.existsById(doctorNoteDto.getId())) {
-            DoctorNote doctorNote = doctorNoteDto.toEntity();
+            DoctorNote doctorNote = doctorNoteMapper.toEntity(doctorNoteDto);
             doctorNoteRepository.save(doctorNote);
             return get(doctorNoteDto.getId());
         } else {

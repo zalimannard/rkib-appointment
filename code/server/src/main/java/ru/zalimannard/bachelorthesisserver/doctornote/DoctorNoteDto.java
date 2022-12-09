@@ -1,27 +1,22 @@
 package ru.zalimannard.bachelorthesisserver.doctornote;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import ru.zalimannard.bachelorthesisserver.institution.InstitutionDto;
-import ru.zalimannard.bachelorthesisserver.institution.InstitutionService;
 
 @Data
 @Builder
 public class DoctorNoteDto {
+    @NotNull
     @JsonProperty("id")
     private Integer id;
+
+    @NotNull
     @JsonProperty("institutionId")
     private Integer institutionId;
+
+    @NotNull
     @JsonProperty("diagnosis")
     private String diagnosis;
-
-    public DoctorNote toEntity() {
-        return DoctorNote.builder()
-                .id(id)
-                .diagnosis(diagnosis)
-                .build();
-    }
 }

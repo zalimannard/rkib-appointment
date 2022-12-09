@@ -9,9 +9,11 @@ import java.util.Optional;
 
 @Service
 public class InstitutionServiceImpl implements InstitutionService {
+    private final InstitutionMapper institutionMapper;
     private final InstitutionRepository institutionRepository;
 
-    public InstitutionServiceImpl(InstitutionRepository institutionRepository) {
+    public InstitutionServiceImpl(InstitutionMapper institutionMapper, InstitutionRepository institutionRepository) {
+        this.institutionMapper = institutionMapper;
         this.institutionRepository = institutionRepository;
     }
 
@@ -20,7 +22,7 @@ public class InstitutionServiceImpl implements InstitutionService {
         Optional<Institution> institutionOptional = institutionRepository.findById(id);
         if (institutionOptional.isPresent()) {
             Institution institution = institutionOptional.get();
-            return institution.toDto();
+            return institutionMapper.toDto(institution);
         } else {
             throw new NotFoundException("Учреждение не найдено");
         }
@@ -30,21 +32,21 @@ public class InstitutionServiceImpl implements InstitutionService {
     public List<InstitutionDto> getAll() {
         Iterable<Institution> institutionEntities = institutionRepository.findAll();
         List<InstitutionDto> institutionDtos = new ArrayList<>();
-        institutionEntities.forEach(institutionEntity -> institutionDtos.add(institutionEntity.toDto()));
+        institutionEntities.forEach(institutionEntity -> institutionDtos.add(institutionMapper.toDto(institutionEntity)));
         return institutionDtos;
     }
 
     @Override
     public InstitutionDto post(InstitutionDto institutionDto) {
-        Institution institutionToAdd = institutionDto.toEntity();
+        Institution institutionToAdd = institutionMapper.toEntity(institutionDto);
         Institution createdEntity = institutionRepository.save(institutionToAdd);
-        return createdEntity.toDto();
+        return institutionMapper.toDto(createdEntity);
     }
 
     @Override
     public InstitutionDto put(InstitutionDto institutionDto) {
         if (institutionRepository.existsById(institutionDto.getId())) {
-            Institution institution = institutionDto.toEntity();
+            Institution institution = institutionMapper.toEntity(institutionDto);
             institutionRepository.save(institution);
             return get(institutionDto.getId());
         } else {

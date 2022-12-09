@@ -30,14 +30,6 @@ public class DoctorNote {
     @JoinColumn(name = "institution_id", nullable = false)
     Institution institution;
 
-    public DoctorNoteDto toDto() {
-        return DoctorNoteDto.builder()
-                .id(id)
-                .institutionId(institution.getId())
-                .diagnosis(diagnosis)
-                .build();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
