@@ -8,41 +8,23 @@ import java.util.List;
 
 @RestController
 @RequestMapping("${application.endpoint.root}" + "${application.endpoint.doctor}")
-@Tag(name = "Работники")
+@Tag(name = "Доктора")
 public class DoctorController {
-    private final DoctorRepository doctorRepository;
+    private final DoctorService doctorService;
 
-    public DoctorController(DoctorRepository doctorRepository) {
-        this.doctorRepository = doctorRepository;
+    public DoctorController(DoctorService doctorService) {
+        this.doctorService = doctorService;
     }
 
     @GetMapping("{id}")
-    @Operation(summary = "Получение работника")
-    public Doctor get(@PathVariable int id) {
-        return doctorRepository.retrieve(id);
+    @Operation(summary = "Получение доктора")
+    public DoctorDto get(@PathVariable int id) {
+        return doctorService.get(id);
     }
 
     @GetMapping
-    @Operation(summary = "Получение списка работников")
-    public List<Doctor> getAll() {
-        return doctorRepository.retrieveAll();
-    }
-
-    @PostMapping
-    @Operation(summary = "Создание нового работника")
-    public void post(@RequestBody Doctor doctor) {
-        doctorRepository.create(doctor);
-    }
-
-    @PutMapping
-    @Operation(summary = "Обновление существующего работника")
-    public void put(@RequestBody Doctor doctor) {
-        doctorRepository.update(doctor);
-    }
-
-    @DeleteMapping("{id}")
-    @Operation(summary = "Удаление работника")
-    public void delete(@PathVariable int id) {
-        doctorRepository.delete(id);
+    @Operation(summary = "Получение списка докторов")
+    public List<DoctorDto> getAll() {
+        return doctorService.getAll();
     }
 }
