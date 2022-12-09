@@ -10,39 +10,21 @@ import java.util.List;
 @RequestMapping("${application.endpoint.root}" + "${application.endpoint.service}")
 @Tag(name = "Услуги")
 public class ServiceController {
-    private final ServiceRepository serviceRepository;
+    private final ServiceService serviceService;
 
-    public ServiceController(ServiceRepository serviceRepository) {
-        this.serviceRepository = serviceRepository;
+    public ServiceController(ServiceService serviceService) {
+        this.serviceService = serviceService;
     }
 
     @GetMapping("{id}")
     @Operation(summary = "Получение услуги")
-    public Service get(@PathVariable int id) {
-        return serviceRepository.retrieve(id);
+    public ServiceDto get(@PathVariable int id) {
+        return serviceService.get(id);
     }
 
     @GetMapping
     @Operation(summary = "Получение списка услуг")
-    public List<Service> getAll() {
-        return serviceRepository.retrieveAll();
-    }
-
-    @PostMapping
-    @Operation(summary = "Создание новой услуги")
-    public void post(@RequestBody Service services) {
-        serviceRepository.create(services);
-    }
-
-    @PutMapping
-    @Operation(summary = "Обновление существующей услуги")
-    public void put(@RequestBody Service services) {
-        serviceRepository.update(services);
-    }
-
-    @DeleteMapping("{id}")
-    @Operation(summary = "Удаление услуги")
-    public void delete(@PathVariable int id) {
-        serviceRepository.delete(id);
+    public List<ServiceDto> getAll() {
+        return serviceService.getAll();
     }
 }
