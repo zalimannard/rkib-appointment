@@ -24,7 +24,7 @@ public class PatientServiceImpl implements PatientService {
             Patient patient = patientOptional.get();
             return patientMapper.toDto(patient);
         } else {
-            throw new NotFoundException("Пациент не найден");
+            throw new NotFoundException("Пациент с id=" + id + " не найден");
         }
     }
 
@@ -50,7 +50,7 @@ public class PatientServiceImpl implements PatientService {
             patientRepository.save(patient);
             return get(patientDto.getId());
         } else {
-            throw new NotFoundException("Изменяемого пациента не существует");
+            throw new NotFoundException("Пациент с id=" + patientDto.getId() + " не найден. Ничего не изменено");
         }
     }
 

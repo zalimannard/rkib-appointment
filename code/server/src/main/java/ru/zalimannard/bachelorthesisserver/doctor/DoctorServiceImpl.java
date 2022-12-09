@@ -24,7 +24,7 @@ public class DoctorServiceImpl implements DoctorService {
             Doctor doctor = doctorOptional.get();
             return doctorMapper.toDto(doctor);
         } else {
-            throw new NotFoundException("Доктор не найден");
+            throw new NotFoundException("Доктор с id=" + id + " не найден");
         }
     }
 

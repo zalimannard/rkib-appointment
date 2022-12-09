@@ -25,7 +25,7 @@ public class DoctorNoteServiceImpl implements DoctorNoteService {
             DoctorNote doctorNote = doctorNoteOptional.get();
             return doctorNoteMapper.toDto(doctorNote);
         } else {
-            throw new NotFoundException("Учреждение не найдено");
+            throw new NotFoundException("Направление с id=" + id + " не найдено.");
         }
     }
 
@@ -51,7 +51,7 @@ public class DoctorNoteServiceImpl implements DoctorNoteService {
             doctorNoteRepository.save(doctorNote);
             return get(doctorNoteDto.getId());
         } else {
-            throw new NotFoundException("Изменяемого учреждения не существует");
+            throw new NotFoundException("Направление с id=" + doctorNoteDto.getId() + " не найдено. Ничего не изменено.");
         }
     }
 

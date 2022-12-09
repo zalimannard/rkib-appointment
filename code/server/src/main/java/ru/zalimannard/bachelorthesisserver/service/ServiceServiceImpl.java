@@ -23,7 +23,7 @@ public class ServiceServiceImpl implements ServiceService {
             Service service = serviceOptional.get();
             return serviceMapper.toDto(service);
         } else {
-            throw new NotFoundException("Услуга не найдена");
+            throw new NotFoundException("Услуга с id=" + id + " не найдена");
         }
     }
 

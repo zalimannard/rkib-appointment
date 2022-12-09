@@ -24,7 +24,7 @@ public class InstitutionServiceImpl implements InstitutionService {
             Institution institution = institutionOptional.get();
             return institutionMapper.toDto(institution);
         } else {
-            throw new NotFoundException("Учреждение не найдено");
+            throw new NotFoundException("Учреждение с id=" + id + " не найдено");
         }
     }
 
@@ -50,7 +50,7 @@ public class InstitutionServiceImpl implements InstitutionService {
             institutionRepository.save(institution);
             return get(institutionDto.getId());
         } else {
-            throw new NotFoundException("Изменяемого учреждения не существует");
+            throw new NotFoundException("Учреждение с id=" + institutionDto.getId()+ " не найдено. Ничего не изменено.");
         }
     }
 
