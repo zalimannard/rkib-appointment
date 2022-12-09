@@ -1,8 +1,29 @@
 package ru.zalimannard.bachelorthesisserver.service;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+
 import java.util.Objects;
 
-public record Service(int id, String name) {
+@Entity
+@Table(name = "services")
+@Builder
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
+@AllArgsConstructor
+public class Service {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Integer id;
+
+    @NotNull
+    @Column(name = "name", nullable = false)
+    private String name;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
