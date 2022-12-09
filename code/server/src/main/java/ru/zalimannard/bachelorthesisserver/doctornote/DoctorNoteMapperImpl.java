@@ -28,8 +28,8 @@ public class DoctorNoteMapperImpl implements DoctorNoteMapper {
     public DoctorNoteDto toDto(DoctorNote entity) {
         return DoctorNoteDto.builder()
                 .id(entity.getId())
-                .institutionId(obtainInstitutionId(entity.institution))
-                .diagnosis(entity.diagnosis)
+                .institutionId(obtainInstitutionId(entity.getInstitution()))
+                .diagnosis(entity.getDiagnosis())
                 .build();
     }
 

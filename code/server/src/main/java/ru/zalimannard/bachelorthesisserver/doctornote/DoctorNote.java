@@ -20,15 +20,15 @@ public class DoctorNote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    Integer id;
+    private Integer id;
 
     @NotNull
     @Column(name = "diagnosis")
-    String diagnosis;
+    private String diagnosis;
 
     @ManyToOne
     @JoinColumn(name = "institution_id", nullable = false)
-    Institution institution;
+    private Institution institution;
 
     @Override
     public boolean equals(Object o) {
