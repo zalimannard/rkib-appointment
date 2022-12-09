@@ -2,6 +2,7 @@ package ru.zalimannard.bachelorthesisserver.patient;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,39 +11,44 @@ import java.util.List;
 @RequestMapping("${application.endpoint.root}" + "${application.endpoint.patient}")
 @Tag(name = "Пациенты")
 public class PatientController {
-    private final PatientRepository patientRepository;
+    private final PatientService patientService;
 
-    public PatientController(PatientRepository patientRepository) {
-        this.patientRepository = patientRepository;
+    public PatientController(PatientService patientService) {
+        this.patientService = patientService;
     }
 
     @GetMapping("{id}")
     @Operation(summary = "Получение пациента")
-    public Patient get(@PathVariable int id) {
-        return patientRepository.retrieve(id);
+    @ResponseStatus(HttpStatus.OK)
+    public PatientDto get(@PathVariable int id) {
+        return patientService.get(id);
     }
 
     @GetMapping
     @Operation(summary = "Получение списка пациентов")
-    public List<Patient> getAll() {
-        return patientRepository.retrieveAll();
+    @ResponseStatus(HttpStatus.OK)
+    public List<PatientDto> getAll() {
+        return patientService.getAll();
     }
 
     @PostMapping
     @Operation(summary = "Создание нового пациента")
-    public void post(@RequestBody Patient patient) {
-        patientRepository.create(patient);
+    @ResponseStatus(HttpStatus.CREATED)
+    public PatientDto post(@RequestBody PatientDto patientDto) {
+        return patientService.post(patientDto);
     }
 
     @PutMapping
     @Operation(summary = "Обновление существующего пациента")
-    public void put(@RequestBody Patient patient) {
-        patientRepository.update(patient);
+    @ResponseStatus(HttpStatus.OK)
+    public PatientDto put(@RequestBody PatientDto patientDto) {
+        return patientService.put(patientDto);
     }
 
     @DeleteMapping("{id}")
     @Operation(summary = "Удаление пациента")
-    public void delete(@PathVariable int id) {
-        patientRepository.delete(id);
+    @ResponseStatus(HttpStatus.OK)
+    public PatientDto delete(@PathVariable int id) {
+        return patientService.delete(id);
     }
 }
