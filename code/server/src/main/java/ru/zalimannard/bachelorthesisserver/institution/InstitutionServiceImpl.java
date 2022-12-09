@@ -30,17 +30,17 @@ public class InstitutionServiceImpl implements InstitutionService {
 
     @Override
     public List<InstitutionDto> getAll() {
-        Iterable<Institution> institutionEntities = institutionRepository.findAll();
+        Iterable<Institution> institutions = institutionRepository.findAll();
         List<InstitutionDto> institutionDtos = new ArrayList<>();
-        institutionEntities.forEach(institutionEntity -> institutionDtos.add(institutionMapper.toDto(institutionEntity)));
+        institutions.forEach(institution -> institutionDtos.add(institutionMapper.toDto(institution)));
         return institutionDtos;
     }
 
     @Override
     public InstitutionDto post(InstitutionDto institutionDto) {
-        Institution institutionToAdd = institutionMapper.toEntity(institutionDto);
-        Institution createdEntity = institutionRepository.save(institutionToAdd);
-        return institutionMapper.toDto(createdEntity);
+        Institution institution = institutionMapper.toEntity(institutionDto);
+        Institution addedInstitution = institutionRepository.save(institution);
+        return institutionMapper.toDto(addedInstitution);
     }
 
     @Override

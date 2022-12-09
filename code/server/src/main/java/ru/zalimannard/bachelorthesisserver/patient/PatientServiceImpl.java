@@ -38,9 +38,9 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public PatientDto post(PatientDto patientDto) {
-        Patient patientToAdd = patientMapper.toEntity(patientDto);
-        Patient createdPatient = patientRepository.save(patientToAdd);
-        return patientMapper.toDto(createdPatient);
+        Patient patient = patientMapper.toEntity(patientDto);
+        Patient addedPatient = patientRepository.save(patient);
+        return patientMapper.toDto(addedPatient);
     }
 
     @Override

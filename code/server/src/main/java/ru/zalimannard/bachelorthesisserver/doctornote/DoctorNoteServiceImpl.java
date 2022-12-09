@@ -39,9 +39,9 @@ public class DoctorNoteServiceImpl implements DoctorNoteService {
 
     @Override
     public DoctorNoteDto post(DoctorNoteDto doctorNoteDto) {
-        DoctorNote doctorNoteToAdd = doctorNoteMapper.toEntity(doctorNoteDto);
-        DoctorNote doctorNoteCreated = doctorNoteRepository.save(doctorNoteToAdd);
-        return doctorNoteMapper.toDto(doctorNoteCreated);
+        DoctorNote doctorNote = doctorNoteMapper.toEntity(doctorNoteDto);
+        DoctorNote addedDoctorNote = doctorNoteRepository.save(doctorNote);
+        return doctorNoteMapper.toDto(addedDoctorNote);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class DoctorNoteServiceImpl implements DoctorNoteService {
         if (doctorNoteRepository.existsById(doctorNoteDto.getId())) {
             DoctorNote doctorNote = doctorNoteMapper.toEntity(doctorNoteDto);
             doctorNoteRepository.save(doctorNote);
-            return get(doctorNoteDto.getId());
+            return get(doctorNote.getId());
         } else {
             throw new NotFoundException("Направление с id=" + doctorNoteDto.getId() + " не найдено. Ничего не изменено.");
         }
