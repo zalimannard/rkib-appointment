@@ -6,7 +6,7 @@
 
 ## Схема данных
 
-![Логическая схема данных](documentation/er-model.png)
+![Логическая схема данных](documentation/er-logical.png)
 
 ## Начать
 

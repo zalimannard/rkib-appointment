@@ -21,20 +21,17 @@
 <identityColumn>true</identityColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="type_id" id="ABE8E219-36DB-AC34-6281-282125C6C0EB">
+<Column name="type_code" id="50C34CA2-F19F-3EA9-C15E-F9D353243DC8">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 21:36:41 UTC</createdTime>
-<generatorID>C73BF713-2E98-BC4D-ACD5-87132955B403</generatorID>
+<createdTime>2022-12-09 13:32:21 UTC</createdTime>
+<generatorID>45C8551E-0509-F7A7-BEB5-E8F1A0506BA7</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT019</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-<previousColumn>false</previousColumn>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>1 CHAR</dataTypeSize>
+<ownDataTypeParameters>1 CHAR,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
-<associations>
-<colAssociation fkAssociation="CA35193E-A688-07D6-9A97-E255DEA3998F" referredColumn="AFEABCD0-8BB4-A673-B57A-A35B7C9DCF6A"/>
-</associations>
 </Column>
 <Column name="name" id="4C8AE2EE-A395-027F-64C6-401512CC010F">
 <createdBy>zalimannard</createdBy>
@@ -60,17 +57,6 @@
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
 <colUsage columnID="4B82C516-AA0F-2E1B-8887-BD8FBC37C593"/>
-</indexColumnUsage>
-</ind_PK_UK>
-<ind_PK_UK id="4763E5E5-5084-9EF1-BEC1-AC3BDA275F9A" name="application_statuses_application_status_types_FK">
-<createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 21:36:41 UTC</createdTime>
-<generatorID>AE313030-C9A5-0171-9305-BDC230A5602F</generatorID>
-<ownerDesignName>er-model-source</ownerDesignName>
-<indexState>Foreign Key</indexState>
-<isSurrogateKey>false</isSurrogateKey>
-<indexColumnUsage>
-<colUsage columnID="ABE8E219-36DB-AC34-6281-282125C6C0EB"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>

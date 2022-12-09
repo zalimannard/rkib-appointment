@@ -29,20 +29,19 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <preferredAbbreviation>id</preferredAbbreviation>
 </Attribute>
-<Attribute name="Тип" id="8CD38E63-7613-C53D-421F-E9D60770D6E0">
+<Attribute name="Тип" id="88360D7C-85FD-F1C4-1515-8A2E7925705C">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 11:11:50 UTC</createdTime>
-<generatorID>0DDF186E-701D-AA05-C4B9-9E72F68D845F</generatorID>
+<createdTime>2022-12-09 13:14:26 UTC</createdTime>
 <ownerDesignName>er-model-source</ownerDesignName>
 <engineerTo>
 <item key="6EF69BCC-AC26-7066-E13C-9CD5EC6D3FC4" value="true"/>
 </engineerTo>
-<referedAttribute>39970E37-C538-D0D2-AAB7-214BFED5A943</referedAttribute>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT019</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-<preferredAbbreviation>type_id</preferredAbbreviation>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>1 CHAR</dataTypeSize>
+<ownDataTypeParameters>1 CHAR,,</ownDataTypeParameters>
+<preferredAbbreviation>type_code</preferredAbbreviation>
 </Attribute>
 <Attribute name="Название" id="1A0EBAA7-9E1D-02E9-E2CA-6E1037729DE4">
 <createdBy>zalimannard</createdBy>
