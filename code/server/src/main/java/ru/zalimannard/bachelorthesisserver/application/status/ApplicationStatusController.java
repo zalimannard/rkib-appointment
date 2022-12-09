@@ -10,39 +10,39 @@ import java.util.List;
 @RequestMapping("${application.endpoint.root}" + "${application.endpoint.applicationStatus}")
 @Tag(name = "Статусы обращений")
 public class ApplicationStatusController {
-    private final ApplicationStatusRepository applicationStatusRepository;
+    private final ApplicationStatusService applicationStatusService;
 
-    public ApplicationStatusController(ApplicationStatusRepository applicationStatusRepository) {
-        this.applicationStatusRepository = applicationStatusRepository;
+    public ApplicationStatusController(ApplicationStatusService applicationStatusService) {
+        this.applicationStatusService = applicationStatusService;
     }
 
     @GetMapping("{id}")
     @Operation(summary = "Получение статуса обращений")
-    public ApplicationStatus get(@PathVariable int id) {
-        return applicationStatusRepository.retrieve(id);
+    public ApplicationStatusDto get(@PathVariable int id) {
+        return applicationStatusService.get(id);
     }
 
     @GetMapping
     @Operation(summary = "Получение списка статусов обращений")
-    public List<ApplicationStatus> getAll() {
-        return applicationStatusRepository.retrieveAll();
+    public List<ApplicationStatusDto> getAll() {
+        return applicationStatusService.getAll();
     }
 
     @PostMapping
     @Operation(summary = "Создание нового статуса обращений")
-    public void post(@RequestBody ApplicationStatus applicationStatus) {
-        applicationStatusRepository.create(applicationStatus);
+    public ApplicationStatusDto post(@RequestBody ApplicationStatusDto applicationStatusDto) {
+        return applicationStatusService.post(applicationStatusDto);
     }
 
     @PutMapping
     @Operation(summary = "Обновление существующего статуса обращений")
-    public void put(@RequestBody ApplicationStatus applicationStatus) {
-        applicationStatusRepository.update(applicationStatus);
+    public ApplicationStatusDto put(@RequestBody ApplicationStatusDto applicationStatusDto) {
+        return applicationStatusService.put(applicationStatusDto);
     }
 
     @DeleteMapping("{id}")
     @Operation(summary = "Удаление статуса обращений")
-    public void delete(@PathVariable int id) {
-        applicationStatusRepository.delete(id);
+    public ApplicationStatusDto delete(@PathVariable int id) {
+        return applicationStatusService.delete(id);
     }
 }
