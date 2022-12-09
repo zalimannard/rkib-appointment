@@ -21,4 +21,3 @@ application:
     unscheduledVisit: /unscheduledVisits
     application: /applications
     applicationStatus: /applicationStatuses
-    applicationStatusType: /applicationStatusTypes
