@@ -1,9 +1,7 @@
 package ru.zalimannard.bachelorthesisserver.doctornote;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.Hibernate;
 import ru.zalimannard.bachelorthesisserver.institution.Institution;
 
 import java.util.Objects;
@@ -22,7 +20,6 @@ public class DoctorNote {
     @Column(name = "id")
     private Integer id;
 
-    @NotNull
     @Column(name = "diagnosis", nullable = false)
     private String diagnosis;
 

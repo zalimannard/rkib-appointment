@@ -1,9 +1,7 @@
 package ru.zalimannard.bachelorthesisserver.scheduleelments.status;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import ru.zalimannard.bachelorthesisserver.application.status.ApplicationStatusType;
 
 import java.util.Objects;
 
@@ -21,11 +19,9 @@ public class ScheduleElementStatus {
     @Column(name = "id")
     private Integer id;
 
-    @NotNull
     @Column(name = "type_code", nullable = false)
     private ScheduleElementStatusType type;
 
-    @NotNull
     @Column(name = "name", nullable = false)
     private String name;
 

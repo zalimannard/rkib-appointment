@@ -1,7 +1,6 @@
 package ru.zalimannard.bachelorthesisserver.doctor;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.Objects;
@@ -20,15 +19,12 @@ public class Doctor {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @NotNull
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @NotNull
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @NotNull
     @Column(name = "middle_name", nullable = false)
     private String middleName;
 

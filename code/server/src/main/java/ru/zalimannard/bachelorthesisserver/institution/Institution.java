@@ -1,9 +1,7 @@
 package ru.zalimannard.bachelorthesisserver.institution;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import java.util.Objects;
 
@@ -21,7 +19,6 @@ public class Institution {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @NotNull
     @Column(name = "name", nullable = false)
     private String name;
 

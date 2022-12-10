@@ -1,7 +1,6 @@
 package ru.zalimannard.bachelorthesisserver.service;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.Objects;
@@ -20,7 +19,6 @@ public class Service {
     @Column(name = "id")
     private Integer id;
 
-    @NotNull
     @Column(name = "name", nullable = false)
     private String name;
 

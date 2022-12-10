@@ -1,7 +1,6 @@
 package ru.zalimannard.bachelorthesisserver.scheduleelments;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import ru.zalimannard.bachelorthesisserver.doctor.Doctor;
 import ru.zalimannard.bachelorthesisserver.scheduleelments.status.ScheduleElementStatus;
@@ -35,7 +34,6 @@ public class ScheduleElement {
     @JoinColumn(name = "status_id", nullable = false)
     private ScheduleElementStatus status;
 
-    @NotNull
     @Column(name = "appointment_timestamp", nullable = false)
     private Timestamp appointmentTimestamp;
 }
