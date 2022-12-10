@@ -10,39 +10,39 @@ import java.util.List;
 @RequestMapping("${application.endpoint.root}" + "${application.endpoint.application}")
 @Tag(name = "Обращения")
 public class ApplicationController {
-    private final ApplicationRepository applicationRepository;
+    private final ApplicationService applicationService;
 
-    public ApplicationController(ApplicationRepository applicationRepository) {
-        this.applicationRepository = applicationRepository;
+    public ApplicationController(ApplicationService applicationService) {
+        this.applicationService = applicationService;
     }
 
     @GetMapping("{id}")
     @Operation(summary = "Получение обращения")
-    public Application get(@PathVariable int id) {
-        return applicationRepository.retrieve(id);
+    public ApplicationDto get(@PathVariable int id) {
+        return applicationService.get(id);
     }
 
     @GetMapping
     @Operation(summary = "Получение списка обращений")
-    public List<Application> getAll() {
-        return applicationRepository.retrieveAll();
+    public List<ApplicationDto> getAll() {
+        return applicationService.getAll();
     }
 
     @PostMapping
     @Operation(summary = "Создание нового обращения")
-    public void post(@RequestBody Application application) {
-        applicationRepository.create(application);
+    public ApplicationDto post(@RequestBody ApplicationDto applicationDto) {
+        return applicationService.post(applicationDto);
     }
 
     @PutMapping
     @Operation(summary = "Обновление существующего обращения")
-    public void put(@RequestBody Application application) {
-        applicationRepository.update(application);
+    public ApplicationDto put(@RequestBody ApplicationDto applicationDto) {
+        return applicationService.put(applicationDto);
     }
 
     @DeleteMapping("{id}")
     @Operation(summary = "Удаление обращения")
-    public void delete(@PathVariable int id) {
-        applicationRepository.delete(id);
+    public ApplicationDto delete(@PathVariable int id) {
+        return applicationService.delete(id);
     }
 }
