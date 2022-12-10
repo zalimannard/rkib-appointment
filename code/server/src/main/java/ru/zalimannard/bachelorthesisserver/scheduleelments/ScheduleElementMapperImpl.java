@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 import ru.zalimannard.bachelorthesisserver.doctor.Doctor;
 import ru.zalimannard.bachelorthesisserver.doctor.DoctorRepository;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
-import ru.zalimannard.bachelorthesisserver.institution.Institution;
 import ru.zalimannard.bachelorthesisserver.scheduleelments.status.ScheduleElementStatus;
 import ru.zalimannard.bachelorthesisserver.scheduleelments.status.ScheduleElementStatusRepository;
 import ru.zalimannard.bachelorthesisserver.service.Service;

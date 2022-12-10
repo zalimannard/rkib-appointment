@@ -50,7 +50,7 @@ public class InstitutionServiceImpl implements InstitutionService {
             institutionRepository.save(institution);
             return read(institutionDto.getId());
         } else {
-            throw new NotFoundException("Учреждение с id=" + institutionDto.getId()+ " не найдено. Ничего не изменено.");
+            throw new NotFoundException("Учреждение с id=" + institutionDto.getId() + " не найдено. Ничего не изменено.");
         }
     }
 

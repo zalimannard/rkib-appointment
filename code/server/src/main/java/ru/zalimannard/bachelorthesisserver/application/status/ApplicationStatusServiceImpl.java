@@ -50,7 +50,7 @@ public class ApplicationStatusServiceImpl implements ApplicationStatusService {
             applicationStatusRepository.save(applicationStatus);
             return get(applicationStatusDto.getId());
         } else {
-            throw new NotFoundException("Статус обращения с id=" + applicationStatusDto.getId()+ " не найден. Ничего не изменено.");
+            throw new NotFoundException("Статус обращения с id=" + applicationStatusDto.getId() + " не найден. Ничего не изменено.");
         }
     }
 
