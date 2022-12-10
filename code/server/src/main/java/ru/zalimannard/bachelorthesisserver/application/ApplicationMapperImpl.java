@@ -27,7 +27,7 @@ public class ApplicationMapperImpl implements ApplicationMapper {
 
     @Override
     public Application toEntity(ApplicationDto dto) {
-        return Application.builder()
+        Application entity = Application.builder()
                 .id(dto.getId())
                 .parentApplication(obtainParentApplication(dto.getParentApplicationId()))
                 .patient(obtainPatient(dto.getPatientId()))
@@ -35,11 +35,15 @@ public class ApplicationMapperImpl implements ApplicationMapper {
                 .status(obtainStatus(dto.getStatusId()))
                 .finalDiagnosis(dto.getFinalDiagnosis())
                 .build();
+        if (entity.getParentApplication() == null) {
+            entity.setParentApplication(entity);
+        }
+        return entity;
     }
 
     @Override
     public ApplicationDto toDto(Application entity) {
-        return ApplicationDto.builder()
+        ApplicationDto dto = ApplicationDto.builder()
                 .id(entity.getId())
                 .parentApplicationId(obtainParentApplicationId(entity.getParentApplication()))
                 .patientId(obtainPatientId(entity.getPatient()))
@@ -47,20 +51,25 @@ public class ApplicationMapperImpl implements ApplicationMapper {
                 .statusId(obtainStatusId(entity.getStatus()))
                 .finalDiagnosis(entity.getFinalDiagnosis())
                 .build();
+        return dto;
     }
 
     @Override
-    public int obtainParentApplicationId(Application application) {
-        return application.getParentApplication().getId();
-    }
-
-    @Override
-    public Application obtainParentApplication(int applicationId) {
-        Optional<Application> applicationOptional = applicationRepository.findById(applicationId);
-        if (applicationOptional.isPresent()) {
-            return applicationOptional.get();
+    public Integer obtainParentApplicationId(Application application) {
+        if (application == null) {
+            return null;
         } else {
-            throw new NotFoundException("Вложенного в обращение родительского обращения не существует");
+            return application.getId();
+        }
+    }
+
+    @Override
+    public Application obtainParentApplication(Integer applicationId) {
+        if (applicationId == null) {
+            return null;
+        } else {
+            Optional<Application> applicationOptional = applicationRepository.findById(applicationId);
+            return applicationOptional.orElse(null);
         }
     }
 

@@ -4,9 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
-import ru.zalimannard.bachelorthesisserver.application.status.ApplicationStatus;
-import ru.zalimannard.bachelorthesisserver.doctornote.DoctorNote;
-import ru.zalimannard.bachelorthesisserver.patient.Patient;
 
 @Data
 @Builder
@@ -15,7 +12,6 @@ public class ApplicationDto {
     @JsonProperty("id")
     private Integer id;
 
-    @NotNull
     @JsonProperty("parentApplicationId")
     private Integer parentApplicationId;
 

@@ -22,7 +22,7 @@ public class Application {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "parent_application_id", nullable = false)
+    @JoinColumn(name = "parent_application_id", nullable = true)
     private Application parentApplication;
 
     @ManyToOne

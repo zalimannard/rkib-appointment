@@ -9,9 +9,9 @@ public interface ApplicationMapper {
 
     ApplicationDto toDto(Application entity);
 
-    int obtainParentApplicationId(Application application);
+    Integer obtainParentApplicationId(Application application);
 
-    Application obtainParentApplication(int applicationId);
+    Application obtainParentApplication(Integer applicationId);
 
     int obtainPatientId(Patient patient);
 
