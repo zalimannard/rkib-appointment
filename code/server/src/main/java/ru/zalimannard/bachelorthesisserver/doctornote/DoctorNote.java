@@ -20,12 +20,12 @@ public class DoctorNote {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "diagnosis", nullable = false)
-    private String diagnosis;
-
     @ManyToOne
     @JoinColumn(name = "institution_id", nullable = false)
     private Institution institution;
+
+    @Column(name = "diagnosis", nullable = false)
+    private String diagnosis;
 
     @Override
     public boolean equals(Object o) {
