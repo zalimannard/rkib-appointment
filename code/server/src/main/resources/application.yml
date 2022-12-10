@@ -15,7 +15,6 @@ application:
     patient: /patients
     scheduleElement: /scheduleElements
     scheduleElementStatus: /scheduleElementStatuses
-    scheduleElementStatusType: /scheduleElementStatusTypes
     scheduledVisit: /scheduledVisits
     service: /services
     unscheduledVisit: /unscheduledVisits
