@@ -29,21 +29,6 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <preferredAbbreviation>id</preferredAbbreviation>
 </Attribute>
-<Attribute name="Статус" id="31243754-0BAD-5B4C-51B1-AA1419538885">
-<createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 11:15:38 UTC</createdTime>
-<generatorID>9E847DAC-F85F-CEC4-962C-01179E2939D6</generatorID>
-<ownerDesignName>er-model-source</ownerDesignName>
-<engineerTo>
-<item key="6EF69BCC-AC26-7066-E13C-9CD5EC6D3FC4" value="true"/>
-</engineerTo>
-<referedAttribute>DFB1EA5B-53A6-9755-7650-49FE58C55CEA</referedAttribute>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT019</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-<preferredAbbreviation>status_id</preferredAbbreviation>
-</Attribute>
 <Attribute name="Врач" id="7C9242FD-63A4-1D42-AAD8-3F92C4925B4E">
 <createdBy>zalimannard</createdBy>
 <createdTime>2022-12-06 11:16:00 UTC</createdTime>
@@ -73,6 +58,21 @@
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <preferredAbbreviation>service_id</preferredAbbreviation>
+</Attribute>
+<Attribute name="Статус" id="31243754-0BAD-5B4C-51B1-AA1419538885">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-06 11:15:38 UTC</createdTime>
+<generatorID>9E847DAC-F85F-CEC4-962C-01179E2939D6</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="6EF69BCC-AC26-7066-E13C-9CD5EC6D3FC4" value="true"/>
+</engineerTo>
+<referedAttribute>DFB1EA5B-53A6-9755-7650-49FE58C55CEA</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<preferredAbbreviation>status_id</preferredAbbreviation>
 </Attribute>
 <Attribute name="Временная метка" id="8534D6BC-51F2-3741-2C58-E16093850845">
 <createdBy>zalimannard</createdBy>

@@ -21,21 +21,6 @@
 <identityColumn>true</identityColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="status_id" id="3D8A6851-7B79-D79D-A898-0C443A4AD171">
-<createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 21:36:41 UTC</createdTime>
-<generatorID>31243754-0BAD-5B4C-51B1-AA1419538885</generatorID>
-<ownerDesignName>er-model-source</ownerDesignName>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT019</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-<previousColumn>false</previousColumn>
-<autoIncrementCycle>false</autoIncrementCycle>
-<associations>
-<colAssociation fkAssociation="E4DAA884-50AC-22DB-DA22-A66507F6A838" referredColumn="DDA73A7F-89BF-B1FD-7608-A0B48EDF5DB9"/>
-</associations>
-</Column>
 <Column name="doctor_id" id="97558B94-FA4D-9519-9DCC-7D237ACF156B">
 <createdBy>zalimannard</createdBy>
 <createdTime>2022-12-06 21:36:41 UTC</createdTime>
@@ -64,6 +49,21 @@
 <autoIncrementCycle>false</autoIncrementCycle>
 <associations>
 <colAssociation fkAssociation="FA44BDC3-7F55-0767-C125-334C508D5E8F" referredColumn="E171E129-216D-0F7E-D4EC-78926804447A"/>
+</associations>
+</Column>
+<Column name="status_id" id="3D8A6851-7B79-D79D-A898-0C443A4AD171">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
+<generatorID>31243754-0BAD-5B4C-51B1-AA1419538885</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="E4DAA884-50AC-22DB-DA22-A66507F6A838" referredColumn="DDA73A7F-89BF-B1FD-7608-A0B48EDF5DB9"/>
 </associations>
 </Column>
 <Column name="appointment_timestamp" id="45BE3D98-320E-804E-1B91-25723B9A6663">
