@@ -77,9 +77,9 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="comment" id="062E95B5-586D-16CE-2081-5022D4019861">
+<Column name="commentary" id="53A76A17-D170-4644-7BBE-0422AC02C527">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-06 21:36:41 UTC</createdTime>
+<createdTime>2022-12-10 21:30:53 UTC</createdTime>
 <generatorID>E2AA9EA0-4C7E-EDF3-FA91-EECA1BC3EF7C</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>

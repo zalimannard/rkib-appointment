@@ -38,7 +38,7 @@ public class UnscheduledVisit {
     @Column(name = "appointment_timestamp", nullable = false)
     private Timestamp appointmentTimestamp;
 
-    @Column(name = "comment", nullable = false)
+    @Column(name = "commentary", nullable = false)
     private String comment;
 
     @Override
