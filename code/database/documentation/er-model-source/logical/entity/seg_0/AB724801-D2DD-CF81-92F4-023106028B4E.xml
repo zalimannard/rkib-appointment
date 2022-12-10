@@ -29,10 +29,10 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <preferredAbbreviation>id</preferredAbbreviation>
 </Attribute>
-<Attribute name="Родительское обращение" id="64269896-A75C-081C-3700-694EE55AF7C0">
+<Attribute name="Родительское обращение" id="9A460C0C-286A-3870-482D-452CD7ABCEB4">
 <createdBy>zalimannard</createdBy>
-<createdTime>2022-12-05 23:29:41 UTC</createdTime>
-<generatorID>120F6A50-5AA2-B5AB-3FB2-8024AD65D89C</generatorID>
+<createdTime>2022-12-10 13:39:33 UTC</createdTime>
+<generatorID>DF1A1443-F762-1CEC-802A-EC8CBFAE540F</generatorID>
 <ownerDesignName>er-model-source</ownerDesignName>
 <engineerTo>
 <item key="6EF69BCC-AC26-7066-E13C-9CD5EC6D3FC4" value="true"/>
