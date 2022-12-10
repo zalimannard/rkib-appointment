@@ -1,18 +1,29 @@
 package ru.zalimannard.bachelorthesisserver.scheduledvisit;
 
-import java.util.Objects;
+import jakarta.persistence.*;
+import lombok.*;
+import ru.zalimannard.bachelorthesisserver.application.Application;
+import ru.zalimannard.bachelorthesisserver.scheduleelments.ScheduleElement;
 
-public record ScheduledVisit(int id, int planElementId, int visitId) {
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ScheduledVisit scheduledVisit = (ScheduledVisit) o;
-        return id == scheduledVisit.id;
-    }
+@Entity
+@Table(name = "scheduled_visits")
+@Builder
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
+@AllArgsConstructor
+public class ScheduledVisit {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+    @ManyToOne
+    @JoinColumn(name = "schedule_element_id", nullable = false)
+    private ScheduleElement scheduleElement;
+
+    @ManyToOne
+    @JoinColumn(name = "application_id", nullable = false)
+    private Application application;
 }
