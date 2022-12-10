@@ -29,20 +29,6 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <preferredAbbreviation>id</preferredAbbreviation>
 </Attribute>
-<Attribute name="Название" id="C93409D1-ABE3-3016-802F-977FFE6E662E">
-<createdBy>zalimannard</createdBy>
-<createdTime>2022-12-05 23:20:12 UTC</createdTime>
-<ownerDesignName>er-model-source</ownerDesignName>
-<engineerTo>
-<item key="6EF69BCC-AC26-7066-E13C-9CD5EC6D3FC4" value="true"/>
-</engineerTo>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT024</logicalDatatype>
-<dataTypeSize>100 CHAR</dataTypeSize>
-<ownDataTypeParameters>100 CHAR,,</ownDataTypeParameters>
-<preferredAbbreviation>name</preferredAbbreviation>
-</Attribute>
 <Attribute name="Тип" id="45C8551E-0509-F7A7-BEB5-E8F1A0506BA7">
 <createdBy>zalimannard</createdBy>
 <createdTime>2022-12-09 13:16:15 UTC</createdTime>
@@ -56,6 +42,20 @@
 <dataTypeSize>1 CHAR</dataTypeSize>
 <ownDataTypeParameters>1 CHAR,,</ownDataTypeParameters>
 <preferredAbbreviation>type_code</preferredAbbreviation>
+</Attribute>
+<Attribute name="Название" id="C93409D1-ABE3-3016-802F-977FFE6E662E">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-05 23:20:12 UTC</createdTime>
+<ownerDesignName>er-model-source</ownerDesignName>
+<engineerTo>
+<item key="6EF69BCC-AC26-7066-E13C-9CD5EC6D3FC4" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 CHAR</dataTypeSize>
+<ownDataTypeParameters>100 CHAR,,</ownDataTypeParameters>
+<preferredAbbreviation>name</preferredAbbreviation>
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
