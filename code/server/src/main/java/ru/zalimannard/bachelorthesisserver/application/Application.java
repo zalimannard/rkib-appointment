@@ -38,6 +38,6 @@ public class Application {
     private ApplicationStatus status;
 
     @NotNull
-    @Column(name = "final_diagnosis")
+    @Column(name = "final_diagnosis", nullable = false)
     private String finalDiagnosis;
 }

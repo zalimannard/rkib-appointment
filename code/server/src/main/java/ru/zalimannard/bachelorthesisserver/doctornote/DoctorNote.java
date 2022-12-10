@@ -23,7 +23,7 @@ public class DoctorNote {
     private Integer id;
 
     @NotNull
-    @Column(name = "diagnosis")
+    @Column(name = "diagnosis", nullable = false)
     private String diagnosis;
 
     @ManyToOne
