@@ -10,39 +10,39 @@ import java.util.List;
 @RequestMapping("${application.endpoint.root}" + "${application.endpoint.scheduleElementStatus}")
 @Tag(name = "Статусы элементов плана")
 public class ScheduleElementStatusController {
-    private final ScheduleElementStatusRepository planElementStatusRepository;
+    private final ScheduleElementStatusService scheduleElementStatusService;
 
-    public ScheduleElementStatusController(ScheduleElementStatusRepository planElementStatusRepository) {
-        this.planElementStatusRepository = planElementStatusRepository;
+    public ScheduleElementStatusController(ScheduleElementStatusService scheduleElementStatusService) {
+        this.scheduleElementStatusService = scheduleElementStatusService;
     }
 
     @GetMapping("{id}")
     @Operation(summary = "Получение статуса элементов плана")
-    public ScheduleElementStatus get(@PathVariable int id) {
-        return planElementStatusRepository.retrieve(id);
+    public ScheduleElementStatusDto get(@PathVariable int id) {
+        return scheduleElementStatusService.get(id);
     }
 
     @GetMapping
     @Operation(summary = "Получение списка статусов элементов плана")
-    public List<ScheduleElementStatus> getAll() {
-        return planElementStatusRepository.retrieveAll();
+    public List<ScheduleElementStatusDto> getAll() {
+        return scheduleElementStatusService.getAll();
     }
 
     @PostMapping
     @Operation(summary = "Создание нового статуса элементов плана")
-    public void post(@RequestBody ScheduleElementStatus scheduleElementStatus) {
-        planElementStatusRepository.create(scheduleElementStatus);
+    public ScheduleElementStatusDto post(@RequestBody ScheduleElementStatusDto scheduleElementStatusDto) {
+        return scheduleElementStatusService.post(scheduleElementStatusDto);
     }
 
     @PutMapping
     @Operation(summary = "Обновление существующего статуса элементов плана")
-    public void put(@RequestBody ScheduleElementStatus scheduleElementStatus) {
-        planElementStatusRepository.update(scheduleElementStatus);
+    public ScheduleElementStatusDto put(@RequestBody ScheduleElementStatusDto scheduleElementStatusDto) {
+        return scheduleElementStatusService.put(scheduleElementStatusDto);
     }
 
     @DeleteMapping("{id}")
     @Operation(summary = "Удаление статуса элементов плана")
-    public void delete(@PathVariable int id) {
-        planElementStatusRepository.delete(id);
+    public ScheduleElementStatusDto delete(@PathVariable int id) {
+        return scheduleElementStatusService.delete(id);
     }
 }
