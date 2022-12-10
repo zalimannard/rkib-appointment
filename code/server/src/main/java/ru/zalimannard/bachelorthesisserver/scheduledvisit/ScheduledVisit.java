@@ -1,20 +1,29 @@
 package ru.zalimannard.bachelorthesisserver.scheduledvisit;
 
-import ru.zalimannard.bachelorthesisserver.BaseEntity;
+import jakarta.persistence.*;
+import lombok.*;
+import ru.zalimannard.bachelorthesisserver.application.Application;
+import ru.zalimannard.bachelorthesisserver.scheduleelments.ScheduleElement;
 
-import java.util.Objects;
+@Entity
+@Table(name = "scheduled_visits")
+@Builder
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
+@AllArgsConstructor
+public class ScheduledVisit {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
 
-public record ScheduledVisit(int id, int planElementId, int visitId) implements BaseEntity {
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ScheduledVisit scheduledVisit = (ScheduledVisit) o;
-        return id == scheduledVisit.id;
-    }
+    @ManyToOne
+    @JoinColumn(name = "schedule_element_id", nullable = false)
+    private ScheduleElement scheduleElement;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+    @ManyToOne
+    @JoinColumn(name = "application_id", nullable = false)
+    private Application application;
 }

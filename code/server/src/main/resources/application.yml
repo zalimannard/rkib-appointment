@@ -9,16 +9,14 @@ spring:
 application:
   endpoint:
     root: /api
-    doctorNote: /doctorNote
-    employee: /employee
-    institution: /institution
-    patient: /patient
-    planElement: /planElement
-    planElementStatus: /planElementStatus
-    planElementType: /planElementType
-    scheduled: /scheduled
-    services: /service
-    unscheduled: /unscheduled
-    visit: /visit
-    visitStatus: /visitStatus
-    visitType: /visitType
+    doctorNote: /doctorNotes
+    doctor: /doctors
+    institution: /institutions
+    patient: /patients
+    scheduleElement: /scheduleElements
+    scheduleElementStatus: /scheduleElementStatuses
+    scheduledVisit: /scheduledVisits
+    service: /services
+    unscheduledVisit: /unscheduledVisits
+    application: /applications
+    applicationStatus: /applicationStatuses

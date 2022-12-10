@@ -7,42 +7,42 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("${application.endpoint.root}" + "${application.endpoint.unscheduled}")
-@Tag(name = "Незапланированные обращения")
+@RequestMapping("${application.endpoint.root}" + "${application.endpoint.unscheduledVisit}")
+@Tag(name = "Незапланированные посещения")
 public class UnscheduledVisitController {
-    private final UnscheduledVisitRepository unscheduledVisitRepository;
+    private final UnscheduledVisitService unscheduledVisitService;
 
-    public UnscheduledVisitController(UnscheduledVisitRepository unscheduledVisitRepository) {
-        this.unscheduledVisitRepository = unscheduledVisitRepository;
+    public UnscheduledVisitController(UnscheduledVisitService unscheduledVisitService) {
+        this.unscheduledVisitService = unscheduledVisitService;
     }
 
     @GetMapping("{id}")
-    @Operation(summary = "Получение незапланированного обращения")
-    public UnscheduledVisit get(@PathVariable int id) {
-        return unscheduledVisitRepository.retrieve(id);
+    @Operation(summary = "Получение незапланированного посещения")
+    public UnscheduledVisitDto get(@PathVariable int id) {
+        return unscheduledVisitService.read(id);
     }
 
     @GetMapping
-    @Operation(summary = "Получение списка незапланированных обращений")
-    public List<UnscheduledVisit> getAll() {
-        return unscheduledVisitRepository.retrieveAll();
+    @Operation(summary = "Получение списка незапланированных посещения")
+    public List<UnscheduledVisitDto> getAll() {
+        return unscheduledVisitService.list();
     }
 
     @PostMapping
-    @Operation(summary = "Создание нового незапланированного обращения")
-    public void post(@RequestBody UnscheduledVisit unscheduledVisit) {
-        unscheduledVisitRepository.create(unscheduledVisit);
+    @Operation(summary = "Создание нового незапланированного посещения")
+    public UnscheduledVisitDto post(@RequestBody UnscheduledVisitDto unscheduledVisitDto) {
+        return unscheduledVisitService.create(unscheduledVisitDto);
     }
 
     @PutMapping
-    @Operation(summary = "Обновление существующего незапланированного обращения")
-    public void put(@RequestBody UnscheduledVisit unscheduledVisit) {
-        unscheduledVisitRepository.update(unscheduledVisit);
+    @Operation(summary = "Обновление существующего незапланированного посещения")
+    public UnscheduledVisitDto put(@RequestBody UnscheduledVisitDto unscheduledVisitDto) {
+        return unscheduledVisitService.update(unscheduledVisitDto);
     }
 
     @DeleteMapping("{id}")
-    @Operation(summary = "Удаление незапланированного обращения")
-    public void delete(@PathVariable int id) {
-        unscheduledVisitRepository.delete(id);
+    @Operation(summary = "Удаление незапланированного посещения")
+    public UnscheduledVisitDto delete(@PathVariable int id) {
+        return unscheduledVisitService.delete(id);
     }
 }

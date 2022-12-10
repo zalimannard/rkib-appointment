@@ -1,20 +1,37 @@
 package ru.zalimannard.bachelorthesisserver.institution;
 
-import ru.zalimannard.bachelorthesisserver.BaseEntity;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.Objects;
 
-public record Institution(int id, String name) implements BaseEntity {
+@Entity
+@Table(name = "institutions")
+@Builder
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
+@AllArgsConstructor
+public class Institution {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Integer id;
+
+    @Column(name = "name", nullable = false)
+    private String name;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Institution that = (Institution) o;
-        return id == that.id;
+        return Objects.equals(getId(), that.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(getId());
     }
 }

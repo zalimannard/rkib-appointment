@@ -6,7 +6,7 @@
 
 ## Схема данных
 
-![Логическая схема данных](documentation/er-model.png)
+![Логическая схема данных](documentation/er-logical.png)
 
 ## Начать
 
@@ -46,6 +46,7 @@ docker run -d -p 1521:1521 -e ORACLE_PASSWORD=<ваш пароль> -v oracle-vo
 ## Ограничения
 
 - В качестве СУБД должна использоваться Oracle, потому что она уже используется этой больницей
+- При генерации схемы данных нужно убрать NOT NULL у поля parent_application_id в таблице applications. Я не смог этого сделать в Data Modeler'e
 
 ## Ссылки
 

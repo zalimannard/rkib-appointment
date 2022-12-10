@@ -7,42 +7,42 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("${application.endpoint.root}" + "${application.endpoint.planElementStatus}")
-@Tag(name = "Статусы элементов плана")
+@RequestMapping("${application.endpoint.root}" + "${application.endpoint.scheduleElementStatus}")
+@Tag(name = "Статусы элементов расписания")
 public class ScheduleElementStatusController {
-    private final ScheduleElementStatusRepository planElementStatusRepository;
+    private final ScheduleElementStatusService scheduleElementStatusService;
 
-    public ScheduleElementStatusController(ScheduleElementStatusRepository planElementStatusRepository) {
-        this.planElementStatusRepository = planElementStatusRepository;
+    public ScheduleElementStatusController(ScheduleElementStatusService scheduleElementStatusService) {
+        this.scheduleElementStatusService = scheduleElementStatusService;
     }
 
     @GetMapping("{id}")
-    @Operation(summary = "Получение статуса элементов плана")
-    public ScheduleElementStatus get(@PathVariable int id) {
-        return planElementStatusRepository.retrieve(id);
+    @Operation(summary = "Получение статуса элементов расписания")
+    public ScheduleElementStatusDto get(@PathVariable int id) {
+        return scheduleElementStatusService.read(id);
     }
 
     @GetMapping
-    @Operation(summary = "Получение списка статусов элементов плана")
-    public List<ScheduleElementStatus> getAll() {
-        return planElementStatusRepository.retrieveAll();
+    @Operation(summary = "Получение списка статусов элементов расписания")
+    public List<ScheduleElementStatusDto> getAll() {
+        return scheduleElementStatusService.list();
     }
 
     @PostMapping
-    @Operation(summary = "Создание нового статуса элементов плана")
-    public void post(@RequestBody ScheduleElementStatus scheduleElementStatus) {
-        planElementStatusRepository.create(scheduleElementStatus);
+    @Operation(summary = "Создание нового статуса элементов расписания")
+    public ScheduleElementStatusDto post(@RequestBody ScheduleElementStatusDto scheduleElementStatusDto) {
+        return scheduleElementStatusService.create(scheduleElementStatusDto);
     }
 
     @PutMapping
-    @Operation(summary = "Обновление существующего статуса элементов плана")
-    public void put(@RequestBody ScheduleElementStatus scheduleElementStatus) {
-        planElementStatusRepository.update(scheduleElementStatus);
+    @Operation(summary = "Обновление существующего статуса элементов расписания")
+    public ScheduleElementStatusDto put(@RequestBody ScheduleElementStatusDto scheduleElementStatusDto) {
+        return scheduleElementStatusService.update(scheduleElementStatusDto);
     }
 
     @DeleteMapping("{id}")
-    @Operation(summary = "Удаление статуса элементов плана")
-    public void delete(@PathVariable int id) {
-        planElementStatusRepository.delete(id);
+    @Operation(summary = "Удаление статуса элементов расписания")
+    public ScheduleElementStatusDto delete(@PathVariable int id) {
+        return scheduleElementStatusService.delete(id);
     }
 }

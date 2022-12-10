@@ -2,6 +2,7 @@ package ru.zalimannard.bachelorthesisserver.institution;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,39 +11,44 @@ import java.util.List;
 @RequestMapping("${application.endpoint.root}" + "${application.endpoint.institution}")
 @Tag(name = "Учреждения")
 public class InstitutionController {
-    private final InstitutionRepository institutionRepository;
+    private final InstitutionService institutionService;
 
-    public InstitutionController(InstitutionRepository institutionRepository) {
-        this.institutionRepository = institutionRepository;
+    public InstitutionController(InstitutionService institutionService) {
+        this.institutionService = institutionService;
     }
 
     @GetMapping("{id}")
     @Operation(summary = "Получение учреждения")
-    public Institution get(@PathVariable int id) {
-        return institutionRepository.retrieve(id);
+    @ResponseStatus(HttpStatus.OK)
+    public InstitutionDto get(@PathVariable int id) {
+        return institutionService.read(id);
     }
 
     @GetMapping
     @Operation(summary = "Получение списка учреждений")
-    public List<Institution> getAll() {
-        return institutionRepository.retrieveAll();
+    @ResponseStatus(HttpStatus.OK)
+    public List<InstitutionDto> getAll() {
+        return institutionService.list();
     }
 
     @PostMapping
     @Operation(summary = "Создание нового учреждения")
-    public void post(@RequestBody Institution institution) {
-        institutionRepository.create(institution);
+    @ResponseStatus(HttpStatus.CREATED)
+    public InstitutionDto post(@RequestBody InstitutionDto institutionDto) {
+        return institutionService.create(institutionDto);
     }
 
     @PutMapping
     @Operation(summary = "Обновление существующего учреждения")
-    public void put(@RequestBody Institution institution) {
-        institutionRepository.update(institution);
+    @ResponseStatus(HttpStatus.OK)
+    public InstitutionDto put(@RequestBody InstitutionDto institutionDto) {
+        return institutionService.update(institutionDto);
     }
 
     @DeleteMapping("{id}")
     @Operation(summary = "Удаление учреждения")
-    public void delete(@PathVariable int id) {
-        institutionRepository.delete(id);
+    @ResponseStatus(HttpStatus.OK)
+    public InstitutionDto delete(@PathVariable int id) {
+        return institutionService.delete(id);
     }
 }

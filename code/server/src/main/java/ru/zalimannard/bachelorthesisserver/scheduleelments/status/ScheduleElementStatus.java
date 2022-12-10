@@ -1,20 +1,40 @@
 package ru.zalimannard.bachelorthesisserver.scheduleelments.status;
 
-import ru.zalimannard.bachelorthesisserver.BaseEntity;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.Objects;
 
-public record ScheduleElementStatus(int id, int typeId, String name) implements BaseEntity {
+@Entity
+@Table(name = "schedule_element_statuses")
+@Builder
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
+@AllArgsConstructor
+public class ScheduleElementStatus {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
+
+    @Column(name = "type_code", nullable = false)
+    private ScheduleElementStatusType type;
+
+    @Column(name = "name", nullable = false)
+    private String name;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ScheduleElementStatus that = (ScheduleElementStatus) o;
-        return id == that.id;
+        return Objects.equals(getId(), that.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(getId());
     }
 }

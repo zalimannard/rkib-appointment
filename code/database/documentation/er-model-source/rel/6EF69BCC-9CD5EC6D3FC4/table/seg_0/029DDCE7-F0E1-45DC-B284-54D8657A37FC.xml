@@ -1,0 +1,140 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="029DDCE7-F0E1-45DC-B284-54D8657A37FC" name="unscheduled_visits">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
+<generatorID>583E302C-0A93-A0EA-D347-CD61AB411EFB</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="231E1B63-3412-098B-A6BA-3BE366807ECB">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
+<generatorID>82454D87-C045-0A86-8A90-7EA2C0E1A6F5</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="doctor_id" id="5B73693C-A0AF-C87E-A8DB-172CBA961228">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
+<generatorID>0BC6531B-C8FE-17BA-B1F3-8CCA02568321</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="386A39BD-AEE7-89C1-B388-9084744F688C" referredColumn="C8EA8B22-5EA6-9926-ED95-5A499A66567B"/>
+</associations>
+</Column>
+<Column name="service_id" id="957108A3-2172-33CE-8BBE-DFCE271A27D1">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
+<generatorID>BA7B864B-4927-1B86-E97E-B9CCE1C4B443</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="0547E57E-55D1-0844-9A50-E8F50D2FE4D7" referredColumn="E171E129-216D-0F7E-D4EC-78926804447A"/>
+</associations>
+</Column>
+<Column name="application_id" id="3C4A363E-9CDE-8AB2-0E88-C26EC6C287D1">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
+<generatorID>0A60A3C1-6D88-9E46-0BFD-C8FB51068AF8</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="1A96530D-46C7-008B-EFFD-141941A5A7D6" referredColumn="EDAA5C5B-675A-B5C2-42B0-FEB56849C397"/>
+</associations>
+</Column>
+<Column name="appointment_timestamp" id="EFA7E157-D0A2-6EDE-0B81-ADCB1CB318A5">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
+<generatorID>557B8F79-8C2F-A93D-0643-72B70E9268EA</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="commentary" id="53A76A17-D170-4644-7BBE-0422AC02C527">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-10 21:30:53 UTC</createdTime>
+<generatorID>E2AA9EA0-4C7E-EDF3-FA91-EECA1BC3EF7C</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>300 CHAR</dataTypeSize>
+<ownDataTypeParameters>300 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="7400220B-8AD2-DF62-74AE-982751E5133E" name="unscheduled_visits_PK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
+<generatorID>7717BC6B-F0BA-3B03-1987-201F309F4464</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="231E1B63-3412-098B-A6BA-3BE366807ECB"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="949B365C-0A35-7B1E-7418-82B051B04E70" name="unscheduled_visits_doctors_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
+<generatorID>62DC8250-7311-F50D-BAB5-32ADEAE25D4E</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5B73693C-A0AF-C87E-A8DB-172CBA961228"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="ABEB6E9E-D590-517B-AEEB-D21373016215" name="unscheduled_visits_services_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
+<generatorID>75EB0004-EC16-64AB-17C6-77D593C9B027</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="957108A3-2172-33CE-8BBE-DFCE271A27D1"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="41C12044-AD9A-A765-6C21-2A585A05FAB1" name="unscheduled_visits_applications_FK">
+<createdBy>zalimannard</createdBy>
+<createdTime>2022-12-06 21:36:41 UTC</createdTime>
+<generatorID>D825EA70-6815-E345-BF86-10475D218A1F</generatorID>
+<ownerDesignName>er-model-source</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3C4A363E-9CDE-8AB2-0E88-C26EC6C287D1"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

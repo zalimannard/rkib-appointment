@@ -7,42 +7,42 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("${application.endpoint.root}" + "${application.endpoint.planElement}")
-@Tag(name = "Элементы плана")
+@RequestMapping("${application.endpoint.root}" + "${application.endpoint.scheduleElement}")
+@Tag(name = "Элементы расписания")
 public class ScheduleElementController {
-    private final ScheduleElementRepository planElementRepository;
+    private final ScheduleElementService scheduleElementService;
 
-    public ScheduleElementController(ScheduleElementRepository planElementRepository) {
-        this.planElementRepository = planElementRepository;
+    public ScheduleElementController(ScheduleElementService scheduleElementService) {
+        this.scheduleElementService = scheduleElementService;
     }
 
     @GetMapping("{id}")
-    @Operation(summary = "Получение элемента плана")
-    public ScheduleElement get(@PathVariable int id) {
-        return planElementRepository.retrieve(id);
+    @Operation(summary = "Получение элемента расписания")
+    public ScheduleElementDto get(@PathVariable int id) {
+        return scheduleElementService.create(id);
     }
 
     @GetMapping
-    @Operation(summary = "Получение списка элементов плана")
-    public List<ScheduleElement> getAll() {
-        return planElementRepository.retrieveAll();
+    @Operation(summary = "Получение списка элементов расписания")
+    public List<ScheduleElementDto> getAll() {
+        return scheduleElementService.list();
     }
 
     @PostMapping
-    @Operation(summary = "Создание нового элемента плана")
-    public void post(@RequestBody ScheduleElement scheduleElement) {
-        planElementRepository.create(scheduleElement);
+    @Operation(summary = "Создание нового элемента расписания")
+    public ScheduleElementDto post(@RequestBody ScheduleElementDto scheduleElementDto) {
+        return scheduleElementService.create(scheduleElementDto);
     }
 
     @PutMapping
-    @Operation(summary = "Обновление существующего элемента плана")
-    public void put(@RequestBody ScheduleElement scheduleElement) {
-        planElementRepository.update(scheduleElement);
+    @Operation(summary = "Обновление существующего элемента расписания")
+    public ScheduleElementDto put(@RequestBody ScheduleElementDto scheduleElementDto) {
+        return scheduleElementService.update(scheduleElementDto);
     }
 
     @DeleteMapping("{id}")
-    @Operation(summary = "Удаление элемента плана")
-    public void delete(@PathVariable int id) {
-        planElementRepository.delete(id);
+    @Operation(summary = "Удаление элемента расписания")
+    public ScheduleElementDto delete(@PathVariable int id) {
+        return scheduleElementService.delete(id);
     }
 }

@@ -2,6 +2,7 @@ package ru.zalimannard.bachelorthesisserver.doctornote;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,39 +11,44 @@ import java.util.List;
 @RequestMapping("${application.endpoint.root}" + "${application.endpoint.doctorNote}")
 @Tag(name = "Направления")
 public class DoctorNoteController {
-    private final DoctorNoteRepository doctorNoteRepository;
+    private final DoctorNoteService doctorNoteService;
 
-    public DoctorNoteController(DoctorNoteRepository doctorNoteRepository) {
-        this.doctorNoteRepository = doctorNoteRepository;
+    public DoctorNoteController(DoctorNoteService doctorNoteService) {
+        this.doctorNoteService = doctorNoteService;
     }
 
     @GetMapping("{id}")
     @Operation(summary = "Получение направления")
-    public DoctorNote get(@PathVariable int id) {
-        return doctorNoteRepository.retrieve(id);
+    @ResponseStatus(HttpStatus.OK)
+    public DoctorNoteDto get(@PathVariable int id) {
+        return doctorNoteService.read(id);
     }
 
     @GetMapping
     @Operation(summary = "Получение списка направлений")
-    public List<DoctorNote> getAll() {
-        return doctorNoteRepository.retrieveAll();
+    @ResponseStatus(HttpStatus.OK)
+    public List<DoctorNoteDto> getAll() {
+        return doctorNoteService.list();
     }
 
     @PostMapping
     @Operation(summary = "Создание нового направления")
-    public void post(@RequestBody DoctorNote doctorNote) {
-        doctorNoteRepository.create(doctorNote);
+    @ResponseStatus(HttpStatus.CREATED)
+    public DoctorNoteDto post(@RequestBody DoctorNoteDto doctorNoteDto) {
+        return doctorNoteService.create(doctorNoteDto);
     }
 
     @PutMapping
     @Operation(summary = "Обновление существующего направления")
-    public void put(@RequestBody DoctorNote doctorNote) {
-        doctorNoteRepository.update(doctorNote);
+    @ResponseStatus(HttpStatus.OK)
+    public DoctorNoteDto put(@RequestBody DoctorNoteDto doctorNoteDto) {
+        return doctorNoteService.update(doctorNoteDto);
     }
 
     @DeleteMapping("{id}")
     @Operation(summary = "Удаление направления")
-    public void delete(@PathVariable int id) {
-        doctorNoteRepository.delete(id);
+    @ResponseStatus(HttpStatus.OK)
+    public DoctorNoteDto delete(@PathVariable int id) {
+        return doctorNoteService.delete(id);
     }
 }

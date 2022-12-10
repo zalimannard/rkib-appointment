@@ -1,13 +1,11 @@
 DROP TABLE unscheduled_visits;
 DROP TABLE scheduled_visits;
-DROP TABLE appointments;
+DROP TABLE applications;
 DROP TABLE patients;
-DROP TABLE appointment_statuses;
-DROP TABLE appointment_status_types;
+DROP TABLE application_statuses;
 DROP TABLE doctor_notes;
 DROP TABLE institutions;
 DROP TABLE schedule_elements;
 DROP TABLE services;
 DROP TABLE doctors;
 DROP TABLE schedule_element_statuses;
-DROP TABLE schedule_element_status_types;
