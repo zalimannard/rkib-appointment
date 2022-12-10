@@ -7,6 +7,7 @@ import ru.zalimannard.bachelorthesisserver.scheduleelments.status.ScheduleElemen
 import ru.zalimannard.bachelorthesisserver.service.Service;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 @Entity
 @Table(name = "schedule_elements")
@@ -36,4 +37,17 @@ public class ScheduleElement {
 
     @Column(name = "appointment_timestamp", nullable = false)
     private Timestamp appointmentTimestamp;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ScheduleElement that = (ScheduleElement) o;
+        return Objects.equals(getId(), that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
 }
