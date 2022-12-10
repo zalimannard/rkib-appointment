@@ -1,18 +1,13 @@
 package ru.zalimannard.bachelorthesisserver.scheduleelments.status;
 
-import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-public record ScheduleElementStatus(int id, int typeId, String name) {
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ScheduleElementStatus that = (ScheduleElementStatus) o;
-        return id == that.id;
-    }
+@AllArgsConstructor
+public enum ScheduleElementStatus {
+    ACTIVE("A"),
+    CANCELED("C");
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+    @Getter
+    private final String code;
 }
