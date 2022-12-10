@@ -10,39 +10,39 @@ import java.util.List;
 @RequestMapping("${application.endpoint.root}" + "${application.endpoint.scheduleElement}")
 @Tag(name = "Элементы плана")
 public class ScheduleElementController {
-    private final ScheduleElementRepository planElementRepository;
+    private final ScheduleElementService scheduleElementService;
 
-    public ScheduleElementController(ScheduleElementRepository planElementRepository) {
-        this.planElementRepository = planElementRepository;
+    public ScheduleElementController(ScheduleElementService scheduleElementService) {
+        this.scheduleElementService = scheduleElementService;
     }
 
     @GetMapping("{id}")
     @Operation(summary = "Получение элемента плана")
-    public ScheduleElement get(@PathVariable int id) {
-        return planElementRepository.retrieve(id);
+    public ScheduleElementDto get(@PathVariable int id) {
+        return scheduleElementService.get(id);
     }
 
     @GetMapping
     @Operation(summary = "Получение списка элементов плана")
-    public List<ScheduleElement> getAll() {
-        return planElementRepository.retrieveAll();
+    public List<ScheduleElementDto> getAll() {
+        return scheduleElementService.getAll();
     }
 
     @PostMapping
     @Operation(summary = "Создание нового элемента плана")
-    public void post(@RequestBody ScheduleElement scheduleElement) {
-        planElementRepository.create(scheduleElement);
+    public ScheduleElementDto post(@RequestBody ScheduleElementDto scheduleElementDto) {
+        return scheduleElementService.post(scheduleElementDto);
     }
 
     @PutMapping
     @Operation(summary = "Обновление существующего элемента плана")
-    public void put(@RequestBody ScheduleElement scheduleElement) {
-        planElementRepository.update(scheduleElement);
+    public ScheduleElementDto put(@RequestBody ScheduleElementDto scheduleElementDto) {
+        return scheduleElementService.put(scheduleElementDto);
     }
 
     @DeleteMapping("{id}")
     @Operation(summary = "Удаление элемента плана")
-    public void delete(@PathVariable int id) {
-        planElementRepository.delete(id);
+    public ScheduleElementDto delete(@PathVariable int id) {
+        return scheduleElementService.delete(id);
     }
 }
