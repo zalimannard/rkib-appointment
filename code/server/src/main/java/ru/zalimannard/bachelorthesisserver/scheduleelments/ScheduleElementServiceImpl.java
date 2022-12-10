@@ -18,7 +18,7 @@ public class ScheduleElementServiceImpl implements ScheduleElementService {
     }
 
     @Override
-    public ScheduleElementDto get(int id) {
+    public ScheduleElementDto create(int id) {
         Optional<ScheduleElement> scheduleElementOptional = scheduleElementRepository.findById(id);
         if (scheduleElementOptional.isPresent()) {
             ScheduleElement scheduleElement = scheduleElementOptional.get();
@@ -29,7 +29,7 @@ public class ScheduleElementServiceImpl implements ScheduleElementService {
     }
 
     @Override
-    public List<ScheduleElementDto> getAll() {
+    public List<ScheduleElementDto> list() {
         Iterable<ScheduleElement> scheduleElements = scheduleElementRepository.findAll();
         List<ScheduleElementDto> scheduleElementDtos = new ArrayList<>();
         scheduleElements.forEach(scheduleElement -> scheduleElementDtos.add(scheduleElementMapper.toDto(scheduleElement)));
@@ -37,18 +37,18 @@ public class ScheduleElementServiceImpl implements ScheduleElementService {
     }
 
     @Override
-    public ScheduleElementDto post(ScheduleElementDto scheduleElementDto) {
+    public ScheduleElementDto create(ScheduleElementDto scheduleElementDto) {
         ScheduleElement scheduleElement = scheduleElementMapper.toEntity(scheduleElementDto);
         ScheduleElement addedScheduleElement = scheduleElementRepository.save(scheduleElement);
         return scheduleElementMapper.toDto(addedScheduleElement);
     }
 
     @Override
-    public ScheduleElementDto put(ScheduleElementDto scheduleElementDto) {
+    public ScheduleElementDto update(ScheduleElementDto scheduleElementDto) {
         if (scheduleElementRepository.existsById(scheduleElementDto.getId())) {
             ScheduleElement scheduleElement = scheduleElementMapper.toEntity(scheduleElementDto);
             scheduleElementRepository.save(scheduleElement);
-            return get(scheduleElement.getId());
+            return create(scheduleElement.getId());
         } else {
             throw new NotFoundException("Элемент расписания с id=" + scheduleElementDto.getId() + " не найден. Ничего не изменено.");
         }
@@ -56,7 +56,7 @@ public class ScheduleElementServiceImpl implements ScheduleElementService {
 
     @Override
     public ScheduleElementDto delete(int id) {
-        ScheduleElementDto doctorNoteDto = get(id);
+        ScheduleElementDto doctorNoteDto = create(id);
         scheduleElementRepository.deleteById(id);
         return doctorNoteDto;
     }

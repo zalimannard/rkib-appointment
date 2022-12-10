@@ -18,7 +18,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public ApplicationDto get(int id) {
+    public ApplicationDto read(int id) {
         Optional<Application> applicationOptional = applicationRepository.findById(id);
         if (applicationOptional.isPresent()) {
             Application application = applicationOptional.get();
@@ -29,7 +29,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public List<ApplicationDto> getAll() {
+    public List<ApplicationDto> list() {
         Iterable<Application> applications = applicationRepository.findAll();
         List<ApplicationDto> applicationDtos = new ArrayList<>();
         applications.forEach(application -> applicationDtos.add(applicationMapper.toDto(application)));
@@ -37,18 +37,18 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public ApplicationDto post(ApplicationDto applicationDto) {
+    public ApplicationDto create(ApplicationDto applicationDto) {
         Application application = applicationMapper.toEntity(applicationDto);
         Application addedApplication = applicationRepository.save(application);
         return applicationMapper.toDto(addedApplication);
     }
 
     @Override
-    public ApplicationDto put(ApplicationDto applicationDto) {
+    public ApplicationDto update(ApplicationDto applicationDto) {
         if (applicationRepository.existsById(applicationDto.getId())) {
             Application application = applicationMapper.toEntity(applicationDto);
             applicationRepository.save(application);
-            return get(application.getId());
+            return read(application.getId());
         } else {
             throw new NotFoundException("Обращение с id=" + applicationDto.getId() + " не найдено. Ничего не изменено.");
         }
@@ -56,7 +56,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public ApplicationDto delete(int id) {
-        ApplicationDto applicationDto = get(id);
+        ApplicationDto applicationDto = read(id);
         applicationRepository.deleteById(id);
         return applicationDto;
     }

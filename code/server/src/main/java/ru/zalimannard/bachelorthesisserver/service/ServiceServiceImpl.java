@@ -17,7 +17,7 @@ public class ServiceServiceImpl implements ServiceService {
     }
 
     @Override
-    public ServiceDto get(int id) {
+    public ServiceDto read(int id) {
         Optional<Service> serviceOptional = serviceRepository.findById(id);
         if (serviceOptional.isPresent()) {
             Service service = serviceOptional.get();
@@ -28,7 +28,7 @@ public class ServiceServiceImpl implements ServiceService {
     }
 
     @Override
-    public List<ServiceDto> getAll() {
+    public List<ServiceDto> list() {
         Iterable<Service> services = serviceRepository.findAll();
         List<ServiceDto> serviceDtos = new ArrayList<>();
         services.forEach(service -> serviceDtos.add(serviceMapper.toDto(service)));

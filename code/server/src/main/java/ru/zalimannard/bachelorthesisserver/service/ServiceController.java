@@ -19,12 +19,12 @@ public class ServiceController {
     @GetMapping("{id}")
     @Operation(summary = "Получение услуги")
     public ServiceDto get(@PathVariable int id) {
-        return serviceService.get(id);
+        return serviceService.read(id);
     }
 
     @GetMapping
     @Operation(summary = "Получение списка услуг")
     public List<ServiceDto> getAll() {
-        return serviceService.getAll();
+        return serviceService.list();
     }
 }

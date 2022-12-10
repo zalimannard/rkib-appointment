@@ -21,28 +21,28 @@ public class PatientController {
     @Operation(summary = "Получение пациента")
     @ResponseStatus(HttpStatus.OK)
     public PatientDto get(@PathVariable int id) {
-        return patientService.get(id);
+        return patientService.read(id);
     }
 
     @GetMapping
     @Operation(summary = "Получение списка пациентов")
     @ResponseStatus(HttpStatus.OK)
     public List<PatientDto> getAll() {
-        return patientService.getAll();
+        return patientService.list();
     }
 
     @PostMapping
     @Operation(summary = "Создание нового пациента")
     @ResponseStatus(HttpStatus.CREATED)
     public PatientDto post(@RequestBody PatientDto patientDto) {
-        return patientService.post(patientDto);
+        return patientService.create(patientDto);
     }
 
     @PutMapping
     @Operation(summary = "Обновление существующего пациента")
     @ResponseStatus(HttpStatus.OK)
     public PatientDto put(@RequestBody PatientDto patientDto) {
-        return patientService.put(patientDto);
+        return patientService.update(patientDto);
     }
 
     @DeleteMapping("{id}")

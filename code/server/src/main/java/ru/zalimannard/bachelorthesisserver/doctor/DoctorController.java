@@ -19,12 +19,12 @@ public class DoctorController {
     @GetMapping("{id}")
     @Operation(summary = "Получение доктора")
     public DoctorDto get(@PathVariable int id) {
-        return doctorService.get(id);
+        return doctorService.read(id);
     }
 
     @GetMapping
     @Operation(summary = "Получение списка докторов")
     public List<DoctorDto> getAll() {
-        return doctorService.getAll();
+        return doctorService.list();
     }
 }

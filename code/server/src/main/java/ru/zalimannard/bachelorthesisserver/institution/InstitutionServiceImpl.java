@@ -18,7 +18,7 @@ public class InstitutionServiceImpl implements InstitutionService {
     }
 
     @Override
-    public InstitutionDto get(int id) {
+    public InstitutionDto read(int id) {
         Optional<Institution> institutionOptional = institutionRepository.findById(id);
         if (institutionOptional.isPresent()) {
             Institution institution = institutionOptional.get();
@@ -29,7 +29,7 @@ public class InstitutionServiceImpl implements InstitutionService {
     }
 
     @Override
-    public List<InstitutionDto> getAll() {
+    public List<InstitutionDto> list() {
         Iterable<Institution> institutions = institutionRepository.findAll();
         List<InstitutionDto> institutionDtos = new ArrayList<>();
         institutions.forEach(institution -> institutionDtos.add(institutionMapper.toDto(institution)));
@@ -37,18 +37,18 @@ public class InstitutionServiceImpl implements InstitutionService {
     }
 
     @Override
-    public InstitutionDto post(InstitutionDto institutionDto) {
+    public InstitutionDto create(InstitutionDto institutionDto) {
         Institution institution = institutionMapper.toEntity(institutionDto);
         Institution addedInstitution = institutionRepository.save(institution);
         return institutionMapper.toDto(addedInstitution);
     }
 
     @Override
-    public InstitutionDto put(InstitutionDto institutionDto) {
+    public InstitutionDto update(InstitutionDto institutionDto) {
         if (institutionRepository.existsById(institutionDto.getId())) {
             Institution institution = institutionMapper.toEntity(institutionDto);
             institutionRepository.save(institution);
-            return get(institutionDto.getId());
+            return read(institutionDto.getId());
         } else {
             throw new NotFoundException("Учреждение с id=" + institutionDto.getId()+ " не найдено. Ничего не изменено.");
         }
@@ -56,7 +56,7 @@ public class InstitutionServiceImpl implements InstitutionService {
 
     @Override
     public InstitutionDto delete(int id) {
-        InstitutionDto institutionDto = get(id);
+        InstitutionDto institutionDto = read(id);
         institutionRepository.deleteById(id);
         return institutionDto;
     }

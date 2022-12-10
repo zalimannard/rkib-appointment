@@ -21,28 +21,28 @@ public class DoctorNoteController {
     @Operation(summary = "Получение направления")
     @ResponseStatus(HttpStatus.OK)
     public DoctorNoteDto get(@PathVariable int id) {
-        return doctorNoteService.get(id);
+        return doctorNoteService.read(id);
     }
 
     @GetMapping
     @Operation(summary = "Получение списка направлений")
     @ResponseStatus(HttpStatus.OK)
     public List<DoctorNoteDto> getAll() {
-        return doctorNoteService.getAll();
+        return doctorNoteService.list();
     }
 
     @PostMapping
     @Operation(summary = "Создание нового направления")
     @ResponseStatus(HttpStatus.CREATED)
     public DoctorNoteDto post(@RequestBody DoctorNoteDto doctorNoteDto) {
-        return doctorNoteService.post(doctorNoteDto);
+        return doctorNoteService.create(doctorNoteDto);
     }
 
     @PutMapping
     @Operation(summary = "Обновление существующего направления")
     @ResponseStatus(HttpStatus.OK)
     public DoctorNoteDto put(@RequestBody DoctorNoteDto doctorNoteDto) {
-        return doctorNoteService.post(doctorNoteDto);
+        return doctorNoteService.update(doctorNoteDto);
     }
 
     @DeleteMapping("{id}")

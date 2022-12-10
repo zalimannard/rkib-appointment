@@ -18,7 +18,7 @@ public class ScheduleElementStatusServiceImpl implements ScheduleElementStatusSe
     }
 
     @Override
-    public ScheduleElementStatusDto get(int id) {
+    public ScheduleElementStatusDto read(int id) {
         Optional<ScheduleElementStatus> scheduleElementStatusOptional = scheduleElementStatusRepository.findById(id);
         if (scheduleElementStatusOptional.isPresent()) {
             ScheduleElementStatus scheduleElementStatus = scheduleElementStatusOptional.get();
@@ -29,7 +29,7 @@ public class ScheduleElementStatusServiceImpl implements ScheduleElementStatusSe
     }
 
     @Override
-    public List<ScheduleElementStatusDto> getAll() {
+    public List<ScheduleElementStatusDto> list() {
         Iterable<ScheduleElementStatus> scheduleElementStatuses = scheduleElementStatusRepository.findAll();
         List<ScheduleElementStatusDto> scheduleElementStatusDtos = new ArrayList<>();
         scheduleElementStatuses.forEach(scheduleElementStatus -> scheduleElementStatusDtos.add(scheduleElementStatusMapper.toDto(scheduleElementStatus)));
@@ -37,18 +37,18 @@ public class ScheduleElementStatusServiceImpl implements ScheduleElementStatusSe
     }
 
     @Override
-    public ScheduleElementStatusDto post(ScheduleElementStatusDto scheduleElementStatusDto) {
+    public ScheduleElementStatusDto create(ScheduleElementStatusDto scheduleElementStatusDto) {
         ScheduleElementStatus scheduleElementStatus = scheduleElementStatusMapper.toEntity(scheduleElementStatusDto);
         ScheduleElementStatus addedScheduleElementStatus = scheduleElementStatusRepository.save(scheduleElementStatus);
         return scheduleElementStatusMapper.toDto(addedScheduleElementStatus);
     }
 
     @Override
-    public ScheduleElementStatusDto put(ScheduleElementStatusDto scheduleElementStatusDto) {
+    public ScheduleElementStatusDto update(ScheduleElementStatusDto scheduleElementStatusDto) {
         if (scheduleElementStatusRepository.existsById(scheduleElementStatusDto.getId())) {
             ScheduleElementStatus scheduleElementStatus = scheduleElementStatusMapper.toEntity(scheduleElementStatusDto);
             scheduleElementStatusRepository.save(scheduleElementStatus);
-            return get(scheduleElementStatus.getId());
+            return read(scheduleElementStatus.getId());
         } else {
             throw new NotFoundException("Статус элемента расписания с id=" + scheduleElementStatusDto.getId() + " не найден. Ничего не изменено.");
         }
@@ -56,7 +56,7 @@ public class ScheduleElementStatusServiceImpl implements ScheduleElementStatusSe
 
     @Override
     public ScheduleElementStatusDto delete(int id) {
-        ScheduleElementStatusDto scheduleElementStatusDto = get(id);
+        ScheduleElementStatusDto scheduleElementStatusDto = read(id);
         scheduleElementStatusRepository.deleteById(id);
         return scheduleElementStatusDto;
     }

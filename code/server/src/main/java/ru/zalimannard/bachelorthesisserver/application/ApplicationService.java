@@ -3,13 +3,13 @@ package ru.zalimannard.bachelorthesisserver.application;
 import java.util.List;
 
 public interface ApplicationService {
-    ApplicationDto get(int id);
+    ApplicationDto read(int id);
 
-    List<ApplicationDto> getAll();
+    List<ApplicationDto> list();
 
-    ApplicationDto post(ApplicationDto applicationDto);
+    ApplicationDto create(ApplicationDto applicationDto);
 
-    ApplicationDto put(ApplicationDto applicationDto);
+    ApplicationDto update(ApplicationDto applicationDto);
 
     ApplicationDto delete(int id);
 }

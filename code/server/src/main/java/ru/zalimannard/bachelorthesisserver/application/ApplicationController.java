@@ -19,25 +19,25 @@ public class ApplicationController {
     @GetMapping("{id}")
     @Operation(summary = "Получение обращения")
     public ApplicationDto get(@PathVariable int id) {
-        return applicationService.get(id);
+        return applicationService.read(id);
     }
 
     @GetMapping
     @Operation(summary = "Получение списка обращений")
     public List<ApplicationDto> getAll() {
-        return applicationService.getAll();
+        return applicationService.list();
     }
 
     @PostMapping
     @Operation(summary = "Создание нового обращения")
     public ApplicationDto post(@RequestBody ApplicationDto applicationDto) {
-        return applicationService.post(applicationDto);
+        return applicationService.create(applicationDto);
     }
 
     @PutMapping
     @Operation(summary = "Обновление существующего обращения")
     public ApplicationDto put(@RequestBody ApplicationDto applicationDto) {
-        return applicationService.put(applicationDto);
+        return applicationService.update(applicationDto);
     }
 
     @DeleteMapping("{id}")

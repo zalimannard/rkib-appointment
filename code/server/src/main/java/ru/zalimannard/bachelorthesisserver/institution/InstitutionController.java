@@ -21,28 +21,28 @@ public class InstitutionController {
     @Operation(summary = "Получение учреждения")
     @ResponseStatus(HttpStatus.OK)
     public InstitutionDto get(@PathVariable int id) {
-        return institutionService.get(id);
+        return institutionService.read(id);
     }
 
     @GetMapping
     @Operation(summary = "Получение списка учреждений")
     @ResponseStatus(HttpStatus.OK)
     public List<InstitutionDto> getAll() {
-        return institutionService.getAll();
+        return institutionService.list();
     }
 
     @PostMapping
     @Operation(summary = "Создание нового учреждения")
     @ResponseStatus(HttpStatus.CREATED)
     public InstitutionDto post(@RequestBody InstitutionDto institutionDto) {
-        return institutionService.post(institutionDto);
+        return institutionService.create(institutionDto);
     }
 
     @PutMapping
     @Operation(summary = "Обновление существующего учреждения")
     @ResponseStatus(HttpStatus.OK)
     public InstitutionDto put(@RequestBody InstitutionDto institutionDto) {
-        return institutionService.put(institutionDto);
+        return institutionService.update(institutionDto);
     }
 
     @DeleteMapping("{id}")

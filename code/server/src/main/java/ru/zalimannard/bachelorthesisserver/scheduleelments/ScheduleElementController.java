@@ -19,25 +19,25 @@ public class ScheduleElementController {
     @GetMapping("{id}")
     @Operation(summary = "Получение элемента плана")
     public ScheduleElementDto get(@PathVariable int id) {
-        return scheduleElementService.get(id);
+        return scheduleElementService.create(id);
     }
 
     @GetMapping
     @Operation(summary = "Получение списка элементов плана")
     public List<ScheduleElementDto> getAll() {
-        return scheduleElementService.getAll();
+        return scheduleElementService.list();
     }
 
     @PostMapping
     @Operation(summary = "Создание нового элемента плана")
     public ScheduleElementDto post(@RequestBody ScheduleElementDto scheduleElementDto) {
-        return scheduleElementService.post(scheduleElementDto);
+        return scheduleElementService.create(scheduleElementDto);
     }
 
     @PutMapping
     @Operation(summary = "Обновление существующего элемента плана")
     public ScheduleElementDto put(@RequestBody ScheduleElementDto scheduleElementDto) {
-        return scheduleElementService.put(scheduleElementDto);
+        return scheduleElementService.update(scheduleElementDto);
     }
 
     @DeleteMapping("{id}")

@@ -3,13 +3,13 @@ package ru.zalimannard.bachelorthesisserver.doctornote;
 import java.util.List;
 
 public interface DoctorNoteService {
-    DoctorNoteDto get(int id);
+    DoctorNoteDto read(int id);
 
-    List<DoctorNoteDto> getAll();
+    List<DoctorNoteDto> list();
 
-    DoctorNoteDto post(DoctorNoteDto doctorNoteDto);
+    DoctorNoteDto create(DoctorNoteDto doctorNoteDto);
 
-    DoctorNoteDto put(DoctorNoteDto doctorNoteDto);
+    DoctorNoteDto update(DoctorNoteDto doctorNoteDto);
 
     DoctorNoteDto delete(int id);
 }

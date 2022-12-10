@@ -3,7 +3,7 @@ package ru.zalimannard.bachelorthesisserver.doctor;
 import java.util.List;
 
 public interface DoctorService {
-    DoctorDto get(int id);
+    DoctorDto read(int id);
 
-    List<DoctorDto> getAll();
+    List<DoctorDto> list();
 }

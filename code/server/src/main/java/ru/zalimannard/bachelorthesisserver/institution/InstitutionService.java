@@ -3,13 +3,13 @@ package ru.zalimannard.bachelorthesisserver.institution;
 import java.util.List;
 
 public interface InstitutionService {
-    InstitutionDto get(int id);
+    InstitutionDto read(int id);
 
-    List<InstitutionDto> getAll();
+    List<InstitutionDto> list();
 
-    InstitutionDto post(InstitutionDto institutionDto);
+    InstitutionDto create(InstitutionDto institutionDto);
 
-    InstitutionDto put(InstitutionDto institutionDto);
+    InstitutionDto update(InstitutionDto institutionDto);
 
     InstitutionDto delete(int id);
 }

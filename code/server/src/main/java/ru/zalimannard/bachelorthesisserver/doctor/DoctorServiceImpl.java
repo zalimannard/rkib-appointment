@@ -18,7 +18,7 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public DoctorDto get(int id) {
+    public DoctorDto read(int id) {
         Optional<Doctor> doctorOptional = doctorRepository.findById(id);
         if (doctorOptional.isPresent()) {
             Doctor doctor = doctorOptional.get();
@@ -29,7 +29,7 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public List<DoctorDto> getAll() {
+    public List<DoctorDto> list() {
         Iterable<Doctor> doctors = doctorRepository.findAll();
         List<DoctorDto> doctorDtos = new ArrayList<>();
         doctors.forEach(doctor -> doctorDtos.add(doctorMapper.toDto(doctor)));

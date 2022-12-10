@@ -3,7 +3,7 @@ package ru.zalimannard.bachelorthesisserver.service;
 import java.util.List;
 
 public interface ServiceService {
-    ServiceDto get(int id);
+    ServiceDto read(int id);
 
-    List<ServiceDto> getAll();
+    List<ServiceDto> list();
 }
