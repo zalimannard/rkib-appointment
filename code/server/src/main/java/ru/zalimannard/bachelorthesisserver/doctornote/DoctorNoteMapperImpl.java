@@ -33,13 +33,11 @@ public class DoctorNoteMapperImpl implements DoctorNoteMapper {
                 .build();
     }
 
-    @Override
-    public int obtainInstitutionId(Institution institution) {
+    private int obtainInstitutionId(Institution institution) {
         return institution.getId();
     }
 
-    @Override
-    public Institution obtainInstitution(int institutionId) {
+    private Institution obtainInstitution(int institutionId) {
         Optional<Institution> institutionOptional = institutionRepository.findById(institutionId);
         if (institutionOptional.isPresent()) {
             return institutionOptional.get();

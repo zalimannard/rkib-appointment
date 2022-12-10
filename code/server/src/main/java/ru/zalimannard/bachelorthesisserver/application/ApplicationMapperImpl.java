@@ -43,7 +43,7 @@ public class ApplicationMapperImpl implements ApplicationMapper {
 
     @Override
     public ApplicationDto toDto(Application entity) {
-        ApplicationDto dto = ApplicationDto.builder()
+        return ApplicationDto.builder()
                 .id(entity.getId())
                 .parentApplicationId(obtainParentApplicationId(entity.getParentApplication()))
                 .patientId(obtainPatientId(entity.getPatient()))
@@ -51,11 +51,9 @@ public class ApplicationMapperImpl implements ApplicationMapper {
                 .statusId(obtainStatusId(entity.getStatus()))
                 .finalDiagnosis(entity.getFinalDiagnosis())
                 .build();
-        return dto;
     }
 
-    @Override
-    public Integer obtainParentApplicationId(Application application) {
+    private Integer obtainParentApplicationId(Application application) {
         if (application == null) {
             return null;
         } else {
@@ -63,8 +61,7 @@ public class ApplicationMapperImpl implements ApplicationMapper {
         }
     }
 
-    @Override
-    public Application obtainParentApplication(Integer applicationId) {
+    private Application obtainParentApplication(Integer applicationId) {
         if (applicationId == null) {
             return null;
         } else {
@@ -73,13 +70,11 @@ public class ApplicationMapperImpl implements ApplicationMapper {
         }
     }
 
-    @Override
-    public int obtainPatientId(Patient patient) {
+    private int obtainPatientId(Patient patient) {
         return patient.getId();
     }
 
-    @Override
-    public Patient obtainPatient(int patientId) {
+    private Patient obtainPatient(int patientId) {
         Optional<Patient> patientOptional = patientRepository.findById(patientId);
         if (patientOptional.isPresent()) {
             return patientOptional.get();
@@ -88,13 +83,11 @@ public class ApplicationMapperImpl implements ApplicationMapper {
         }
     }
 
-    @Override
-    public int obtainDoctorNoteId(DoctorNote doctorNote) {
+    private int obtainDoctorNoteId(DoctorNote doctorNote) {
         return doctorNote.getId();
     }
 
-    @Override
-    public DoctorNote obtainDoctorNote(int doctorNoteId) {
+    private DoctorNote obtainDoctorNote(int doctorNoteId) {
         Optional<DoctorNote> doctorNoteOptional = doctorNoteRepository.findById(doctorNoteId);
         if (doctorNoteOptional.isPresent()) {
             return doctorNoteOptional.get();
@@ -103,13 +96,11 @@ public class ApplicationMapperImpl implements ApplicationMapper {
         }
     }
 
-    @Override
-    public int obtainStatusId(ApplicationStatus applicationStatus) {
+    private int obtainStatusId(ApplicationStatus applicationStatus) {
         return applicationStatus.getId();
     }
 
-    @Override
-    public ApplicationStatus obtainStatus(int applicationStatusId) {
+    private ApplicationStatus obtainStatus(int applicationStatusId) {
         Optional<ApplicationStatus> applicationStatusOptional = applicationStatusRepository.findById(applicationStatusId);
         if (applicationStatusOptional.isPresent()) {
             return applicationStatusOptional.get();
