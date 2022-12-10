@@ -1,19 +1,43 @@
 package ru.zalimannard.bachelorthesisserver.application;
 
-import java.util.Objects;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+import ru.zalimannard.bachelorthesisserver.application.status.ApplicationStatus;
+import ru.zalimannard.bachelorthesisserver.doctornote.DoctorNote;
+import ru.zalimannard.bachelorthesisserver.patient.Patient;
 
-public record Application(int id, int parentVisitId, int patientId, int serviceId, int doctorNoteId, int statusId,
-                          String finalDiagnosis) {
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Application application = (Application) o;
-        return id == application.id;
-    }
+@Entity
+@Table(name = "applications")
+@Builder
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
+@AllArgsConstructor
+public class Application {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+    @ManyToOne
+    @JoinColumn(name = "parent_application_id", nullable = false)
+    private Application parentApplication;
+
+    @ManyToOne
+    @JoinColumn(name = "patient_id", nullable = false)
+    private Patient patient;
+
+    @ManyToOne
+    @JoinColumn(name = "doctor_note_id", nullable = false)
+    private DoctorNote doctorNote;
+
+    @ManyToOne
+    @JoinColumn(name = "application_status_id", nullable = false)
+    private ApplicationStatus status;
+
+    @NotNull
+    @Column(name = "final_diagnosis")
+    private String finalDiagnosis;
 }
