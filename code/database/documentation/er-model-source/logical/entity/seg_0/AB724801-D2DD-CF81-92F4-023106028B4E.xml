@@ -43,7 +43,7 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
-<preferredAbbreviation>parent_appointment_id</preferredAbbreviation>
+<preferredAbbreviation>parent_application_id</preferredAbbreviation>
 </Attribute>
 <Attribute name="Пациент" id="BC002C3C-0369-AC91-5707-FDD9EE1EC14C">
 <createdBy>zalimannard</createdBy>
@@ -88,7 +88,7 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
-<preferredAbbreviation>appointment_status_id</preferredAbbreviation>
+<preferredAbbreviation>application_status_id</preferredAbbreviation>
 </Attribute>
 <Attribute name="Окончательный диагноз" id="3595F8C1-A6FE-4268-8949-F89380199CE9">
 <createdBy>zalimannard</createdBy>

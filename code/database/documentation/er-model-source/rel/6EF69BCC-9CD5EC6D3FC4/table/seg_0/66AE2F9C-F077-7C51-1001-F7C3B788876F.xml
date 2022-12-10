@@ -21,7 +21,7 @@
 <identityColumn>true</identityColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="parent_appointment_id" id="FB392D60-EEAA-B35E-CB1F-91A56705B60C">
+<Column name="parent_application_id" id="FB392D60-EEAA-B35E-CB1F-91A56705B60C">
 <createdBy>zalimannard</createdBy>
 <createdTime>2022-12-06 21:36:41 UTC</createdTime>
 <generatorID>64269896-A75C-081C-3700-694EE55AF7C0</generatorID>
@@ -66,7 +66,7 @@
 <colAssociation fkAssociation="95E8E26B-5B9E-63CB-90C7-421A9EDFC6CF" referredColumn="5D1C18F0-F9B9-C039-5257-C7C2CD239DA3"/>
 </associations>
 </Column>
-<Column name="appointment_status_id" id="24E5AFDB-1885-5075-5E40-217B533BD512">
+<Column name="application_status_id" id="24E5AFDB-1885-5075-5E40-217B533BD512">
 <createdBy>zalimannard</createdBy>
 <createdTime>2022-12-06 21:36:41 UTC</createdTime>
 <generatorID>A3CFFAD9-219B-E21E-F778-BBFD9520B47E</generatorID>
