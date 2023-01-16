@@ -11,7 +11,7 @@
 - [guideline](guideline.pdf) - Методичка
 - [topic-application](topic-application.pdf) - Заявление на утверждение темы и преподавателя
 - [assignment](assignment.pdf) - Задание на ВКР
-- [text](text.pdf) - Текст ВКР
+- [text](text/text.pdf) - Текст ВКР
 
 ## :alien: Почему TeX?
 
