@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  rkib-appointment-server:
+    container_name: rkib-appointment-server
+    build:
+      context: .
+    image: zalimannard/rkib-appointment-server
+    ports:
+      - "8116:8116"
+    environment:
+      - DB_URL=8.8.8.8
+      - DB_USER=admin
+      - DB_PASSWORD=admin
+    restart: unless-stopped
