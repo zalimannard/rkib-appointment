@@ -2,6 +2,7 @@ package ru.zalimannard.bachelorthesisserver.application;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,17 +10,14 @@ import java.util.List;
 @RestController
 @RequestMapping("${application.endpoint.root}" + "${application.endpoint.application}")
 @Tag(name = "Обращения")
+@RequiredArgsConstructor
 public class ApplicationController {
     private final ApplicationService applicationService;
 
-    public ApplicationController(ApplicationService applicationService) {
-        this.applicationService = applicationService;
-    }
-
     @GetMapping("{id}")
     @Operation(summary = "Получение обращения")
-    public ApplicationDto get(@PathVariable int id) {
-        return applicationService.read(id);
+    public ApplicationDto get(@PathVariable String id) {
+        return applicationService.get(id);
     }
 
     @GetMapping
@@ -42,7 +40,7 @@ public class ApplicationController {
 
     @DeleteMapping("{id}")
     @Operation(summary = "Удаление обращения")
-    public ApplicationDto delete(@PathVariable int id) {
+    public ApplicationDto delete(@PathVariable String id) {
         return applicationService.delete(id);
     }
 }

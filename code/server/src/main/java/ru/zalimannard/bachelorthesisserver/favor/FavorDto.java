@@ -1,15 +1,14 @@
-package ru.zalimannard.bachelorthesisserver.service;
+package ru.zalimannard.bachelorthesisserver.favor;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder
-public class ServiceDto {
+public class FavorDto {
     @JsonProperty("id")
-    private Integer id;
+    private String id;
 
     @JsonProperty("name")
     private String name;
+
 }

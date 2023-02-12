@@ -1,63 +1,56 @@
 package ru.zalimannard.bachelorthesisserver.scheduledvisit;
 
+import lombok.RequiredArgsConstructor;
+import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ScheduledVisitServiceImpl implements ScheduledVisitService {
-    private final ScheduledVisitMapper scheduledVisitMapper;
     private final ScheduledVisitRepository scheduledVisitRepository;
-
-    public ScheduledVisitServiceImpl(ScheduledVisitMapper scheduledVisitMapper, ScheduledVisitRepository scheduledVisitRepository) {
-        this.scheduledVisitMapper = scheduledVisitMapper;
-        this.scheduledVisitRepository = scheduledVisitRepository;
-    }
+    private final ScheduledVisitMapper scheduledVisitMapper = Mappers.getMapper(ScheduledVisitMapper.class);
 
     @Override
-    public ScheduledVisitDto read(int id) {
-        Optional<ScheduledVisit> scheduledVisitOptional = scheduledVisitRepository.findById(id);
-        if (scheduledVisitOptional.isPresent()) {
-            ScheduledVisit scheduledVisit = scheduledVisitOptional.get();
-            return scheduledVisitMapper.toDto(scheduledVisit);
-        } else {
-            throw new NotFoundException("Запланированное посещение с id=" + id + " не найдено.");
-        }
+    public ScheduledVisitDto get(String id) {
+        ScheduledVisit scheduledVisit = scheduledVisitRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("ScheduledVisit", "id", id));
+        return scheduledVisitMapper.toDto(scheduledVisit);
     }
 
     @Override
     public List<ScheduledVisitDto> list() {
-        Iterable<ScheduledVisit> scheduledVisits = scheduledVisitRepository.findAll();
-        List<ScheduledVisitDto> scheduledVisitDtos = new ArrayList<>();
-        scheduledVisits.forEach(scheduledVisit -> scheduledVisitDtos.add(scheduledVisitMapper.toDto(scheduledVisit)));
-        return scheduledVisitDtos;
+        List<ScheduledVisit> scheduledVisitList = new ArrayList<>();
+        scheduledVisitRepository.findAll().forEach(scheduledVisitList::add);
+        return scheduledVisitMapper.toDtoList(scheduledVisitList);
     }
 
     @Override
     public ScheduledVisitDto create(ScheduledVisitDto scheduledVisitDto) {
-        ScheduledVisit scheduledVisit = scheduledVisitMapper.toEntity(scheduledVisitDto);
-        ScheduledVisit addedScheduledVisit = scheduledVisitRepository.save(scheduledVisit);
-        return scheduledVisitMapper.toDto(addedScheduledVisit);
+        ScheduledVisit scheduledVisitRequest = scheduledVisitMapper.toEntity(scheduledVisitDto);
+        ScheduledVisit scheduledVisitResponse = scheduledVisitRepository.save(scheduledVisitRequest);
+        return scheduledVisitMapper.toDto(scheduledVisitResponse);
     }
 
     @Override
     public ScheduledVisitDto update(ScheduledVisitDto scheduledVisitDto) {
-        if (scheduledVisitRepository.existsById(scheduledVisitDto.getId())) {
-            ScheduledVisit scheduledVisit = scheduledVisitMapper.toEntity(scheduledVisitDto);
-            scheduledVisitRepository.save(scheduledVisit);
-            return read(scheduledVisit.getId());
+        ScheduledVisit scheduledVisitRequest = scheduledVisitMapper.toEntity(scheduledVisitDto);
+        if (scheduledVisitRepository.existsById(scheduledVisitRequest.getId())) {
+            ScheduledVisit scheduledVisitResponse = scheduledVisitRepository.save(scheduledVisitRequest);
+            return scheduledVisitMapper.toDto(scheduledVisitResponse);
         } else {
-            throw new NotFoundException("Запланированное посещение с id=" + scheduledVisitDto.getId() + " не найдено. Ничего не изменено.");
+            throw new NotFoundException("ScheduledVisit", "id", String.valueOf(scheduledVisitRequest.getId()));
         }
     }
 
     @Override
-    public ScheduledVisitDto delete(int id) {
-        ScheduledVisitDto scheduledVisitDto = read(id);
+    public ScheduledVisitDto delete(String id) {
+        ScheduledVisit scheduledVisit = scheduledVisitRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("ScheduledVisit", "id", id));
         scheduledVisitRepository.deleteById(id);
-        return scheduledVisitDto;
+        return scheduledVisitMapper.toDto(scheduledVisit);
     }
 }

@@ -1,27 +1,26 @@
 package ru.zalimannard.bachelorthesisserver.application;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder
 public class ApplicationDto {
     @JsonProperty("id")
-    private Integer id;
+    private String id;
 
     @JsonProperty("parentApplicationId")
-    private Integer parentApplicationId;
+    private int parentApplicationId;
 
     @JsonProperty("patientId")
-    private Integer patientId;
+    private int patientId;
 
     @JsonProperty("doctorNoteId")
-    private Integer doctorNoteId;
+    private int doctorNoteId;
 
     @JsonProperty("statusId")
-    private Integer statusId;
+    private int statusId;
 
     @JsonProperty("finalDiagnosis")
     private String finalDiagnosis;
+
 }

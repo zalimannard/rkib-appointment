@@ -2,6 +2,7 @@ package ru.zalimannard.bachelorthesisserver.doctornote;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,18 +11,15 @@ import java.util.List;
 @RestController
 @RequestMapping("${application.endpoint.root}" + "${application.endpoint.doctorNote}")
 @Tag(name = "Направления")
+@RequiredArgsConstructor
 public class DoctorNoteController {
     private final DoctorNoteService doctorNoteService;
-
-    public DoctorNoteController(DoctorNoteService doctorNoteService) {
-        this.doctorNoteService = doctorNoteService;
-    }
 
     @GetMapping("{id}")
     @Operation(summary = "Получение направления")
     @ResponseStatus(HttpStatus.OK)
-    public DoctorNoteDto get(@PathVariable int id) {
-        return doctorNoteService.read(id);
+    public DoctorNoteDto get(@PathVariable String id) {
+        return doctorNoteService.get(id);
     }
 
     @GetMapping
@@ -48,7 +46,7 @@ public class DoctorNoteController {
     @DeleteMapping("{id}")
     @Operation(summary = "Удаление направления")
     @ResponseStatus(HttpStatus.OK)
-    public DoctorNoteDto delete(@PathVariable int id) {
+    public DoctorNoteDto delete(@PathVariable String id) {
         return doctorNoteService.delete(id);
     }
 }

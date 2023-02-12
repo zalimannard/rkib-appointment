@@ -1,16 +1,14 @@
 package ru.zalimannard.bachelorthesisserver.patient;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
 import lombok.Data;
 
 import java.sql.Date;
 
 @Data
-@Builder
 public class PatientDto {
     @JsonProperty("id")
-    private Integer id;
+    private String id;
 
     @JsonProperty("lastName")
     private String lastName;
@@ -32,4 +30,5 @@ public class PatientDto {
 
     @JsonProperty("occupation")
     private String occupation;
+
 }

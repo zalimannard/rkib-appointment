@@ -13,6 +13,10 @@ spring:
 #    hibernate:
 #      ddl-auto: create
 
+springdoc:
+  swagger-ui:
+    path: /docs/api
+
 application:
   endpoint:
     root: /api
@@ -23,7 +27,7 @@ application:
     scheduleElement: /scheduleElements
     scheduleElementStatus: /scheduleElementStatuses
     scheduledVisit: /scheduledVisits
-    service: /services
+    favor: /favors
     unscheduledVisit: /unscheduledVisits
     application: /applications
     applicationStatus: /applicationStatuses

@@ -2,6 +2,7 @@ package ru.zalimannard.bachelorthesisserver.patient;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,18 +11,15 @@ import java.util.List;
 @RestController
 @RequestMapping("${application.endpoint.root}" + "${application.endpoint.patient}")
 @Tag(name = "Пациенты")
+@RequiredArgsConstructor
 public class PatientController {
     private final PatientService patientService;
-
-    public PatientController(PatientService patientService) {
-        this.patientService = patientService;
-    }
 
     @GetMapping("{id}")
     @Operation(summary = "Получение пациента")
     @ResponseStatus(HttpStatus.OK)
-    public PatientDto get(@PathVariable int id) {
-        return patientService.read(id);
+    public PatientDto get(@PathVariable String id) {
+        return patientService.get(id);
     }
 
     @GetMapping
@@ -48,7 +46,7 @@ public class PatientController {
     @DeleteMapping("{id}")
     @Operation(summary = "Удаление пациента")
     @ResponseStatus(HttpStatus.OK)
-    public PatientDto delete(@PathVariable int id) {
+    public PatientDto delete(@PathVariable String id) {
         return patientService.delete(id);
     }
 }

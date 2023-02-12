@@ -1,19 +1,16 @@
-package ru.zalimannard.bachelorthesisserver.application.status;
+package ru.zalimannard.bachelorthesisserver.favor;
 
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "application_statuses")
+@Table(name = "favors")
 @Data
-public class ApplicationStatus {
+public class Favor {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private String id;
-
-    @Column(name = "type_code", nullable = false)
-    private ApplicationStatusType type;
 
     @Column(name = "name", nullable = false)
     private String name;

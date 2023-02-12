@@ -3,7 +3,7 @@ package ru.zalimannard.bachelorthesisserver.scheduleelments.status;
 import java.util.List;
 
 public interface ScheduleElementStatusService {
-    ScheduleElementStatusDto read(int id);
+    ScheduleElementStatusDto get(String id);
 
     List<ScheduleElementStatusDto> list();
 
@@ -11,5 +11,5 @@ public interface ScheduleElementStatusService {
 
     ScheduleElementStatusDto update(ScheduleElementStatusDto scheduleElementStatusDto);
 
-    ScheduleElementStatusDto delete(int id);
+    ScheduleElementStatusDto delete(String id);
 }

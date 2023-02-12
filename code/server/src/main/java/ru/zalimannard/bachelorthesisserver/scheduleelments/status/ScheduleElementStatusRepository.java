@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ScheduleElementStatusRepository extends CrudRepository<ScheduleElementStatus, Integer> {
+public interface ScheduleElementStatusRepository extends CrudRepository<ScheduleElementStatus, String> {
 
 }

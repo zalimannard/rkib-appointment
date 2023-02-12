@@ -1,37 +1,18 @@
 package ru.zalimannard.bachelorthesisserver.institution;
 
 import jakarta.persistence.*;
-import lombok.*;
-
-import java.util.Objects;
+import lombok.Data;
 
 @Entity
 @Table(name = "institutions")
-@Builder
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
-@AllArgsConstructor
+@Data
 public class Institution {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id")
+    private String id;
 
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Institution that = (Institution) o;
-        return Objects.equals(getId(), that.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId());
-    }
 }

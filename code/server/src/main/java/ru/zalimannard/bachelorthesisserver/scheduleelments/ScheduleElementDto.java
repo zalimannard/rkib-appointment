@@ -10,16 +10,16 @@ import java.sql.Timestamp;
 @Builder
 public class ScheduleElementDto {
     @JsonProperty("id")
-    private Integer id;
+    private String id;
 
     @JsonProperty("doctorId")
-    private Integer doctorId;
+    private int doctorId;
 
     @JsonProperty("serviceId")
-    private Integer serviceId;
+    private int serviceId;
 
     @JsonProperty("statusId")
-    private Integer statusId;
+    private int statusId;
 
     @JsonProperty("appointmentTimestamp")
     private Timestamp appointmentTimestamp;

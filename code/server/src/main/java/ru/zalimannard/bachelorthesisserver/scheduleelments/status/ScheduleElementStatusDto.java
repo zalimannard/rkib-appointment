@@ -8,7 +8,7 @@ import lombok.Data;
 @Builder
 public class ScheduleElementStatusDto {
     @JsonProperty("id")
-    private Integer id;
+    private String id;
 
     @JsonProperty("type")
     private ScheduleElementStatusType type;

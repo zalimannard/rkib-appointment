@@ -1,23 +1,18 @@
 package ru.zalimannard.bachelorthesisserver.scheduledvisit;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 import ru.zalimannard.bachelorthesisserver.application.Application;
 import ru.zalimannard.bachelorthesisserver.scheduleelments.ScheduleElement;
 
 @Entity
 @Table(name = "scheduled_visits")
-@Builder
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
-@AllArgsConstructor
+@Data
 public class ScheduledVisit {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private Integer id;
+    private String id;
 
     @ManyToOne
     @JoinColumn(name = "schedule_element_id", nullable = false)
@@ -26,4 +21,5 @@ public class ScheduledVisit {
     @ManyToOne
     @JoinColumn(name = "application_id", nullable = false)
     private Application application;
+
 }

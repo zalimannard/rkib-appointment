@@ -1,63 +1,56 @@
 package ru.zalimannard.bachelorthesisserver.institution;
 
+import lombok.RequiredArgsConstructor;
+import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class InstitutionServiceImpl implements InstitutionService {
-    private final InstitutionMapper institutionMapper;
     private final InstitutionRepository institutionRepository;
-
-    public InstitutionServiceImpl(InstitutionMapper institutionMapper, InstitutionRepository institutionRepository) {
-        this.institutionMapper = institutionMapper;
-        this.institutionRepository = institutionRepository;
-    }
+    private final InstitutionMapper institutionMapper = Mappers.getMapper(InstitutionMapper.class);
 
     @Override
-    public InstitutionDto read(int id) {
-        Optional<Institution> institutionOptional = institutionRepository.findById(id);
-        if (institutionOptional.isPresent()) {
-            Institution institution = institutionOptional.get();
-            return institutionMapper.toDto(institution);
-        } else {
-            throw new NotFoundException("Учреждение с id=" + id + " не найдено");
-        }
+    public InstitutionDto get(String id) {
+        Institution institution = institutionRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Institution", "id", id));
+        return institutionMapper.toDto(institution);
     }
 
     @Override
     public List<InstitutionDto> list() {
-        Iterable<Institution> institutions = institutionRepository.findAll();
-        List<InstitutionDto> institutionDtos = new ArrayList<>();
-        institutions.forEach(institution -> institutionDtos.add(institutionMapper.toDto(institution)));
-        return institutionDtos;
+        List<Institution> institutionList = new ArrayList<>();
+        institutionRepository.findAll().forEach(institutionList::add);
+        return institutionMapper.toDtoList(institutionList);
     }
 
     @Override
     public InstitutionDto create(InstitutionDto institutionDto) {
-        Institution institution = institutionMapper.toEntity(institutionDto);
-        Institution addedInstitution = institutionRepository.save(institution);
-        return institutionMapper.toDto(addedInstitution);
+        Institution institutionRequest = institutionMapper.toEntity(institutionDto);
+        Institution institutionResponse = institutionRepository.save(institutionRequest);
+        return institutionMapper.toDto(institutionResponse);
     }
 
     @Override
     public InstitutionDto update(InstitutionDto institutionDto) {
-        if (institutionRepository.existsById(institutionDto.getId())) {
-            Institution institution = institutionMapper.toEntity(institutionDto);
-            institutionRepository.save(institution);
-            return read(institutionDto.getId());
+        Institution institutionRequest = institutionMapper.toEntity(institutionDto);
+        if (institutionRepository.existsById(institutionRequest.getId())) {
+            Institution institutionResponse = institutionRepository.save(institutionRequest);
+            return institutionMapper.toDto(institutionResponse);
         } else {
-            throw new NotFoundException("Учреждение с id=" + institutionDto.getId() + " не найдено. Ничего не изменено.");
+            throw new NotFoundException("Institution", "id", String.valueOf(institutionRequest.getId()));
         }
     }
 
     @Override
-    public InstitutionDto delete(int id) {
-        InstitutionDto institutionDto = read(id);
+    public InstitutionDto delete(String id) {
+        Institution institution = institutionRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Institution", "id", id));
         institutionRepository.deleteById(id);
-        return institutionDto;
+        return institutionMapper.toDto(institution);
     }
 }

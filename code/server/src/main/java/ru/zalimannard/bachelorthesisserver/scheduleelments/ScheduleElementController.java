@@ -2,6 +2,7 @@ package ru.zalimannard.bachelorthesisserver.scheduleelments;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,17 +10,14 @@ import java.util.List;
 @RestController
 @RequestMapping("${application.endpoint.root}" + "${application.endpoint.scheduleElement}")
 @Tag(name = "Элементы расписания")
+@RequiredArgsConstructor
 public class ScheduleElementController {
     private final ScheduleElementService scheduleElementService;
 
-    public ScheduleElementController(ScheduleElementService scheduleElementService) {
-        this.scheduleElementService = scheduleElementService;
-    }
-
     @GetMapping("{id}")
     @Operation(summary = "Получение элемента расписания")
-    public ScheduleElementDto get(@PathVariable int id) {
-        return scheduleElementService.create(id);
+    public ScheduleElementDto get(@PathVariable String id) {
+        return scheduleElementService.get(id);
     }
 
     @GetMapping
@@ -42,7 +40,7 @@ public class ScheduleElementController {
 
     @DeleteMapping("{id}")
     @Operation(summary = "Удаление элемента расписания")
-    public ScheduleElementDto delete(@PathVariable int id) {
+    public ScheduleElementDto delete(@PathVariable String id) {
         return scheduleElementService.delete(id);
     }
 }

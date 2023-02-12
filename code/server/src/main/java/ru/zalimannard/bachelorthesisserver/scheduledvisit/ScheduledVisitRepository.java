@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ScheduledVisitRepository extends CrudRepository<ScheduledVisit, Integer> {
+public interface ScheduledVisitRepository extends CrudRepository<ScheduledVisit, String> {
 
 }

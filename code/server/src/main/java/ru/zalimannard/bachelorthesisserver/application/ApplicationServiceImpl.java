@@ -1,63 +1,56 @@
 package ru.zalimannard.bachelorthesisserver.application;
 
+import lombok.RequiredArgsConstructor;
+import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ApplicationServiceImpl implements ApplicationService {
-    private final ApplicationMapper applicationMapper;
     private final ApplicationRepository applicationRepository;
-
-    public ApplicationServiceImpl(ApplicationMapper applicationMapper, ApplicationRepository applicationRepository) {
-        this.applicationMapper = applicationMapper;
-        this.applicationRepository = applicationRepository;
-    }
+    private final ApplicationMapper applicationMapper = Mappers.getMapper(ApplicationMapper.class);
 
     @Override
-    public ApplicationDto read(int id) {
-        Optional<Application> applicationOptional = applicationRepository.findById(id);
-        if (applicationOptional.isPresent()) {
-            Application application = applicationOptional.get();
-            return applicationMapper.toDto(application);
-        } else {
-            throw new NotFoundException("Обращение с id=" + id + " не найдено.");
-        }
+    public ApplicationDto get(String id) {
+        Application application = applicationRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Application", "id", id));
+        return applicationMapper.toDto(application);
     }
 
     @Override
     public List<ApplicationDto> list() {
-        Iterable<Application> applications = applicationRepository.findAll();
-        List<ApplicationDto> applicationDtos = new ArrayList<>();
-        applications.forEach(application -> applicationDtos.add(applicationMapper.toDto(application)));
-        return applicationDtos;
+        List<Application> applicationList = new ArrayList<>();
+        applicationRepository.findAll().forEach(applicationList::add);
+        return applicationMapper.toDtoList(applicationList);
     }
 
     @Override
     public ApplicationDto create(ApplicationDto applicationDto) {
-        Application application = applicationMapper.toEntity(applicationDto);
-        Application addedApplication = applicationRepository.save(application);
-        return applicationMapper.toDto(addedApplication);
+        Application applicationRequest = applicationMapper.toEntity(applicationDto);
+        Application applicationResponse = applicationRepository.save(applicationRequest);
+        return applicationMapper.toDto(applicationResponse);
     }
 
     @Override
     public ApplicationDto update(ApplicationDto applicationDto) {
-        if (applicationRepository.existsById(applicationDto.getId())) {
-            Application application = applicationMapper.toEntity(applicationDto);
-            applicationRepository.save(application);
-            return read(application.getId());
+        Application applicationRequest = applicationMapper.toEntity(applicationDto);
+        if (applicationRepository.existsById(applicationRequest.getId())) {
+            Application applicationResponse = applicationRepository.save(applicationRequest);
+            return applicationMapper.toDto(applicationResponse);
         } else {
-            throw new NotFoundException("Обращение с id=" + applicationDto.getId() + " не найдено. Ничего не изменено.");
+            throw new NotFoundException("Application", "id", String.valueOf(applicationRequest.getId()));
         }
     }
 
     @Override
-    public ApplicationDto delete(int id) {
-        ApplicationDto applicationDto = read(id);
+    public ApplicationDto delete(String id) {
+        Application application = applicationRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Application", "id", id));
         applicationRepository.deleteById(id);
-        return applicationDto;
+        return applicationMapper.toDto(application);
     }
 }

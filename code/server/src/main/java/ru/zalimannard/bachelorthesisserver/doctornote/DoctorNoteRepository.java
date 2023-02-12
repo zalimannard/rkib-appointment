@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DoctorNoteRepository extends CrudRepository<DoctorNote, Integer> {
+public interface DoctorNoteRepository extends CrudRepository<DoctorNote, String> {
 
 }
