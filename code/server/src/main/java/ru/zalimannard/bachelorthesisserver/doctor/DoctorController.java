@@ -22,7 +22,7 @@ public class DoctorController {
     @GetMapping("{id}")
     @Operation(summary = "Получение доктора")
     public DoctorDto get(@PathVariable int id) {
-        return doctorService.read(id);
+        return doctorService.get(id);
     }
 
     @GetMapping

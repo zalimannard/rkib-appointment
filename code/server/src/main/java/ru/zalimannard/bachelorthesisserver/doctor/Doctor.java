@@ -1,23 +1,16 @@
 package ru.zalimannard.bachelorthesisserver.doctor;
 
 import jakarta.persistence.*;
-import lombok.*;
-
-import java.util.Objects;
+import lombok.Data;
 
 @Entity
 @Table(name = "doctors")
-@Builder
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
-@AllArgsConstructor
+@Data
 public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    @Column(name = "id")
+    private int id;
 
     @Column(name = "last_name", nullable = false)
     private String lastName;
@@ -28,16 +21,4 @@ public class Doctor {
     @Column(name = "middle_name", nullable = false)
     private String middleName;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Doctor doctor = (Doctor) o;
-        return Objects.equals(getId(), doctor.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId());
-    }
 }
