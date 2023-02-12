@@ -6,20 +6,20 @@ import ru.zalimannard.bachelorthesisserver.doctor.DoctorRepository;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 import ru.zalimannard.bachelorthesisserver.scheduleelments.status.ScheduleElementStatus;
 import ru.zalimannard.bachelorthesisserver.scheduleelments.status.ScheduleElementStatusRepository;
-import ru.zalimannard.bachelorthesisserver.service.Service;
-import ru.zalimannard.bachelorthesisserver.service.ServiceRepository;
+import ru.zalimannard.bachelorthesisserver.favor.Favor;
+import ru.zalimannard.bachelorthesisserver.favor.FavorRepository;
 
 import java.util.Optional;
 
 @Component
 public class ScheduleElementMapperImpl implements ScheduleElementMapper {
     private final DoctorRepository doctorRepository;
-    private final ServiceRepository serviceRepository;
+    private final FavorRepository favorRepository;
     private final ScheduleElementStatusRepository scheduleElementStatusRepository;
 
-    public ScheduleElementMapperImpl(DoctorRepository doctorRepository, ServiceRepository serviceRepository, ScheduleElementStatusRepository scheduleElementStatusRepository) {
+    public ScheduleElementMapperImpl(DoctorRepository doctorRepository, FavorRepository favorRepository, ScheduleElementStatusRepository scheduleElementStatusRepository) {
         this.doctorRepository = doctorRepository;
-        this.serviceRepository = serviceRepository;
+        this.favorRepository = favorRepository;
         this.scheduleElementStatusRepository = scheduleElementStatusRepository;
     }
 
@@ -28,7 +28,7 @@ public class ScheduleElementMapperImpl implements ScheduleElementMapper {
         return ScheduleElement.builder()
                 .id(dto.getId())
                 .doctor(obtainDoctor(dto.getDoctorId()))
-                .service(obtainService(dto.getServiceId()))
+                .favor(obtainService(dto.getServiceId()))
                 .status(obtainScheduleElementStatus(dto.getStatusId()))
                 .appointmentTimestamp(dto.getAppointmentTimestamp())
                 .build();
@@ -39,7 +39,7 @@ public class ScheduleElementMapperImpl implements ScheduleElementMapper {
         return ScheduleElementDto.builder()
                 .id(entity.getId())
                 .doctorId(obtainDoctorId(entity.getDoctor()))
-                .serviceId(obtainServiceId(entity.getService()))
+                .serviceId(obtainServiceId(entity.getFavor()))
                 .statusId(obtainScheduleElementStatusId(entity.getStatus()))
                 .appointmentTimestamp(entity.getAppointmentTimestamp())
                 .build();
@@ -58,12 +58,12 @@ public class ScheduleElementMapperImpl implements ScheduleElementMapper {
         }
     }
 
-    private int obtainServiceId(Service service) {
-        return service.getId();
+    private int obtainServiceId(Favor favor) {
+        return favor.getId();
     }
 
-    private Service obtainService(int institutionId) {
-        Optional<Service> serviceOptional = serviceRepository.findById(institutionId);
+    private Favor obtainService(int institutionId) {
+        Optional<Favor> serviceOptional = favorRepository.findById(institutionId);
         if (serviceOptional.isPresent()) {
             return serviceOptional.get();
         } else {

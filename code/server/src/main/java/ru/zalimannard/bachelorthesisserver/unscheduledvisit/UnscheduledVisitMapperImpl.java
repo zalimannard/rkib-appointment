@@ -6,20 +6,20 @@ import ru.zalimannard.bachelorthesisserver.application.ApplicationRepository;
 import ru.zalimannard.bachelorthesisserver.doctor.Doctor;
 import ru.zalimannard.bachelorthesisserver.doctor.DoctorRepository;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
-import ru.zalimannard.bachelorthesisserver.service.Service;
-import ru.zalimannard.bachelorthesisserver.service.ServiceRepository;
+import ru.zalimannard.bachelorthesisserver.favor.Favor;
+import ru.zalimannard.bachelorthesisserver.favor.FavorRepository;
 
 import java.util.Optional;
 
 @Component
 public class UnscheduledVisitMapperImpl implements UnscheduledVisitMapper {
     private final DoctorRepository doctorRepository;
-    private final ServiceRepository serviceRepository;
+    private final FavorRepository favorRepository;
     private final ApplicationRepository applicationRepository;
 
-    public UnscheduledVisitMapperImpl(DoctorRepository doctorRepository, ServiceRepository serviceRepository, ApplicationRepository applicationRepository) {
+    public UnscheduledVisitMapperImpl(DoctorRepository doctorRepository, FavorRepository favorRepository, ApplicationRepository applicationRepository) {
         this.doctorRepository = doctorRepository;
-        this.serviceRepository = serviceRepository;
+        this.favorRepository = favorRepository;
         this.applicationRepository = applicationRepository;
     }
 
@@ -28,7 +28,7 @@ public class UnscheduledVisitMapperImpl implements UnscheduledVisitMapper {
         return UnscheduledVisit.builder()
                 .id(dto.getId())
                 .doctor(obtainDoctor(dto.getDoctorId()))
-                .service(obtainService(dto.getServiceId()))
+                .favor(obtainService(dto.getServiceId()))
                 .application(obtainApplication(dto.getApplicationId()))
                 .appointmentTimestamp(dto.getAppointmentTimestamp())
                 .comment(dto.getComment())
@@ -40,7 +40,7 @@ public class UnscheduledVisitMapperImpl implements UnscheduledVisitMapper {
         return UnscheduledVisitDto.builder()
                 .id(entity.getId())
                 .doctorId(obtainDoctorId(entity.getDoctor()))
-                .serviceId(obtainServiceId(entity.getService()))
+                .serviceId(obtainServiceId(entity.getFavor()))
                 .applicationId(obtainApplicationId(entity.getApplication()))
                 .appointmentTimestamp(entity.getAppointmentTimestamp())
                 .comment(entity.getComment())
@@ -60,12 +60,12 @@ public class UnscheduledVisitMapperImpl implements UnscheduledVisitMapper {
         }
     }
 
-    private int obtainServiceId(Service service) {
-        return service.getId();
+    private int obtainServiceId(Favor favor) {
+        return favor.getId();
     }
 
-    private Service obtainService(int serviceId) {
-        Optional<Service> serviceOptional = serviceRepository.findById(serviceId);
+    private Favor obtainService(int serviceId) {
+        Optional<Favor> serviceOptional = favorRepository.findById(serviceId);
         if (serviceOptional.isPresent()) {
             return serviceOptional.get();
         } else {

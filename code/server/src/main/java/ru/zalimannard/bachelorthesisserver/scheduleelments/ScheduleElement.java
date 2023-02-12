@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import ru.zalimannard.bachelorthesisserver.doctor.Doctor;
 import ru.zalimannard.bachelorthesisserver.scheduleelments.status.ScheduleElementStatus;
-import ru.zalimannard.bachelorthesisserver.service.Service;
+import ru.zalimannard.bachelorthesisserver.favor.Favor;
 
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -29,7 +29,7 @@ public class ScheduleElement {
 
     @ManyToOne
     @JoinColumn(name = "service_id", nullable = false)
-    private Service service;
+    private Favor favor;
 
     @ManyToOne
     @JoinColumn(name = "status_id", nullable = false)

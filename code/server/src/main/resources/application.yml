@@ -27,7 +27,7 @@ application:
     scheduleElement: /scheduleElements
     scheduleElementStatus: /scheduleElementStatuses
     scheduledVisit: /scheduledVisits
-    service: /services
+    favor: /favors
     unscheduledVisit: /unscheduledVisits
     application: /applications
     applicationStatus: /applicationStatuses
