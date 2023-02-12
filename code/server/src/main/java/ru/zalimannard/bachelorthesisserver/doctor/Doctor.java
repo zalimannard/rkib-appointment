@@ -18,7 +18,7 @@ public class Doctor {
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "middle_name", nullable = false)
-    private String middleName;
+    @Column(name = "patronymic", nullable = false)
+    private String patronymic;
 
 }

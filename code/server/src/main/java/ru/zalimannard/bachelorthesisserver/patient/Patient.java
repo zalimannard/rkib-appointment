@@ -20,8 +20,8 @@ public class Patient {
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "middle_name", nullable = false)
-    private String middleName;
+    @Column(name = "patronymic", nullable = false)
+    private String patronymic;
 
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
