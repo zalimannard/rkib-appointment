@@ -8,7 +8,7 @@ import java.sql.Date;
 @Data
 public class PatientDto {
     @JsonProperty("id")
-    private int id;
+    private String id;
 
     @JsonProperty("lastName")
     private String lastName;

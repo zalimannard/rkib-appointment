@@ -16,7 +16,7 @@ public class ApplicationController {
 
     @GetMapping("{id}")
     @Operation(summary = "Получение обращения")
-    public ApplicationDto get(@PathVariable int id) {
+    public ApplicationDto get(@PathVariable String id) {
         return applicationService.get(id);
     }
 
@@ -40,7 +40,7 @@ public class ApplicationController {
 
     @DeleteMapping("{id}")
     @Operation(summary = "Удаление обращения")
-    public ApplicationDto delete(@PathVariable int id) {
+    public ApplicationDto delete(@PathVariable String id) {
         return applicationService.delete(id);
     }
 }

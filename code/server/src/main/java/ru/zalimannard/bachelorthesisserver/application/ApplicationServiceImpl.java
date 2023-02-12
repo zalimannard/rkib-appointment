@@ -15,9 +15,9 @@ public class ApplicationServiceImpl implements ApplicationService {
     private final ApplicationMapper applicationMapper = Mappers.getMapper(ApplicationMapper.class);
 
     @Override
-    public ApplicationDto get(int id) {
+    public ApplicationDto get(String id) {
         Application application = applicationRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Application", "id", String.valueOf(id)));
+                .orElseThrow(() -> new NotFoundException("Application", "id", id));
         return applicationMapper.toDto(application);
     }
 
@@ -47,9 +47,9 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public ApplicationDto delete(int id) {
+    public ApplicationDto delete(String id) {
         Application application = applicationRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Application", "id", String.valueOf(id)));
+                .orElseThrow(() -> new NotFoundException("Application", "id", id));
         applicationRepository.deleteById(id);
         return applicationMapper.toDto(application);
     }

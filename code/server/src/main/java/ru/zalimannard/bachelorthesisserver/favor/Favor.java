@@ -8,9 +8,9 @@ import lombok.Data;
 @Data
 public class Favor {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private int id;
+    private String id;
 
     @Column(name = "name", nullable = false)
     private String name;

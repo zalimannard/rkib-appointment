@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @Builder
 public class ScheduleElementDto {
     @JsonProperty("id")
-    private int id;
+    private String id;
 
     @JsonProperty("doctorId")
     private int doctorId;

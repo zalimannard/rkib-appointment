@@ -15,9 +15,9 @@ public class PatientServiceImpl implements PatientService {
     private final PatientMapper patientMapper = Mappers.getMapper(PatientMapper.class);
 
     @Override
-    public PatientDto get(int id) {
+    public PatientDto get(String id) {
         Patient patient = patientRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Patient", "id", String.valueOf(id)));
+                .orElseThrow(() -> new NotFoundException("Patient", "id", id));
         return patientMapper.toDto(patient);
     }
 
@@ -47,9 +47,9 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public PatientDto delete(int id) {
+    public PatientDto delete(String id) {
         Patient patient = patientRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Patient", "id", String.valueOf(id)));
+                .orElseThrow(() -> new NotFoundException("Patient", "id", id));
         patientRepository.deleteById(id);
         return patientMapper.toDto(patient);
     }

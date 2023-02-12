@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface ApplicationService {
 
-    ApplicationDto get(int id);
+    ApplicationDto get(String id);
 
     List<ApplicationDto> list();
 
@@ -12,5 +12,5 @@ public interface ApplicationService {
 
     ApplicationDto update(ApplicationDto applicationDto);
 
-    ApplicationDto delete(int id);
+    ApplicationDto delete(String id);
 }

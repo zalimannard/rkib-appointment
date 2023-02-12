@@ -10,9 +10,9 @@ import ru.zalimannard.bachelorthesisserver.scheduleelments.ScheduleElement;
 @Data
 public class ScheduledVisit {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private int id;
+    private String id;
 
     @ManyToOne
     @JoinColumn(name = "schedule_element_id", nullable = false)

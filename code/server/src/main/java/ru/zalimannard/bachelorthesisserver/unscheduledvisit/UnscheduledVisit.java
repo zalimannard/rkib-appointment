@@ -13,9 +13,9 @@ import java.sql.Timestamp;
 @Data
 public class UnscheduledVisit {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private int id;
+    private String id;
 
     @ManyToOne
     @JoinColumn(name = "doctor_id", nullable = false)

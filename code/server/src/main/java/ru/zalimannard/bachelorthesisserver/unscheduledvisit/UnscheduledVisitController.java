@@ -16,7 +16,7 @@ public class UnscheduledVisitController {
 
     @GetMapping("{id}")
     @Operation(summary = "Получение незапланированного посещения")
-    public UnscheduledVisitDto get(@PathVariable int id) {
+    public UnscheduledVisitDto get(@PathVariable String id) {
         return unscheduledVisitService.get(id);
     }
 
@@ -40,7 +40,7 @@ public class UnscheduledVisitController {
 
     @DeleteMapping("{id}")
     @Operation(summary = "Удаление незапланированного посещения")
-    public UnscheduledVisitDto delete(@PathVariable int id) {
+    public UnscheduledVisitDto delete(@PathVariable String id) {
         return unscheduledVisitService.delete(id);
     }
 }

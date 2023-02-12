@@ -15,9 +15,9 @@ public class DoctorServiceImpl implements DoctorService {
     private final DoctorMapper doctorMapper = Mappers.getMapper(DoctorMapper.class);
 
     @Override
-    public DoctorDto get(int id) {
+    public DoctorDto get(String id) {
         Doctor doctor = doctorRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Doctor", "id", String.valueOf(id)));
+                .orElseThrow(() -> new NotFoundException("Doctor", "id", id));
         return doctorMapper.toDto(doctor);
     }
 

@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ApplicationStatusRepository extends CrudRepository<ApplicationStatus, Integer> {
+public interface ApplicationStatusRepository extends CrudRepository<ApplicationStatus, String> {
 
 }

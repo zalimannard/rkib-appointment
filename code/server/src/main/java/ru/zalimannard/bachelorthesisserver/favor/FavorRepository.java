@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FavorRepository extends CrudRepository<Favor, Integer> {
+public interface FavorRepository extends CrudRepository<Favor, String> {
 
 }

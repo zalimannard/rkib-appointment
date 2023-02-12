@@ -15,9 +15,9 @@ public class ScheduleElementStatusServiceImpl implements ScheduleElementStatusSe
     private final ScheduleElementStatusMapper scheduleElementStatusMapper = Mappers.getMapper(ScheduleElementStatusMapper.class);
 
     @Override
-    public ScheduleElementStatusDto get(int id) {
+    public ScheduleElementStatusDto get(String id) {
         ScheduleElementStatus scheduleElementStatus = scheduleElementStatusRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("ScheduleElementStatus", "id", String.valueOf(id)));
+                .orElseThrow(() -> new NotFoundException("ScheduleElementStatus", "id", id));
         return scheduleElementStatusMapper.toDto(scheduleElementStatus);
     }
 
@@ -47,9 +47,9 @@ public class ScheduleElementStatusServiceImpl implements ScheduleElementStatusSe
     }
 
     @Override
-    public ScheduleElementStatusDto delete(int id) {
+    public ScheduleElementStatusDto delete(String id) {
         ScheduleElementStatus scheduleElementStatus = scheduleElementStatusRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("ScheduleElementStatus", "id", String.valueOf(id)));
+                .orElseThrow(() -> new NotFoundException("ScheduleElementStatus", "id", id));
         scheduleElementStatusRepository.deleteById(id);
         return scheduleElementStatusMapper.toDto(scheduleElementStatus);
     }

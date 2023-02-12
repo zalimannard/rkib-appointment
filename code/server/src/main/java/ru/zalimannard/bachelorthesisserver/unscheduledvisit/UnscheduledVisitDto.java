@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 @Data
 public class UnscheduledVisitDto {
     @JsonProperty("id")
-    private int id;
+    private String id;
 
     @JsonProperty("doctorId")
     private int doctorId;

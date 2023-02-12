@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface InstitutionService {
 
-    InstitutionDto get(int id);
+    InstitutionDto get(String id);
 
     List<InstitutionDto> list();
 
@@ -12,5 +12,5 @@ public interface InstitutionService {
 
     InstitutionDto update(InstitutionDto institutionDto);
 
-    InstitutionDto delete(int id);
+    InstitutionDto delete(String id);
 }

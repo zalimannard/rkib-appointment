@@ -16,7 +16,7 @@ public class ApplicationStatusController {
 
     @GetMapping("{id}")
     @Operation(summary = "Получение статуса обращений")
-    public ApplicationStatusDto get(@PathVariable int id) {
+    public ApplicationStatusDto get(@PathVariable String id) {
         return applicationStatusService.get(id);
     }
 
@@ -40,7 +40,7 @@ public class ApplicationStatusController {
 
     @DeleteMapping("{id}")
     @Operation(summary = "Удаление статуса обращений")
-    public ApplicationStatusDto delete(@PathVariable int id) {
+    public ApplicationStatusDto delete(@PathVariable String id) {
         return applicationStatusService.delete(id);
     }
 }

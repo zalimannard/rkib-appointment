@@ -11,9 +11,9 @@ import ru.zalimannard.bachelorthesisserver.patient.Patient;
 @Data
 public class Application {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private int id;
+    private String id;
 
     @ManyToOne
     @JoinColumn(name = "parent_application_id", nullable = true)

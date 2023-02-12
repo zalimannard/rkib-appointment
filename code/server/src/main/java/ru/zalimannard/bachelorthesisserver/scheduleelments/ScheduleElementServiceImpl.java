@@ -15,9 +15,9 @@ public class ScheduleElementServiceImpl implements ScheduleElementService {
     private final ScheduleElementMapper scheduleElementMapper = Mappers.getMapper(ScheduleElementMapper.class);
 
     @Override
-    public ScheduleElementDto get(int id) {
+    public ScheduleElementDto get(String id) {
         ScheduleElement scheduleElement = scheduleElementRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("ScheduleElement", "id", String.valueOf(id)));
+                .orElseThrow(() -> new NotFoundException("ScheduleElement", "id", id));
         return scheduleElementMapper.toDto(scheduleElement);
     }
 
@@ -47,9 +47,9 @@ public class ScheduleElementServiceImpl implements ScheduleElementService {
     }
 
     @Override
-    public ScheduleElementDto delete(int id) {
+    public ScheduleElementDto delete(String id) {
         ScheduleElement scheduleElement = scheduleElementRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("ScheduleElement", "id", String.valueOf(id)));
+                .orElseThrow(() -> new NotFoundException("ScheduleElement", "id", id));
         scheduleElementRepository.deleteById(id);
         return scheduleElementMapper.toDto(scheduleElement);
     }

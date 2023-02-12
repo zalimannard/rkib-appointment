@@ -9,9 +9,9 @@ import ru.zalimannard.bachelorthesisserver.institution.Institution;
 @Data
 public class DoctorNote {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private int id;
+    private String id;
 
     @ManyToOne
     @JoinColumn(name = "institution_id", nullable = false)

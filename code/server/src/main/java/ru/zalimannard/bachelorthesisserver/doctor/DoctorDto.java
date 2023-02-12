@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class DoctorDto {
     @JsonProperty("id")
-    private int id;
+    private String id;
 
     @JsonProperty("lastName")
     private String lastName;

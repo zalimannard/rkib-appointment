@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface DoctorService {
 
-    DoctorDto get(int id);
+    DoctorDto get(String id);
 
     List<DoctorDto> list();
 }

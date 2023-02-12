@@ -19,7 +19,7 @@ public class DoctorController {
 
     @GetMapping("{id}")
     @Operation(summary = "Получение доктора")
-    public DoctorDto get(@PathVariable int id) {
+    public DoctorDto get(@PathVariable String id) {
         return doctorService.get(id);
     }
 

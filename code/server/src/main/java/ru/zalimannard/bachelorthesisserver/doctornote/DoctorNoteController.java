@@ -18,7 +18,7 @@ public class DoctorNoteController {
     @GetMapping("{id}")
     @Operation(summary = "Получение направления")
     @ResponseStatus(HttpStatus.OK)
-    public DoctorNoteDto get(@PathVariable int id) {
+    public DoctorNoteDto get(@PathVariable String id) {
         return doctorNoteService.get(id);
     }
 
@@ -46,7 +46,7 @@ public class DoctorNoteController {
     @DeleteMapping("{id}")
     @Operation(summary = "Удаление направления")
     @ResponseStatus(HttpStatus.OK)
-    public DoctorNoteDto delete(@PathVariable int id) {
+    public DoctorNoteDto delete(@PathVariable String id) {
         return doctorNoteService.delete(id);
     }
 }

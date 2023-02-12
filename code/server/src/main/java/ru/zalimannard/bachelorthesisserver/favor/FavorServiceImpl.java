@@ -15,9 +15,9 @@ public class FavorServiceImpl implements FavorService {
     private final FavorMapper favorMapper = Mappers.getMapper(FavorMapper.class);
 
     @Override
-    public FavorDto get(int id) {
+    public FavorDto get(String id) {
         Favor favor = favorRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Favor", "id", String.valueOf(id)));
+                .orElseThrow(() -> new NotFoundException("Favor", "id", id));
         return favorMapper.toDto(favor);
     }
 

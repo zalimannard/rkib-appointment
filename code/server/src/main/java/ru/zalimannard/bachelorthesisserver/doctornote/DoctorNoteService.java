@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface DoctorNoteService {
 
-    DoctorNoteDto get(int id);
+    DoctorNoteDto get(String id);
 
     List<DoctorNoteDto> list();
 
@@ -12,5 +12,5 @@ public interface DoctorNoteService {
 
     DoctorNoteDto update(DoctorNoteDto doctorNoteDto);
 
-    DoctorNoteDto delete(int id);
+    DoctorNoteDto delete(String id);
 }

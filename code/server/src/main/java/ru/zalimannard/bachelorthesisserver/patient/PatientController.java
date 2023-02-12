@@ -18,7 +18,7 @@ public class PatientController {
     @GetMapping("{id}")
     @Operation(summary = "Получение пациента")
     @ResponseStatus(HttpStatus.OK)
-    public PatientDto get(@PathVariable int id) {
+    public PatientDto get(@PathVariable String id) {
         return patientService.get(id);
     }
 
@@ -46,7 +46,7 @@ public class PatientController {
     @DeleteMapping("{id}")
     @Operation(summary = "Удаление пациента")
     @ResponseStatus(HttpStatus.OK)
-    public PatientDto delete(@PathVariable int id) {
+    public PatientDto delete(@PathVariable String id) {
         return patientService.delete(id);
     }
 }

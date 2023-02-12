@@ -7,7 +7,7 @@ import lombok.Data;
 public class ApplicationStatusDto {
 
     @JsonProperty("id")
-    private Integer id;
+    private String id;
 
     @JsonProperty("type")
     private ApplicationStatusType type;

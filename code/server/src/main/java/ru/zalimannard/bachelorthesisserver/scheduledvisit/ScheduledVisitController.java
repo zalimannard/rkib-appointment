@@ -16,7 +16,7 @@ public class ScheduledVisitController {
 
     @GetMapping("{id}")
     @Operation(summary = "Получение запланированного посещения")
-    public ScheduledVisitDto get(@PathVariable int id) {
+    public ScheduledVisitDto get(@PathVariable String id) {
         return scheduledVisitService.get(id);
     }
 
@@ -40,7 +40,7 @@ public class ScheduledVisitController {
 
     @DeleteMapping("{id}")
     @Operation(summary = "Удаление запланированного посещения")
-    public ScheduledVisitDto delete(@PathVariable int id) {
+    public ScheduledVisitDto delete(@PathVariable String id) {
         return scheduledVisitService.delete(id);
     }
 }

@@ -18,7 +18,7 @@ public class InstitutionController {
     @GetMapping("{id}")
     @Operation(summary = "Получение учреждения")
     @ResponseStatus(HttpStatus.OK)
-    public InstitutionDto get(@PathVariable int id) {
+    public InstitutionDto get(@PathVariable String id) {
         return institutionService.get(id);
     }
 
@@ -46,7 +46,7 @@ public class InstitutionController {
     @DeleteMapping("{id}")
     @Operation(summary = "Удаление учреждения")
     @ResponseStatus(HttpStatus.OK)
-    public InstitutionDto delete(@PathVariable int id) {
+    public InstitutionDto delete(@PathVariable String id) {
         return institutionService.delete(id);
     }
 }

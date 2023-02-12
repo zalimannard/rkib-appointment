@@ -8,9 +8,9 @@ import lombok.Data;
 @Data
 public class ApplicationStatus {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private int id;
+    private String id;
 
     @Column(name = "type_code", nullable = false)
     private ApplicationStatusType type;

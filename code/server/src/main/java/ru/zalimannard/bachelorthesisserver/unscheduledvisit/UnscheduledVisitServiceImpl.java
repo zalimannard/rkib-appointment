@@ -15,9 +15,9 @@ public class UnscheduledVisitServiceImpl implements UnscheduledVisitService {
     private final UnscheduledVisitMapper unscheduledVisitMapper = Mappers.getMapper(UnscheduledVisitMapper.class);
 
     @Override
-    public UnscheduledVisitDto get(int id) {
+    public UnscheduledVisitDto get(String id) {
         UnscheduledVisit unscheduledVisit = unscheduledVisitRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("UnscheduledVisit", "id", String.valueOf(id)));
+                .orElseThrow(() -> new NotFoundException("UnscheduledVisit", "id", id));
         return unscheduledVisitMapper.toDto(unscheduledVisit);
     }
 
@@ -47,9 +47,9 @@ public class UnscheduledVisitServiceImpl implements UnscheduledVisitService {
     }
 
     @Override
-    public UnscheduledVisitDto delete(int id) {
+    public UnscheduledVisitDto delete(String id) {
         UnscheduledVisit unscheduledVisit = unscheduledVisitRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("UnscheduledVisit", "id", String.valueOf(id)));
+                .orElseThrow(() -> new NotFoundException("UnscheduledVisit", "id", id));
         unscheduledVisitRepository.deleteById(id);
         return unscheduledVisitMapper.toDto(unscheduledVisit);
     }

@@ -19,7 +19,7 @@ public class FavorController {
 
     @GetMapping("{id}")
     @Operation(summary = "Получение услуги")
-    public FavorDto get(@PathVariable int id) {
+    public FavorDto get(@PathVariable String id) {
         return favorService.get(id);
     }
 

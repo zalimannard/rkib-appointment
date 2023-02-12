@@ -7,7 +7,6 @@ import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -16,9 +15,9 @@ public class ScheduledVisitServiceImpl implements ScheduledVisitService {
     private final ScheduledVisitMapper scheduledVisitMapper = Mappers.getMapper(ScheduledVisitMapper.class);
 
     @Override
-    public ScheduledVisitDto get(int id) {
+    public ScheduledVisitDto get(String id) {
         ScheduledVisit scheduledVisit = scheduledVisitRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("ScheduledVisit", "id", String.valueOf(id)));
+                .orElseThrow(() -> new NotFoundException("ScheduledVisit", "id", id));
         return scheduledVisitMapper.toDto(scheduledVisit);
     }
 
@@ -48,9 +47,9 @@ public class ScheduledVisitServiceImpl implements ScheduledVisitService {
     }
 
     @Override
-    public ScheduledVisitDto delete(int id) {
+    public ScheduledVisitDto delete(String id) {
         ScheduledVisit scheduledVisit = scheduledVisitRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("ScheduledVisit", "id", String.valueOf(id)));
+                .orElseThrow(() -> new NotFoundException("ScheduledVisit", "id", id));
         scheduledVisitRepository.deleteById(id);
         return scheduledVisitMapper.toDto(scheduledVisit);
     }

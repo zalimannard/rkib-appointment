@@ -16,7 +16,7 @@ public class ScheduleElementStatusController {
 
     @GetMapping("{id}")
     @Operation(summary = "Получение статуса элементов расписания")
-    public ScheduleElementStatusDto get(@PathVariable int id) {
+    public ScheduleElementStatusDto get(@PathVariable String id) {
         return scheduleElementStatusService.get(id);
     }
 
@@ -40,7 +40,7 @@ public class ScheduleElementStatusController {
 
     @DeleteMapping("{id}")
     @Operation(summary = "Удаление статуса элементов расписания")
-    public ScheduleElementStatusDto delete(@PathVariable int id) {
+    public ScheduleElementStatusDto delete(@PathVariable String id) {
         return scheduleElementStatusService.delete(id);
     }
 }

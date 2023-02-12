@@ -6,12 +6,12 @@ import lombok.Data;
 @Data
 public class ScheduledVisitDto {
     @JsonProperty("id")
-    private Integer id;
+    private String id;
 
     @JsonProperty("schedule_element_id")
-    private Integer scheduleElementId;
+    private int scheduleElementId;
 
     @JsonProperty("application_id")
-    private Integer applicationId;
+    private int applicationId;
 
 }

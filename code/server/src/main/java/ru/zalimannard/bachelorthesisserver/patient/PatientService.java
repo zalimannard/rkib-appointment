@@ -3,7 +3,8 @@ package ru.zalimannard.bachelorthesisserver.patient;
 import java.util.List;
 
 public interface PatientService {
-    PatientDto get(int id);
+
+    PatientDto get(String id);
 
     List<PatientDto> list();
 
@@ -11,5 +12,5 @@ public interface PatientService {
 
     PatientDto update(PatientDto patientDto);
 
-    PatientDto delete(int id);
+    PatientDto delete(String id);
 }

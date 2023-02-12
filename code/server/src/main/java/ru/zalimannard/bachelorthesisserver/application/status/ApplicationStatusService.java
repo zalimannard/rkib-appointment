@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface ApplicationStatusService {
 
-    ApplicationStatusDto get(int id);
+    ApplicationStatusDto get(String id);
 
     List<ApplicationStatusDto> list();
 
@@ -12,5 +12,5 @@ public interface ApplicationStatusService {
 
     ApplicationStatusDto update(ApplicationStatusDto applicationStatusDto);
 
-    ApplicationStatusDto delete(int id);
+    ApplicationStatusDto delete(String id);
 }

@@ -15,9 +15,9 @@ public class DoctorNoteServiceImpl implements DoctorNoteService {
     private final DoctorNoteMapper doctorNoteMapper = Mappers.getMapper(DoctorNoteMapper.class);
 
     @Override
-    public DoctorNoteDto get(int id) {
+    public DoctorNoteDto get(String id) {
         DoctorNote doctorNote = doctorNoteRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("DoctorNote", "id", String.valueOf(id)));
+                .orElseThrow(() -> new NotFoundException("DoctorNote", "id", id));
         return doctorNoteMapper.toDto(doctorNote);
     }
 
@@ -47,9 +47,9 @@ public class DoctorNoteServiceImpl implements DoctorNoteService {
     }
 
     @Override
-    public DoctorNoteDto delete(int id) {
+    public DoctorNoteDto delete(String id) {
         DoctorNote doctorNote = doctorNoteRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("DoctorNote", "id", String.valueOf(id)));
+                .orElseThrow(() -> new NotFoundException("DoctorNote", "id", id));
         doctorNoteRepository.deleteById(id);
         return doctorNoteMapper.toDto(doctorNote);
     }

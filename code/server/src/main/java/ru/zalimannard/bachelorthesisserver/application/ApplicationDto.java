@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class ApplicationDto {
     @JsonProperty("id")
-    private int id;
+    private String id;
 
     @JsonProperty("parentApplicationId")
     private int parentApplicationId;

@@ -15,9 +15,9 @@ public class ApplicationStatusServiceImpl implements ApplicationStatusService {
     private final ApplicationStatusMapper applicationStatusMapper = Mappers.getMapper(ApplicationStatusMapper.class);
 
     @Override
-    public ApplicationStatusDto get(int id) {
+    public ApplicationStatusDto get(String id) {
         ApplicationStatus applicationStatus = applicationStatusRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("ApplicationStatus", "id", String.valueOf(id)));
+                .orElseThrow(() -> new NotFoundException("ApplicationStatus", "id", id));
         return applicationStatusMapper.toDto(applicationStatus);
     }
 
@@ -47,9 +47,9 @@ public class ApplicationStatusServiceImpl implements ApplicationStatusService {
     }
 
     @Override
-    public ApplicationStatusDto delete(int id) {
+    public ApplicationStatusDto delete(String id) {
         ApplicationStatus applicationStatus = applicationStatusRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("ApplicationStatus", "id", String.valueOf(id)));
+                .orElseThrow(() -> new NotFoundException("ApplicationStatus", "id", id));
         applicationStatusRepository.deleteById(id);
         return applicationStatusMapper.toDto(applicationStatus);
     }
