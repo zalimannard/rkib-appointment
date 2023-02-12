@@ -9,16 +9,16 @@ public class ApplicationDto {
     private String id;
 
     @JsonProperty("parentApplicationId")
-    private int parentApplicationId;
+    private String parentApplicationId;
 
     @JsonProperty("patientId")
-    private int patientId;
+    private String patientId;
 
     @JsonProperty("doctorNoteId")
-    private int doctorNoteId;
+    private String doctorNoteId;
 
     @JsonProperty("statusId")
-    private int statusId;
+    private String statusId;
 
     @JsonProperty("finalDiagnosis")
     private String finalDiagnosis;

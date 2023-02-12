@@ -9,7 +9,7 @@ public class DoctorNoteDto {
     private String id;
 
     @JsonProperty("institutionId")
-    private int institutionId;
+    private String institutionId;
 
     @JsonProperty("diagnosis")
     private String diagnosis;
