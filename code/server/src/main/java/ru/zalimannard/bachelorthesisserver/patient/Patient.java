@@ -1,24 +1,18 @@
 package ru.zalimannard.bachelorthesisserver.patient;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 
 import java.sql.Date;
-import java.util.Objects;
 
 @Entity
 @Table(name = "patients")
-@Builder
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
-@AllArgsConstructor
+@Data
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private int id;
 
     @Column(name = "last_name", nullable = false)
     private String lastName;
@@ -41,16 +35,4 @@ public class Patient {
     @Column(name = "occupation", nullable = false)
     private String occupation;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Patient patient = (Patient) o;
-        return Objects.equals(getId(), patient.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId());
-    }
 }

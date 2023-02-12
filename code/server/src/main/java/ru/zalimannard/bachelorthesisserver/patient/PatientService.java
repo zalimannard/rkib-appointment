@@ -3,7 +3,7 @@ package ru.zalimannard.bachelorthesisserver.patient;
 import java.util.List;
 
 public interface PatientService {
-    PatientDto read(int id);
+    PatientDto get(int id);
 
     List<PatientDto> list();
 

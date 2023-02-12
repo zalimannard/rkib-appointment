@@ -21,7 +21,7 @@ public class PatientController {
     @Operation(summary = "Получение пациента")
     @ResponseStatus(HttpStatus.OK)
     public PatientDto get(@PathVariable int id) {
-        return patientService.read(id);
+        return patientService.get(id);
     }
 
     @GetMapping
