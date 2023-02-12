@@ -21,7 +21,7 @@ public class DoctorNoteController {
     @Operation(summary = "Получение направления")
     @ResponseStatus(HttpStatus.OK)
     public DoctorNoteDto get(@PathVariable int id) {
-        return doctorNoteService.read(id);
+        return doctorNoteService.get(id);
     }
 
     @GetMapping

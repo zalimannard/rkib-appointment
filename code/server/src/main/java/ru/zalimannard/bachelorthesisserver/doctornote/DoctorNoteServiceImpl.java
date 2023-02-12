@@ -1,63 +1,58 @@
 package ru.zalimannard.bachelorthesisserver.doctornote;
 
+import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class DoctorNoteServiceImpl implements DoctorNoteService {
-    private final DoctorNoteMapper doctorNoteMapper;
     private final DoctorNoteRepository doctorNoteRepository;
+    private final DoctorNoteMapper doctorNoteMapper = Mappers.getMapper(DoctorNoteMapper.class);
 
-    public DoctorNoteServiceImpl(DoctorNoteMapper doctorNoteMapper, DoctorNoteRepository doctorNoteRepository) {
-        this.doctorNoteMapper = doctorNoteMapper;
+    public DoctorNoteServiceImpl(DoctorNoteRepository doctorNoteRepository) {
         this.doctorNoteRepository = doctorNoteRepository;
     }
 
     @Override
-    public DoctorNoteDto read(int id) {
-        Optional<DoctorNote> doctorNoteOptional = doctorNoteRepository.findById(id);
-        if (doctorNoteOptional.isPresent()) {
-            DoctorNote doctorNote = doctorNoteOptional.get();
-            return doctorNoteMapper.toDto(doctorNote);
-        } else {
-            throw new NotFoundException("Направление с id=" + id + " не найдено.");
-        }
+    public DoctorNoteDto get(int id) {
+        DoctorNote doctorNote = doctorNoteRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("DoctorNote", "id", String.valueOf(id)));
+        return doctorNoteMapper.toDto(doctorNote);
     }
 
     @Override
     public List<DoctorNoteDto> list() {
-        Iterable<DoctorNote> doctorNotes = doctorNoteRepository.findAll();
-        List<DoctorNoteDto> doctorNoteDtos = new ArrayList<>();
-        doctorNotes.forEach(doctorNote -> doctorNoteDtos.add(doctorNoteMapper.toDto(doctorNote)));
-        return doctorNoteDtos;
+        List<DoctorNote> doctorNoteList = new ArrayList<>();
+        doctorNoteRepository.findAll().forEach(doctorNote -> doctorNoteList.add(doctorNote));
+        return doctorNoteMapper.toDtoList(doctorNoteList);
     }
 
     @Override
     public DoctorNoteDto create(DoctorNoteDto doctorNoteDto) {
-        DoctorNote doctorNote = doctorNoteMapper.toEntity(doctorNoteDto);
-        DoctorNote addedDoctorNote = doctorNoteRepository.save(doctorNote);
-        return doctorNoteMapper.toDto(addedDoctorNote);
+        DoctorNote doctorNoteRequest = doctorNoteMapper.toEntity(doctorNoteDto);
+        DoctorNote doctorNoteResponse = doctorNoteRepository.save(doctorNoteRequest);
+        return doctorNoteMapper.toDto(doctorNoteResponse);
     }
 
     @Override
     public DoctorNoteDto update(DoctorNoteDto doctorNoteDto) {
-        if (doctorNoteRepository.existsById(doctorNoteDto.getId())) {
-            DoctorNote doctorNote = doctorNoteMapper.toEntity(doctorNoteDto);
-            doctorNoteRepository.save(doctorNote);
-            return read(doctorNote.getId());
+        DoctorNote doctorNoteRequest = doctorNoteMapper.toEntity(doctorNoteDto);
+        if (doctorNoteRepository.existsById(doctorNoteRequest.getId())) {
+            DoctorNote doctorNoteResponse = doctorNoteRepository.save(doctorNoteRequest);
+            return doctorNoteMapper.toDto(doctorNoteResponse);
         } else {
-            throw new NotFoundException("Направление с id=" + doctorNoteDto.getId() + " не найдено. Ничего не изменено.");
+            throw new NotFoundException("DoctorNote", "id", String.valueOf(doctorNoteRequest.getId()));
         }
     }
 
     @Override
     public DoctorNoteDto delete(int id) {
-        DoctorNoteDto doctorNoteDto = read(id);
+        DoctorNote doctorNote = doctorNoteRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("DoctorNote", "id", String.valueOf(id)));
         doctorNoteRepository.deleteById(id);
-        return doctorNoteDto;
+        return doctorNoteMapper.toDto(doctorNote);
     }
 }
