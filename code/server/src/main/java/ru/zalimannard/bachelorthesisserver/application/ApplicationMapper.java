@@ -1,6 +1,7 @@
 package ru.zalimannard.bachelorthesisserver.application;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 
