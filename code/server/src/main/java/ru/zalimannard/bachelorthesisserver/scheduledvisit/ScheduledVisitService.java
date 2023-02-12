@@ -3,7 +3,8 @@ package ru.zalimannard.bachelorthesisserver.scheduledvisit;
 import java.util.List;
 
 public interface ScheduledVisitService {
-    ScheduledVisitDto read(int id);
+
+    ScheduledVisitDto get(int id);
 
     List<ScheduledVisitDto> list();
 

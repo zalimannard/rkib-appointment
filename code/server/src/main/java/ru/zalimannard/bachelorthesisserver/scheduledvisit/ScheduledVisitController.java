@@ -19,7 +19,7 @@ public class ScheduledVisitController {
     @GetMapping("{id}")
     @Operation(summary = "Получение запланированного посещения")
     public ScheduledVisitDto get(@PathVariable int id) {
-        return scheduledVisitService.read(id);
+        return scheduledVisitService.get(id);
     }
 
     @GetMapping
