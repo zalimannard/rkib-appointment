@@ -19,7 +19,7 @@ public class ScheduleElementStatusController {
     @GetMapping("{id}")
     @Operation(summary = "Получение статуса элементов расписания")
     public ScheduleElementStatusDto get(@PathVariable int id) {
-        return scheduleElementStatusService.read(id);
+        return scheduleElementStatusService.get(id);
     }
 
     @GetMapping

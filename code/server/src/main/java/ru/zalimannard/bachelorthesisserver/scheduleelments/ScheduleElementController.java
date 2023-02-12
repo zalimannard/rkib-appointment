@@ -19,7 +19,7 @@ public class ScheduleElementController {
     @GetMapping("{id}")
     @Operation(summary = "Получение элемента расписания")
     public ScheduleElementDto get(@PathVariable int id) {
-        return scheduleElementService.create(id);
+        return scheduleElementService.get(id);
     }
 
     @GetMapping

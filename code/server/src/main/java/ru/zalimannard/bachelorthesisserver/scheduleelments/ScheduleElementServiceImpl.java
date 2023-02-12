@@ -1,63 +1,58 @@
 package ru.zalimannard.bachelorthesisserver.scheduleelments;
 
+import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ScheduleElementServiceImpl implements ScheduleElementService {
-    private final ScheduleElementMapper scheduleElementMapper;
     private final ScheduleElementRepository scheduleElementRepository;
+    private final ScheduleElementMapper scheduleElementMapper = Mappers.getMapper(ScheduleElementMapper.class);
 
-    public ScheduleElementServiceImpl(ScheduleElementMapper scheduleElementMapper, ScheduleElementRepository scheduleElementRepository) {
-        this.scheduleElementMapper = scheduleElementMapper;
+    public ScheduleElementServiceImpl(ScheduleElementRepository scheduleElementRepository) {
         this.scheduleElementRepository = scheduleElementRepository;
     }
 
     @Override
-    public ScheduleElementDto create(int id) {
-        Optional<ScheduleElement> scheduleElementOptional = scheduleElementRepository.findById(id);
-        if (scheduleElementOptional.isPresent()) {
-            ScheduleElement scheduleElement = scheduleElementOptional.get();
-            return scheduleElementMapper.toDto(scheduleElement);
-        } else {
-            throw new NotFoundException("Элемент расписания с id=" + id + " не найден.");
-        }
+    public ScheduleElementDto get(int id) {
+        ScheduleElement scheduleElement = scheduleElementRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("ScheduleElement", "id", String.valueOf(id)));
+        return scheduleElementMapper.toDto(scheduleElement);
     }
 
     @Override
     public List<ScheduleElementDto> list() {
-        Iterable<ScheduleElement> scheduleElements = scheduleElementRepository.findAll();
-        List<ScheduleElementDto> scheduleElementDtos = new ArrayList<>();
-        scheduleElements.forEach(scheduleElement -> scheduleElementDtos.add(scheduleElementMapper.toDto(scheduleElement)));
-        return scheduleElementDtos;
+        List<ScheduleElement> scheduleElementList = new ArrayList<>();
+        scheduleElementRepository.findAll().forEach(scheduleElement -> scheduleElementList.add(scheduleElement));
+        return scheduleElementMapper.toDtoList(scheduleElementList);
     }
 
     @Override
     public ScheduleElementDto create(ScheduleElementDto scheduleElementDto) {
-        ScheduleElement scheduleElement = scheduleElementMapper.toEntity(scheduleElementDto);
-        ScheduleElement addedScheduleElement = scheduleElementRepository.save(scheduleElement);
-        return scheduleElementMapper.toDto(addedScheduleElement);
+        ScheduleElement scheduleElementRequest = scheduleElementMapper.toEntity(scheduleElementDto);
+        ScheduleElement scheduleElementResponse = scheduleElementRepository.save(scheduleElementRequest);
+        return scheduleElementMapper.toDto(scheduleElementResponse);
     }
 
     @Override
     public ScheduleElementDto update(ScheduleElementDto scheduleElementDto) {
-        if (scheduleElementRepository.existsById(scheduleElementDto.getId())) {
-            ScheduleElement scheduleElement = scheduleElementMapper.toEntity(scheduleElementDto);
-            scheduleElementRepository.save(scheduleElement);
-            return create(scheduleElement.getId());
+        ScheduleElement scheduleElementRequest = scheduleElementMapper.toEntity(scheduleElementDto);
+        if (scheduleElementRepository.existsById(scheduleElementRequest.getId())) {
+            ScheduleElement scheduleElementResponse = scheduleElementRepository.save(scheduleElementRequest);
+            return scheduleElementMapper.toDto(scheduleElementResponse);
         } else {
-            throw new NotFoundException("Элемент расписания с id=" + scheduleElementDto.getId() + " не найден. Ничего не изменено.");
+            throw new NotFoundException("ScheduleElement", "id", String.valueOf(scheduleElementRequest.getId()));
         }
     }
 
     @Override
     public ScheduleElementDto delete(int id) {
-        ScheduleElementDto doctorNoteDto = create(id);
+        ScheduleElement scheduleElement = scheduleElementRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("ScheduleElement", "id", String.valueOf(id)));
         scheduleElementRepository.deleteById(id);
-        return doctorNoteDto;
+        return scheduleElementMapper.toDto(scheduleElement);
     }
 }

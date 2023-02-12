@@ -3,7 +3,7 @@ package ru.zalimannard.bachelorthesisserver.scheduleelments;
 import java.util.List;
 
 public interface ScheduleElementService {
-    ScheduleElementDto create(int id);
+    ScheduleElementDto get(int id);
 
     List<ScheduleElementDto> list();
 
