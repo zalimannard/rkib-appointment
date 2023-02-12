@@ -19,7 +19,7 @@ public class UnscheduledVisitController {
     @GetMapping("{id}")
     @Operation(summary = "Получение незапланированного посещения")
     public UnscheduledVisitDto get(@PathVariable int id) {
-        return unscheduledVisitService.read(id);
+        return unscheduledVisitService.get(id);
     }
 
     @GetMapping

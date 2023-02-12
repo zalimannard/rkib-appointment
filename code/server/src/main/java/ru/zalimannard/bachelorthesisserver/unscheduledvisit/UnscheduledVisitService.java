@@ -3,7 +3,7 @@ package ru.zalimannard.bachelorthesisserver.unscheduledvisit;
 import java.util.List;
 
 public interface UnscheduledVisitService {
-    UnscheduledVisitDto read(int id);
+    UnscheduledVisitDto get(int id);
 
     List<UnscheduledVisitDto> list();
 

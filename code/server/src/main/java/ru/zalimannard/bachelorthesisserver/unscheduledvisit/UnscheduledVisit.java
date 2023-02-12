@@ -1,27 +1,21 @@
 package ru.zalimannard.bachelorthesisserver.unscheduledvisit;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 import ru.zalimannard.bachelorthesisserver.application.Application;
 import ru.zalimannard.bachelorthesisserver.doctor.Doctor;
 import ru.zalimannard.bachelorthesisserver.favor.Favor;
 
 import java.sql.Timestamp;
-import java.util.Objects;
 
 @Entity
 @Table(name = "unscheduled_visits")
-@Builder
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
-@AllArgsConstructor
+@Data
 public class UnscheduledVisit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "doctor_id", nullable = false)
@@ -41,16 +35,4 @@ public class UnscheduledVisit {
     @Column(name = "commentary", nullable = false)
     private String comment;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UnscheduledVisit that = (UnscheduledVisit) o;
-        return Objects.equals(getId(), that.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId());
-    }
 }

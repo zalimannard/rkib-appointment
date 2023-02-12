@@ -1,29 +1,28 @@
 package ru.zalimannard.bachelorthesisserver.unscheduledvisit;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
 import lombok.Data;
 
 import java.sql.Timestamp;
 
 @Data
-@Builder
 public class UnscheduledVisitDto {
     @JsonProperty("id")
-    private Integer id;
+    private int id;
 
     @JsonProperty("doctorId")
-    private Integer doctorId;
+    private int doctorId;
 
     @JsonProperty("serviceId")
-    private Integer serviceId;
+    private int serviceId;
 
     @JsonProperty("applicationId")
-    private Integer applicationId;
+    private int applicationId;
 
     @JsonProperty("appointmentTimestamp")
     private Timestamp appointmentTimestamp;
 
     @JsonProperty("comment")
     private String comment;
+
 }
