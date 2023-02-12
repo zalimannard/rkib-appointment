@@ -3,7 +3,8 @@ package ru.zalimannard.bachelorthesisserver.institution;
 import java.util.List;
 
 public interface InstitutionService {
-    InstitutionDto read(int id);
+
+    InstitutionDto get(int id);
 
     List<InstitutionDto> list();
 

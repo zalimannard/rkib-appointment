@@ -21,7 +21,7 @@ public class InstitutionController {
     @Operation(summary = "Получение учреждения")
     @ResponseStatus(HttpStatus.OK)
     public InstitutionDto get(@PathVariable int id) {
-        return institutionService.read(id);
+        return institutionService.get(id);
     }
 
     @GetMapping
