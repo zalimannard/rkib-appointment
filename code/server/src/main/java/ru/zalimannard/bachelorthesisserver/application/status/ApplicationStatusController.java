@@ -25,19 +25,19 @@ public class ApplicationStatusController {
     @GetMapping
     @Operation(summary = "Получение списка статусов обращений")
     public List<ApplicationStatusDto> getAll() {
-        return applicationStatusService.getAll();
+        return applicationStatusService.list();
     }
 
     @PostMapping
     @Operation(summary = "Создание нового статуса обращений")
     public ApplicationStatusDto post(@RequestBody ApplicationStatusDto applicationStatusDto) {
-        return applicationStatusService.post(applicationStatusDto);
+        return applicationStatusService.create(applicationStatusDto);
     }
 
     @PutMapping
     @Operation(summary = "Обновление существующего статуса обращений")
     public ApplicationStatusDto put(@RequestBody ApplicationStatusDto applicationStatusDto) {
-        return applicationStatusService.put(applicationStatusDto);
+        return applicationStatusService.update(applicationStatusDto);
     }
 
     @DeleteMapping("{id}")

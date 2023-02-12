@@ -1,63 +1,58 @@
 package ru.zalimannard.bachelorthesisserver.application.status;
 
+import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ApplicationStatusServiceImpl implements ApplicationStatusService {
-    private final ApplicationStatusMapper applicationStatusMapper;
     private final ApplicationStatusRepository applicationStatusRepository;
+    private final ApplicationStatusMapper applicationStatusMapper = Mappers.getMapper(ApplicationStatusMapper.class);
 
-    public ApplicationStatusServiceImpl(ApplicationStatusMapper applicationStatusMapper, ApplicationStatusRepository applicationStatusRepository) {
-        this.applicationStatusMapper = applicationStatusMapper;
+    public ApplicationStatusServiceImpl(ApplicationStatusRepository applicationStatusRepository) {
         this.applicationStatusRepository = applicationStatusRepository;
     }
 
     @Override
     public ApplicationStatusDto get(int id) {
-        Optional<ApplicationStatus> applicationStatusOptional = applicationStatusRepository.findById(id);
-        if (applicationStatusOptional.isPresent()) {
-            ApplicationStatus applicationStatus = applicationStatusOptional.get();
-            return applicationStatusMapper.toDto(applicationStatus);
+        ApplicationStatus applicationStatus = applicationStatusRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("ApplicationStatus", "id", String.valueOf(id)));
+        return applicationStatusMapper.toDto(applicationStatus);
+    }
+
+    @Override
+    public List<ApplicationStatusDto> list() {
+        List<ApplicationStatus> applicationStatusList = new ArrayList<>();
+        applicationStatusRepository.findAll().forEach(applicationStatus -> applicationStatusList.add(applicationStatus));
+        return applicationStatusMapper.toDtoList(applicationStatusList);
+    }
+
+    @Override
+    public ApplicationStatusDto create(ApplicationStatusDto applicationStatusDto) {
+        ApplicationStatus applicationStatusRequest = applicationStatusMapper.toEntity(applicationStatusDto);
+        ApplicationStatus applicationStatusResponse = applicationStatusRepository.save(applicationStatusRequest);
+        return applicationStatusMapper.toDto(applicationStatusResponse);
+    }
+
+    @Override
+    public ApplicationStatusDto update(ApplicationStatusDto applicationStatusDto) {
+        ApplicationStatus applicationStatusRequest = applicationStatusMapper.toEntity(applicationStatusDto);
+        if (applicationStatusRepository.existsById(applicationStatusRequest.getId())) {
+            ApplicationStatus applicationStatusResponse = applicationStatusRepository.save(applicationStatusRequest);
+            return applicationStatusMapper.toDto(applicationStatusResponse);
         } else {
-            throw new NotFoundException("Статус обращения с id=" + id + " не найден");
-        }
-    }
-
-    @Override
-    public List<ApplicationStatusDto> getAll() {
-        Iterable<ApplicationStatus> applicationStatuses = applicationStatusRepository.findAll();
-        List<ApplicationStatusDto> applicationStatusDtos = new ArrayList<>();
-        applicationStatuses.forEach(applicationStatus -> applicationStatusDtos.add(applicationStatusMapper.toDto(applicationStatus)));
-        return applicationStatusDtos;
-    }
-
-    @Override
-    public ApplicationStatusDto post(ApplicationStatusDto applicationStatusDto) {
-        ApplicationStatus applicationStatus = applicationStatusMapper.toEntity(applicationStatusDto);
-        ApplicationStatus addedApplicationStatus = applicationStatusRepository.save(applicationStatus);
-        return applicationStatusMapper.toDto(addedApplicationStatus);
-    }
-
-    @Override
-    public ApplicationStatusDto put(ApplicationStatusDto applicationStatusDto) {
-        if (applicationStatusRepository.existsById(applicationStatusDto.getId())) {
-            ApplicationStatus applicationStatus = applicationStatusMapper.toEntity(applicationStatusDto);
-            applicationStatusRepository.save(applicationStatus);
-            return get(applicationStatusDto.getId());
-        } else {
-            throw new NotFoundException("Статус обращения с id=" + applicationStatusDto.getId() + " не найден. Ничего не изменено.");
+            throw new NotFoundException("ApplicationStatus", "id", String.valueOf(applicationStatusRequest.getId()));
         }
     }
 
     @Override
     public ApplicationStatusDto delete(int id) {
-        ApplicationStatusDto applicationStatusDto = get(id);
+        ApplicationStatus applicationStatus = applicationStatusRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("ApplicationStatus", "id", String.valueOf(id)));
         applicationStatusRepository.deleteById(id);
-        return applicationStatusDto;
+        return applicationStatusMapper.toDto(applicationStatus);
     }
 }

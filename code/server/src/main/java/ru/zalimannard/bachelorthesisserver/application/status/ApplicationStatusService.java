@@ -3,13 +3,14 @@ package ru.zalimannard.bachelorthesisserver.application.status;
 import java.util.List;
 
 public interface ApplicationStatusService {
+
     ApplicationStatusDto get(int id);
 
-    List<ApplicationStatusDto> getAll();
+    List<ApplicationStatusDto> list();
 
-    ApplicationStatusDto post(ApplicationStatusDto applicationStatusDto);
+    ApplicationStatusDto create(ApplicationStatusDto applicationStatusDto);
 
-    ApplicationStatusDto put(ApplicationStatusDto applicationStatusDto);
+    ApplicationStatusDto update(ApplicationStatusDto applicationStatusDto);
 
     ApplicationStatusDto delete(int id);
 }

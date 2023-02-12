@@ -3,7 +3,8 @@ package ru.zalimannard.bachelorthesisserver.application;
 import java.util.List;
 
 public interface ApplicationService {
-    ApplicationDto read(int id);
+
+    ApplicationDto get(int id);
 
     List<ApplicationDto> list();
 

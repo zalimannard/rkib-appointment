@@ -19,7 +19,7 @@ public class ApplicationController {
     @GetMapping("{id}")
     @Operation(summary = "Получение обращения")
     public ApplicationDto get(@PathVariable int id) {
-        return applicationService.read(id);
+        return applicationService.get(id);
     }
 
     @GetMapping

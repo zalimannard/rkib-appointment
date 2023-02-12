@@ -1,26 +1,19 @@
 package ru.zalimannard.bachelorthesisserver.application;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 import ru.zalimannard.bachelorthesisserver.application.status.ApplicationStatus;
 import ru.zalimannard.bachelorthesisserver.doctornote.DoctorNote;
 import ru.zalimannard.bachelorthesisserver.patient.Patient;
 
-import java.util.Objects;
-
 @Entity
 @Table(name = "applications")
-@Builder
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
-@AllArgsConstructor
+@Data
 public class Application {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "parent_application_id", nullable = true)
@@ -41,16 +34,4 @@ public class Application {
     @Column(name = "final_diagnosis", nullable = false)
     private String finalDiagnosis;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Application that = (Application) o;
-        return Objects.equals(getId(), that.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId());
-    }
 }
