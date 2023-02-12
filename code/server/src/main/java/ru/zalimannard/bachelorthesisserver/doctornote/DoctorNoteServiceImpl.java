@@ -26,7 +26,7 @@ public class DoctorNoteServiceImpl implements DoctorNoteService {
     @Override
     public List<DoctorNoteDto> list() {
         List<DoctorNote> doctorNoteList = new ArrayList<>();
-        doctorNoteRepository.findAll().forEach(doctorNote -> doctorNoteList.add(doctorNote));
+        doctorNoteRepository.findAll().forEach(doctorNoteList::add);
         return doctorNoteMapper.toDtoList(doctorNoteList);
     }
 

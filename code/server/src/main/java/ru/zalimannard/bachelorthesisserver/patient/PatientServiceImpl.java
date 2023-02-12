@@ -26,7 +26,7 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public List<PatientDto> list() {
         List<Patient> patientList = new ArrayList<>();
-        patientRepository.findAll().forEach(patient -> patientList.add(patient));
+        patientRepository.findAll().forEach(patientList::add);
         return patientMapper.toDtoList(patientList);
     }
 

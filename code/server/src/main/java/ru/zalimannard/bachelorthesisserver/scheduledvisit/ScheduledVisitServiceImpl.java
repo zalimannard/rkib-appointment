@@ -27,7 +27,7 @@ public class ScheduledVisitServiceImpl implements ScheduledVisitService {
     @Override
     public List<ScheduledVisitDto> list() {
         List<ScheduledVisit> scheduledVisitList = new ArrayList<>();
-        scheduledVisitRepository.findAll().forEach(scheduledVisit -> scheduledVisitList.add(scheduledVisit));
+        scheduledVisitRepository.findAll().forEach(scheduledVisitList::add);
         return scheduledVisitMapper.toDtoList(scheduledVisitList);
     }
 

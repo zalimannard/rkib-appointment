@@ -26,7 +26,7 @@ public class ScheduleElementServiceImpl implements ScheduleElementService {
     @Override
     public List<ScheduleElementDto> list() {
         List<ScheduleElement> scheduleElementList = new ArrayList<>();
-        scheduleElementRepository.findAll().forEach(scheduleElement -> scheduleElementList.add(scheduleElement));
+        scheduleElementRepository.findAll().forEach(scheduleElementList::add);
         return scheduleElementMapper.toDtoList(scheduleElementList);
     }
 

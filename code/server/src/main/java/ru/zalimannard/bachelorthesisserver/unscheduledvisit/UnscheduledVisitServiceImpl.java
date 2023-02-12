@@ -26,7 +26,7 @@ public class UnscheduledVisitServiceImpl implements UnscheduledVisitService {
     @Override
     public List<UnscheduledVisitDto> list() {
         List<UnscheduledVisit> unscheduledVisitList = new ArrayList<>();
-        unscheduledVisitRepository.findAll().forEach(unscheduledVisit -> unscheduledVisitList.add(unscheduledVisit));
+        unscheduledVisitRepository.findAll().forEach(unscheduledVisitList::add);
         return unscheduledVisitMapper.toDtoList(unscheduledVisitList);
     }
 

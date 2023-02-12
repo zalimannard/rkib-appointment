@@ -26,7 +26,7 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public List<DoctorDto> list() {
         List<Doctor> doctorList = new ArrayList<>();
-        doctorRepository.findAll().forEach(doctor -> doctorList.add(doctor));
+        doctorRepository.findAll().forEach(doctorList::add);
         return doctorMapper.toDtoList(doctorList);
     }
 }

@@ -26,7 +26,7 @@ public class FavorServiceImpl implements FavorService {
     @Override
     public List<FavorDto> list() {
         List<Favor> favorList = new ArrayList<>();
-        favorRepository.findAll().forEach(service -> favorList.add(service));
+        favorRepository.findAll().forEach(favorList::add);
         return favorMapper.toDtoList(favorList);
     }
 }

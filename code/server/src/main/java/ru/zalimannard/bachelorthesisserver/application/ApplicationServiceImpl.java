@@ -26,7 +26,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public List<ApplicationDto> list() {
         List<Application> applicationList = new ArrayList<>();
-        applicationRepository.findAll().forEach(application -> applicationList.add(application));
+        applicationRepository.findAll().forEach(applicationList::add);
         return applicationMapper.toDtoList(applicationList);
     }
 

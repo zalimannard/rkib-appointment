@@ -26,7 +26,7 @@ public class ScheduleElementStatusServiceImpl implements ScheduleElementStatusSe
     @Override
     public List<ScheduleElementStatusDto> list() {
         List<ScheduleElementStatus> scheduleElementStatusList = new ArrayList<>();
-        scheduleElementStatusRepository.findAll().forEach(scheduleElementStatus -> scheduleElementStatusList.add(scheduleElementStatus));
+        scheduleElementStatusRepository.findAll().forEach(scheduleElementStatusList::add);
         return scheduleElementStatusMapper.toDtoList(scheduleElementStatusList);
     }
 

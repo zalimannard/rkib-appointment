@@ -26,7 +26,7 @@ public class ApplicationStatusServiceImpl implements ApplicationStatusService {
     @Override
     public List<ApplicationStatusDto> list() {
         List<ApplicationStatus> applicationStatusList = new ArrayList<>();
-        applicationStatusRepository.findAll().forEach(applicationStatus -> applicationStatusList.add(applicationStatus));
+        applicationStatusRepository.findAll().forEach(applicationStatusList::add);
         return applicationStatusMapper.toDtoList(applicationStatusList);
     }
 

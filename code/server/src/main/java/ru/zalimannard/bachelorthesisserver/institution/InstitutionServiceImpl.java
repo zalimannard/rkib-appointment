@@ -26,7 +26,7 @@ public class InstitutionServiceImpl implements InstitutionService {
     @Override
     public List<InstitutionDto> list() {
         List<Institution> institutionList = new ArrayList<>();
-        institutionRepository.findAll().forEach(institution -> institutionList.add(institution));
+        institutionRepository.findAll().forEach(institutionList::add);
         return institutionMapper.toDtoList(institutionList);
     }
 
