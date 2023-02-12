@@ -2,6 +2,7 @@ package ru.zalimannard.bachelorthesisserver.unscheduledvisit;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,12 +10,9 @@ import java.util.List;
 @RestController
 @RequestMapping("${application.endpoint.root}" + "${application.endpoint.unscheduledVisit}")
 @Tag(name = "Незапланированные посещения")
+@RequiredArgsConstructor
 public class UnscheduledVisitController {
     private final UnscheduledVisitService unscheduledVisitService;
-
-    public UnscheduledVisitController(UnscheduledVisitService unscheduledVisitService) {
-        this.unscheduledVisitService = unscheduledVisitService;
-    }
 
     @GetMapping("{id}")
     @Operation(summary = "Получение незапланированного посещения")

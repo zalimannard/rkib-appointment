@@ -2,6 +2,7 @@ package ru.zalimannard.bachelorthesisserver.institution;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,12 +11,9 @@ import java.util.List;
 @RestController
 @RequestMapping("${application.endpoint.root}" + "${application.endpoint.institution}")
 @Tag(name = "Учреждения")
+@RequiredArgsConstructor
 public class InstitutionController {
     private final InstitutionService institutionService;
-
-    public InstitutionController(InstitutionService institutionService) {
-        this.institutionService = institutionService;
-    }
 
     @GetMapping("{id}")
     @Operation(summary = "Получение учреждения")

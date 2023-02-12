@@ -1,5 +1,6 @@
 package ru.zalimannard.bachelorthesisserver.unscheduledvisit;
 
+import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
@@ -8,13 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UnscheduledVisitServiceImpl implements UnscheduledVisitService {
     private final UnscheduledVisitRepository unscheduledVisitRepository;
     private final UnscheduledVisitMapper unscheduledVisitMapper = Mappers.getMapper(UnscheduledVisitMapper.class);
-
-    public UnscheduledVisitServiceImpl(UnscheduledVisitRepository unscheduledVisitRepository) {
-        this.unscheduledVisitRepository = unscheduledVisitRepository;
-    }
 
     @Override
     public UnscheduledVisitDto get(int id) {

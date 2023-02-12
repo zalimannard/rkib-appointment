@@ -1,5 +1,6 @@
 package ru.zalimannard.bachelorthesisserver.favor;
 
+import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
@@ -8,13 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class FavorServiceImpl implements FavorService {
     private final FavorRepository favorRepository;
     private final FavorMapper favorMapper = Mappers.getMapper(FavorMapper.class);
-
-    public FavorServiceImpl(FavorRepository favorRepository) {
-        this.favorRepository = favorRepository;
-    }
 
     @Override
     public FavorDto get(int id) {

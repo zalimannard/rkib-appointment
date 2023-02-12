@@ -1,5 +1,6 @@
 package ru.zalimannard.bachelorthesisserver.scheduleelments;
 
+import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
@@ -8,13 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ScheduleElementServiceImpl implements ScheduleElementService {
     private final ScheduleElementRepository scheduleElementRepository;
     private final ScheduleElementMapper scheduleElementMapper = Mappers.getMapper(ScheduleElementMapper.class);
-
-    public ScheduleElementServiceImpl(ScheduleElementRepository scheduleElementRepository) {
-        this.scheduleElementRepository = scheduleElementRepository;
-    }
 
     @Override
     public ScheduleElementDto get(int id) {

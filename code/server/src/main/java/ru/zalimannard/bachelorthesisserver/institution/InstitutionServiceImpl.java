@@ -1,5 +1,6 @@
 package ru.zalimannard.bachelorthesisserver.institution;
 
+import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
@@ -8,13 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class InstitutionServiceImpl implements InstitutionService {
     private final InstitutionRepository institutionRepository;
     private final InstitutionMapper institutionMapper = Mappers.getMapper(InstitutionMapper.class);
-
-    public InstitutionServiceImpl(InstitutionRepository institutionRepository) {
-        this.institutionRepository = institutionRepository;
-    }
 
     @Override
     public InstitutionDto get(int id) {

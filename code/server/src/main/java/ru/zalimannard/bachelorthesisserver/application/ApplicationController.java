@@ -2,6 +2,7 @@ package ru.zalimannard.bachelorthesisserver.application;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,12 +10,9 @@ import java.util.List;
 @RestController
 @RequestMapping("${application.endpoint.root}" + "${application.endpoint.application}")
 @Tag(name = "Обращения")
+@RequiredArgsConstructor
 public class ApplicationController {
     private final ApplicationService applicationService;
-
-    public ApplicationController(ApplicationService applicationService) {
-        this.applicationService = applicationService;
-    }
 
     @GetMapping("{id}")
     @Operation(summary = "Получение обращения")

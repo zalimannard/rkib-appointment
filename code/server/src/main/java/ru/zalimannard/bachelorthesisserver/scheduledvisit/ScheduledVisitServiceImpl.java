@@ -1,5 +1,6 @@
 package ru.zalimannard.bachelorthesisserver.scheduledvisit;
 
+import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
@@ -9,13 +10,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ScheduledVisitServiceImpl implements ScheduledVisitService {
     private final ScheduledVisitRepository scheduledVisitRepository;
     private final ScheduledVisitMapper scheduledVisitMapper = Mappers.getMapper(ScheduledVisitMapper.class);
-
-    public ScheduledVisitServiceImpl(ScheduledVisitRepository scheduledVisitRepository) {
-        this.scheduledVisitRepository = scheduledVisitRepository;
-    }
 
     @Override
     public ScheduledVisitDto get(int id) {

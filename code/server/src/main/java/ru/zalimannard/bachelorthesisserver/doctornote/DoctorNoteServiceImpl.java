@@ -1,5 +1,6 @@
 package ru.zalimannard.bachelorthesisserver.doctornote;
 
+import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
@@ -8,13 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class DoctorNoteServiceImpl implements DoctorNoteService {
     private final DoctorNoteRepository doctorNoteRepository;
     private final DoctorNoteMapper doctorNoteMapper = Mappers.getMapper(DoctorNoteMapper.class);
-
-    public DoctorNoteServiceImpl(DoctorNoteRepository doctorNoteRepository) {
-        this.doctorNoteRepository = doctorNoteRepository;
-    }
 
     @Override
     public DoctorNoteDto get(int id) {
