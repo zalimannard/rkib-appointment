@@ -22,7 +22,7 @@ public class ScheduleElement {
     private Doctor doctor;
 
     @ManyToOne
-    @JoinColumn(name = "service_id", nullable = false)
+    @JoinColumn(name = "favor_id", nullable = false)
     private Favor favor;
 
     @ManyToOne

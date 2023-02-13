@@ -15,8 +15,8 @@ public class ScheduleElementDto {
     @JsonProperty("doctorId")
     private String doctorId;
 
-    @JsonProperty("serviceId")
-    private String serviceId;
+    @JsonProperty("favorId")
+    private String favorId;
 
     @JsonProperty("statusId")
     private String statusId;
