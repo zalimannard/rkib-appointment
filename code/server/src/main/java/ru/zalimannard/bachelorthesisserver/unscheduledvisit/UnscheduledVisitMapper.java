@@ -1,17 +1,48 @@
 package ru.zalimannard.bachelorthesisserver.unscheduledvisit;
 
-import org.mapstruct.Mapper;
+import org.mapstruct.*;
+import ru.zalimannard.bachelorthesisserver.application.Application;
+import ru.zalimannard.bachelorthesisserver.application.ApplicationRepository;
+import ru.zalimannard.bachelorthesisserver.doctor.Doctor;
+import ru.zalimannard.bachelorthesisserver.doctor.DoctorRepository;
+import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
+import ru.zalimannard.bachelorthesisserver.favor.Favor;
+import ru.zalimannard.bachelorthesisserver.favor.FavorRepository;
 
 import java.util.List;
 
 @Mapper
 public interface UnscheduledVisitMapper {
 
-    UnscheduledVisit toEntity(UnscheduledVisitDto dto);
+    UnscheduledVisit toEntity(UnscheduledVisitDto dto,
+                              @Context DoctorRepository doctorRepository,
+                              @Context FavorRepository favorRepository,
+                              @Context ApplicationRepository applicationRepository);
 
+    @Mapping(target = "doctorId", source = "entity.doctor.id")
+    @Mapping(target = "favorId", source = "entity.favor.id")
+    @Mapping(target = "applicationId", source = "entity.application.id")
     UnscheduledVisitDto toDto(UnscheduledVisit entity);
 
     List<UnscheduledVisit> toEntityList(List<UnscheduledVisitDto> dtoList);
 
     List<UnscheduledVisitDto> toDtoList(List<UnscheduledVisit> entityList);
+
+    @AfterMapping
+    default void toEntity(@MappingTarget UnscheduledVisit entity, UnscheduledVisitDto dto,
+                          @Context DoctorRepository doctorRepository,
+                          @Context FavorRepository favorRepository,
+                          @Context ApplicationRepository applicationRepository) {
+        Doctor doctor = doctorRepository.findById(dto.getDoctorId())
+                .orElseThrow(() -> new NotFoundException("Doctor", "id", dto.getDoctorId()));
+        entity.setDoctor(doctor);
+
+        Favor favor = favorRepository.findById(dto.getFavorId())
+                .orElseThrow(() -> new NotFoundException("Favor", "id", dto.getFavorId()));
+        entity.setFavor(favor);
+
+        Application application = applicationRepository.findById(dto.getApplicationId())
+                .orElseThrow(() -> new NotFoundException("Application", "id", dto.getApplicationId()));
+        entity.setApplication(application);
+    }
 }

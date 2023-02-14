@@ -1,9 +1,13 @@
 package ru.zalimannard.bachelorthesisserver.unscheduledvisit;
 
 import lombok.RequiredArgsConstructor;
+import org.mapstruct.Context;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
+import ru.zalimannard.bachelorthesisserver.application.ApplicationRepository;
+import ru.zalimannard.bachelorthesisserver.doctor.DoctorRepository;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
+import ru.zalimannard.bachelorthesisserver.favor.FavorRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +16,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UnscheduledVisitServiceImpl implements UnscheduledVisitService {
     private final UnscheduledVisitRepository unscheduledVisitRepository;
+    private final DoctorRepository doctorRepository;
+    private final FavorRepository favorRepository;
+    private final ApplicationRepository applicationRepository;
     private final UnscheduledVisitMapper unscheduledVisitMapper = Mappers.getMapper(UnscheduledVisitMapper.class);
 
     @Override
@@ -30,14 +37,16 @@ public class UnscheduledVisitServiceImpl implements UnscheduledVisitService {
 
     @Override
     public UnscheduledVisitDto create(UnscheduledVisitDto unscheduledVisitDto) {
-        UnscheduledVisit unscheduledVisitRequest = unscheduledVisitMapper.toEntity(unscheduledVisitDto);
+        UnscheduledVisit unscheduledVisitRequest = unscheduledVisitMapper.toEntity(unscheduledVisitDto,
+                doctorRepository, favorRepository, applicationRepository);
         UnscheduledVisit unscheduledVisitResponse = unscheduledVisitRepository.save(unscheduledVisitRequest);
         return unscheduledVisitMapper.toDto(unscheduledVisitResponse);
     }
 
     @Override
     public UnscheduledVisitDto update(UnscheduledVisitDto unscheduledVisitDto) {
-        UnscheduledVisit unscheduledVisitRequest = unscheduledVisitMapper.toEntity(unscheduledVisitDto);
+        UnscheduledVisit unscheduledVisitRequest = unscheduledVisitMapper.toEntity(unscheduledVisitDto,
+                doctorRepository, favorRepository, applicationRepository);
         if (unscheduledVisitRepository.existsById(unscheduledVisitRequest.getId())) {
             UnscheduledVisit unscheduledVisitResponse = unscheduledVisitRepository.save(unscheduledVisitRequest);
             return unscheduledVisitMapper.toDto(unscheduledVisitResponse);

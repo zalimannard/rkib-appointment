@@ -13,8 +13,8 @@ public class UnscheduledVisitDto {
     @JsonProperty("doctorId")
     private String doctorId;
 
-    @JsonProperty("serviceId")
-    private String serviceId;
+    @JsonProperty("favorId")
+    private String favorId;
 
     @JsonProperty("applicationId")
     private String applicationId;
