@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface DoctorNoteMapper {
 
-    DoctorNote toEntity(DoctorNoteDto dto, @Context InstitutionRepository institutionRepository);
+    DoctorNote toEntity(DoctorNoteDto dto, InstitutionRepository institutionRepository);
 
     @Mapping(target = "institutionId", source = "entity.institution.id")
     DoctorNoteDto toDto(DoctorNote entity);
@@ -20,7 +20,7 @@ public interface DoctorNoteMapper {
     List<DoctorNoteDto> toDtoList(List<DoctorNote> entityList);
 
     @AfterMapping
-    default void toEntity(@MappingTarget DoctorNote entity, DoctorNoteDto dto, @Context InstitutionRepository institutionRepository) {
+    default void toEntity(@MappingTarget DoctorNote entity, DoctorNoteDto dto, InstitutionRepository institutionRepository) {
         Institution institutionEntity = institutionRepository.findById(dto.getInstitutionId())
                 .orElseThrow(() -> new NotFoundException("Institution", "id", dto.getInstitutionId()));
         entity.setInstitution(institutionEntity);

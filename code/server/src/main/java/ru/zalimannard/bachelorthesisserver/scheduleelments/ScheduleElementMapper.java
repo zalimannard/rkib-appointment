@@ -15,9 +15,9 @@ import java.util.List;
 public interface ScheduleElementMapper {
 
     ScheduleElement toEntity(ScheduleElementDto dto,
-                             @Context DoctorRepository doctorRepository,
-                             @Context FavorRepository favorRepository,
-                             @Context ScheduleElementStatusRepository scheduleElementStatusRepository);
+                             DoctorRepository doctorRepository,
+                             FavorRepository favorRepository,
+                             ScheduleElementStatusRepository scheduleElementStatusRepository);
 
     @Mapping(target = "doctorId", source = "entity.doctor.id")
     @Mapping(target = "favorId", source = "entity.favor.id")
@@ -30,9 +30,9 @@ public interface ScheduleElementMapper {
 
     @AfterMapping
     default void toEntity(@MappingTarget ScheduleElement entity, ScheduleElementDto dto,
-                          @Context DoctorRepository doctorRepository,
-                          @Context FavorRepository favorRepository,
-                          @Context ScheduleElementStatusRepository scheduleElementStatusRepository) {
+                          DoctorRepository doctorRepository,
+                          FavorRepository favorRepository,
+                          ScheduleElementStatusRepository scheduleElementStatusRepository) {
         Doctor doctor = doctorRepository.findById(dto.getDoctorId())
                 .orElseThrow(() -> new NotFoundException("Doctor", "id", dto.getDoctorId()));
         entity.setDoctor(doctor);

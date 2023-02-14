@@ -17,10 +17,10 @@ import java.util.List;
 @Mapper
 public interface ApplicationMapper {
 
-    Application toEntity(ApplicationDto dto, @Context ApplicationRepository applicationRepository,
-                         @Context PatientRepository patientRepository,
-                         @Context DoctorNoteRepository doctorNoteRepository,
-                         @Context ApplicationStatusRepository applicationStatusRepository);
+    Application toEntity(ApplicationDto dto, ApplicationRepository applicationRepository,
+                         PatientRepository patientRepository,
+                         DoctorNoteRepository doctorNoteRepository,
+                         ApplicationStatusRepository applicationStatusRepository);
 
     @Mapping(target = "patientId", source = "entity.patient.id")
     @Mapping(target = "doctorNoteId", source = "entity.doctorNote.id")
@@ -33,10 +33,10 @@ public interface ApplicationMapper {
 
     @AfterMapping
     default void toEntity(@MappingTarget Application entity, ApplicationDto dto,
-                          @Context ApplicationRepository applicationRepository,
-                          @Context PatientRepository patientRepository,
-                          @Context DoctorNoteRepository doctorNoteRepository,
-                          @Context ApplicationStatusRepository applicationStatusRepository) {
+                          ApplicationRepository applicationRepository,
+                          PatientRepository patientRepository,
+                          DoctorNoteRepository doctorNoteRepository,
+                          ApplicationStatusRepository applicationStatusRepository) {
         if (dto.getParentApplicationId() != null) {
             Application parentApplicationEntity = applicationRepository.findById(dto.getParentApplicationId())
                     .orElseThrow(() -> new NotFoundException("Application", "id", dto.getParentApplicationId()));

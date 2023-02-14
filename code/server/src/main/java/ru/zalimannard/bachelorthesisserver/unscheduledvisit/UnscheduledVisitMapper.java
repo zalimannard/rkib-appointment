@@ -15,9 +15,9 @@ import java.util.List;
 public interface UnscheduledVisitMapper {
 
     UnscheduledVisit toEntity(UnscheduledVisitDto dto,
-                              @Context DoctorRepository doctorRepository,
-                              @Context FavorRepository favorRepository,
-                              @Context ApplicationRepository applicationRepository);
+                              DoctorRepository doctorRepository,
+                              FavorRepository favorRepository,
+                              ApplicationRepository applicationRepository);
 
     @Mapping(target = "doctorId", source = "entity.doctor.id")
     @Mapping(target = "favorId", source = "entity.favor.id")
@@ -30,9 +30,9 @@ public interface UnscheduledVisitMapper {
 
     @AfterMapping
     default void toEntity(@MappingTarget UnscheduledVisit entity, UnscheduledVisitDto dto,
-                          @Context DoctorRepository doctorRepository,
-                          @Context FavorRepository favorRepository,
-                          @Context ApplicationRepository applicationRepository) {
+                          DoctorRepository doctorRepository,
+                          FavorRepository favorRepository,
+                          ApplicationRepository applicationRepository) {
         Doctor doctor = doctorRepository.findById(dto.getDoctorId())
                 .orElseThrow(() -> new NotFoundException("Doctor", "id", dto.getDoctorId()));
         entity.setDoctor(doctor);

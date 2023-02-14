@@ -13,8 +13,8 @@ import java.util.List;
 public interface ScheduledVisitMapper {
 
     ScheduledVisit toEntity(ScheduledVisitDto dto,
-                            @Context ScheduleElementRepository scheduleElementRepository,
-                            @Context ApplicationRepository applicationRepository);
+                            ScheduleElementRepository scheduleElementRepository,
+                            ApplicationRepository applicationRepository);
 
     @Mapping(target = "scheduleElementId", source = "entity.scheduleElement.id")
     @Mapping(target = "applicationId", source = "entity.application.id")
@@ -26,8 +26,8 @@ public interface ScheduledVisitMapper {
 
     @AfterMapping
     default void toEntity(@MappingTarget ScheduledVisit entity, ScheduledVisitDto dto,
-                          @Context ScheduleElementRepository scheduleElementRepository,
-                          @Context ApplicationRepository applicationRepository) {
+                          ScheduleElementRepository scheduleElementRepository,
+                          ApplicationRepository applicationRepository) {
         ScheduleElement scheduleElement = scheduleElementRepository.findById(dto.getScheduleElementId())
                 .orElseThrow(() -> new NotFoundException("ScheduleElement", "id", dto.getScheduleElementId()));
         entity.setScheduleElement(scheduleElement);
