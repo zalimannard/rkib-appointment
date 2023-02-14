@@ -17,17 +17,27 @@ import java.util.List;
 @Mapper
 public interface ApplicationMapper {
 
-    Application toEntity(ApplicationDto dto, ApplicationRepository applicationRepository,
-                         PatientRepository patientRepository,
-                         DoctorNoteRepository doctorNoteRepository,
-                         ApplicationStatusRepository applicationStatusRepository);
+    @Mapping(target = "parentApplication", ignore = true)
+    @Mapping(target = "patient", ignore = true)
+    @Mapping(target = "doctorNote", ignore = true)
+    @Mapping(target = "status", ignore = true)
+    Application toEntity(ApplicationDto dto,
+                         @Context ApplicationRepository applicationRepository,
+                         @Context PatientRepository patientRepository,
+                         @Context DoctorNoteRepository doctorNoteRepository,
+                         @Context ApplicationStatusRepository applicationStatusRepository);
 
+    @Mapping(target = "parentApplicationId", ignore = true)
     @Mapping(target = "patientId", source = "entity.patient.id")
     @Mapping(target = "doctorNoteId", source = "entity.doctorNote.id")
     @Mapping(target = "statusId", source = "entity.status.id")
     ApplicationDto toDto(Application entity);
 
-    List<Application> toEntityList(List<ApplicationDto> dtoList);
+    List<Application> toEntityList(List<ApplicationDto> dtoList,
+                                   @Context ApplicationRepository applicationRepository,
+                                   @Context PatientRepository patientRepository,
+                                   @Context DoctorNoteRepository doctorNoteRepository,
+                                   @Context ApplicationStatusRepository applicationStatusRepository);
 
     List<ApplicationDto> toDtoList(List<Application> entityList);
 

@@ -12,15 +12,19 @@ import java.util.List;
 @Mapper
 public interface ScheduledVisitMapper {
 
+    @Mapping(target = "scheduleElement", ignore = true)
+    @Mapping(target = "application", ignore = true)
     ScheduledVisit toEntity(ScheduledVisitDto dto,
-                            ScheduleElementRepository scheduleElementRepository,
-                            ApplicationRepository applicationRepository);
+                            @Context ScheduleElementRepository scheduleElementRepository,
+                            @Context ApplicationRepository applicationRepository);
 
     @Mapping(target = "scheduleElementId", source = "entity.scheduleElement.id")
     @Mapping(target = "applicationId", source = "entity.application.id")
     ScheduledVisitDto toDto(ScheduledVisit entity);
 
-    List<ScheduledVisit> toEntityList(List<ScheduledVisitDto> dtoList);
+    List<ScheduledVisit> toEntityList(List<ScheduledVisitDto> dtoList,
+                                      @Context ScheduleElementRepository scheduleElementRepository,
+                                      @Context ApplicationRepository applicationRepository);
 
     List<ScheduledVisitDto> toDtoList(List<ScheduledVisit> entityList);
 

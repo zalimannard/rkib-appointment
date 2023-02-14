@@ -10,12 +10,15 @@ import java.util.List;
 @Mapper
 public interface DoctorNoteMapper {
 
-    DoctorNote toEntity(DoctorNoteDto dto, InstitutionRepository institutionRepository);
+    @Mapping(target = "institution", ignore = true)
+    DoctorNote toEntity(DoctorNoteDto dto,
+                        @Context InstitutionRepository institutionRepository);
 
     @Mapping(target = "institutionId", source = "entity.institution.id")
     DoctorNoteDto toDto(DoctorNote entity);
 
-    List<DoctorNote> toEntityList(List<DoctorNoteDto> dtoList);
+    List<DoctorNote> toEntityList(List<DoctorNoteDto> dtoList,
+                                  @Context InstitutionRepository institutionRepository);
 
     List<DoctorNoteDto> toDtoList(List<DoctorNote> entityList);
 

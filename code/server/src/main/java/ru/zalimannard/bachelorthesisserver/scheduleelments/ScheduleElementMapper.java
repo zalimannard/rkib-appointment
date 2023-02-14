@@ -14,25 +14,31 @@ import java.util.List;
 @Mapper
 public interface ScheduleElementMapper {
 
+    @Mapping(target = "doctor", ignore = true)
+    @Mapping(target = "favor", ignore = true)
+    @Mapping(target = "status", ignore = true)
     ScheduleElement toEntity(ScheduleElementDto dto,
-                             DoctorRepository doctorRepository,
-                             FavorRepository favorRepository,
-                             ScheduleElementStatusRepository scheduleElementStatusRepository);
+                             @Context DoctorRepository doctorRepository,
+                             @Context FavorRepository favorRepository,
+                             @Context ScheduleElementStatusRepository scheduleElementStatusRepository);
 
     @Mapping(target = "doctorId", source = "entity.doctor.id")
     @Mapping(target = "favorId", source = "entity.favor.id")
     @Mapping(target = "statusId", source = "entity.status.id")
     ScheduleElementDto toDto(ScheduleElement entity);
 
-    List<ScheduleElement> toEntityList(List<ScheduleElementDto> dtoList);
+    List<ScheduleElement> toEntityList(List<ScheduleElementDto> dtoList,
+                                       @Context DoctorRepository doctorRepository,
+                                       @Context FavorRepository favorRepository,
+                                       @Context ScheduleElementStatusRepository scheduleElementStatusRepository);
 
     List<ScheduleElementDto> toDtoList(List<ScheduleElement> entityList);
 
     @AfterMapping
     default void toEntity(@MappingTarget ScheduleElement entity, ScheduleElementDto dto,
-                          DoctorRepository doctorRepository,
-                          FavorRepository favorRepository,
-                          ScheduleElementStatusRepository scheduleElementStatusRepository) {
+                          @Context DoctorRepository doctorRepository,
+                          @Context FavorRepository favorRepository,
+                          @Context ScheduleElementStatusRepository scheduleElementStatusRepository) {
         Doctor doctor = doctorRepository.findById(dto.getDoctorId())
                 .orElseThrow(() -> new NotFoundException("Doctor", "id", dto.getDoctorId()));
         entity.setDoctor(doctor);
