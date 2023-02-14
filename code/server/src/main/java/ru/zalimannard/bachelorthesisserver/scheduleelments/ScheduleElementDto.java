@@ -13,13 +13,13 @@ public class ScheduleElementDto {
     private String id;
 
     @JsonProperty("doctorId")
-    private int doctorId;
+    private String doctorId;
 
-    @JsonProperty("serviceId")
-    private int serviceId;
+    @JsonProperty("favorId")
+    private String favorId;
 
     @JsonProperty("statusId")
-    private int statusId;
+    private String statusId;
 
     @JsonProperty("appointmentTimestamp")
     private Timestamp appointmentTimestamp;

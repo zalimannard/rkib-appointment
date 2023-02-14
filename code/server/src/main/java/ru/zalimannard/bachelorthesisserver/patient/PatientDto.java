@@ -16,8 +16,8 @@ public class PatientDto {
     @JsonProperty("firstName")
     private String firstName;
 
-    @JsonProperty("middleName")
-    private String middleName;
+    @JsonProperty("patronymic")
+    private String patronymic;
 
     @JsonProperty("phoneNumber")
     private String phoneNumber;

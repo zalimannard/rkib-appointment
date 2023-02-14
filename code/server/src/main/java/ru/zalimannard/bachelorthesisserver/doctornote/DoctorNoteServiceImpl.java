@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
+import ru.zalimannard.bachelorthesisserver.institution.InstitutionRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DoctorNoteServiceImpl implements DoctorNoteService {
     private final DoctorNoteRepository doctorNoteRepository;
+    private final InstitutionRepository institutionRepository;
     private final DoctorNoteMapper doctorNoteMapper = Mappers.getMapper(DoctorNoteMapper.class);
 
     @Override
@@ -30,14 +32,14 @@ public class DoctorNoteServiceImpl implements DoctorNoteService {
 
     @Override
     public DoctorNoteDto create(DoctorNoteDto doctorNoteDto) {
-        DoctorNote doctorNoteRequest = doctorNoteMapper.toEntity(doctorNoteDto);
+        DoctorNote doctorNoteRequest = doctorNoteMapper.toEntity(doctorNoteDto, institutionRepository);
         DoctorNote doctorNoteResponse = doctorNoteRepository.save(doctorNoteRequest);
         return doctorNoteMapper.toDto(doctorNoteResponse);
     }
 
     @Override
     public DoctorNoteDto update(DoctorNoteDto doctorNoteDto) {
-        DoctorNote doctorNoteRequest = doctorNoteMapper.toEntity(doctorNoteDto);
+        DoctorNote doctorNoteRequest = doctorNoteMapper.toEntity(doctorNoteDto, institutionRepository);
         if (doctorNoteRepository.existsById(doctorNoteRequest.getId())) {
             DoctorNote doctorNoteResponse = doctorNoteRepository.save(doctorNoteRequest);
             return doctorNoteMapper.toDto(doctorNoteResponse);

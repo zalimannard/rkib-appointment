@@ -3,7 +3,10 @@ package ru.zalimannard.bachelorthesisserver.application;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
+import ru.zalimannard.bachelorthesisserver.application.status.ApplicationStatusRepository;
+import ru.zalimannard.bachelorthesisserver.doctornote.DoctorNoteRepository;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
+import ru.zalimannard.bachelorthesisserver.patient.PatientRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +15,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ApplicationServiceImpl implements ApplicationService {
     private final ApplicationRepository applicationRepository;
+    private final PatientRepository patientRepository;
+    private final DoctorNoteRepository doctorNoteRepository;
+    private final ApplicationStatusRepository applicationStatusRepository;
     private final ApplicationMapper applicationMapper = Mappers.getMapper(ApplicationMapper.class);
 
     @Override
@@ -30,14 +36,16 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public ApplicationDto create(ApplicationDto applicationDto) {
-        Application applicationRequest = applicationMapper.toEntity(applicationDto);
+        Application applicationRequest = applicationMapper.toEntity(applicationDto, applicationRepository,
+                patientRepository, doctorNoteRepository, applicationStatusRepository);
         Application applicationResponse = applicationRepository.save(applicationRequest);
         return applicationMapper.toDto(applicationResponse);
     }
 
     @Override
     public ApplicationDto update(ApplicationDto applicationDto) {
-        Application applicationRequest = applicationMapper.toEntity(applicationDto);
+        Application applicationRequest = applicationMapper.toEntity(applicationDto, applicationRepository,
+                patientRepository, doctorNoteRepository, applicationStatusRepository);
         if (applicationRepository.existsById(applicationRequest.getId())) {
             Application applicationResponse = applicationRepository.save(applicationRequest);
             return applicationMapper.toDto(applicationResponse);

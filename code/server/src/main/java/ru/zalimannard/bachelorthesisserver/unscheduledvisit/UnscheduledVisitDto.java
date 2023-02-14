@@ -11,13 +11,13 @@ public class UnscheduledVisitDto {
     private String id;
 
     @JsonProperty("doctorId")
-    private int doctorId;
+    private String doctorId;
 
-    @JsonProperty("serviceId")
-    private int serviceId;
+    @JsonProperty("favorId")
+    private String favorId;
 
     @JsonProperty("applicationId")
-    private int applicationId;
+    private String applicationId;
 
     @JsonProperty("appointmentTimestamp")
     private Timestamp appointmentTimestamp;

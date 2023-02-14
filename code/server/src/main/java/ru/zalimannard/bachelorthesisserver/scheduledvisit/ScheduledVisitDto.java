@@ -9,9 +9,9 @@ public class ScheduledVisitDto {
     private String id;
 
     @JsonProperty("schedule_element_id")
-    private int scheduleElementId;
+    private String scheduleElementId;
 
     @JsonProperty("application_id")
-    private int applicationId;
+    private String applicationId;
 
 }

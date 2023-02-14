@@ -3,7 +3,9 @@ package ru.zalimannard.bachelorthesisserver.scheduledvisit;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
+import ru.zalimannard.bachelorthesisserver.application.ApplicationRepository;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
+import ru.zalimannard.bachelorthesisserver.scheduleelments.ScheduleElementRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ScheduledVisitServiceImpl implements ScheduledVisitService {
     private final ScheduledVisitRepository scheduledVisitRepository;
+    private final ScheduleElementRepository scheduleElementRepository;
+    private final ApplicationRepository applicationRepository;
     private final ScheduledVisitMapper scheduledVisitMapper = Mappers.getMapper(ScheduledVisitMapper.class);
 
     @Override
@@ -30,14 +34,16 @@ public class ScheduledVisitServiceImpl implements ScheduledVisitService {
 
     @Override
     public ScheduledVisitDto create(ScheduledVisitDto scheduledVisitDto) {
-        ScheduledVisit scheduledVisitRequest = scheduledVisitMapper.toEntity(scheduledVisitDto);
+        ScheduledVisit scheduledVisitRequest = scheduledVisitMapper.toEntity(scheduledVisitDto,
+                scheduleElementRepository, applicationRepository);
         ScheduledVisit scheduledVisitResponse = scheduledVisitRepository.save(scheduledVisitRequest);
         return scheduledVisitMapper.toDto(scheduledVisitResponse);
     }
 
     @Override
     public ScheduledVisitDto update(ScheduledVisitDto scheduledVisitDto) {
-        ScheduledVisit scheduledVisitRequest = scheduledVisitMapper.toEntity(scheduledVisitDto);
+        ScheduledVisit scheduledVisitRequest = scheduledVisitMapper.toEntity(scheduledVisitDto,
+                scheduleElementRepository, applicationRepository);
         if (scheduledVisitRepository.existsById(scheduledVisitRequest.getId())) {
             ScheduledVisit scheduledVisitResponse = scheduledVisitRepository.save(scheduledVisitRequest);
             return scheduledVisitMapper.toDto(scheduledVisitResponse);
