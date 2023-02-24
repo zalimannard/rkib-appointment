@@ -1,9 +1,9 @@
 package ru.zalimannard.bachelorthesisserver.institution;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface InstitutionRepository extends CrudRepository<Institution, String> {
+public interface InstitutionRepository extends JpaRepository<Institution, String> {
 
 }

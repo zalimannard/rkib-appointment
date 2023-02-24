@@ -1,9 +1,9 @@
 package ru.zalimannard.bachelorthesisserver.favor;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FavorRepository extends CrudRepository<Favor, String> {
+public interface FavorRepository extends JpaRepository<Favor, String> {
 
 }

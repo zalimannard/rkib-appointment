@@ -1,7 +1,6 @@
 package ru.zalimannard.bachelorthesisserver.unscheduledvisit;
 
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.Context;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import ru.zalimannard.bachelorthesisserver.application.ApplicationRepository;

@@ -4,11 +4,8 @@ import org.mapstruct.*;
 import ru.zalimannard.bachelorthesisserver.application.status.ApplicationStatus;
 import ru.zalimannard.bachelorthesisserver.application.status.ApplicationStatusRepository;
 import ru.zalimannard.bachelorthesisserver.doctornote.DoctorNote;
-import ru.zalimannard.bachelorthesisserver.doctornote.DoctorNoteDto;
 import ru.zalimannard.bachelorthesisserver.doctornote.DoctorNoteRepository;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
-import ru.zalimannard.bachelorthesisserver.institution.Institution;
-import ru.zalimannard.bachelorthesisserver.institution.InstitutionRepository;
 import ru.zalimannard.bachelorthesisserver.patient.Patient;
 import ru.zalimannard.bachelorthesisserver.patient.PatientRepository;
 
