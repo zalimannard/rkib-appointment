@@ -6,5 +6,5 @@ public interface DoctorService {
 
     DoctorDto get(String id);
 
-    List<DoctorDto> list();
+    List<DoctorDto> list(DoctorDto exampleDoctorDto);
 }
