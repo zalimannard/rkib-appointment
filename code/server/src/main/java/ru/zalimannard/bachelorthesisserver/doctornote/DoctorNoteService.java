@@ -6,7 +6,7 @@ public interface DoctorNoteService {
 
     DoctorNoteDto get(String id);
 
-    List<DoctorNoteDto> list();
+    List<DoctorNoteDto> list(DoctorNoteDto exampleDoctorNoteDto);
 
     DoctorNoteDto create(DoctorNoteDto doctorNoteDto);
 

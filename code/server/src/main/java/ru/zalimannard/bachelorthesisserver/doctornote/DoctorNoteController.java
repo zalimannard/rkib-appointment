@@ -3,6 +3,7 @@ package ru.zalimannard.bachelorthesisserver.doctornote;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,8 +26,8 @@ public class DoctorNoteController {
     @GetMapping
     @Operation(summary = "Получение списка направлений")
     @ResponseStatus(HttpStatus.OK)
-    public List<DoctorNoteDto> getAll() {
-        return doctorNoteService.list();
+    public List<DoctorNoteDto> getAll(@QuerydslPredicate DoctorNoteDto exampleDoctorNoteDto) {
+        return doctorNoteService.list(exampleDoctorNoteDto);
     }
 
     @PostMapping

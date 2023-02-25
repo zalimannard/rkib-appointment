@@ -23,9 +23,11 @@ public interface DoctorNoteMapper {
     List<DoctorNoteDto> toDtoList(List<DoctorNote> entityList);
 
     @AfterMapping
-    default void toEntity(@MappingTarget DoctorNote entity, DoctorNoteDto dto, InstitutionRepository institutionRepository) {
-        Institution institutionEntity = institutionRepository.findById(dto.getInstitutionId())
-                .orElseThrow(() -> new NotFoundException("Institution", "id", dto.getInstitutionId()));
-        entity.setInstitution(institutionEntity);
+    default void toEntity(@MappingTarget DoctorNote entity, DoctorNoteDto dto, @Context InstitutionRepository institutionRepository) {
+        if (dto.getInstitutionId() != null) {
+            Institution institutionEntity = institutionRepository.findById(dto.getInstitutionId())
+                    .orElseThrow(() -> new NotFoundException("Institution", "id", dto.getInstitutionId()));
+            entity.setInstitution(institutionEntity);
+        }
     }
 }

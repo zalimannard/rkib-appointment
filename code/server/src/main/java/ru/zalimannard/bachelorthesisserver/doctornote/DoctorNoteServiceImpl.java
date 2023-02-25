@@ -2,7 +2,9 @@ package ru.zalimannard.bachelorthesisserver.doctornote;
 
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
+import ru.zalimannard.bachelorthesisserver.doctor.Doctor;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 import ru.zalimannard.bachelorthesisserver.institution.InstitutionRepository;
 
@@ -24,9 +26,9 @@ public class DoctorNoteServiceImpl implements DoctorNoteService {
     }
 
     @Override
-    public List<DoctorNoteDto> list() {
-        List<DoctorNote> doctorNoteList = new ArrayList<>();
-        doctorNoteRepository.findAll().forEach(doctorNoteList::add);
+    public List<DoctorNoteDto> list(DoctorNoteDto exampleDoctorNoteDto) {
+        DoctorNote exampleDoctorNote = doctorNoteMapper.toEntity(exampleDoctorNoteDto, institutionRepository);
+        List<DoctorNote> doctorNoteList = new ArrayList<>(doctorNoteRepository.findAll(Example.of(exampleDoctorNote)));
         return doctorNoteMapper.toDtoList(doctorNoteList);
     }
 
