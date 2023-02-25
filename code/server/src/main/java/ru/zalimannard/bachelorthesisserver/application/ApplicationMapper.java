@@ -40,27 +40,33 @@ public interface ApplicationMapper {
 
     @AfterMapping
     default void toEntity(@MappingTarget Application entity, ApplicationDto dto,
-                          ApplicationRepository applicationRepository,
-                          PatientRepository patientRepository,
-                          DoctorNoteRepository doctorNoteRepository,
-                          ApplicationStatusRepository applicationStatusRepository) {
+                          @Context ApplicationRepository applicationRepository,
+                          @Context PatientRepository patientRepository,
+                          @Context DoctorNoteRepository doctorNoteRepository,
+                          @Context ApplicationStatusRepository applicationStatusRepository) {
         if (dto.getParentApplicationId() != null) {
             Application parentApplicationEntity = applicationRepository.findById(dto.getParentApplicationId())
                     .orElseThrow(() -> new NotFoundException("Application", "id", dto.getParentApplicationId()));
             entity.setParentApplication(parentApplicationEntity);
         }
 
-        Patient patient = patientRepository.findById(dto.getPatientId())
-                .orElseThrow(() -> new NotFoundException("Patient", "id", dto.getPatientId()));
-        entity.setPatient(patient);
+        if (dto.getPatientId() != null) {
+            Patient patient = patientRepository.findById(dto.getPatientId())
+                    .orElseThrow(() -> new NotFoundException("Patient", "id", dto.getPatientId()));
+            entity.setPatient(patient);
+        }
 
-        DoctorNote doctorNote = doctorNoteRepository.findById(dto.getDoctorNoteId())
-                .orElseThrow(() -> new NotFoundException("DoctorNote", "id", dto.getDoctorNoteId()));
-        entity.setDoctorNote(doctorNote);
+        if (dto.getDoctorNoteId() != null) {
+            DoctorNote doctorNote = doctorNoteRepository.findById(dto.getDoctorNoteId())
+                    .orElseThrow(() -> new NotFoundException("DoctorNote", "id", dto.getDoctorNoteId()));
+            entity.setDoctorNote(doctorNote);
+        }
 
-        ApplicationStatus applicationStatus = applicationStatusRepository.findById(dto.getStatusId())
-                .orElseThrow(() -> new NotFoundException("ApplicationStatus", "id", dto.getStatusId()));
-        entity.setStatus(applicationStatus);
+        if (dto.getStatusId() != null) {
+            ApplicationStatus applicationStatus = applicationStatusRepository.findById(dto.getStatusId())
+                    .orElseThrow(() -> new NotFoundException("ApplicationStatus", "id", dto.getStatusId()));
+            entity.setStatus(applicationStatus);
+        }
     }
 
     @AfterMapping

@@ -36,19 +36,25 @@ public interface UnscheduledVisitMapper {
 
     @AfterMapping
     default void toEntity(@MappingTarget UnscheduledVisit entity, UnscheduledVisitDto dto,
-                          DoctorRepository doctorRepository,
-                          FavorRepository favorRepository,
-                          ApplicationRepository applicationRepository) {
-        Doctor doctor = doctorRepository.findById(dto.getDoctorId())
-                .orElseThrow(() -> new NotFoundException("Doctor", "id", dto.getDoctorId()));
-        entity.setDoctor(doctor);
+                          @Context DoctorRepository doctorRepository,
+                          @Context FavorRepository favorRepository,
+                          @Context ApplicationRepository applicationRepository) {
+        if (dto.getDoctorId() != null) {
+            Doctor doctor = doctorRepository.findById(dto.getDoctorId())
+                    .orElseThrow(() -> new NotFoundException("Doctor", "id", dto.getDoctorId()));
+            entity.setDoctor(doctor);
+        }
 
-        Favor favor = favorRepository.findById(dto.getFavorId())
-                .orElseThrow(() -> new NotFoundException("Favor", "id", dto.getFavorId()));
-        entity.setFavor(favor);
+        if (dto.getFavorId() != null) {
+            Favor favor = favorRepository.findById(dto.getFavorId())
+                    .orElseThrow(() -> new NotFoundException("Favor", "id", dto.getFavorId()));
+            entity.setFavor(favor);
+        }
 
-        Application application = applicationRepository.findById(dto.getApplicationId())
-                .orElseThrow(() -> new NotFoundException("Application", "id", dto.getApplicationId()));
-        entity.setApplication(application);
+        if (dto.getApplicationId() != null) {
+            Application application = applicationRepository.findById(dto.getApplicationId())
+                    .orElseThrow(() -> new NotFoundException("Application", "id", dto.getApplicationId()));
+            entity.setApplication(application);
+        }
     }
 }
