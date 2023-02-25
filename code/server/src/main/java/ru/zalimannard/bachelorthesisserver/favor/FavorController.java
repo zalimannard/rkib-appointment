@@ -26,7 +26,7 @@ public class FavorController {
 
     @GetMapping
     @Operation(summary = "Получение списка услуг")
-    public List<FavorDto> getAll(@QuerydslPredicate FavorDto example) {
-        return favorService.list(example);
+    public List<FavorDto> getAll(@QuerydslPredicate FavorDto exampleFavorDto) {
+        return favorService.list(exampleFavorDto);
     }
 }

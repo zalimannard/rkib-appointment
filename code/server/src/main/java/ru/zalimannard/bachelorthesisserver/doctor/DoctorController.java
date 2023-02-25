@@ -26,7 +26,7 @@ public class DoctorController {
 
     @GetMapping
     @Operation(summary = "Получение списка докторов")
-    public List<DoctorDto> getAll(@QuerydslPredicate DoctorDto example) {
-        return doctorService.list(example);
+    public List<DoctorDto> getAll(@QuerydslPredicate DoctorDto exampleDoctorDto) {
+        return doctorService.list(exampleDoctorDto);
     }
 }
