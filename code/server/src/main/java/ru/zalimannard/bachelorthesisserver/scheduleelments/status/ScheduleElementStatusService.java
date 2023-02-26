@@ -5,7 +5,7 @@ import java.util.List;
 public interface ScheduleElementStatusService {
     ScheduleElementStatusDto get(String id);
 
-    List<ScheduleElementStatusDto> list();
+    List<ScheduleElementStatusDto> list(ScheduleElementStatusDto exampleScheduleElementStatusDto);
 
     ScheduleElementStatusDto create(ScheduleElementStatusDto scheduleElementStatusDto);
 

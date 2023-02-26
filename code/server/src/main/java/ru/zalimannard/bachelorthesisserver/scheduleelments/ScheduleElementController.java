@@ -3,6 +3,7 @@ package ru.zalimannard.bachelorthesisserver.scheduleelments;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,8 +23,8 @@ public class ScheduleElementController {
 
     @GetMapping
     @Operation(summary = "Получение списка элементов расписания")
-    public List<ScheduleElementDto> getAll() {
-        return scheduleElementService.list();
+    public List<ScheduleElementDto> getAll(@QuerydslPredicate ScheduleElementDto exampleScheduleElementDto) {
+        return scheduleElementService.list(exampleScheduleElementDto);
     }
 
     @PostMapping

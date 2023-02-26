@@ -2,6 +2,7 @@ package ru.zalimannard.bachelorthesisserver.scheduleelments;
 
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import ru.zalimannard.bachelorthesisserver.doctor.DoctorRepository;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
@@ -28,9 +29,10 @@ public class ScheduleElementServiceImpl implements ScheduleElementService {
     }
 
     @Override
-    public List<ScheduleElementDto> list() {
-        List<ScheduleElement> scheduleElementList = new ArrayList<>();
-        scheduleElementRepository.findAll().forEach(scheduleElementList::add);
+    public List<ScheduleElementDto> list(ScheduleElementDto exampleScheduleElementDto) {
+        ScheduleElement exampleScheduleElement = scheduleElementMapper.toEntity(exampleScheduleElementDto,
+                doctorRepository, favorRepository, scheduleElementStatusRepository);
+        List<ScheduleElement> scheduleElementList = new ArrayList<>(scheduleElementRepository.findAll(Example.of(exampleScheduleElement)));
         return scheduleElementMapper.toDtoList(scheduleElementList);
     }
 
