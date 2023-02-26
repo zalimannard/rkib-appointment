@@ -2,6 +2,7 @@ package ru.zalimannard.bachelorthesisserver.scheduledvisit;
 
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import ru.zalimannard.bachelorthesisserver.application.ApplicationRepository;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
@@ -26,9 +27,9 @@ public class ScheduledVisitServiceImpl implements ScheduledVisitService {
     }
 
     @Override
-    public List<ScheduledVisitDto> list() {
-        List<ScheduledVisit> scheduledVisitList = new ArrayList<>();
-        scheduledVisitRepository.findAll().forEach(scheduledVisitList::add);
+    public List<ScheduledVisitDto> list(ScheduledVisitDto exampleScheduledVisitDto) {
+        ScheduledVisit exampleScheduledVisit = scheduledVisitMapper.toEntity(exampleScheduledVisitDto, scheduleElementRepository, applicationRepository);
+        List<ScheduledVisit> scheduledVisitList = new ArrayList<>(scheduledVisitRepository.findAll(Example.of(exampleScheduledVisit)));
         return scheduledVisitMapper.toDtoList(scheduledVisitList);
     }
 

@@ -3,6 +3,7 @@ package ru.zalimannard.bachelorthesisserver.scheduledvisit;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,8 +23,8 @@ public class ScheduledVisitController {
 
     @GetMapping
     @Operation(summary = "Получение списка запланированных посещений")
-    public List<ScheduledVisitDto> getAll() {
-        return scheduledVisitService.list();
+    public List<ScheduledVisitDto> getAll(@QuerydslPredicate ScheduledVisitDto exampleScheduledVisitDto) {
+        return scheduledVisitService.list(exampleScheduledVisitDto);
     }
 
     @PostMapping
