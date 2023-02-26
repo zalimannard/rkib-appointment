@@ -6,7 +6,7 @@ public interface InstitutionService {
 
     InstitutionDto get(String id);
 
-    List<InstitutionDto> list();
+    List<InstitutionDto> list(InstitutionDto exampleInstitutionDto);
 
     InstitutionDto create(InstitutionDto institutionDto);
 

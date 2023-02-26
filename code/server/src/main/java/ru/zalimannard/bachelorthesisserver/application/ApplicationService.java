@@ -6,7 +6,7 @@ public interface ApplicationService {
 
     ApplicationDto get(String id);
 
-    List<ApplicationDto> list();
+    List<ApplicationDto> list(ApplicationDto exampleApplicationDto);
 
     ApplicationDto create(ApplicationDto applicationDto);
 

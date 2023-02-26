@@ -2,6 +2,7 @@ package ru.zalimannard.bachelorthesisserver.patient;
 
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 
@@ -22,9 +23,9 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public List<PatientDto> list() {
-        List<Patient> patientList = new ArrayList<>();
-        patientRepository.findAll().forEach(patientList::add);
+    public List<PatientDto> list(PatientDto examplePatientDto) {
+        Patient examplePatient = patientMapper.toEntity(examplePatientDto);
+        List<Patient> patientList = new ArrayList<>(patientRepository.findAll(Example.of(examplePatient)));
         return patientMapper.toDtoList(patientList);
     }
 

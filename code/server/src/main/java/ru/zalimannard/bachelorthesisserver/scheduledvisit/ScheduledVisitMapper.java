@@ -30,14 +30,18 @@ public interface ScheduledVisitMapper {
 
     @AfterMapping
     default void toEntity(@MappingTarget ScheduledVisit entity, ScheduledVisitDto dto,
-                          ScheduleElementRepository scheduleElementRepository,
-                          ApplicationRepository applicationRepository) {
-        ScheduleElement scheduleElement = scheduleElementRepository.findById(dto.getScheduleElementId())
-                .orElseThrow(() -> new NotFoundException("ScheduleElement", "id", dto.getScheduleElementId()));
-        entity.setScheduleElement(scheduleElement);
+                          @Context ScheduleElementRepository scheduleElementRepository,
+                          @Context ApplicationRepository applicationRepository) {
+        if (dto.getScheduleElementId() != null) {
+            ScheduleElement scheduleElement = scheduleElementRepository.findById(dto.getScheduleElementId())
+                    .orElseThrow(() -> new NotFoundException("ScheduleElement", "id", dto.getScheduleElementId()));
+            entity.setScheduleElement(scheduleElement);
+        }
 
-        Application application = applicationRepository.findById(dto.getApplicationId())
-                .orElseThrow(() -> new NotFoundException("Application", "id", dto.getApplicationId()));
-        entity.setApplication(application);
+        if (dto.getApplicationId() != null) {
+            Application application = applicationRepository.findById(dto.getApplicationId())
+                    .orElseThrow(() -> new NotFoundException("Application", "id", dto.getApplicationId()));
+            entity.setApplication(application);
+        }
     }
 }

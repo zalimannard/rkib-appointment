@@ -39,16 +39,22 @@ public interface ScheduleElementMapper {
                           @Context DoctorRepository doctorRepository,
                           @Context FavorRepository favorRepository,
                           @Context ScheduleElementStatusRepository scheduleElementStatusRepository) {
-        Doctor doctor = doctorRepository.findById(dto.getDoctorId())
-                .orElseThrow(() -> new NotFoundException("Doctor", "id", dto.getDoctorId()));
-        entity.setDoctor(doctor);
+        if (dto.getDoctorId() != null) {
+            Doctor doctor = doctorRepository.findById(dto.getDoctorId())
+                    .orElseThrow(() -> new NotFoundException("Doctor", "id", dto.getDoctorId()));
+            entity.setDoctor(doctor);
+        }
 
-        Favor favor = favorRepository.findById(dto.getFavorId())
-                .orElseThrow(() -> new NotFoundException("Favor", "id", dto.getFavorId()));
-        entity.setFavor(favor);
+        if (dto.getFavorId() != null) {
+            Favor favor = favorRepository.findById(dto.getFavorId())
+                    .orElseThrow(() -> new NotFoundException("Favor", "id", dto.getFavorId()));
+            entity.setFavor(favor);
+        }
 
-        ScheduleElementStatus scheduleElementStatus = scheduleElementStatusRepository.findById(dto.getStatusId())
-                .orElseThrow(() -> new NotFoundException("ScheduleElementStatus", "id", dto.getStatusId()));
-        entity.setStatus(scheduleElementStatus);
+        if (dto.getStatusId() != null) {
+            ScheduleElementStatus scheduleElementStatus = scheduleElementStatusRepository.findById(dto.getStatusId())
+                    .orElseThrow(() -> new NotFoundException("ScheduleElementStatus", "id", dto.getStatusId()));
+            entity.setStatus(scheduleElementStatus);
+        }
     }
 }

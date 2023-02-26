@@ -6,7 +6,7 @@ public interface PatientService {
 
     PatientDto get(String id);
 
-    List<PatientDto> list();
+    List<PatientDto> list(PatientDto examplePatientDto);
 
     PatientDto create(PatientDto patientDto);
 

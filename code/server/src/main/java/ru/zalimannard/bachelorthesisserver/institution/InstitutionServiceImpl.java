@@ -2,6 +2,7 @@ package ru.zalimannard.bachelorthesisserver.institution;
 
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 
@@ -22,9 +23,9 @@ public class InstitutionServiceImpl implements InstitutionService {
     }
 
     @Override
-    public List<InstitutionDto> list() {
-        List<Institution> institutionList = new ArrayList<>();
-        institutionRepository.findAll().forEach(institutionList::add);
+    public List<InstitutionDto> list(InstitutionDto exampleInstitutionDto) {
+        Institution exampleInstitution = institutionMapper.toEntity(exampleInstitutionDto);
+        List<Institution> institutionList = new ArrayList<>(institutionRepository.findAll(Example.of(exampleInstitution)));
         return institutionMapper.toDtoList(institutionList);
     }
 

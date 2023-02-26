@@ -3,8 +3,10 @@ package ru.zalimannard.bachelorthesisserver.patient;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.zalimannard.bachelorthesisserver.doctor.DoctorDto;
 
 import java.util.List;
 
@@ -25,8 +27,8 @@ public class PatientController {
     @GetMapping
     @Operation(summary = "Получение списка пациентов")
     @ResponseStatus(HttpStatus.OK)
-    public List<PatientDto> getAll() {
-        return patientService.list();
+    public List<PatientDto> getAll(@QuerydslPredicate PatientDto examplePatientDto) {
+        return patientService.list(examplePatientDto);
     }
 
     @PostMapping

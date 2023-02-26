@@ -2,6 +2,7 @@ package ru.zalimannard.bachelorthesisserver.application;
 
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import ru.zalimannard.bachelorthesisserver.application.status.ApplicationStatusRepository;
 import ru.zalimannard.bachelorthesisserver.doctornote.DoctorNoteRepository;
@@ -28,9 +29,10 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public List<ApplicationDto> list() {
-        List<Application> applicationList = new ArrayList<>();
-        applicationRepository.findAll().forEach(applicationList::add);
+    public List<ApplicationDto> list(ApplicationDto exampleApplicationDto) {
+        Application exampleApplication = applicationMapper.toEntity(exampleApplicationDto,
+                applicationRepository, patientRepository, doctorNoteRepository, applicationStatusRepository);
+        List<Application> applicationList = new ArrayList<>(applicationRepository.findAll(Example.of(exampleApplication)));
         return applicationMapper.toDtoList(applicationList);
     }
 

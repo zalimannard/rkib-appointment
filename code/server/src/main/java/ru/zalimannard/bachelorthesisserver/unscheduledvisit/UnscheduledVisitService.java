@@ -5,7 +5,7 @@ import java.util.List;
 public interface UnscheduledVisitService {
     UnscheduledVisitDto get(String id);
 
-    List<UnscheduledVisitDto> list();
+    List<UnscheduledVisitDto> list(UnscheduledVisitDto exampleUnscheduledVisitDto);
 
     UnscheduledVisitDto create(UnscheduledVisitDto unscheduledVisitDto);
 

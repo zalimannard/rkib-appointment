@@ -2,6 +2,7 @@ package ru.zalimannard.bachelorthesisserver.favor;
 
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 
@@ -22,9 +23,9 @@ public class FavorServiceImpl implements FavorService {
     }
 
     @Override
-    public List<FavorDto> list() {
-        List<Favor> favorList = new ArrayList<>();
-        favorRepository.findAll().forEach(favorList::add);
+    public List<FavorDto> list(FavorDto exampleFavorDto) {
+        Favor exampleFavor = favorMapper.toEntity(exampleFavorDto);
+        List<Favor> favorList = new ArrayList<>(favorRepository.findAll(Example.of(exampleFavor)));
         return favorMapper.toDtoList(favorList);
     }
 }

@@ -3,6 +3,7 @@ package ru.zalimannard.bachelorthesisserver.institution;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,8 +26,8 @@ public class InstitutionController {
     @GetMapping
     @Operation(summary = "Получение списка учреждений")
     @ResponseStatus(HttpStatus.OK)
-    public List<InstitutionDto> getAll() {
-        return institutionService.list();
+    public List<InstitutionDto> getAll(@QuerydslPredicate InstitutionDto exampleInstitutionDto) {
+        return institutionService.list(exampleInstitutionDto);
     }
 
     @PostMapping

@@ -6,7 +6,7 @@ public interface ApplicationStatusService {
 
     ApplicationStatusDto get(String id);
 
-    List<ApplicationStatusDto> list();
+    List<ApplicationStatusDto> list(ApplicationStatusDto exampleApplicationStatusDto);
 
     ApplicationStatusDto create(ApplicationStatusDto applicationStatusDto);
 

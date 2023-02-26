@@ -6,7 +6,7 @@ public interface ScheduledVisitService {
 
     ScheduledVisitDto get(String id);
 
-    List<ScheduledVisitDto> list();
+    List<ScheduledVisitDto> list(ScheduledVisitDto exampleScheduledVisitDto);
 
     ScheduledVisitDto create(ScheduledVisitDto doctorNoteDto);
 

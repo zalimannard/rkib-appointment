@@ -5,7 +5,7 @@ import java.util.List;
 public interface ScheduleElementService {
     ScheduleElementDto get(String id);
 
-    List<ScheduleElementDto> list();
+    List<ScheduleElementDto> list(ScheduleElementDto exampleScheduleElementDto);
 
     ScheduleElementDto create(ScheduleElementDto scheduleElementDto);
 

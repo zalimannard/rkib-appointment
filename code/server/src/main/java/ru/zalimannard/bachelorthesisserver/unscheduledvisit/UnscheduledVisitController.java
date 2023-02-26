@@ -3,6 +3,7 @@ package ru.zalimannard.bachelorthesisserver.unscheduledvisit;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,8 +23,8 @@ public class UnscheduledVisitController {
 
     @GetMapping
     @Operation(summary = "Получение списка незапланированных посещения")
-    public List<UnscheduledVisitDto> getAll() {
-        return unscheduledVisitService.list();
+    public List<UnscheduledVisitDto> getAll(@QuerydslPredicate UnscheduledVisitDto exampleUnscheduledVisitDto) {
+        return unscheduledVisitService.list(exampleUnscheduledVisitDto);
     }
 
     @PostMapping
