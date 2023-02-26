@@ -3,6 +3,7 @@ package ru.zalimannard.bachelorthesisserver.application;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,8 +23,8 @@ public class ApplicationController {
 
     @GetMapping
     @Operation(summary = "Получение списка обращений")
-    public List<ApplicationDto> getAll() {
-        return applicationService.list();
+    public List<ApplicationDto> getAll(@QuerydslPredicate ApplicationDto exampleApplicationDto) {
+        return applicationService.list(exampleApplicationDto);
     }
 
     @PostMapping

@@ -2,6 +2,7 @@ package ru.zalimannard.bachelorthesisserver.application.status;
 
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 
@@ -22,9 +23,9 @@ public class ApplicationStatusServiceImpl implements ApplicationStatusService {
     }
 
     @Override
-    public List<ApplicationStatusDto> list() {
-        List<ApplicationStatus> applicationStatusList = new ArrayList<>();
-        applicationStatusRepository.findAll().forEach(applicationStatusList::add);
+    public List<ApplicationStatusDto> list(ApplicationStatusDto exampleApplicationStatusDto) {
+        ApplicationStatus exampleApplicationStatus = applicationStatusMapper.toEntity(exampleApplicationStatusDto);
+        List<ApplicationStatus> applicationStatusList = new ArrayList<>(applicationStatusRepository.findAll(Example.of(exampleApplicationStatus)));
         return applicationStatusMapper.toDtoList(applicationStatusList);
     }
 

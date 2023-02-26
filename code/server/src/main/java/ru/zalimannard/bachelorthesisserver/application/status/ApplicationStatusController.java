@@ -3,6 +3,7 @@ package ru.zalimannard.bachelorthesisserver.application.status;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,8 +23,8 @@ public class ApplicationStatusController {
 
     @GetMapping
     @Operation(summary = "Получение списка статусов обращений")
-    public List<ApplicationStatusDto> getAll() {
-        return applicationStatusService.list();
+    public List<ApplicationStatusDto> getAll(@QuerydslPredicate ApplicationStatusDto exampleApplicationStatusDto) {
+        return applicationStatusService.list(exampleApplicationStatusDto);
     }
 
     @PostMapping
