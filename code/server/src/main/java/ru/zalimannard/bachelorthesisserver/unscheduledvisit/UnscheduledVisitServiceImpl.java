@@ -2,6 +2,7 @@ package ru.zalimannard.bachelorthesisserver.unscheduledvisit;
 
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import ru.zalimannard.bachelorthesisserver.application.ApplicationRepository;
 import ru.zalimannard.bachelorthesisserver.doctor.DoctorRepository;
@@ -28,9 +29,10 @@ public class UnscheduledVisitServiceImpl implements UnscheduledVisitService {
     }
 
     @Override
-    public List<UnscheduledVisitDto> list() {
-        List<UnscheduledVisit> unscheduledVisitList = new ArrayList<>();
-        unscheduledVisitRepository.findAll().forEach(unscheduledVisitList::add);
+    public List<UnscheduledVisitDto> list(UnscheduledVisitDto exampleUnscheduledVisitDto) {
+        UnscheduledVisit exampleUnscheduledVisit = unscheduledVisitMapper.toEntity(exampleUnscheduledVisitDto,
+                doctorRepository, favorRepository, applicationRepository);
+        List<UnscheduledVisit> unscheduledVisitList = new ArrayList<>(unscheduledVisitRepository.findAll(Example.of(exampleUnscheduledVisit)));
         return unscheduledVisitMapper.toDtoList(unscheduledVisitList);
     }
 
