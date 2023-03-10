@@ -54,10 +54,14 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public ApplicationDto update(String id, ApplicationDto applicationDto) {
         read(id);
-        Application applicationRequest = applicationMapper.toEntity(applicationDto, MappingType.DEFAULT);
-        applicationRequest.setId(id);
-        Application applicationResponse = applicationRepository.save(applicationRequest);
-        return applicationMapper.toDto(applicationResponse);
+        try {
+            Application applicationRequest = applicationMapper.toEntity(applicationDto, MappingType.DEFAULT);
+            applicationRequest.setId(id);
+            Application applicationResponse = applicationRepository.save(applicationRequest);
+            return applicationMapper.toDto(applicationResponse);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationExceptionHttp("${application.entityNames.application}");
+        }
     }
 
     @Override

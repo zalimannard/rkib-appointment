@@ -55,10 +55,14 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public PatientDto update(String id, PatientDto patientDto) {
         read(id);
-        Patient patientRequest = patientMapper.toEntity(patientDto, MappingType.DEFAULT);
-        patientRequest.setId(id);
-        Patient patientResponse = patientRepository.save(patientRequest);
-        return patientMapper.toDto(patientResponse);
+        try {
+            Patient patientRequest = patientMapper.toEntity(patientDto, MappingType.DEFAULT);
+            patientRequest.setId(id);
+            Patient patientResponse = patientRepository.save(patientRequest);
+            return patientMapper.toDto(patientResponse);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationExceptionHttp("${application.entityNames.patient}");
+        }
     }
 
     @Override

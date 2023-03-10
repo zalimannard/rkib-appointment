@@ -37,7 +37,6 @@ public class ScheduleController {
                                             ".defaultPageNumber}", required = false) int pageNo,
                                     @RequestParam(value = "pageSize", defaultValue = "${application.constant.defaultPageSize}", required = false) int pageSize,
                                     @RequestParam(value = "sort", defaultValue = "${application.constant.defaultSort}", required = false) String[] sort) {
-        System.out.println(beginTimestamp);
         return scheduleService.search(exampleScheduleDto, beginTimestamp, endTimestamp, pageNo, pageSize, sort);
     }
 

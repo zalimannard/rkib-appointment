@@ -41,7 +41,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public List<ScheduleDto> search(ScheduleDto filterScheduleDto, Date beginTimestamp, Date endTimestamp, int pageNo, int pageSize, String[] sort) {
-        System.out.println(beginTimestamp);
         Schedule filterSchedule = scheduleMapper.toEntity(filterScheduleDto, MappingType.FORCE);
         List<Sort.Order> orders = Utils.ordersByStringArray(sort);
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(orders));
@@ -55,10 +54,14 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public ScheduleDto update(String id, ScheduleDto scheduleDto) {
         read(id);
-        Schedule scheduleRequest = scheduleMapper.toEntity(scheduleDto, MappingType.DEFAULT);
-        scheduleRequest.setId(id);
-        Schedule scheduleResponse = scheduleRepository.save(scheduleRequest);
-        return scheduleMapper.toDto(scheduleResponse);
+        try {
+            Schedule scheduleRequest = scheduleMapper.toEntity(scheduleDto, MappingType.DEFAULT);
+            scheduleRequest.setId(id);
+            Schedule scheduleResponse = scheduleRepository.save(scheduleRequest);
+            return scheduleMapper.toDto(scheduleResponse);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationExceptionHttp("${application.entityNames.schedule}");
+        }
     }
 
     @Override

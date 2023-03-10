@@ -53,10 +53,14 @@ public class ScheduleStatusServiceImpl implements ScheduleStatusService {
     @Override
     public ScheduleStatusDto update(String id, ScheduleStatusDto scheduleStatusDto) {
         read(id);
-        ScheduleStatus scheduleStatusRequest = scheduleStatusMapper.toEntity(scheduleStatusDto, MappingType.DEFAULT);
-        scheduleStatusRequest.setId(id);
-        ScheduleStatus scheduleStatusResponse = scheduleStatusRepository.save(scheduleStatusRequest);
-        return scheduleStatusMapper.toDto(scheduleStatusResponse);
+        try {
+            ScheduleStatus scheduleStatusRequest = scheduleStatusMapper.toEntity(scheduleStatusDto, MappingType.DEFAULT);
+            scheduleStatusRequest.setId(id);
+            ScheduleStatus scheduleStatusResponse = scheduleStatusRepository.save(scheduleStatusRequest);
+            return scheduleStatusMapper.toDto(scheduleStatusResponse);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationExceptionHttp("${application.entityNames.scheduleStatus}");
+        }
     }
 
     @Override

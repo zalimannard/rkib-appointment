@@ -53,10 +53,14 @@ public class ApplicationStatusServiceImpl implements ApplicationStatusService {
     @Override
     public ApplicationStatusDto update(String id, ApplicationStatusDto applicationStatusDto) {
         read(id);
-        ApplicationStatus applicationStatusRequest = applicationStatusMapper.toEntity(applicationStatusDto, MappingType.DEFAULT);
-        applicationStatusRequest.setId(id);
-        ApplicationStatus applicationStatusResponse = applicationStatusRepository.save(applicationStatusRequest);
-        return applicationStatusMapper.toDto(applicationStatusResponse);
+        try {
+            ApplicationStatus applicationStatusRequest = applicationStatusMapper.toEntity(applicationStatusDto, MappingType.DEFAULT);
+            applicationStatusRequest.setId(id);
+            ApplicationStatus applicationStatusResponse = applicationStatusRepository.save(applicationStatusRequest);
+            return applicationStatusMapper.toDto(applicationStatusResponse);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationExceptionHttp("${application.entityNames.applicationStatus}");
+        }
     }
 
     @Override

@@ -51,10 +51,14 @@ public class InstitutionServiceImpl implements InstitutionService {
     @Override
     public InstitutionDto update(String id, InstitutionDto institutionDto) {
         read(id);
-        Institution institutionRequest = institutionMapper.toEntity(institutionDto, MappingType.DEFAULT);
-        institutionRequest.setId(id);
-        Institution institutionResponse = institutionRepository.save(institutionRequest);
-        return institutionMapper.toDto(institutionResponse);
+        try {
+            Institution institutionRequest = institutionMapper.toEntity(institutionDto, MappingType.DEFAULT);
+            institutionRequest.setId(id);
+            Institution institutionResponse = institutionRepository.save(institutionRequest);
+            return institutionMapper.toDto(institutionResponse);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationExceptionHttp("${application.entityNames.institution}");
+        }
     }
 
     @Override
