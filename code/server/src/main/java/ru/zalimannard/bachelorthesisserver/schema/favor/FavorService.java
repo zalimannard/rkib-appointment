@@ -9,6 +9,6 @@ public interface FavorService {
 
     FavorDto read(String id);
 
-    List<FavorDto> search(FavorDto favorDto, int pageNo, int pageSize, String[] sortBy);
+    List<FavorDto> search(FavorDto favorDto, int pageNo, int pageSize, String[] sort);
 
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("${application.endpoint.root}" + "${application.endpoint.institution}")
+@RequestMapping("${application.endpoint.root}${application.endpoint.institution}")
 @Tag(name = "Учреждения")
 @RequiredArgsConstructor
 public class InstitutionController {
@@ -21,14 +21,17 @@ public class InstitutionController {
     @Operation(summary = "Получение учреждения")
     @ResponseStatus(HttpStatus.OK)
     public InstitutionDto get(@PathVariable String id) {
-        return institutionService.get(id);
+        return institutionService.read(id);
     }
 
-    @GetMapping
+    @GetMapping("${application.endpoint.search}")
     @Operation(summary = "Получение списка учреждений")
     @ResponseStatus(HttpStatus.OK)
-    public List<InstitutionDto> getAll(@QuerydslPredicate InstitutionDto exampleInstitutionDto) {
-        return institutionService.list(exampleInstitutionDto);
+    public List<InstitutionDto> search(@QuerydslPredicate InstitutionDto exampleInstitutionDto,
+                                       @RequestParam(value = "pageNo", defaultValue = "${application.constant.defaultPageNumber}", required = false) int pageNo,
+                                       @RequestParam(value = "pageSize", defaultValue = "${application.constant.defaultPageSize}", required = false) int pageSize,
+                                       @RequestParam(value = "sort", defaultValue = "${application.constant.defaultSort}", required = false) String[] sort) {
+        return institutionService.search(exampleInstitutionDto, pageNo, pageSize, sort);
     }
 
     @PostMapping
@@ -38,11 +41,12 @@ public class InstitutionController {
         return institutionService.create(institutionDto);
     }
 
-    @PutMapping
+    @PutMapping("{id}")
     @Operation(summary = "Обновление существующего учреждения")
     @ResponseStatus(HttpStatus.OK)
-    public InstitutionDto put(@RequestBody InstitutionDto institutionDto) {
-        return institutionService.update(institutionDto);
+    public InstitutionDto put(@PathVariable String id,
+                              @RequestBody InstitutionDto institutionDto) {
+        return institutionService.update(id, institutionDto);
     }
 
     @DeleteMapping("{id}")

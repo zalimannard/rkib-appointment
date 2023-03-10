@@ -1,16 +1,20 @@
 package ru.zalimannard.bachelorthesisserver.schema.institution;
 
+import jakarta.validation.Valid;
+import org.springframework.validation.annotation.Validated;
+
 import java.util.List;
 
+@Validated
 public interface InstitutionService {
 
-    InstitutionDto get(String id);
+    InstitutionDto create(@Valid InstitutionDto institutionDto);
 
-    List<InstitutionDto> list(InstitutionDto exampleInstitutionDto);
+    InstitutionDto read(String id);
 
-    InstitutionDto create(InstitutionDto institutionDto);
+    List<InstitutionDto> search(InstitutionDto exampleInstitutionDto, int pageNo, int pageSize, String[] sortBy);
 
-    InstitutionDto update(InstitutionDto institutionDto);
+    InstitutionDto update(String id, @Valid InstitutionDto institutionDto);
 
     InstitutionDto delete(String id);
 

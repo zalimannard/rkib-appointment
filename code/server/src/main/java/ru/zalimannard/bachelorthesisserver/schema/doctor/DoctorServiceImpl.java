@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 import ru.zalimannard.bachelorthesisserver.utils.Utils;
+import ru.zalimannard.bachelorthesisserver.utils.mapper.MappingType;
 
 import java.util.List;
 
@@ -21,13 +22,13 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public DoctorDto read(String id) {
         Doctor doctor = doctorRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Doctor", "id", id));
+                .orElseThrow(() -> new NotFoundException("${application.entityNames.doctor}", "id", id));
         return doctorMapper.toDto(doctor);
     }
 
     @Override
     public List<DoctorDto> search(DoctorDto filterDoctorDto, int pageNo, int pageSize, String[] sort) {
-        Doctor filterDoctor = doctorMapper.toEntity(filterDoctorDto);
+        Doctor filterDoctor = doctorMapper.toEntity(filterDoctorDto, MappingType.FORCE);
         List<Sort.Order> orders = Utils.ordersByStringArray(sort);
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(orders));
 

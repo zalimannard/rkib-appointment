@@ -23,7 +23,7 @@ public class FavorController {
 
     @GetMapping
     @Operation(summary = "Поиск услуг")
-    public List<FavorDto> getAll(FavorDto exampleFavorDto,
+    public List<FavorDto> search(FavorDto exampleFavorDto,
                                  @RequestParam(value = "pageNo", defaultValue = "${application.constant.defaultPageNumber}", required = false) int pageNo,
                                  @RequestParam(value = "pageSize", defaultValue = "${application.constant.defaultPageSize}", required = false) int pageSize,
                                  @RequestParam(value = "sort", defaultValue = "${application.constant.defaultSort}", required = false) String[] sort) {

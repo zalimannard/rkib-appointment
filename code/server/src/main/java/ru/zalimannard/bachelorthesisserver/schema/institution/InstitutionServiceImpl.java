@@ -2,11 +2,16 @@ package ru.zalimannard.bachelorthesisserver.schema.institution;
 
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
-import org.springframework.data.domain.Example;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import ru.zalimannard.bachelorthesisserver.exceptions.DataIntegrityViolationExceptionHttp;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
+import ru.zalimannard.bachelorthesisserver.utils.Utils;
+import ru.zalimannard.bachelorthesisserver.utils.mapper.MappingType;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,43 +22,51 @@ public class InstitutionServiceImpl implements InstitutionService {
     private final InstitutionMapper institutionMapper = Mappers.getMapper(InstitutionMapper.class);
 
     @Override
-    public InstitutionDto get(String id) {
+    public InstitutionDto create(InstitutionDto institutionDto) {
+        try {
+            Institution institutionRequest = institutionMapper.toEntity(institutionDto, MappingType.DEFAULT);
+            Institution institutionResponse = institutionRepository.save(institutionRequest);
+            return institutionMapper.toDto(institutionResponse);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationExceptionHttp("${application.entityNames.institution}");
+        }
+    }
+
+    @Override
+    public InstitutionDto read(String id) {
         Institution institution = institutionRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Institution", "id", id));
+                .orElseThrow(() -> new NotFoundException("${application.entityNames.institution}", id));
         return institutionMapper.toDto(institution);
     }
 
     @Override
-    public List<InstitutionDto> list(InstitutionDto exampleInstitutionDto) {
-        Institution exampleInstitution = institutionMapper.toEntity(exampleInstitutionDto);
-        List<Institution> institutionList = new ArrayList<>(institutionRepository.findAll(Example.of(exampleInstitution)));
+    public List<InstitutionDto> search(InstitutionDto filterInstitutionDto, int pageNo, int pageSize, String[] sort) {
+        Institution filterInstitution = institutionMapper.toEntity(filterInstitutionDto, MappingType.FORCE);
+        List<Sort.Order> orders = Utils.ordersByStringArray(sort);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(orders));
+
+        List<Institution> institutionList = institutionRepository.search(filterInstitution.getName(), pageable);
         return institutionMapper.toDtoList(institutionList);
     }
 
     @Override
-    public InstitutionDto create(InstitutionDto institutionDto) {
-        Institution institutionRequest = institutionMapper.toEntity(institutionDto);
+    public InstitutionDto update(String id, InstitutionDto institutionDto) {
+        read(id);
+        Institution institutionRequest = institutionMapper.toEntity(institutionDto, MappingType.DEFAULT);
+        institutionRequest.setId(id);
         Institution institutionResponse = institutionRepository.save(institutionRequest);
         return institutionMapper.toDto(institutionResponse);
     }
 
     @Override
-    public InstitutionDto update(InstitutionDto institutionDto) {
-        Institution institutionRequest = institutionMapper.toEntity(institutionDto);
-        if (institutionRepository.existsById(institutionRequest.getId())) {
-            Institution institutionResponse = institutionRepository.save(institutionRequest);
-            return institutionMapper.toDto(institutionResponse);
-        } else {
-            throw new NotFoundException("Institution", "id", String.valueOf(institutionRequest.getId()));
-        }
-    }
-
-    @Override
     public InstitutionDto delete(String id) {
-        Institution institution = institutionRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Institution", "id", id));
-        institutionRepository.deleteById(id);
-        return institutionMapper.toDto(institution);
+        try {
+            InstitutionDto institutionDto = read(id);
+            institutionRepository.deleteById(id);
+            return institutionDto;
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationExceptionHttp("${application.entityNames.institution}");
+        }
     }
 
 }

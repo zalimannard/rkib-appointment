@@ -22,8 +22,17 @@ application:
     defaultPageNumber: 0
     defaultPageSize: 10
     defaultSort: id,asc
+  entityNames:
+    doctor: Doctor
+    institution: Institution
+    patient: Patient
+    schedule: ScheduleElement
+    favor: Favor
+    application: Application
+    applicationStatus: ApplicationStatus
   endpoint:
     root: /api
+    search: /search
     doctorNote: /doctorNotes
     doctor: /doctors
     institution: /institutions
