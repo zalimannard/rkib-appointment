@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.NOT_MODIFIED)
 public class NotModifiedExceptionHttp extends RuntimeException {
 
-    public NotModifiedExceptionHttp(String message) {
-        super(message);
+    public NotModifiedExceptionHttp(String name) {
+        super("The element from the " + name + " has not been changed");
     }
 
 }

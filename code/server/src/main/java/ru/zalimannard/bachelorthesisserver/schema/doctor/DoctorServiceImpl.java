@@ -21,7 +21,7 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public DoctorDto read(String id) {
         Doctor doctor = doctorRepository.findById(id)
-                .orElseThrow(() -> new NotFoundExceptionHttp("${application.entityNames.doctor}", "id", id));
+                .orElseThrow(() -> new NotFoundExceptionHttp("${application.entityNames.doctor}", id));
         return doctorMapper.toDto(doctor);
     }
 
