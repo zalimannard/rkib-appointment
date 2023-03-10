@@ -9,7 +9,7 @@ import ru.zalimannard.bachelorthesisserver.schema.schedule.status.ScheduleStatus
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "schedule_elements")
+@Table(name = "schedules")
 @Data
 public class Schedule {
 
@@ -33,7 +33,7 @@ public class Schedule {
     @Column(name = "appointment_timestamp", nullable = false)
     private Timestamp appointmentTimestamp;
 
-    @Column(name = "comment")
-    private String comment;
+    @Column(name = "commentary")
+    private String commentary;
 
 }

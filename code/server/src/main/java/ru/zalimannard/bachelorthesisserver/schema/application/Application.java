@@ -3,7 +3,7 @@ package ru.zalimannard.bachelorthesisserver.schema.application;
 import jakarta.persistence.*;
 import lombok.Data;
 import ru.zalimannard.bachelorthesisserver.schema.application.status.ApplicationStatus;
-import ru.zalimannard.bachelorthesisserver.schema.doctornote.DoctorNote;
+import ru.zalimannard.bachelorthesisserver.schema.institution.Institution;
 import ru.zalimannard.bachelorthesisserver.schema.patient.Patient;
 
 @Entity
@@ -21,14 +21,20 @@ public class Application {
     private Patient patient;
 
     @ManyToOne
-    @JoinColumn(name = "doctor_note_id")
-    private DoctorNote doctorNote;
+    @JoinColumn(name = "sending_institution_id")
+    private Institution sendingInstitution;
 
     @ManyToOne
     @JoinColumn(name = "status_id", nullable = false)
     private ApplicationStatus status;
 
-    @Column(name = "final_diagnosis", nullable = false)
+    @Column(name = "doctor_note")
+    private String doctorNote;
+
+    @Column(name = "final_diagnosis")
     private String finalDiagnosis;
+
+    @Column(name = "commentary")
+    private String commentary;
 
 }

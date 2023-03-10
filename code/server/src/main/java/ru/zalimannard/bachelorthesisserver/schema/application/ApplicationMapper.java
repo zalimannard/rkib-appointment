@@ -1,64 +1,88 @@
 package ru.zalimannard.bachelorthesisserver.schema.application;
 
+import lombok.RequiredArgsConstructor;
 import org.mapstruct.*;
-import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundExceptionHttp;
-import ru.zalimannard.bachelorthesisserver.schema.application.status.ApplicationStatus;
-import ru.zalimannard.bachelorthesisserver.schema.application.status.ApplicationStatusRepository;
-import ru.zalimannard.bachelorthesisserver.schema.doctornote.DoctorNote;
-import ru.zalimannard.bachelorthesisserver.schema.doctornote.DoctorNoteRepository;
-import ru.zalimannard.bachelorthesisserver.schema.patient.Patient;
-import ru.zalimannard.bachelorthesisserver.schema.patient.PatientRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import ru.zalimannard.bachelorthesisserver.schema.application.status.ApplicationStatusDto;
+import ru.zalimannard.bachelorthesisserver.schema.application.status.ApplicationStatusMapper;
+import ru.zalimannard.bachelorthesisserver.schema.application.status.ApplicationStatusService;
+import ru.zalimannard.bachelorthesisserver.schema.institution.InstitutionDto;
+import ru.zalimannard.bachelorthesisserver.schema.institution.InstitutionMapper;
+import ru.zalimannard.bachelorthesisserver.schema.institution.InstitutionService;
+import ru.zalimannard.bachelorthesisserver.schema.patient.PatientDto;
+import ru.zalimannard.bachelorthesisserver.schema.patient.PatientMapper;
+import ru.zalimannard.bachelorthesisserver.schema.patient.PatientService;
+import ru.zalimannard.bachelorthesisserver.utils.mapper.MappingType;
 
 import java.util.List;
 
-@Mapper
-public interface ApplicationMapper {
+@Mapper(componentModel = "spring")
+@RequiredArgsConstructor
+public abstract class ApplicationMapper {
+
+    @Autowired
+    private PatientService patientService;
+    @Autowired
+    private PatientMapper patientMapper;
+    @Autowired
+    private InstitutionService institutionService;
+    @Autowired
+    private InstitutionMapper institutionMapper;
+    @Autowired
+    private ApplicationStatusService applicationStatusService;
+    @Autowired
+    private ApplicationStatusMapper applicationStatusMapper;
 
     @Mapping(target = "patient", ignore = true)
-    @Mapping(target = "doctorNote", ignore = true)
+    @Mapping(target = "sendingInstitution", ignore = true)
     @Mapping(target = "status", ignore = true)
-    Application toEntity(ApplicationDto dto,
-                         @Context ApplicationRepository applicationRepository,
-                         @Context PatientRepository patientRepository,
-                         @Context DoctorNoteRepository doctorNoteRepository,
-                         @Context ApplicationStatusRepository applicationStatusRepository);
+    public abstract Application toEntity(ApplicationDto dto,
+                                         @Context MappingType mappingType);
 
     @Mapping(target = "patientId", source = "entity.patient.id")
-    @Mapping(target = "doctorNoteId", source = "entity.doctorNote.id")
+    @Mapping(target = "sendingInstitutionId", source = "entity.sendingInstitution.id")
     @Mapping(target = "statusId", source = "entity.status.id")
-    ApplicationDto toDto(Application entity);
+    public abstract ApplicationDto toDto(Application entity);
 
-    List<Application> toEntityList(List<ApplicationDto> dtoList,
-                                   @Context ApplicationRepository applicationRepository,
-                                   @Context PatientRepository patientRepository,
-                                   @Context DoctorNoteRepository doctorNoteRepository,
-                                   @Context ApplicationStatusRepository applicationStatusRepository);
+    public abstract List<Application> toEntityList(List<ApplicationDto> dtoList,
+                                                   @Context MappingType mappingType);
 
-    List<ApplicationDto> toDtoList(List<Application> entityList);
+    public abstract List<ApplicationDto> toDtoList(List<Application> entityList);
 
     @AfterMapping
-    default void toEntity(@MappingTarget Application entity, ApplicationDto dto,
-                          @Context ApplicationRepository applicationRepository,
-                          @Context PatientRepository patientRepository,
-                          @Context DoctorNoteRepository doctorNoteRepository,
-                          @Context ApplicationStatusRepository applicationStatusRepository) {
-
-        if (dto.getPatientId() != null) {
-            Patient patient = patientRepository.findById(dto.getPatientId())
-                    .orElseThrow(() -> new NotFoundExceptionHttp("Patient", "id", dto.getPatientId()));
-            entity.setPatient(patient);
+    protected void toEntity(@MappingTarget Application entity, ApplicationDto dto,
+                            @Context MappingType mappingType) {
+        try {
+            PatientDto patientDto = patientService.read(dto.getPatientId());
+            entity.setPatient(patientMapper.toEntity(patientDto, MappingType.DEFAULT));
+        } catch (Exception e) {
+            if ((mappingType.equals(MappingType.FORCE)) && (dto.getPatientId()) == null) {
+                // Всё нормально, поле patient останется null
+            } else {
+                throw e;
+            }
         }
 
-        if (dto.getDoctorNoteId() != null) {
-            DoctorNote doctorNote = doctorNoteRepository.findById(dto.getDoctorNoteId())
-                    .orElseThrow(() -> new NotFoundExceptionHttp("DoctorNote", "id", dto.getDoctorNoteId()));
-            entity.setDoctorNote(doctorNote);
+        try {
+            InstitutionDto institutionDto = institutionService.read(dto.getSendingInstitutionId());
+            entity.setSendingInstitution(institutionMapper.toEntity(institutionDto, MappingType.DEFAULT));
+        } catch (Exception e) {
+            if ((mappingType.equals(MappingType.FORCE)) && (dto.getSendingInstitutionId()) == null) {
+                // Всё нормально, поле institution останется null
+            } else {
+                throw e;
+            }
         }
 
-        if (dto.getStatusId() != null) {
-            ApplicationStatus applicationStatus = applicationStatusRepository.findById(dto.getStatusId())
-                    .orElseThrow(() -> new NotFoundExceptionHttp("ApplicationStatus", "id", dto.getStatusId()));
-            entity.setStatus(applicationStatus);
+        try {
+            ApplicationStatusDto applicationStatusDto = applicationStatusService.read(dto.getStatusId());
+            entity.setStatus(applicationStatusMapper.toEntity(applicationStatusDto, MappingType.DEFAULT));
+        } catch (Exception e) {
+            if ((mappingType.equals(MappingType.FORCE)) && (dto.getStatusId()) == null) {
+                // Всё нормально, поле status останется null
+            } else {
+                throw e;
+            }
         }
     }
 

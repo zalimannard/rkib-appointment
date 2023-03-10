@@ -1,15 +1,16 @@
 package ru.zalimannard.bachelorthesisserver.schema.application;
 
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.factory.Mappers;
-import org.springframework.data.domain.Example;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import ru.zalimannard.bachelorthesisserver.exceptions.DataIntegrityViolationExceptionHttp;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundExceptionHttp;
-import ru.zalimannard.bachelorthesisserver.schema.application.status.ApplicationStatusRepository;
-import ru.zalimannard.bachelorthesisserver.schema.doctornote.DoctorNoteRepository;
-import ru.zalimannard.bachelorthesisserver.schema.patient.PatientRepository;
+import ru.zalimannard.bachelorthesisserver.utils.Utils;
+import ru.zalimannard.bachelorthesisserver.utils.mapper.MappingType;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,52 +18,57 @@ import java.util.List;
 public class ApplicationServiceImpl implements ApplicationService {
 
     private final ApplicationRepository applicationRepository;
-    private final PatientRepository patientRepository;
-    private final DoctorNoteRepository doctorNoteRepository;
-    private final ApplicationStatusRepository applicationStatusRepository;
-    private final ApplicationMapper applicationMapper = Mappers.getMapper(ApplicationMapper.class);
+    private final ApplicationMapper applicationMapper;
 
     @Override
-    public ApplicationDto get(String id) {
+    public ApplicationDto create(ApplicationDto applicationDto) {
+        try {
+            Application applicationRequest = applicationMapper.toEntity(applicationDto, MappingType.DEFAULT);
+            Application applicationResponse = applicationRepository.save(applicationRequest);
+            return applicationMapper.toDto(applicationResponse);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationExceptionHttp("${application.entityNames.application}");
+        }
+    }
+
+    @Override
+    public ApplicationDto read(String id) {
         Application application = applicationRepository.findById(id)
-                .orElseThrow(() -> new NotFoundExceptionHttp("Application", "id", id));
+                .orElseThrow(() -> new NotFoundExceptionHttp("${application.entityNames.application}", id));
         return applicationMapper.toDto(application);
     }
 
     @Override
-    public List<ApplicationDto> list(ApplicationDto exampleApplicationDto) {
-        Application exampleApplication = applicationMapper.toEntity(exampleApplicationDto,
-                applicationRepository, patientRepository, doctorNoteRepository, applicationStatusRepository);
-        List<Application> applicationList = new ArrayList<>(applicationRepository.findAll(Example.of(exampleApplication)));
+    public List<ApplicationDto> search(ApplicationDto filterApplicationDto, int pageNo, int pageSize, String[] sort) {
+        Application filterApplication = applicationMapper.toEntity(filterApplicationDto, MappingType.FORCE);
+        List<Sort.Order> orders = Utils.ordersByStringArray(sort);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(orders));
+
+        List<Application> applicationList = applicationRepository.search(filterApplication.getPatient(),
+                filterApplication.getSendingInstitution(), filterApplication.getStatus(),
+                filterApplication.getDoctorNote(), filterApplication.getFinalDiagnosis(),
+                filterApplication.getCommentary(), pageable);
         return applicationMapper.toDtoList(applicationList);
     }
 
     @Override
-    public ApplicationDto create(ApplicationDto applicationDto) {
-        Application applicationRequest = applicationMapper.toEntity(applicationDto, applicationRepository,
-                patientRepository, doctorNoteRepository, applicationStatusRepository);
+    public ApplicationDto update(String id, ApplicationDto applicationDto) {
+        read(id);
+        Application applicationRequest = applicationMapper.toEntity(applicationDto, MappingType.DEFAULT);
+        applicationRequest.setId(id);
         Application applicationResponse = applicationRepository.save(applicationRequest);
         return applicationMapper.toDto(applicationResponse);
     }
 
     @Override
-    public ApplicationDto update(ApplicationDto applicationDto) {
-        Application applicationRequest = applicationMapper.toEntity(applicationDto, applicationRepository,
-                patientRepository, doctorNoteRepository, applicationStatusRepository);
-        if (applicationRepository.existsById(applicationRequest.getId())) {
-            Application applicationResponse = applicationRepository.save(applicationRequest);
-            return applicationMapper.toDto(applicationResponse);
-        } else {
-            throw new NotFoundExceptionHttp("Application", "id", String.valueOf(applicationRequest.getId()));
-        }
-    }
-
-    @Override
     public ApplicationDto delete(String id) {
-        Application application = applicationRepository.findById(id)
-                .orElseThrow(() -> new NotFoundExceptionHttp("Application", "id", id));
-        applicationRepository.deleteById(id);
-        return applicationMapper.toDto(application);
+        try {
+            ApplicationDto applicationDto = read(id);
+            applicationRepository.deleteById(id);
+            return applicationDto;
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationExceptionHttp("${application.entityNames.application}");
+        }
     }
 
 }

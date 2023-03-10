@@ -5,7 +5,7 @@ import lombok.Data;
 import ru.zalimannard.bachelorthesisserver.schema.schedule.status.type.ScheduleStatusType;
 
 @Entity
-@Table(name = "schedule_element_statuses")
+@Table(name = "schedule_statuses")
 @Data
 public class ScheduleStatus {
 
