@@ -1,17 +1,17 @@
-package ru.zalimannard.bachelorthesisserver.scheduleelments;
+package ru.zalimannard.bachelorthesisserver.schedule;
 
 import jakarta.persistence.*;
 import lombok.Data;
 import ru.zalimannard.bachelorthesisserver.doctor.Doctor;
 import ru.zalimannard.bachelorthesisserver.favor.Favor;
-import ru.zalimannard.bachelorthesisserver.scheduleelments.status.ScheduleElementStatus;
+import ru.zalimannard.bachelorthesisserver.schedule.status.ScheduleStatus;
 
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "schedule_elements")
 @Data
-public class ScheduleElement {
+public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
@@ -27,9 +27,12 @@ public class ScheduleElement {
 
     @ManyToOne
     @JoinColumn(name = "status_id", nullable = false)
-    private ScheduleElementStatus status;
+    private ScheduleStatus status;
 
     @Column(name = "appointment_timestamp", nullable = false)
     private Timestamp appointmentTimestamp;
+
+    @Column(name = "comment")
+    private String comment;
 
 }

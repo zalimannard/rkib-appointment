@@ -1,4 +1,4 @@
-package ru.zalimannard.bachelorthesisserver.scheduleelments.status;
+package ru.zalimannard.bachelorthesisserver.schedule.status;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -12,36 +12,36 @@ import java.util.List;
 @RequestMapping("${application.endpoint.root}" + "${application.endpoint.scheduleElementStatus}")
 @Tag(name = "Статусы элементов расписания")
 @RequiredArgsConstructor
-public class ScheduleElementStatusController {
-    private final ScheduleElementStatusService scheduleElementStatusService;
+public class ScheduleStatusController {
+    private final ScheduleStatusService scheduleStatusService;
 
     @GetMapping("{id}")
     @Operation(summary = "Получение статуса элементов расписания")
-    public ScheduleElementStatusDto get(@PathVariable String id) {
-        return scheduleElementStatusService.get(id);
+    public ScheduleStatusDto get(@PathVariable String id) {
+        return scheduleStatusService.get(id);
     }
 
     @GetMapping
     @Operation(summary = "Получение списка статусов элементов расписания")
-    public List<ScheduleElementStatusDto> getAll(@QuerydslPredicate ScheduleElementStatusDto exampleScheduleElementStatusDto) {
-        return scheduleElementStatusService.list(exampleScheduleElementStatusDto);
+    public List<ScheduleStatusDto> getAll(@QuerydslPredicate ScheduleStatusDto exampleScheduleStatusDto) {
+        return scheduleStatusService.list(exampleScheduleStatusDto);
     }
 
     @PostMapping
     @Operation(summary = "Создание нового статуса элементов расписания")
-    public ScheduleElementStatusDto post(@RequestBody ScheduleElementStatusDto scheduleElementStatusDto) {
-        return scheduleElementStatusService.create(scheduleElementStatusDto);
+    public ScheduleStatusDto post(@RequestBody ScheduleStatusDto scheduleStatusDto) {
+        return scheduleStatusService.create(scheduleStatusDto);
     }
 
     @PutMapping
     @Operation(summary = "Обновление существующего статуса элементов расписания")
-    public ScheduleElementStatusDto put(@RequestBody ScheduleElementStatusDto scheduleElementStatusDto) {
-        return scheduleElementStatusService.update(scheduleElementStatusDto);
+    public ScheduleStatusDto put(@RequestBody ScheduleStatusDto scheduleStatusDto) {
+        return scheduleStatusService.update(scheduleStatusDto);
     }
 
     @DeleteMapping("{id}")
     @Operation(summary = "Удаление статуса элементов расписания")
-    public ScheduleElementStatusDto delete(@PathVariable String id) {
-        return scheduleElementStatusService.delete(id);
+    public ScheduleStatusDto delete(@PathVariable String id) {
+        return scheduleStatusService.delete(id);
     }
 }

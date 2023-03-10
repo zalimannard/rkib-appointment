@@ -8,7 +8,7 @@ spring:
     url: ${DB_URL}
     username: ${DB_USER}
     password: ${DB_PASSWORD}
-## Uncomment for database re-creation
+# Uncomment for database re-creation
 #  jpa:
 #    hibernate:
 #      ddl-auto: create
@@ -26,8 +26,6 @@ application:
     patient: /patients
     scheduleElement: /scheduleElements
     scheduleElementStatus: /scheduleElementStatuses
-    scheduledVisit: /scheduledVisits
     favor: /favors
-    unscheduledVisit: /unscheduledVisits
     application: /applications
     applicationStatus: /applicationStatuses

@@ -15,7 +15,7 @@ public class ApplicationStatus {
     @Column(name = "type_code", nullable = false)
     private ApplicationStatusType type;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
 }

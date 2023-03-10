@@ -20,7 +20,7 @@ public class Patient {
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "patronymic", nullable = false)
+    @Column(name = "patronymic")
     private String patronymic;
 
     @Column(name = "phone_number", nullable = false)
@@ -29,10 +29,10 @@ public class Patient {
     @Column(name = "birthdate", nullable = false)
     private Date birthdate;
 
-    @Column(name = "address", nullable = false)
+    @Column(name = "address")
     private String address;
 
-    @Column(name = "occupation", nullable = false)
+    @Column(name = "occupation")
     private String occupation;
 
 }

@@ -14,7 +14,6 @@ import java.util.List;
 @Mapper
 public interface ApplicationMapper {
 
-    @Mapping(target = "parentApplication", ignore = true)
     @Mapping(target = "patient", ignore = true)
     @Mapping(target = "doctorNote", ignore = true)
     @Mapping(target = "status", ignore = true)
@@ -24,7 +23,6 @@ public interface ApplicationMapper {
                          @Context DoctorNoteRepository doctorNoteRepository,
                          @Context ApplicationStatusRepository applicationStatusRepository);
 
-    @Mapping(target = "parentApplicationId", ignore = true)
     @Mapping(target = "patientId", source = "entity.patient.id")
     @Mapping(target = "doctorNoteId", source = "entity.doctorNote.id")
     @Mapping(target = "statusId", source = "entity.status.id")
@@ -44,11 +42,6 @@ public interface ApplicationMapper {
                           @Context PatientRepository patientRepository,
                           @Context DoctorNoteRepository doctorNoteRepository,
                           @Context ApplicationStatusRepository applicationStatusRepository) {
-        if (dto.getParentApplicationId() != null) {
-            Application parentApplicationEntity = applicationRepository.findById(dto.getParentApplicationId())
-                    .orElseThrow(() -> new NotFoundException("Application", "id", dto.getParentApplicationId()));
-            entity.setParentApplication(parentApplicationEntity);
-        }
 
         if (dto.getPatientId() != null) {
             Patient patient = patientRepository.findById(dto.getPatientId())
@@ -66,13 +59,6 @@ public interface ApplicationMapper {
             ApplicationStatus applicationStatus = applicationStatusRepository.findById(dto.getStatusId())
                     .orElseThrow(() -> new NotFoundException("ApplicationStatus", "id", dto.getStatusId()));
             entity.setStatus(applicationStatus);
-        }
-    }
-
-    @AfterMapping
-    default void toDto(@MappingTarget ApplicationDto dto, Application entity) {
-        if (entity.getParentApplication() != null) {
-            dto.setParentApplicationId(entity.getParentApplication().getId());
         }
     }
 }
