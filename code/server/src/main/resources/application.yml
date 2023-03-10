@@ -26,10 +26,10 @@ application:
     doctor: Doctor
     institution: Institution
     patient: Patient
-    schedule: ScheduleElement
+    schedule: Schedule element
     favor: Favor
     application: Application
-    applicationStatus: ApplicationStatus
+    applicationStatus: Application status
   endpoint:
     root: /api
     search: /search

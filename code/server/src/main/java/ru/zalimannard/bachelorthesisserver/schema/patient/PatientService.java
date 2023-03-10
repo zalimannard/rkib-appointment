@@ -14,7 +14,7 @@ public interface PatientService {
 
     PatientDto read(String id);
 
-    List<PatientDto> search(PatientDto examplePatientDto, @Past Date beginBirthdate, @Past Date endBirthdate, int pageNo,
+    List<PatientDto> search(PatientDto filterPatientDto, @Past Date beginBirthdate, @Past Date endBirthdate, int pageNo,
                             int pageSize, String[] sortBy);
 
     PatientDto update(String id, @Valid PatientDto patientDto);

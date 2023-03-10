@@ -1,4 +1,4 @@
-package ru.zalimannard.bachelorthesisserver.schema.application.status;
+package ru.zalimannard.bachelorthesisserver.schema.application.status.type;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

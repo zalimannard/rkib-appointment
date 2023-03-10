@@ -1,16 +1,18 @@
 package ru.zalimannard.bachelorthesisserver.schema.application.status;
 
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 public interface ApplicationStatusService {
 
-    ApplicationStatusDto get(String id);
+    ApplicationStatusDto create(@Valid ApplicationStatusDto applicationStatusDto);
 
-    List<ApplicationStatusDto> list(ApplicationStatusDto exampleApplicationStatusDto);
+    ApplicationStatusDto read(String id);
 
-    ApplicationStatusDto create(ApplicationStatusDto applicationStatusDto);
+    List<ApplicationStatusDto> search(ApplicationStatusDto filterApplicationStatusDto, int pageNo, int pageSize, String[] sortBy);
 
-    ApplicationStatusDto update(ApplicationStatusDto applicationStatusDto);
+    ApplicationStatusDto update(String id, @Valid ApplicationStatusDto applicationStatusDto);
 
     ApplicationStatusDto delete(String id);
 

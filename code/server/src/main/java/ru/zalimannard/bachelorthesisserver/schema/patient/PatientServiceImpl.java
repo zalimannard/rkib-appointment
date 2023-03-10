@@ -42,9 +42,6 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public List<PatientDto> search(PatientDto filterPatientDto, Date beginBirthdate, Date endBirthdate,
                                    int pageNo, int pageSize, String[] sort) {
-        System.out.println(filterPatientDto);
-        System.out.println(beginBirthdate);
-        System.out.println(endBirthdate);
         Patient filterPatient = patientMapper.toEntity(filterPatientDto, MappingType.FORCE);
         List<Sort.Order> orders = Utils.ordersByStringArray(sort);
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(orders));

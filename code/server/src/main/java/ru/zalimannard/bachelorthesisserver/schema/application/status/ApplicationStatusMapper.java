@@ -1,18 +1,24 @@
 package ru.zalimannard.bachelorthesisserver.schema.application.status;
 
+import lombok.RequiredArgsConstructor;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
+import ru.zalimannard.bachelorthesisserver.utils.mapper.MappingType;
 
 import java.util.List;
 
-@Mapper
-public interface ApplicationStatusMapper {
+@Mapper(componentModel = "spring")
+@RequiredArgsConstructor
+public abstract class ApplicationStatusMapper {
 
-    ApplicationStatus toEntity(ApplicationStatusDto dto);
+    public abstract ApplicationStatus toEntity(ApplicationStatusDto dto,
+                                               @Context MappingType mappingType);
 
-    ApplicationStatusDto toDto(ApplicationStatus entity);
+    public abstract ApplicationStatusDto toDto(ApplicationStatus entity);
 
-    List<ApplicationStatus> toEntityList(List<ApplicationStatusDto> dtoList);
+    public abstract List<ApplicationStatus> toEntityList(List<ApplicationStatusDto> dtoList,
+                                                         @Context MappingType mappingType);
 
-    List<ApplicationStatusDto> toDtoList(List<ApplicationStatus> entityList);
+    public abstract List<ApplicationStatusDto> toDtoList(List<ApplicationStatus> entityList);
 
 }

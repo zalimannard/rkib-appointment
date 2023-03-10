@@ -12,7 +12,7 @@ public interface InstitutionService {
 
     InstitutionDto read(String id);
 
-    List<InstitutionDto> search(InstitutionDto exampleInstitutionDto, int pageNo, int pageSize, String[] sortBy);
+    List<InstitutionDto> search(InstitutionDto filterInstitutionDto, int pageNo, int pageSize, String[] sortBy);
 
     InstitutionDto update(String id, @Valid InstitutionDto institutionDto);
 

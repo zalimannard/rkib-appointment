@@ -6,6 +6,6 @@ public interface DoctorService {
 
     DoctorDto read(String id);
 
-    List<DoctorDto> search(DoctorDto exampleDoctorDto, int pageNo, int pageSize, String[] sort);
+    List<DoctorDto> search(DoctorDto filterDoctorDto, int pageNo, int pageSize, String[] sort);
 
 }

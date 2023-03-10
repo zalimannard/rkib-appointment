@@ -2,6 +2,7 @@ package ru.zalimannard.bachelorthesisserver.schema.application.status;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import ru.zalimannard.bachelorthesisserver.schema.application.status.type.ApplicationStatusType;
 
 @Entity
 @Table(name = "application_statuses")

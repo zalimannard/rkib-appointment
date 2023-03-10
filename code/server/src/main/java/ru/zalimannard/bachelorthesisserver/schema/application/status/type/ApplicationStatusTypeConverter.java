@@ -1,4 +1,4 @@
-package ru.zalimannard.bachelorthesisserver.schema.application.status;
+package ru.zalimannard.bachelorthesisserver.schema.application.status.type;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
