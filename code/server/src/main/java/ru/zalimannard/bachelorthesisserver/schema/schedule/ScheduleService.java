@@ -1,16 +1,19 @@
 package ru.zalimannard.bachelorthesisserver.schema.schedule;
 
+import jakarta.validation.Valid;
+
+import java.util.Date;
 import java.util.List;
 
 public interface ScheduleService {
 
-    ScheduleDto get(String id);
+    ScheduleDto create(@Valid ScheduleDto scheduleDto);
 
-    List<ScheduleDto> list(ScheduleDto exampleScheduleDto);
+    ScheduleDto read(String id);
 
-    ScheduleDto create(ScheduleDto scheduleDto);
+    List<ScheduleDto> search(ScheduleDto filterScheduleDto, Date beginTimestamp, Date endTimestamp, int pageNo, int pageSize, String[] sortBy);
 
-    ScheduleDto update(ScheduleDto scheduleDto);
+    ScheduleDto update(String id, @Valid ScheduleDto scheduleDto);
 
     ScheduleDto delete(String id);
 

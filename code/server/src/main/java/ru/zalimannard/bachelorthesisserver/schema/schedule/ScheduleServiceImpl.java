@@ -1,15 +1,17 @@
 package ru.zalimannard.bachelorthesisserver.schema.schedule;
 
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.factory.Mappers;
-import org.springframework.data.domain.Example;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import ru.zalimannard.bachelorthesisserver.exceptions.DataIntegrityViolationExceptionHttp;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundExceptionHttp;
-import ru.zalimannard.bachelorthesisserver.schema.doctor.DoctorRepository;
-import ru.zalimannard.bachelorthesisserver.schema.favor.FavorRepository;
-import ru.zalimannard.bachelorthesisserver.schema.schedule.status.ScheduleStatusRepository;
+import ru.zalimannard.bachelorthesisserver.utils.Utils;
+import ru.zalimannard.bachelorthesisserver.utils.mapper.MappingType;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,52 +19,57 @@ import java.util.List;
 public class ScheduleServiceImpl implements ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
-    private final DoctorRepository doctorRepository;
-    private final FavorRepository favorRepository;
-    private final ScheduleStatusRepository scheduleStatusRepository;
-    private final ScheduleMapper scheduleMapper = Mappers.getMapper(ScheduleMapper.class);
+    private final ScheduleMapper scheduleMapper;
 
     @Override
-    public ScheduleDto get(String id) {
+    public ScheduleDto create(ScheduleDto scheduleDto) {
+        try {
+            Schedule scheduleRequest = scheduleMapper.toEntity(scheduleDto, MappingType.DEFAULT);
+            Schedule scheduleResponse = scheduleRepository.save(scheduleRequest);
+            return scheduleMapper.toDto(scheduleResponse);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationExceptionHttp("${application.entityNames.schedule}");
+        }
+    }
+
+    @Override
+    public ScheduleDto read(String id) {
         Schedule schedule = scheduleRepository.findById(id)
-                .orElseThrow(() -> new NotFoundExceptionHttp("ScheduleElement", "id", id));
+                .orElseThrow(() -> new NotFoundExceptionHttp("${application.entityNames.schedule}", id));
         return scheduleMapper.toDto(schedule);
     }
 
     @Override
-    public List<ScheduleDto> list(ScheduleDto exampleScheduleDto) {
-        Schedule exampleSchedule = scheduleMapper.toEntity(exampleScheduleDto,
-                doctorRepository, favorRepository, scheduleStatusRepository);
-        List<Schedule> scheduleList = new ArrayList<>(scheduleRepository.findAll(Example.of(exampleSchedule)));
+    public List<ScheduleDto> search(ScheduleDto filterScheduleDto, Date beginTimestamp, Date endTimestamp, int pageNo, int pageSize, String[] sort) {
+        System.out.println(beginTimestamp);
+        Schedule filterSchedule = scheduleMapper.toEntity(filterScheduleDto, MappingType.FORCE);
+        List<Sort.Order> orders = Utils.ordersByStringArray(sort);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(orders));
+
+        List<Schedule> scheduleList = scheduleRepository.search(filterSchedule.getDoctor(), filterSchedule.getFavor(),
+                filterSchedule.getApplication(), filterSchedule.getStatus(), beginTimestamp, endTimestamp,
+                filterSchedule.getCommentary(), pageable);
         return scheduleMapper.toDtoList(scheduleList);
     }
 
     @Override
-    public ScheduleDto create(ScheduleDto scheduleDto) {
-        Schedule scheduleRequest = scheduleMapper.toEntity(scheduleDto, doctorRepository,
-                favorRepository, scheduleStatusRepository);
+    public ScheduleDto update(String id, ScheduleDto scheduleDto) {
+        read(id);
+        Schedule scheduleRequest = scheduleMapper.toEntity(scheduleDto, MappingType.DEFAULT);
+        scheduleRequest.setId(id);
         Schedule scheduleResponse = scheduleRepository.save(scheduleRequest);
         return scheduleMapper.toDto(scheduleResponse);
     }
 
     @Override
-    public ScheduleDto update(ScheduleDto scheduleDto) {
-        Schedule scheduleRequest = scheduleMapper.toEntity(scheduleDto, doctorRepository,
-                favorRepository, scheduleStatusRepository);
-        if (scheduleRepository.existsById(scheduleRequest.getId())) {
-            Schedule scheduleResponse = scheduleRepository.save(scheduleRequest);
-            return scheduleMapper.toDto(scheduleResponse);
-        } else {
-            throw new NotFoundExceptionHttp("ScheduleElement", "id", String.valueOf(scheduleRequest.getId()));
-        }
-    }
-
-    @Override
     public ScheduleDto delete(String id) {
-        Schedule schedule = scheduleRepository.findById(id)
-                .orElseThrow(() -> new NotFoundExceptionHttp("ScheduleElement", "id", id));
-        scheduleRepository.deleteById(id);
-        return scheduleMapper.toDto(schedule);
+        try {
+            ScheduleDto scheduleDto = read(id);
+            scheduleRepository.deleteById(id);
+            return scheduleDto;
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationExceptionHttp("${application.entityNames.schedule}");
+        }
     }
 
 }

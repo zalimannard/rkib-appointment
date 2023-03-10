@@ -27,9 +27,9 @@ public class ScheduleStatusController {
     @Operation(summary = "Получение списка статусов элементов расписания")
     @ResponseStatus(HttpStatus.OK)
     public List<ScheduleStatusDto> search(ScheduleStatusDto exampleScheduleStatusDto,
-                                          @RequestParam(value = "pageNo", defaultValue = "${schedule.constant.defaultPageNumber}", required = false) int pageNo,
-                                          @RequestParam(value = "pageSize", defaultValue = "${schedule.constant.defaultPageSize}", required = false) int pageSize,
-                                          @RequestParam(value = "sort", defaultValue = "${schedule.constant.defaultSort}", required = false) String[] sort) {
+                                          @RequestParam(value = "pageNo", defaultValue = "${application.constant.defaultPageNumber}", required = false) int pageNo,
+                                          @RequestParam(value = "pageSize", defaultValue = "${application.constant.defaultPageSize}", required = false) int pageSize,
+                                          @RequestParam(value = "sort", defaultValue = "${application.constant.defaultSort}", required = false) String[] sort) {
         return scheduleStatusService.search(exampleScheduleStatusDto, pageNo, pageSize, sort);
     }
 
