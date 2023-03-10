@@ -1,12 +1,17 @@
 package ru.zalimannard.bachelorthesisserver.schema.patient;
 
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.factory.Mappers;
-import org.springframework.data.domain.Example;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import ru.zalimannard.bachelorthesisserver.exceptions.DataIntegrityViolationExceptionHttp;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundExceptionHttp;
+import ru.zalimannard.bachelorthesisserver.utils.Utils;
+import ru.zalimannard.bachelorthesisserver.utils.mapper.MappingType;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -14,46 +19,60 @@ import java.util.List;
 public class PatientServiceImpl implements PatientService {
 
     private final PatientRepository patientRepository;
-    private final PatientMapper patientMapper = Mappers.getMapper(PatientMapper.class);
+    private final PatientMapper patientMapper;
 
     @Override
-    public PatientDto get(String id) {
+    public PatientDto create(PatientDto patientDto) {
+        try {
+            Patient patientRequest = patientMapper.toEntity(patientDto, MappingType.DEFAULT);
+            Patient patientResponse = patientRepository.save(patientRequest);
+            return patientMapper.toDto(patientResponse);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationExceptionHttp("${application.entityNames.patient}");
+        }
+    }
+
+    @Override
+    public PatientDto read(String id) {
         Patient patient = patientRepository.findById(id)
-                .orElseThrow(() -> new NotFoundExceptionHttp("Patient", "id", id));
+                .orElseThrow(() -> new NotFoundExceptionHttp("${application.entityNames.patient}", id));
         return patientMapper.toDto(patient);
     }
 
     @Override
-    public List<PatientDto> list(PatientDto examplePatientDto) {
-        Patient examplePatient = patientMapper.toEntity(examplePatientDto);
-        List<Patient> patientList = new ArrayList<>(patientRepository.findAll(Example.of(examplePatient)));
+    public List<PatientDto> search(PatientDto filterPatientDto, Date beginBirthdate, Date endBirthdate,
+                                   int pageNo, int pageSize, String[] sort) {
+        System.out.println(filterPatientDto);
+        System.out.println(beginBirthdate);
+        System.out.println(endBirthdate);
+        Patient filterPatient = patientMapper.toEntity(filterPatientDto, MappingType.FORCE);
+        List<Sort.Order> orders = Utils.ordersByStringArray(sort);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(orders));
+
+        List<Patient> patientList = patientRepository.search(beginBirthdate, endBirthdate,
+                filterPatient.getLastName(), filterPatient.getFirstName(), filterPatient.getPatronymic(),
+                filterPatient.getPhoneNumber(), filterPatient.getAddress(), filterPatient.getOccupation(), pageable);
         return patientMapper.toDtoList(patientList);
     }
 
     @Override
-    public PatientDto create(PatientDto patientDto) {
-        Patient patientRequest = patientMapper.toEntity(patientDto);
+    public PatientDto update(String id, PatientDto patientDto) {
+        read(id);
+        Patient patientRequest = patientMapper.toEntity(patientDto, MappingType.DEFAULT);
+        patientRequest.setId(id);
         Patient patientResponse = patientRepository.save(patientRequest);
         return patientMapper.toDto(patientResponse);
     }
 
     @Override
-    public PatientDto update(PatientDto patientDto) {
-        Patient patientRequest = patientMapper.toEntity(patientDto);
-        if (patientRepository.existsById(patientRequest.getId())) {
-            Patient patientResponse = patientRepository.save(patientRequest);
-            return patientMapper.toDto(patientResponse);
-        } else {
-            throw new NotFoundExceptionHttp("Patient", "id", String.valueOf(patientRequest.getId()));
-        }
-    }
-
-    @Override
     public PatientDto delete(String id) {
-        Patient patient = patientRepository.findById(id)
-                .orElseThrow(() -> new NotFoundExceptionHttp("Patient", "id", id));
-        patientRepository.deleteById(id);
-        return patientMapper.toDto(patient);
+        try {
+            PatientDto patientDto = read(id);
+            patientRepository.deleteById(id);
+            return patientDto;
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationExceptionHttp("${application.entityNames.patient}");
+        }
     }
 
 }

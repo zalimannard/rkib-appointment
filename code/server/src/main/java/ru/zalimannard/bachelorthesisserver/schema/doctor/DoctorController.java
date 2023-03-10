@@ -3,7 +3,6 @@ package ru.zalimannard.bachelorthesisserver.schema.doctor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +23,7 @@ public class DoctorController {
 
     @GetMapping
     @Operation(summary = "Получение списка докторов")
-    public List<DoctorDto> search(@QuerydslPredicate DoctorDto exampleDoctorDto,
+    public List<DoctorDto> search(DoctorDto exampleDoctorDto,
                                   @RequestParam(value = "pageNo", defaultValue = "${application.constant.defaultPageNumber}", required = false) int pageNo,
                                   @RequestParam(value = "pageSize", defaultValue = "${application.constant.defaultPageSize}", required = false) int pageSize,
                                   @RequestParam(value = "sort", defaultValue = "${application.constant.defaultSort}", required = false) String[] sort) {

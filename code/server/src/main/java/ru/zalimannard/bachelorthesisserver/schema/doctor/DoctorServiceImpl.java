@@ -1,7 +1,6 @@
 package ru.zalimannard.bachelorthesisserver.schema.doctor;
 
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -17,7 +16,7 @@ import java.util.List;
 public class DoctorServiceImpl implements DoctorService {
 
     private final DoctorRepository doctorRepository;
-    private final DoctorMapper doctorMapper = Mappers.getMapper(DoctorMapper.class);
+    private final DoctorMapper doctorMapper;
 
     @Override
     public DoctorDto read(String id) {

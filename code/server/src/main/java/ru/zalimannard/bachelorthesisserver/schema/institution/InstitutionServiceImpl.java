@@ -1,7 +1,6 @@
 package ru.zalimannard.bachelorthesisserver.schema.institution;
 
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.factory.Mappers;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +18,7 @@ import java.util.List;
 public class InstitutionServiceImpl implements InstitutionService {
 
     private final InstitutionRepository institutionRepository;
-    private final InstitutionMapper institutionMapper = Mappers.getMapper(InstitutionMapper.class);
+    private final InstitutionMapper institutionMapper;
 
     @Override
     public InstitutionDto create(InstitutionDto institutionDto) {

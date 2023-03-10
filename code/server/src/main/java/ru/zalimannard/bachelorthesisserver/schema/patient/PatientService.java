@@ -1,16 +1,23 @@
 package ru.zalimannard.bachelorthesisserver.schema.patient;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Past;
+import org.springframework.validation.annotation.Validated;
+
+import java.util.Date;
 import java.util.List;
 
+@Validated
 public interface PatientService {
 
-    PatientDto get(String id);
+    PatientDto create(@Valid PatientDto patientDto);
 
-    List<PatientDto> list(PatientDto examplePatientDto);
+    PatientDto read(String id);
 
-    PatientDto create(PatientDto patientDto);
+    List<PatientDto> search(PatientDto examplePatientDto, @Past Date beginBirthdate, @Past Date endBirthdate, int pageNo,
+                            int pageSize, String[] sortBy);
 
-    PatientDto update(PatientDto patientDto);
+    PatientDto update(String id, @Valid PatientDto patientDto);
 
     PatientDto delete(String id);
 
