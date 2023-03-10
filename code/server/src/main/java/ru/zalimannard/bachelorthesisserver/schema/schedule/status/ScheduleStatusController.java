@@ -13,6 +13,7 @@ import java.util.List;
 @Tag(name = "Статусы элементов расписания")
 @RequiredArgsConstructor
 public class ScheduleStatusController {
+
     private final ScheduleStatusService scheduleStatusService;
 
     @GetMapping("{id}")
@@ -44,4 +45,5 @@ public class ScheduleStatusController {
     public ScheduleStatusDto delete(@PathVariable String id) {
         return scheduleStatusService.delete(id);
     }
+
 }

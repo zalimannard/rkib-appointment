@@ -14,6 +14,7 @@ import java.util.List;
 @Tag(name = "Пациенты")
 @RequiredArgsConstructor
 public class PatientController {
+
     private final PatientService patientService;
 
     @GetMapping("{id}")
@@ -50,4 +51,5 @@ public class PatientController {
     public PatientDto delete(@PathVariable String id) {
         return patientService.delete(id);
     }
+
 }

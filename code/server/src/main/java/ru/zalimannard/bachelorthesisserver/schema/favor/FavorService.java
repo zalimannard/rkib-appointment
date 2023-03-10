@@ -7,4 +7,5 @@ public interface FavorService {
     FavorDto get(String id);
 
     List<FavorDto> list(FavorDto exampleFavorDto);
+
 }

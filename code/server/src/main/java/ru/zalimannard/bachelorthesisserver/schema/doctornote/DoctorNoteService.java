@@ -13,4 +13,5 @@ public interface DoctorNoteService {
     DoctorNoteDto update(DoctorNoteDto doctorNoteDto);
 
     DoctorNoteDto delete(String id);
+
 }

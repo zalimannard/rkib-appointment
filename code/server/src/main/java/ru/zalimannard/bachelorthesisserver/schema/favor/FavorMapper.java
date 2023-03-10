@@ -14,4 +14,5 @@ public interface FavorMapper {
     List<Favor> toEntityList(List<FavorDto> dtoList);
 
     List<FavorDto> toDtoList(List<Favor> entityList);
+
 }

@@ -10,6 +10,7 @@ import ru.zalimannard.bachelorthesisserver.schema.patient.Patient;
 @Table(name = "applications")
 @Data
 public class Application {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")

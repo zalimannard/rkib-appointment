@@ -8,6 +8,7 @@ import ru.zalimannard.bachelorthesisserver.schema.schedule.status.type.ScheduleS
 @Table(name = "schedule_element_statuses")
 @Data
 public class ScheduleStatus {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")

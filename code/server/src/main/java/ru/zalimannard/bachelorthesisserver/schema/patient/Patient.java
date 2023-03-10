@@ -9,6 +9,7 @@ import java.sql.Date;
 @Table(name = "patients")
 @Data
 public class Patient {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")

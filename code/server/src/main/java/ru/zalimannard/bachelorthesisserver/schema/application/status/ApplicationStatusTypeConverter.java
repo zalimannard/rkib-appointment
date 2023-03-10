@@ -20,4 +20,5 @@ public class ApplicationStatusTypeConverter implements AttributeConverter<Applic
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
+
 }

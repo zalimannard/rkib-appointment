@@ -16,6 +16,7 @@ import java.util.List;
 @Tag(name = "Доктора")
 @RequiredArgsConstructor
 public class DoctorController {
+
     private final DoctorService doctorService;
 
     @GetMapping("{id}")
@@ -29,4 +30,5 @@ public class DoctorController {
     public List<DoctorDto> getAll(@QuerydslPredicate DoctorDto exampleDoctorDto) {
         return doctorService.list(exampleDoctorDto);
     }
+
 }

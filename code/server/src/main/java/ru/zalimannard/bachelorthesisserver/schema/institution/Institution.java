@@ -7,6 +7,7 @@ import lombok.Data;
 @Table(name = "institutions")
 @Data
 public class Institution {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")

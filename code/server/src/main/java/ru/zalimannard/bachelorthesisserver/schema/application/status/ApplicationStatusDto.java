@@ -14,4 +14,5 @@ public class ApplicationStatusDto {
 
     @JsonProperty("name")
     private String name;
+
 }

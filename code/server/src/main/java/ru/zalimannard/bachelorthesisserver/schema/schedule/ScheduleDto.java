@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 @Data
 @Builder
 public class ScheduleDto {
+
     @JsonProperty("id")
     private String id;
 
@@ -23,4 +24,5 @@ public class ScheduleDto {
 
     @JsonProperty("appointmentTimestamp")
     private Timestamp appointmentTimestamp;
+
 }

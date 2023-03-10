@@ -14,4 +14,5 @@ public interface ApplicationStatusMapper {
     List<ApplicationStatus> toEntityList(List<ApplicationStatusDto> dtoList);
 
     List<ApplicationStatusDto> toDtoList(List<ApplicationStatus> entityList);
+
 }

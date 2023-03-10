@@ -13,6 +13,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class DoctorNoteServiceImpl implements DoctorNoteService {
+
     private final DoctorNoteRepository doctorNoteRepository;
     private final InstitutionRepository institutionRepository;
     private final DoctorNoteMapper doctorNoteMapper = Mappers.getMapper(DoctorNoteMapper.class);
@@ -56,4 +57,5 @@ public class DoctorNoteServiceImpl implements DoctorNoteService {
         doctorNoteRepository.deleteById(id);
         return doctorNoteMapper.toDto(doctorNote);
     }
+
 }

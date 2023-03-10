@@ -1,11 +1,11 @@
 package ru.zalimannard.bachelorthesisserver.schema.application;
 
 import org.mapstruct.*;
+import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 import ru.zalimannard.bachelorthesisserver.schema.application.status.ApplicationStatus;
 import ru.zalimannard.bachelorthesisserver.schema.application.status.ApplicationStatusRepository;
 import ru.zalimannard.bachelorthesisserver.schema.doctornote.DoctorNote;
 import ru.zalimannard.bachelorthesisserver.schema.doctornote.DoctorNoteRepository;
-import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 import ru.zalimannard.bachelorthesisserver.schema.patient.Patient;
 import ru.zalimannard.bachelorthesisserver.schema.patient.PatientRepository;
 
@@ -61,4 +61,5 @@ public interface ApplicationMapper {
             entity.setStatus(applicationStatus);
         }
     }
+
 }

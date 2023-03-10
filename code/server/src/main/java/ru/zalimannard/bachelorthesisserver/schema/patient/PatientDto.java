@@ -7,6 +7,7 @@ import java.sql.Date;
 
 @Data
 public class PatientDto {
+
     @JsonProperty("id")
     private String id;
 

@@ -14,6 +14,7 @@ import java.util.List;
 @Tag(name = "Направления")
 @RequiredArgsConstructor
 public class DoctorNoteController {
+
     private final DoctorNoteService doctorNoteService;
 
     @GetMapping("{id}")
@@ -50,4 +51,5 @@ public class DoctorNoteController {
     public DoctorNoteDto delete(@PathVariable String id) {
         return doctorNoteService.delete(id);
     }
+
 }

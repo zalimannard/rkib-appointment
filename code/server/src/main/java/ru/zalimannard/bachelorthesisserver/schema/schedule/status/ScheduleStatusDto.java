@@ -8,6 +8,7 @@ import ru.zalimannard.bachelorthesisserver.schema.schedule.status.type.ScheduleS
 @Data
 @Builder
 public class ScheduleStatusDto {
+
     @JsonProperty("id")
     private String id;
 
@@ -16,4 +17,5 @@ public class ScheduleStatusDto {
 
     @JsonProperty("name")
     private String name;
+
 }

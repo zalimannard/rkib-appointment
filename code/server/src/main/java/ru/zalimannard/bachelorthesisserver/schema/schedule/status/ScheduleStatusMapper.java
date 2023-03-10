@@ -14,4 +14,5 @@ public interface ScheduleStatusMapper {
     List<ScheduleStatus> toEntityList(List<ScheduleStatusDto> dtoList);
 
     List<ScheduleStatusDto> toDtoList(List<ScheduleStatus> entityList);
+
 }

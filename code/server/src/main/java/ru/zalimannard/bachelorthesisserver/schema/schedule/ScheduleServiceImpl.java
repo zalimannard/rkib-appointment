@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
-import ru.zalimannard.bachelorthesisserver.schema.doctor.DoctorRepository;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
+import ru.zalimannard.bachelorthesisserver.schema.doctor.DoctorRepository;
 import ru.zalimannard.bachelorthesisserver.schema.favor.FavorRepository;
 import ru.zalimannard.bachelorthesisserver.schema.schedule.status.ScheduleStatusRepository;
 
@@ -15,6 +15,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ScheduleServiceImpl implements ScheduleService {
+
     private final ScheduleRepository scheduleRepository;
     private final DoctorRepository doctorRepository;
     private final FavorRepository favorRepository;
@@ -63,4 +64,5 @@ public class ScheduleServiceImpl implements ScheduleService {
         scheduleRepository.deleteById(id);
         return scheduleMapper.toDto(schedule);
     }
+
 }

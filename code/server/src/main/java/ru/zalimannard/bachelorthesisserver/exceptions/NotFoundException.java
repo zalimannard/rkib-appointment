@@ -14,4 +14,5 @@ public class NotFoundException extends RuntimeException {
     public NotFoundException(String name, String field, String value) {
         super(name + " with " + field + "=" + value + " not found");
     }
+
 }

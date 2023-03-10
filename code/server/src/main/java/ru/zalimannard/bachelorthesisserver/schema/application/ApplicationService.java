@@ -13,4 +13,5 @@ public interface ApplicationService {
     ApplicationDto update(ApplicationDto applicationDto);
 
     ApplicationDto delete(String id);
+
 }

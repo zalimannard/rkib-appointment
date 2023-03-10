@@ -13,4 +13,5 @@ public interface InstitutionService {
     InstitutionDto update(InstitutionDto institutionDto);
 
     InstitutionDto delete(String id);
+
 }

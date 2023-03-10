@@ -1,9 +1,9 @@
 package ru.zalimannard.bachelorthesisserver.schema.schedule;
 
 import org.mapstruct.*;
+import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 import ru.zalimannard.bachelorthesisserver.schema.doctor.Doctor;
 import ru.zalimannard.bachelorthesisserver.schema.doctor.DoctorRepository;
-import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 import ru.zalimannard.bachelorthesisserver.schema.favor.Favor;
 import ru.zalimannard.bachelorthesisserver.schema.favor.FavorRepository;
 import ru.zalimannard.bachelorthesisserver.schema.schedule.status.ScheduleStatus;
@@ -57,4 +57,5 @@ public interface ScheduleMapper {
             entity.setStatus(scheduleStatus);
         }
     }
+
 }

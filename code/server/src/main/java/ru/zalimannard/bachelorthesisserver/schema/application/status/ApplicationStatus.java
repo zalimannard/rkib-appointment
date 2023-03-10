@@ -7,6 +7,7 @@ import lombok.Data;
 @Table(name = "application_statuses")
 @Data
 public class ApplicationStatus {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")

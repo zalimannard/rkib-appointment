@@ -12,6 +12,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class FavorServiceImpl implements FavorService {
+
     private final FavorRepository favorRepository;
     private final FavorMapper favorMapper = Mappers.getMapper(FavorMapper.class);
 
@@ -28,4 +29,5 @@ public class FavorServiceImpl implements FavorService {
         List<Favor> favorList = new ArrayList<>(favorRepository.findAll(Example.of(exampleFavor)));
         return favorMapper.toDtoList(favorList);
     }
+
 }

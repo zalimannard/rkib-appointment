@@ -12,6 +12,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class PatientServiceImpl implements PatientService {
+
     private final PatientRepository patientRepository;
     private final PatientMapper patientMapper = Mappers.getMapper(PatientMapper.class);
 
@@ -54,4 +55,5 @@ public class PatientServiceImpl implements PatientService {
         patientRepository.deleteById(id);
         return patientMapper.toDto(patient);
     }
+
 }

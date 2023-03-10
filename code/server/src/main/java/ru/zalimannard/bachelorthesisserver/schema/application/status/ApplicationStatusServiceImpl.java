@@ -12,6 +12,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ApplicationStatusServiceImpl implements ApplicationStatusService {
+
     private final ApplicationStatusRepository applicationStatusRepository;
     private final ApplicationStatusMapper applicationStatusMapper = Mappers.getMapper(ApplicationStatusMapper.class);
 
@@ -54,4 +55,5 @@ public class ApplicationStatusServiceImpl implements ApplicationStatusService {
         applicationStatusRepository.deleteById(id);
         return applicationStatusMapper.toDto(applicationStatus);
     }
+
 }

@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class FavorDto {
+
     @JsonProperty("id")
     private String id;
 

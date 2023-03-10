@@ -13,4 +13,5 @@ public interface PatientService {
     PatientDto update(PatientDto patientDto);
 
     PatientDto delete(String id);
+
 }

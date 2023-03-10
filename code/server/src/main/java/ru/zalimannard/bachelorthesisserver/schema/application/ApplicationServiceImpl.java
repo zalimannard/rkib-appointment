@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
+import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 import ru.zalimannard.bachelorthesisserver.schema.application.status.ApplicationStatusRepository;
 import ru.zalimannard.bachelorthesisserver.schema.doctornote.DoctorNoteRepository;
-import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
 import ru.zalimannard.bachelorthesisserver.schema.patient.PatientRepository;
 
 import java.util.ArrayList;
@@ -15,6 +15,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ApplicationServiceImpl implements ApplicationService {
+
     private final ApplicationRepository applicationRepository;
     private final PatientRepository patientRepository;
     private final DoctorNoteRepository doctorNoteRepository;
@@ -63,4 +64,5 @@ public class ApplicationServiceImpl implements ApplicationService {
         applicationRepository.deleteById(id);
         return applicationMapper.toDto(application);
     }
+
 }

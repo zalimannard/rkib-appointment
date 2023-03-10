@@ -14,6 +14,7 @@ import java.util.List;
 @Tag(name = "Учреждения")
 @RequiredArgsConstructor
 public class InstitutionController {
+
     private final InstitutionService institutionService;
 
     @GetMapping("{id}")
@@ -50,4 +51,5 @@ public class InstitutionController {
     public InstitutionDto delete(@PathVariable String id) {
         return institutionService.delete(id);
     }
+
 }

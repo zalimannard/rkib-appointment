@@ -16,6 +16,7 @@ import java.util.List;
 @Tag(name = "Услуги")
 @RequiredArgsConstructor
 public class FavorController {
+
     private final FavorService favorService;
 
     @GetMapping("{id}")
@@ -29,4 +30,5 @@ public class FavorController {
     public List<FavorDto> getAll(@QuerydslPredicate FavorDto exampleFavorDto) {
         return favorService.list(exampleFavorDto);
     }
+
 }

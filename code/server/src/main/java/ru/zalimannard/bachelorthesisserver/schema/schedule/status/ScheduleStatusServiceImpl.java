@@ -12,6 +12,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ScheduleStatusServiceImpl implements ScheduleStatusService {
+
     private final ScheduleStatusRepository scheduleStatusRepository;
     private final ScheduleStatusMapper scheduleStatusMapper = Mappers.getMapper(ScheduleStatusMapper.class);
 
@@ -54,4 +55,5 @@ public class ScheduleStatusServiceImpl implements ScheduleStatusService {
         scheduleStatusRepository.deleteById(id);
         return scheduleStatusMapper.toDto(scheduleStatus);
     }
+
 }

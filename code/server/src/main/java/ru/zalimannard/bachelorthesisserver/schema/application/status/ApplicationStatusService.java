@@ -13,4 +13,5 @@ public interface ApplicationStatusService {
     ApplicationStatusDto update(ApplicationStatusDto applicationStatusDto);
 
     ApplicationStatusDto delete(String id);
+
 }

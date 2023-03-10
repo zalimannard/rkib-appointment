@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 @Table(name = "schedule_elements")
 @Data
 public class Schedule {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")

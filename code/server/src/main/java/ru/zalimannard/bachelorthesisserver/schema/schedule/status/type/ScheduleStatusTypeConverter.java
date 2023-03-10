@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 
 @Converter(autoApply = true)
 public class ScheduleStatusTypeConverter implements AttributeConverter<ScheduleStatusType, String> {
+
     @Override
     public String convertToDatabaseColumn(ScheduleStatusType attribute) {
         return attribute.getCode();
@@ -19,4 +20,5 @@ public class ScheduleStatusTypeConverter implements AttributeConverter<ScheduleS
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
+
 }

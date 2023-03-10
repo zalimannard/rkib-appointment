@@ -7,6 +7,7 @@ import lombok.Data;
 @Table(name = "favors")
 @Data
 public class Favor {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")

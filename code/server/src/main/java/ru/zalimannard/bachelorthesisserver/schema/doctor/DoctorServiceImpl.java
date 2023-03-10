@@ -12,6 +12,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class DoctorServiceImpl implements DoctorService {
+
     private final DoctorRepository doctorRepository;
     private final DoctorMapper doctorMapper = Mappers.getMapper(DoctorMapper.class);
 
@@ -28,4 +29,5 @@ public class DoctorServiceImpl implements DoctorService {
         List<Doctor> doctorList = new ArrayList<>(doctorRepository.findAll(Example.of(exampleDoctor)));
         return doctorMapper.toDtoList(doctorList);
     }
+
 }

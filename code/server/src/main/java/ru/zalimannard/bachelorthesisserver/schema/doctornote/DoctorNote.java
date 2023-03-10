@@ -8,6 +8,7 @@ import ru.zalimannard.bachelorthesisserver.schema.institution.Institution;
 @Table(name = "doctor_notes")
 @Data
 public class DoctorNote {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")

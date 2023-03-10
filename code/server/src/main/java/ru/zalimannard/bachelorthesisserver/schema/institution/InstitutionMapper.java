@@ -14,4 +14,5 @@ public interface InstitutionMapper {
     List<Institution> toEntityList(List<InstitutionDto> dtoList);
 
     List<InstitutionDto> toDtoList(List<Institution> entityList);
+
 }

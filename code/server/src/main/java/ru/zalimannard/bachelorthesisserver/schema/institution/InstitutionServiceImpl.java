@@ -12,6 +12,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class InstitutionServiceImpl implements InstitutionService {
+
     private final InstitutionRepository institutionRepository;
     private final InstitutionMapper institutionMapper = Mappers.getMapper(InstitutionMapper.class);
 
@@ -54,4 +55,5 @@ public class InstitutionServiceImpl implements InstitutionService {
         institutionRepository.deleteById(id);
         return institutionMapper.toDto(institution);
     }
+
 }

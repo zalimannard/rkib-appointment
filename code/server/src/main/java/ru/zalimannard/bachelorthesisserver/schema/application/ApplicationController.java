@@ -13,6 +13,7 @@ import java.util.List;
 @Tag(name = "Обращения")
 @RequiredArgsConstructor
 public class ApplicationController {
+
     private final ApplicationService applicationService;
 
     @GetMapping("{id}")
@@ -44,4 +45,5 @@ public class ApplicationController {
     public ApplicationDto delete(@PathVariable String id) {
         return applicationService.delete(id);
     }
+
 }
