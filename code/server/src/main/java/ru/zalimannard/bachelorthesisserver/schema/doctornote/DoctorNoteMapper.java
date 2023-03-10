@@ -1,7 +1,7 @@
 package ru.zalimannard.bachelorthesisserver.schema.doctornote;
 
 import org.mapstruct.*;
-import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
+import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundExceptionHttp;
 import ru.zalimannard.bachelorthesisserver.schema.institution.Institution;
 import ru.zalimannard.bachelorthesisserver.schema.institution.InstitutionRepository;
 
@@ -27,7 +27,7 @@ public interface DoctorNoteMapper {
                           InstitutionRepository institutionRepository) {
         if (dto.getInstitutionId() != null) {
             Institution institutionEntity = institutionRepository.findById(dto.getInstitutionId())
-                    .orElseThrow(() -> new NotFoundException("Institution", "id", dto.getInstitutionId()));
+                    .orElseThrow(() -> new NotFoundExceptionHttp("Institution", "id", dto.getInstitutionId()));
             entity.setInstitution(institutionEntity);
         }
     }

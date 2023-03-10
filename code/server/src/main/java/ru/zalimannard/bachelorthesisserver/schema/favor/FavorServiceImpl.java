@@ -5,7 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
+import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundExceptionHttp;
 import ru.zalimannard.bachelorthesisserver.utils.Utils;
 import ru.zalimannard.bachelorthesisserver.utils.mapper.MappingType;
 
@@ -21,7 +21,7 @@ public class FavorServiceImpl implements FavorService {
     @Override
     public FavorDto read(String id) {
         Favor favor = favorRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("${application.entityNames.favor}", id));
+                .orElseThrow(() -> new NotFoundExceptionHttp("${application.entityNames.favor}", id));
         return favorMapper.toDto(favor);
     }
 

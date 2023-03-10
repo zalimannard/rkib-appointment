@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
-import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
+import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundExceptionHttp;
 import ru.zalimannard.bachelorthesisserver.schema.application.status.ApplicationStatusRepository;
 import ru.zalimannard.bachelorthesisserver.schema.doctornote.DoctorNoteRepository;
 import ru.zalimannard.bachelorthesisserver.schema.patient.PatientRepository;
@@ -25,7 +25,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public ApplicationDto get(String id) {
         Application application = applicationRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Application", "id", id));
+                .orElseThrow(() -> new NotFoundExceptionHttp("Application", "id", id));
         return applicationMapper.toDto(application);
     }
 
@@ -53,14 +53,14 @@ public class ApplicationServiceImpl implements ApplicationService {
             Application applicationResponse = applicationRepository.save(applicationRequest);
             return applicationMapper.toDto(applicationResponse);
         } else {
-            throw new NotFoundException("Application", "id", String.valueOf(applicationRequest.getId()));
+            throw new NotFoundExceptionHttp("Application", "id", String.valueOf(applicationRequest.getId()));
         }
     }
 
     @Override
     public ApplicationDto delete(String id) {
         Application application = applicationRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Application", "id", id));
+                .orElseThrow(() -> new NotFoundExceptionHttp("Application", "id", id));
         applicationRepository.deleteById(id);
         return applicationMapper.toDto(application);
     }

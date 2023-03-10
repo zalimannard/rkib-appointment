@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
-import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
+import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundExceptionHttp;
 import ru.zalimannard.bachelorthesisserver.schema.doctor.DoctorRepository;
 import ru.zalimannard.bachelorthesisserver.schema.favor.FavorRepository;
 import ru.zalimannard.bachelorthesisserver.schema.schedule.status.ScheduleStatusRepository;
@@ -25,7 +25,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public ScheduleDto get(String id) {
         Schedule schedule = scheduleRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("ScheduleElement", "id", id));
+                .orElseThrow(() -> new NotFoundExceptionHttp("ScheduleElement", "id", id));
         return scheduleMapper.toDto(schedule);
     }
 
@@ -53,14 +53,14 @@ public class ScheduleServiceImpl implements ScheduleService {
             Schedule scheduleResponse = scheduleRepository.save(scheduleRequest);
             return scheduleMapper.toDto(scheduleResponse);
         } else {
-            throw new NotFoundException("ScheduleElement", "id", String.valueOf(scheduleRequest.getId()));
+            throw new NotFoundExceptionHttp("ScheduleElement", "id", String.valueOf(scheduleRequest.getId()));
         }
     }
 
     @Override
     public ScheduleDto delete(String id) {
         Schedule schedule = scheduleRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("ScheduleElement", "id", id));
+                .orElseThrow(() -> new NotFoundExceptionHttp("ScheduleElement", "id", id));
         scheduleRepository.deleteById(id);
         return scheduleMapper.toDto(schedule);
     }

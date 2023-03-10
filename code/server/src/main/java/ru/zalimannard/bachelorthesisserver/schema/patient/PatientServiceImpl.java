@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
-import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
+import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundExceptionHttp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public PatientDto get(String id) {
         Patient patient = patientRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Patient", "id", id));
+                .orElseThrow(() -> new NotFoundExceptionHttp("Patient", "id", id));
         return patientMapper.toDto(patient);
     }
 
@@ -44,14 +44,14 @@ public class PatientServiceImpl implements PatientService {
             Patient patientResponse = patientRepository.save(patientRequest);
             return patientMapper.toDto(patientResponse);
         } else {
-            throw new NotFoundException("Patient", "id", String.valueOf(patientRequest.getId()));
+            throw new NotFoundExceptionHttp("Patient", "id", String.valueOf(patientRequest.getId()));
         }
     }
 
     @Override
     public PatientDto delete(String id) {
         Patient patient = patientRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Patient", "id", id));
+                .orElseThrow(() -> new NotFoundExceptionHttp("Patient", "id", id));
         patientRepository.deleteById(id);
         return patientMapper.toDto(patient);
     }

@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.zalimannard.bachelorthesisserver.exceptions.DataIntegrityViolationExceptionHttp;
-import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
+import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundExceptionHttp;
 import ru.zalimannard.bachelorthesisserver.utils.Utils;
 import ru.zalimannard.bachelorthesisserver.utils.mapper.MappingType;
 
@@ -35,7 +35,7 @@ public class InstitutionServiceImpl implements InstitutionService {
     @Override
     public InstitutionDto read(String id) {
         Institution institution = institutionRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("${application.entityNames.institution}", id));
+                .orElseThrow(() -> new NotFoundExceptionHttp("${application.entityNames.institution}", id));
         return institutionMapper.toDto(institution);
     }
 

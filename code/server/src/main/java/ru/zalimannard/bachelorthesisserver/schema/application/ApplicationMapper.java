@@ -1,7 +1,7 @@
 package ru.zalimannard.bachelorthesisserver.schema.application;
 
 import org.mapstruct.*;
-import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
+import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundExceptionHttp;
 import ru.zalimannard.bachelorthesisserver.schema.application.status.ApplicationStatus;
 import ru.zalimannard.bachelorthesisserver.schema.application.status.ApplicationStatusRepository;
 import ru.zalimannard.bachelorthesisserver.schema.doctornote.DoctorNote;
@@ -45,19 +45,19 @@ public interface ApplicationMapper {
 
         if (dto.getPatientId() != null) {
             Patient patient = patientRepository.findById(dto.getPatientId())
-                    .orElseThrow(() -> new NotFoundException("Patient", "id", dto.getPatientId()));
+                    .orElseThrow(() -> new NotFoundExceptionHttp("Patient", "id", dto.getPatientId()));
             entity.setPatient(patient);
         }
 
         if (dto.getDoctorNoteId() != null) {
             DoctorNote doctorNote = doctorNoteRepository.findById(dto.getDoctorNoteId())
-                    .orElseThrow(() -> new NotFoundException("DoctorNote", "id", dto.getDoctorNoteId()));
+                    .orElseThrow(() -> new NotFoundExceptionHttp("DoctorNote", "id", dto.getDoctorNoteId()));
             entity.setDoctorNote(doctorNote);
         }
 
         if (dto.getStatusId() != null) {
             ApplicationStatus applicationStatus = applicationStatusRepository.findById(dto.getStatusId())
-                    .orElseThrow(() -> new NotFoundException("ApplicationStatus", "id", dto.getStatusId()));
+                    .orElseThrow(() -> new NotFoundExceptionHttp("ApplicationStatus", "id", dto.getStatusId()));
             entity.setStatus(applicationStatus);
         }
     }

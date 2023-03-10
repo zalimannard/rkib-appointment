@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
-import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
+import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundExceptionHttp;
 import ru.zalimannard.bachelorthesisserver.schema.institution.InstitutionRepository;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class DoctorNoteServiceImpl implements DoctorNoteService {
     @Override
     public DoctorNoteDto get(String id) {
         DoctorNote doctorNote = doctorNoteRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("DoctorNote", "id", id));
+                .orElseThrow(() -> new NotFoundExceptionHttp("DoctorNote", "id", id));
         return doctorNoteMapper.toDto(doctorNote);
     }
 
@@ -46,14 +46,14 @@ public class DoctorNoteServiceImpl implements DoctorNoteService {
             DoctorNote doctorNoteResponse = doctorNoteRepository.save(doctorNoteRequest);
             return doctorNoteMapper.toDto(doctorNoteResponse);
         } else {
-            throw new NotFoundException("DoctorNote", "id", String.valueOf(doctorNoteRequest.getId()));
+            throw new NotFoundExceptionHttp("DoctorNote", "id", String.valueOf(doctorNoteRequest.getId()));
         }
     }
 
     @Override
     public DoctorNoteDto delete(String id) {
         DoctorNote doctorNote = doctorNoteRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("DoctorNote", "id", id));
+                .orElseThrow(() -> new NotFoundExceptionHttp("DoctorNote", "id", id));
         doctorNoteRepository.deleteById(id);
         return doctorNoteMapper.toDto(doctorNote);
     }

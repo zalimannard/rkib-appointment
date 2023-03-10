@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
-import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
+import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundExceptionHttp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class ApplicationStatusServiceImpl implements ApplicationStatusService {
     @Override
     public ApplicationStatusDto get(String id) {
         ApplicationStatus applicationStatus = applicationStatusRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("ApplicationStatus", "id", id));
+                .orElseThrow(() -> new NotFoundExceptionHttp("ApplicationStatus", "id", id));
         return applicationStatusMapper.toDto(applicationStatus);
     }
 
@@ -44,14 +44,14 @@ public class ApplicationStatusServiceImpl implements ApplicationStatusService {
             ApplicationStatus applicationStatusResponse = applicationStatusRepository.save(applicationStatusRequest);
             return applicationStatusMapper.toDto(applicationStatusResponse);
         } else {
-            throw new NotFoundException("ApplicationStatus", "id", String.valueOf(applicationStatusRequest.getId()));
+            throw new NotFoundExceptionHttp("ApplicationStatus", "id", String.valueOf(applicationStatusRequest.getId()));
         }
     }
 
     @Override
     public ApplicationStatusDto delete(String id) {
         ApplicationStatus applicationStatus = applicationStatusRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("ApplicationStatus", "id", id));
+                .orElseThrow(() -> new NotFoundExceptionHttp("ApplicationStatus", "id", id));
         applicationStatusRepository.deleteById(id);
         return applicationStatusMapper.toDto(applicationStatus);
     }

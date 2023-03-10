@@ -6,7 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
+import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundExceptionHttp;
 import ru.zalimannard.bachelorthesisserver.utils.Utils;
 import ru.zalimannard.bachelorthesisserver.utils.mapper.MappingType;
 
@@ -22,7 +22,7 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public DoctorDto read(String id) {
         Doctor doctor = doctorRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("${application.entityNames.doctor}", "id", id));
+                .orElseThrow(() -> new NotFoundExceptionHttp("${application.entityNames.doctor}", "id", id));
         return doctorMapper.toDto(doctor);
     }
 

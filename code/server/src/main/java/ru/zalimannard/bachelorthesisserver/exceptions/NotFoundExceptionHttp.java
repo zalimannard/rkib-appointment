@@ -4,18 +4,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class NotFoundException extends RuntimeException {
+public class NotFoundExceptionHttp extends RuntimeException {
 
     // TODO: Удалить после переработки всех сущносстей
-    public NotFoundException(String message) {
+    public NotFoundExceptionHttp(String message) {
         super(message);
     }
 
-    public NotFoundException(String name, String field, String value) {
+    public NotFoundExceptionHttp(String name, String field, String value) {
         super(name + " with " + field + "=" + value + " not found");
     }
 
-    public NotFoundException(String name, String id) {
+    public NotFoundExceptionHttp(String name, String id) {
         super(name + " with id=" + id + " not found");
     }
 

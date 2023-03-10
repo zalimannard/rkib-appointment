@@ -1,7 +1,7 @@
 package ru.zalimannard.bachelorthesisserver.schema.schedule;
 
 import org.mapstruct.*;
-import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
+import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundExceptionHttp;
 import ru.zalimannard.bachelorthesisserver.schema.doctor.Doctor;
 import ru.zalimannard.bachelorthesisserver.schema.doctor.DoctorRepository;
 import ru.zalimannard.bachelorthesisserver.schema.favor.Favor;
@@ -41,19 +41,19 @@ public interface ScheduleMapper {
                           @Context ScheduleStatusRepository scheduleStatusRepository) {
         if (dto.getDoctorId() != null) {
             Doctor doctor = doctorRepository.findById(dto.getDoctorId())
-                    .orElseThrow(() -> new NotFoundException("Doctor", "id", dto.getDoctorId()));
+                    .orElseThrow(() -> new NotFoundExceptionHttp("Doctor", "id", dto.getDoctorId()));
             entity.setDoctor(doctor);
         }
 
         if (dto.getFavorId() != null) {
             Favor favor = favorRepository.findById(dto.getFavorId())
-                    .orElseThrow(() -> new NotFoundException("Favor", "id", dto.getFavorId()));
+                    .orElseThrow(() -> new NotFoundExceptionHttp("Favor", "id", dto.getFavorId()));
             entity.setFavor(favor);
         }
 
         if (dto.getStatusId() != null) {
             ScheduleStatus scheduleStatus = scheduleStatusRepository.findById(dto.getStatusId())
-                    .orElseThrow(() -> new NotFoundException("ScheduleElementStatus", "id", dto.getStatusId()));
+                    .orElseThrow(() -> new NotFoundExceptionHttp("ScheduleElementStatus", "id", dto.getStatusId()));
             entity.setStatus(scheduleStatus);
         }
     }
