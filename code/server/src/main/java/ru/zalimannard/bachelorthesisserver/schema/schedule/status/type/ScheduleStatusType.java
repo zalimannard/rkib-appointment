@@ -6,6 +6,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ScheduleStatusType {
     ACTIVE("A"),
+    PENDING("P"),
     CANCELED("C");
 
     @Getter

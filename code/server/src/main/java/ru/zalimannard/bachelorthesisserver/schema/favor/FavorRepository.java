@@ -19,6 +19,7 @@ public interface FavorRepository extends JpaRepository<Favor, String> {
             WHERE
                 (:name IS NULL OR lower(f.name) LIKE lower(concat('%', :name, '%')))
             """)
-    List<Favor> search(@Param("name") String name, Pageable pageable);
+    List<Favor> search(@Param("name") String name,
+                       Pageable pageable);
 
 }

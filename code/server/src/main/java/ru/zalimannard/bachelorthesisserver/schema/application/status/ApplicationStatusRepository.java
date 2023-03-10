@@ -16,12 +16,14 @@ public interface ApplicationStatusRepository extends JpaRepository<ApplicationSt
             SELECT
                 a
             FROM
-                ApplicationStatus a
+                ScheduleStatus a
             WHERE
                 (:type IS NULL OR a.type = :type)
             AND
                 (:name IS NULL OR lower(a.name) LIKE lower(concat('%', :name, '%')))
             """)
-    List<ApplicationStatus> search(@Param("type") ApplicationStatusType type, @Param("name") String name, Pageable pageable);
+    List<ApplicationStatus> search(@Param("type") ApplicationStatusType type,
+                                   @Param("name") String name,
+                                   Pageable pageable);
 
 }

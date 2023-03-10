@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("${application.endpoint.root}" + "${application.endpoint.scheduleElement}")
+@RequestMapping("${application.endpoint.root}${application.endpoint.schedule}")
 @Tag(name = "Элементы расписания")
 @RequiredArgsConstructor
 public class ScheduleController {

@@ -33,12 +33,11 @@ application:
   endpoint:
     root: /api
     search: /search
-    doctorNote: /doctorNotes
     doctor: /doctors
     institution: /institutions
     patient: /patients
-    scheduleElement: /scheduleElements
-    scheduleElementStatus: /scheduleElementStatuses
+    schedule: /schedule
+    scheduleStatus: /scheduleStatuses
     favor: /favors
     application: /applications
     applicationStatus: /applicationStatuses

@@ -19,6 +19,7 @@ public interface InstitutionRepository extends JpaRepository<Institution, String
             WHERE
                 (:name IS NULL OR lower(i.name) LIKE lower(concat('%', :name, '%')))
             """)
-    List<Institution> search(@Param("name") String name, Pageable pageable);
+    List<Institution> search(@Param("name") String name,
+                             Pageable pageable);
 
 }

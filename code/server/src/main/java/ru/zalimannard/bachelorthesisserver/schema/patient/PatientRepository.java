@@ -34,9 +34,14 @@ public interface PatientRepository extends JpaRepository<Patient, String> {
             AND
                 (:endBirthdate IS NULL OR p.birthdate <= :endBirthdate)
             """)
-    List<Patient> search(@Param("beginBirthdate") Date beginBirthdate, @Param("endBirthdate") Date endBirthdate,
-                         @Param("lastName") String lastName, @Param("firstName") String firstName,
-                         @Param("patronymic") String patronymic, @Param("phoneNumber") String phoneNumber,
-                         @Param("address") String address, @Param("occupation") String occupation, Pageable pageable);
+    List<Patient> search(@Param("beginBirthdate") Date beginBirthdate,
+                         @Param("endBirthdate") Date endBirthdate,
+                         @Param("lastName") String lastName,
+                         @Param("firstName") String firstName,
+                         @Param("patronymic") String patronymic,
+                         @Param("phoneNumber") String phoneNumber,
+                         @Param("address") String address,
+                         @Param("occupation") String occupation,
+                         Pageable pageable);
 
 }

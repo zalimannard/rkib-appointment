@@ -17,7 +17,7 @@ public class ScheduleStatus {
     @Column(name = "type_code", nullable = false)
     private ScheduleStatusType type;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
 }

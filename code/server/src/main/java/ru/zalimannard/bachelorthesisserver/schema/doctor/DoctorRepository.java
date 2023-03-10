@@ -23,7 +23,9 @@ public interface DoctorRepository extends JpaRepository<Doctor, String> {
             AND
                 (:patronymic IS NULL OR lower(d.patronymic) LIKE lower(concat('%', :patronymic, '%')))
             """)
-    List<Doctor> search(@Param("lastName") String lastName, @Param("firstName") String firstName,
-                        @Param("patronymic") String patronymic, Pageable pageable);
+    List<Doctor> search(@Param("lastName") String lastName,
+                        @Param("firstName") String firstName,
+                        @Param("patronymic") String patronymic,
+                        Pageable pageable);
 
 }
