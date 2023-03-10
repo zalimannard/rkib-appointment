@@ -9,25 +9,35 @@ spring:
     username: ${DB_USER}
     password: ${DB_PASSWORD}
 ## Uncomment for database re-creation
-#  jpa:
-#    hibernate:
-#      ddl-auto: create
+  jpa:
+    hibernate:
+      ddl-auto: update
 
 springdoc:
   swagger-ui:
     path: /docs/api
 
 application:
+  constant:
+    defaultPageNumber: 0
+    defaultPageSize: 10
+    defaultSort: id,asc
+  entityNames:
+    doctor: Doctor
+    institution: Institution
+    patient: Patient
+    schedule: Schedule element
+    favor: Favor
+    application: Application
+    applicationStatus: Application status
   endpoint:
     root: /api
-    doctorNote: /doctorNotes
+    search: /search
     doctor: /doctors
     institution: /institutions
     patient: /patients
-    scheduleElement: /scheduleElements
-    scheduleElementStatus: /scheduleElementStatuses
-    scheduledVisit: /scheduledVisits
+    schedule: /schedule
+    scheduleStatus: /scheduleStatuses
     favor: /favors
-    unscheduledVisit: /unscheduledVisits
     application: /applications
     applicationStatus: /applicationStatuses
