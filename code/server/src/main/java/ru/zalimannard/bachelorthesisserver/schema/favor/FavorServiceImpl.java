@@ -1,12 +1,13 @@
 package ru.zalimannard.bachelorthesisserver.schema.favor;
 
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.factory.Mappers;
-import org.springframework.data.domain.Example;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.zalimannard.bachelorthesisserver.exceptions.NotFoundException;
+import ru.zalimannard.bachelorthesisserver.utils.Utils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,19 +15,22 @@ import java.util.List;
 public class FavorServiceImpl implements FavorService {
 
     private final FavorRepository favorRepository;
-    private final FavorMapper favorMapper = Mappers.getMapper(FavorMapper.class);
+    private final FavorMapper favorMapper;
 
     @Override
-    public FavorDto get(String id) {
+    public FavorDto read(String id) {
         Favor favor = favorRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Favor", "id", id));
+                .orElseThrow(() -> new NotFoundException("Favor", id));
         return favorMapper.toDto(favor);
     }
 
     @Override
-    public List<FavorDto> list(FavorDto exampleFavorDto) {
-        Favor exampleFavor = favorMapper.toEntity(exampleFavorDto);
-        List<Favor> favorList = new ArrayList<>(favorRepository.findAll(Example.of(exampleFavor)));
+    public List<FavorDto> search(FavorDto filterFavorDto, int pageNo, int pageSize, String[] sort) {
+        Favor filterFavor = favorMapper.toEntity(filterFavorDto);
+        List<Sort.Order> orders = Utils.ordersByStringArray(sort);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(orders));
+
+        List<Favor> favorList = favorRepository.search(filterFavor.getName(), pageable);
         return favorMapper.toDtoList(favorList);
     }
 

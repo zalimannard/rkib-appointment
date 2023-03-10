@@ -18,6 +18,9 @@ springdoc:
     path: /docs/api
 
 application:
+  constant:
+    defaultPageNumber: 0
+    defaultPageSize: 10
   endpoint:
     root: /api
     doctorNote: /doctorNotes

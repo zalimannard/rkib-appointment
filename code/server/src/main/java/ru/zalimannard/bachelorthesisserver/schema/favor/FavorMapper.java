@@ -1,18 +1,20 @@
 package ru.zalimannard.bachelorthesisserver.schema.favor;
 
+import lombok.RequiredArgsConstructor;
 import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper
-public interface FavorMapper {
+@Mapper(componentModel = "spring")
+@RequiredArgsConstructor
+public abstract class FavorMapper {
 
-    Favor toEntity(FavorDto dto);
+    public abstract Favor toEntity(FavorDto dto);
 
-    FavorDto toDto(Favor entity);
+    public abstract FavorDto toDto(Favor entity);
 
-    List<Favor> toEntityList(List<FavorDto> dtoList);
+    public abstract List<Favor> toEntityList(List<FavorDto> dtoList);
 
-    List<FavorDto> toDtoList(List<Favor> entityList);
+    public abstract List<FavorDto> toDtoList(List<Favor> entityList);
 
 }
