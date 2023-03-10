@@ -4,8 +4,8 @@ import java.util.List;
 
 public interface DoctorService {
 
-    DoctorDto get(String id);
+    DoctorDto read(String id);
 
-    List<DoctorDto> list(DoctorDto exampleDoctorDto);
+    List<DoctorDto> search(DoctorDto exampleDoctorDto, int pageNo, int pageSize, String[] sort);
 
 }

@@ -1,18 +1,20 @@
 package ru.zalimannard.bachelorthesisserver.schema.doctor;
 
+import lombok.RequiredArgsConstructor;
 import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper
-public interface DoctorMapper {
+@Mapper(componentModel = "spring")
+@RequiredArgsConstructor
+public abstract class DoctorMapper {
 
-    Doctor toEntity(DoctorDto dto);
+    public abstract Doctor toEntity(DoctorDto dto);
 
-    DoctorDto toDto(Doctor entity);
+    public abstract DoctorDto toDto(Doctor entity);
 
-    List<Doctor> toEntityList(List<DoctorDto> dtoList);
+    public abstract List<Doctor> toEntityList(List<DoctorDto> dtoList);
 
-    List<DoctorDto> toDtoList(List<Doctor> entityList);
+    public abstract List<DoctorDto> toDtoList(List<Doctor> entityList);
 
 }
