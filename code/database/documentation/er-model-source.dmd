@@ -1,8 +1,0 @@
-<?xml version = '1.0' encoding = 'UTF-8'?>
-<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="er-model-source" id="4B8CF823-4905-4645-0C6B-3F4F4225A464" version="3.5">
-<createdBy>zalimannard</createdBy>
-<createdTime>2022-12-05 22:36:35 UTC</createdTime>
-<ownerDesignName>er-model-source</ownerDesignName>
-<capitalNames>false</capitalNames>
-<designId>4B8CF823-4905-4645-0C6B-3F4F4225A464</designId>
-</OSDM_Design>
