@@ -23,7 +23,7 @@ public class PersonRegistrationServiceImpl implements PersonRegistrationService 
     public PersonDto register(PersonRegistrationDto personDto) {
         Person personRequest = personMapper.toEntity(personDto);
 
-        personRequest.setRoles(List.of(PersonRole.USER));
+        personRequest.setRoles(List.of(PersonRole.PATIENT));
         Person personResponse = personService.createEntity(personRequest);
 
         return personMapper.toDto(personResponse);

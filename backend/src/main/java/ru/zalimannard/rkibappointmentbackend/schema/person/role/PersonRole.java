@@ -9,7 +9,7 @@ public enum PersonRole {
     ADMIN("A"),
     REGISTRAR("R"),
     DOCTOR("D"),
-    USER("U");
+    PATIENT("P");
 
     @Getter
     private final String code;

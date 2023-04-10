@@ -20,7 +20,3 @@ application:
   endpoint:
     registration: /registration
     persons: /persons
-  init:
-    admin:
-      email: ${ADMIN_USERNAME}
-      password: ${ADMIN_PASSWORD}

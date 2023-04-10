@@ -2,7 +2,7 @@ package ru.zalimannard.rkibappointmentbackend.schema.person;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import ru.zalimannard.rkibappointmentbackend.schema.person.gender.PersonGender;
 import ru.zalimannard.rkibappointmentbackend.schema.person.role.PersonRole;
@@ -12,6 +12,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "people")
+@Builder(toBuilder = true)
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class Person {
 
@@ -22,22 +25,27 @@ public class Person {
 
     @Column(name = "username", nullable = false, unique = true)
     @NotBlank(message = "Имя пользователя должно быть у каждого")
+    @Pattern(regexp = "[a-zA-Z0-9.-]+", message = "Недопустимые символы в имени пользователя")
     private String username;
 
     @Column(name = "password", nullable = false)
     @NotBlank(message = "Пароль должен быть у каждого")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "Недопустимые символы в пароле")
     private String password;
 
     @Column(name = "last_name", nullable = false)
     @NotBlank(message = "Фамилия не должна быть пустой")
+    @Pattern(regexp = "[a-zA-Zа-яА-ЯЁё()-]+([ ]?[a-zA-Zа-яА-ЯЁё()-]+)*", message = "Недопустимые символы в фамилии")
     private String lastName;
 
     @Column(name = "first_name", nullable = false)
     @NotBlank(message = "Имя не должно быть пустым")
+    @Pattern(regexp = "[a-zA-Zа-яА-ЯЁё()-]+([ ]?[a-zA-Zа-яА-ЯЁё()-]+)*", message = "Недопустимые символы в имени")
     private String firstName;
 
     @Column(name = "patronymic")
     @Length(min = 1, message = "Если указано отчество, то оно должен быть ненулевой длины")
+    @Pattern(regexp = "[a-zA-Zа-яА-ЯЁё()-]+([ ]?[a-zA-Zа-яА-ЯЁё()-]+)*", message = "Недопустимые символы в отчестве")
     private String patronymic;
 
     @Column(name = "phone_number")
@@ -50,10 +58,12 @@ public class Person {
 
     @Column(name = "address")
     @Length(min = 1, message = "Если указан адрес, то он должен быть ненулевой длины")
+    @Pattern(regexp = "[a-zA-Zа-яА-ЯЁё().,-]+([ ]?[a-zA-Zа-яА-ЯЁё().,-]+)*", message = "Недопустимые символы в адресе")
     private String address;
 
     @Column(name = "occupation")
     @Length(min = 1, message = "Если указана занятость, то она должна быть ненулевой длины")
+    @Pattern(regexp = "[a-zA-Zа-яА-ЯЁё().,-]+([ ]?[a-zA-Zа-яА-ЯЁё().,-]+)*", message = "Недопустимые символы в занятости")
     private String occupation;
 
     @Column(name = "gender", nullable = false)
@@ -64,5 +74,4 @@ public class Person {
     @NotNull(message = "Роли не переданы")
     @NotEmpty(message = "Не указана ни одна роль")
     private List<PersonRole> roles;
-
 }
