@@ -18,8 +18,8 @@ import java.util.Date;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Epic("Пользователь")
-@Feature("Добавление пользователя")
+@Epic("Человек")
+@Feature("Регистрация пользователя")
 @Story("Неудачная регистрация из-за неправильных данных")
 class PersonRegistrationControllerPostBadRequestTests {
 

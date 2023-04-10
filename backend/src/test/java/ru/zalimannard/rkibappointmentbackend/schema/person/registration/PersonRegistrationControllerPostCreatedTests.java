@@ -10,12 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import ru.zalimannard.rkibappointmentbackend.PersonDtoToAuthConverter;
 import ru.zalimannard.rkibappointmentbackend.Specifications;
 import ru.zalimannard.rkibappointmentbackend.schema.person.PersonDto;
 import ru.zalimannard.rkibappointmentbackend.schema.person.PersonSteps;
 import ru.zalimannard.rkibappointmentbackend.schema.person.gender.PersonGender;
 import ru.zalimannard.rkibappointmentbackend.schema.person.role.PersonRole;
-import ru.zalimannard.rkibappointmentbackend.security.AuthDataConstructor;
 
 import java.time.Instant;
 import java.util.Date;
@@ -24,8 +24,8 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Epic("Пользователь")
-@Feature("Добавление пользователя")
+@Epic("Человек")
+@Feature("Регистрация пользователя")
 @Story("Успешная регистрация")
 class PersonRegistrationControllerPostCreatedTests {
 
@@ -43,9 +43,8 @@ class PersonRegistrationControllerPostCreatedTests {
     @BeforeEach
     void setUp() {
         assertThat(personRegistrationController).isNotNull();
-        adminAuth = passwordEncoder.encode(AuthDataConstructor.construct(
-                System.getenv("ADMIN_USERNAME"),
-                System.getenv("ADMIN_PASSWORD")));
+        adminAuth = passwordEncoder.encode(PersonDtoToAuthConverter.convert(
+                System.getenv("ADMIN_USERNAME"), System.getenv("ADMIN_PASSWORD")));
         RestAssured.port = port;
 
         Date birthdate = Date.from(Instant.now().minusSeconds(100));
