@@ -9,6 +9,8 @@ import org.springframework.validation.annotation.Validated;
 import ru.zalimannard.rkibappointmentbackend.exception.ConflictException;
 import ru.zalimannard.rkibappointmentbackend.exception.NotFoundException;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Validated
@@ -42,8 +44,11 @@ public class PersonServiceImpl implements PersonService {
     @Override
     @Transactional
     public Person readEntity(String id) {
-        if (personRepository.existsById(id)) {
-            return personRepository.getReferenceById(id);
+        Optional<Person> personOpt = personRepository.findById(id);
+        if (personOpt.isPresent()) {
+            Person person = personOpt.get();
+            person.setPassword(null);
+            return person;
         } else {
             throw new NotFoundException("p-001", "id", id);
         }
@@ -64,7 +69,10 @@ public class PersonServiceImpl implements PersonService {
             String textToEncode = person.getUsername() + ":" + person.getPassword();
             String encodedPassword = passwordEncoder.encode(textToEncode);
             Person personToSave = person.toBuilder().password(encodedPassword).build();
-            return personRepository.save(personToSave);
+
+            Person savedPerson = personRepository.save(personToSave);
+            savedPerson.setPassword(null);
+            return savedPerson;
         } catch (DataIntegrityViolationException e) {
             throw new ConflictException("p-002", "person", e.getLocalizedMessage());
         }

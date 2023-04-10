@@ -29,7 +29,13 @@ public class WebSecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, registrationPath).anonymous()
+
                         .requestMatchers(HttpMethod.GET, personsPath + "/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, personsPath).authenticated()
+                        .requestMatchers(HttpMethod.PUT, personsPath + "/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, personsPath + "/**").hasAnyAuthority(
+                                PersonRole.ADMIN.toString(), PersonRole.REGISTRAR.toString(), PersonRole.DOCTOR.toString())
+
                         .requestMatchers("**").hasAuthority(PersonRole.ADMIN.toString())
                         .anyRequest().denyAll()
                 )

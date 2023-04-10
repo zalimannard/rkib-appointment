@@ -32,7 +32,6 @@ public class Person {
     private String username;
 
     @Column(name = "password", nullable = false)
-    @NotBlank(message = "Пароль должен быть у каждого")
     private String password;
 
     @Column(name = "last_name", nullable = false)
