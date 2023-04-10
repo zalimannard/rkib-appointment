@@ -8,29 +8,24 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.zalimannard.rkibappointmentbackend.Specifications;
 import ru.zalimannard.rkibappointmentbackend.exception.response.ExceptionResponse;
-import ru.zalimannard.rkibappointmentbackend.schema.person.PersonDto;
 import ru.zalimannard.rkibappointmentbackend.schema.person.gender.PersonGender;
-import ru.zalimannard.rkibappointmentbackend.schema.person.role.PersonRole;
 
 import java.time.Instant;
 import java.util.Date;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Epic("Пользователь")
 @Feature("Добавление пользователя")
-@Story("Негативная регистрация регистрация")
+@Story("Неудачная регистрация из-за неправильных данных")
 class PersonRegistrationControllerPostBadRequestTests {
 
     @Autowired
     private PersonRegistrationController personRegistrationController;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+
     @LocalServerPort
     private int port;
     private PersonRegistrationDto defaultPersonRegistration;
@@ -38,7 +33,6 @@ class PersonRegistrationControllerPostBadRequestTests {
     @BeforeEach
     void setUp() {
         assertThat(personRegistrationController).isNotNull();
-        assertThat(passwordEncoder).isNotNull();
         RestAssured.port = port;
         defaultPersonRegistration = PersonRegistrationDto.builder()
                 .password("password")

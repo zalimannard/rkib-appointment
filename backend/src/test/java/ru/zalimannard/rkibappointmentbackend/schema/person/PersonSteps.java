@@ -1,7 +1,6 @@
 package ru.zalimannard.rkibappointmentbackend.schema.person;
 
 import io.qameta.allure.Step;
-import ru.zalimannard.rkibappointmentbackend.schema.person.registration.PersonRegistrationDto;
 
 import static io.restassured.RestAssured.given;
 

@@ -11,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.zalimannard.rkibappointmentbackend.Specifications;
-import ru.zalimannard.rkibappointmentbackend.schema.person.PersonControllerGetTests;
 import ru.zalimannard.rkibappointmentbackend.schema.person.PersonDto;
 import ru.zalimannard.rkibappointmentbackend.schema.person.PersonSteps;
 import ru.zalimannard.rkibappointmentbackend.schema.person.gender.PersonGender;
@@ -44,7 +43,6 @@ class PersonRegistrationControllerPostCreatedTests {
     @BeforeEach
     void setUp() {
         assertThat(personRegistrationController).isNotNull();
-        assertThat(passwordEncoder).isNotNull();
         adminAuth = passwordEncoder.encode(AuthDataConstructor.construct(
                 System.getenv("ADMIN_USERNAME"),
                 System.getenv("ADMIN_PASSWORD")));
