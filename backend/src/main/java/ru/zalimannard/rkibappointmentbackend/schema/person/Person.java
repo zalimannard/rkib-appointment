@@ -2,7 +2,10 @@ package ru.zalimannard.rkibappointmentbackend.schema.person;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import ru.zalimannard.rkibappointmentbackend.schema.person.gender.PersonGender;
 import ru.zalimannard.rkibappointmentbackend.schema.person.role.PersonRole;
@@ -30,7 +33,6 @@ public class Person {
 
     @Column(name = "password", nullable = false)
     @NotBlank(message = "Пароль должен быть у каждого")
-    @Pattern(regexp = "[a-zA-Z0-9]+", message = "Недопустимые символы в пароле")
     private String password;
 
     @Column(name = "last_name", nullable = false)

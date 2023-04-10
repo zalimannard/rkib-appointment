@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 public interface PersonService {
 
-    PersonDto create(PersonDto personDto);
+    PersonDto create(@Valid PersonDto personDto);
 
     Person createEntity(@Valid Person person);
 

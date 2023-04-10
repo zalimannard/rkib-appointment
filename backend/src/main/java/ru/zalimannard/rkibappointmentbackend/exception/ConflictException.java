@@ -1,13 +1,19 @@
 package ru.zalimannard.rkibappointmentbackend.exception;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import ru.zalimannard.rkibappointmentbackend.exception.response.ExceptionMessage;
+import ru.zalimannard.rkibappointmentbackend.exception.response.HttpCodes;
 
-@ResponseStatus(HttpStatus.CONFLICT)
+import java.util.List;
+
 public class ConflictException extends BaseException {
 
-    public ConflictException() {
-        super(null, null, null, null);
+    public ConflictException(String code, String field, String value) {
+        super(HttpCodes.CONFLICT,
+                code,
+                "Конфликт при работе с объектом",
+                List.of(ExceptionMessage.builder()
+                        .field(field)
+                        .value(value).build()));
     }
 
 }

@@ -38,10 +38,6 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
-test {
-	forkEvery 1L
-}
-
 tasks.named('test') {
 	useJUnitPlatform()
 }

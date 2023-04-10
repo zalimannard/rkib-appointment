@@ -1,6 +1,7 @@
 package ru.zalimannard.rkibappointmentbackend.schema.person;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +25,7 @@ public class PersonDto {
     private String username;
 
     @JsonProperty(value = "password", access = JsonProperty.Access.WRITE_ONLY)
+    @Pattern(regexp = "[a-zA-Z0-9!@#%?_]+", message = "Недопустимые символы в пароле")
     private String password;
 
     @JsonProperty("lastName")

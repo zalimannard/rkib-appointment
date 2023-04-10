@@ -45,7 +45,7 @@ public class PersonServiceImpl implements PersonService {
         if (personRepository.existsById(id)) {
             return personRepository.getReferenceById(id);
         } else {
-            throw new NotFoundException("pr-001", "id", id);
+            throw new NotFoundException("p-001", "id", id);
         }
     }
 
@@ -66,7 +66,7 @@ public class PersonServiceImpl implements PersonService {
             Person personToSave = person.toBuilder().password(encodedPassword).build();
             return personRepository.save(personToSave);
         } catch (DataIntegrityViolationException e) {
-            throw new ConflictException();
+            throw new ConflictException("p-002", "person", e.getLocalizedMessage());
         }
     }
 
