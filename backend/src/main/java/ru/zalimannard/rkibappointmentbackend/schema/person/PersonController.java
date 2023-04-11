@@ -67,19 +67,18 @@ public class PersonController {
     private void postConstruct() {
         if (personService.readEntityByUsername(System.getenv("ADMIN_USERNAME")) == null) {
             String adminField = "ADMIN";
-            PersonDto adminAccountDto = PersonDto.builder()
-                    .username(System.getenv("ADMIN_USERNAME"))
-                    .password(System.getenv("ADMIN_PASSWORD"))
-                    .lastName(adminField)
-                    .firstName(adminField)
-                    .patronymic(adminField)
-                    .gender(PersonGender.MALE)
-                    .phoneNumber("0000000000")
-                    .birthdate(Date.from(Instant.now()))
-                    .address(adminField)
-                    .occupation(adminField)
-                    .roles(List.of(PersonRole.ADMIN))
-                    .build();
+            PersonDto adminAccountDto = new PersonDto();
+            adminAccountDto.setUsername(System.getenv("ADMIN_USERNAME"));
+            adminAccountDto.setPassword(System.getenv("ADMIN_PASSWORD"));
+            adminAccountDto.setLastName(adminField);
+            adminAccountDto.setFirstName(adminField);
+            adminAccountDto.setPatronymic(adminField);
+            adminAccountDto.setGender(PersonGender.MALE);
+            adminAccountDto.setPhoneNumber("0000000000");
+            adminAccountDto.setBirthdate(Date.from(Instant.now()));
+            adminAccountDto.setAddress(adminField);
+            adminAccountDto.setOccupation(adminField);
+            adminAccountDto.setRoles(List.of(PersonRole.ADMIN));
             personService.create(adminAccountDto);
         }
     }

@@ -3,8 +3,8 @@ package ru.zalimannard.rkibappointmentbackend.schema.person;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import ru.zalimannard.rkibappointmentbackend.schema.person.gender.PersonGender;
@@ -15,10 +15,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "persons")
-@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@EqualsAndHashCode(of = "id")
 public class Person {
 
     @Id

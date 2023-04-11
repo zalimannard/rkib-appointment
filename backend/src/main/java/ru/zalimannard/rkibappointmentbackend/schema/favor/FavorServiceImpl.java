@@ -36,7 +36,7 @@ public class FavorServiceImpl implements FavorService {
         try {
             return repository.save(favor);
         } catch (DataIntegrityViolationException e) {
-            throw new ConflictException("fas-01", "application status", e.getLocalizedMessage());
+            throw new ConflictException("fas-01", "favor", e.getLocalizedMessage());
         }
     }
 

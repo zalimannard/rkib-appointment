@@ -40,7 +40,7 @@ public class PersonServiceImpl implements PersonService {
         try {
             return saveToDatabase(person);
         } catch (DataIntegrityViolationException e) {
-            throw new ConflictException("pes-01", "application status", e.getLocalizedMessage());
+            throw new ConflictException("pes-01", "person", e.getLocalizedMessage());
         }
     }
 
@@ -57,7 +57,6 @@ public class PersonServiceImpl implements PersonService {
         Optional<Person> personOpt = repository.findById(id);
         if (personOpt.isPresent()) {
             Person person = personOpt.get();
-            person.setPassword(null);
             return person;
         } else {
             throw new NotFoundException("pes-02", "id", id);
@@ -152,101 +151,14 @@ public class PersonServiceImpl implements PersonService {
         try {
             String textToEncode = person.getUsername() + ":" + person.getPassword();
             String encodedPassword = passwordEncoder.encode(textToEncode);
-            Person personToSave = person.toBuilder().password(encodedPassword).build();
+            person.setPassword(encodedPassword);
 
-            Person savedPerson = repository.save(personToSave);
+            Person savedPerson = repository.save(person);
             savedPerson.setPassword(null);
             return savedPerson;
         } catch (DataIntegrityViolationException e) {
-            throw new ConflictException("p-002", "person", e.getLocalizedMessage());
+            throw new ConflictException("pes-06", "person", e.getLocalizedMessage());
         }
 
     }
 }
-
-
-//
-//    private final PersonMapper personMapper;
-//    private final PersonRepository personRepository;
-//    private final PasswordEncoder passwordEncoder;
-//
-//    @Override
-//    public PersonDto create(PersonDto personDto) {
-//        Person personRequest = personMapper.toEntity(personDto);
-//
-//        Person personResponse = createEntity(personRequest);
-//
-//        return personMapper.toDto(personResponse);
-//    }
-//
-//    @Override
-//    public Person createEntity(Person person) {
-//        return saveToDatabase(person);
-//    }
-//
-//    @Override
-//    public PersonDto read(String id) {
-//        Person personResponse = readEntity(id);
-//
-//        return personMapper.toDto(personResponse);
-//    }
-//
-//    @Override
-//    @Transactional
-//    public Person readEntity(String id) {
-//        Optional<Person> personOpt = personRepository.findById(id);
-//        if (personOpt.isPresent()) {
-//            Person person = personOpt.get();
-//            person.setPassword(null);
-//            return person;
-//        } else {
-//            throw new NotFoundException("p-001", "id", id);
-//        }
-//    }
-//
-//
-//    @Override
-//    public List<PersonDto> search(PersonDto filterDto, String[] sortBy, int pageSize, int pageNumber) {
-//        return null;
-//    }
-//
-//    @Override
-//    public List<Person> searchEntities(Person filter, String[] sortBy, int pageSize, int pageNumber) {
-//        return null;
-//    }
-//
-//    @Override
-//    public List<Person> searchEntities(Person filter, int pageSize, int pageNumber) {
-//        return null;
-//    }
-//
-//
-//    @Override
-//    public PersonDto update(String id, PersonDto personDto) {
-//        return null;
-//    }
-//
-//    @Override
-//    public Person updateEntity(String id, Person person) {
-//        return null;
-//    }
-//
-//
-//    @Override
-//    public void delete(String id) {
-//
-//    }
-//
-//    private Person saveToDatabase(Person person) {
-//        try {
-//            String textToEncode = person.getUsername() + ":" + person.getPassword();
-//            String encodedPassword = passwordEncoder.encode(textToEncode);
-//            Person personToSave = person.toBuilder().password(encodedPassword).build();
-//
-//            Person savedPerson = personRepository.save(personToSave);
-//            savedPerson.setPassword(null);
-//            return savedPerson;
-//        } catch (DataIntegrityViolationException e) {
-//            throw new ConflictException("p-002", "person", e.getLocalizedMessage());
-//        }
-//    }

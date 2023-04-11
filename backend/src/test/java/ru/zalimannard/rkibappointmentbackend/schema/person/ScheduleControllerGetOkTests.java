@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Epic("Человек")
 @Feature("Получение человека")
 @Story("Успешное получение")
-public class PersonControllerGetOkTests {
+public class ScheduleControllerGetOkTests {
 
     private final String defaultPassword = "password";
     @Autowired

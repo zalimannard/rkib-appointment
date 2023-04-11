@@ -2,7 +2,6 @@ package ru.zalimannard.rkibappointmentbackend.schema.schedule;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.zalimannard.rkibappointmentbackend.schema.application.ApplicationDto;
@@ -13,7 +12,6 @@ import ru.zalimannard.rkibappointmentbackend.schema.schedule.status.ScheduleStat
 import java.util.Date;
 
 @Data
-@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class ScheduleDto {
@@ -21,28 +19,28 @@ public class ScheduleDto {
     @JsonProperty(value = "id", access = JsonProperty.Access.READ_ONLY)
     private String id;
 
-    @JsonProperty("doctorId")
+    @JsonProperty(value = "doctorId", access = JsonProperty.Access.WRITE_ONLY)
     private String doctorId;
 
-    @JsonProperty("doctor")
+    @JsonProperty(value = "doctor", access = JsonProperty.Access.READ_ONLY)
     private PersonDto doctor;
 
-    @JsonProperty("favorId")
+    @JsonProperty(value = "favorId", access = JsonProperty.Access.WRITE_ONLY)
     private String favorId;
 
-    @JsonProperty("favor")
+    @JsonProperty(value = "favor", access = JsonProperty.Access.READ_ONLY)
     private FavorDto favor;
 
-    @JsonProperty("applicationId")
+    @JsonProperty(value = "applicationId", access = JsonProperty.Access.WRITE_ONLY)
     private String applicationId;
 
-    @JsonProperty("application")
+    @JsonProperty(value = "application", access = JsonProperty.Access.READ_ONLY)
     private ApplicationDto application;
 
-    @JsonProperty("statusId")
+    @JsonProperty(value = "statusId", access = JsonProperty.Access.WRITE_ONLY)
     private String statusId;
 
-    @JsonProperty("status")
+    @JsonProperty(value = "status", access = JsonProperty.Access.READ_ONLY)
     private ScheduleStatusDto status;
 
     @JsonProperty("appointmentTimestamp")

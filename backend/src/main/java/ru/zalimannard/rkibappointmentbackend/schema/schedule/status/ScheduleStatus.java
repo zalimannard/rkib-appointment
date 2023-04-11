@@ -4,17 +4,17 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import ru.zalimannard.rkibappointmentbackend.schema.schedule.status.type.ScheduleStatusType;
 
 @Entity
 @Table(name = "schedule_statuses")
-@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@EqualsAndHashCode(of = "id")
 public class ScheduleStatus {
 
     @Id

@@ -3,7 +3,6 @@ package ru.zalimannard.rkibappointmentbackend.schema.person;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.zalimannard.rkibappointmentbackend.schema.person.gender.PersonGender;
 
@@ -43,16 +42,16 @@ public interface PersonRepository extends JpaRepository<Person, String> {
             AND
                 (:endBirthdate IS NULL OR p.birthdate <= :endBirthdate)
             """)
-    List<Person> search(@Param("username") String username,
-                        @Param("lastName") String lastName,
-                        @Param("firstName") String firstName,
-                        @Param("patronymic") String patronymic,
-                        @Param("phoneNumber") String phoneNumber,
-                        @Param("address") String address,
-                        @Param("occupation") String occupation,
-                        @Param("gender") PersonGender gender,
-                        @Param("beginBirthdate") Date beginBirthdate,
-                        @Param("endBirthdate") Date endBirthdate,
+    List<Person> search(String username,
+                        String lastName,
+                        String firstName,
+                        String patronymic,
+                        String phoneNumber,
+                        String address,
+                        String occupation,
+                        PersonGender gender,
+                        Date beginBirthdate,
+                        Date endBirthdate,
                         Pageable pageable);
 
 }

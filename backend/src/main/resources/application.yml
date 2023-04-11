@@ -23,7 +23,7 @@ application:
     registration: /registration
     persons: /persons
     institution: /institutions
-    schedule: /schedule
+    schedule: /schedules
     scheduleStatus: /scheduleStatuses
     favor: /favors
     application: /applications

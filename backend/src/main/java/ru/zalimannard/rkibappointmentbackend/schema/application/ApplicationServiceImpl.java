@@ -1,4 +1,4 @@
-package ru.zalimannard.rkibappointmentbackend.schema.institution;
+package ru.zalimannard.rkibappointmentbackend.schema.application;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -17,99 +17,104 @@ import java.util.Optional;
 @Service
 @Validated
 @RequiredArgsConstructor
-public class InstitutionServiceImpl implements InstitutionService {
+public class ApplicationServiceImpl implements ApplicationService {
 
-    private final InstitutionMapper mapper;
-    private final InstitutionRepository repository;
+    private final ApplicationMapper mapper;
+    private final ApplicationRepository repository;
 
     @Override
-    public InstitutionDto create(InstitutionDto institutionDto) {
-        Institution request = mapper.toEntity(institutionDto);
+    public ApplicationDto create(ApplicationDto applicationDto) {
+        Application request = mapper.toEntity(applicationDto);
 
-        Institution response = createEntity(request);
+        Application response = createEntity(request);
 
         return mapper.toDto(response);
     }
 
     @Override
-    public Institution createEntity(Institution institution) {
+    public Application createEntity(Application application) {
         try {
-            return repository.save(institution);
+            return repository.save(application);
         } catch (DataIntegrityViolationException e) {
-            throw new ConflictException("ins-01", "institution", e.getLocalizedMessage());
+            throw new ConflictException("aps-01", "application", e.getLocalizedMessage());
         }
     }
 
 
     @Override
-    public InstitutionDto read(String id) {
-        Institution response = readEntity(id);
+    public ApplicationDto read(String id) {
+        Application response = readEntity(id);
 
         return mapper.toDto(response);
     }
 
 
     @Override
-    public Institution readEntity(String id) {
-        Optional<Institution> responseOptional = repository.findById(id);
+    public Application readEntity(String id) {
+        Optional<Application> responseOptional = repository.findById(id);
         if (responseOptional.isPresent()) {
             return responseOptional.get();
         } else {
-            throw new NotFoundException("ins-02", "id", id);
+            throw new NotFoundException("aps-02", "id", id);
         }
     }
 
     @Override
-    public List<InstitutionDto> search(InstitutionDto filterDto, String[] sortBy,
+    public List<ApplicationDto> search(ApplicationDto filterDto, String[] sortBy,
                                        int pageSize, int pageNumber) {
-        Institution filter = mapper.toEntity(filterDto);
+        Application filter = mapper.toEntity(filterDto);
 
-        List<Institution> response = searchEntities(filter, sortBy, pageSize, pageNumber);
+        List<Application> response = searchEntities(filter, sortBy, pageSize, pageNumber);
 
         return mapper.toDtoList(response);
     }
 
     @Override
-    public List<Institution> searchEntities(Institution filter, String[] sortBy,
+    public List<Application> searchEntities(Application filter, String[] sortBy,
                                             int pageSize, int pageNumber) {
         List<Sort.Order> orders = Utils.ordersByStringArray(sortBy);
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(orders));
 
         return repository.search(
-                filter.getName(),
+                filter.getPatient(),
+                filter.getSendingInstitution(),
+                filter.getStatus(),
+                filter.getDoctorNote(),
+                filter.getFinalDiagnosis(),
+                filter.getCommentary(),
                 pageable);
     }
 
     @Override
-    public List<Institution> searchEntities(Institution filter,
+    public List<Application> searchEntities(Application filter,
                                             int pageSize, int pageNumber) {
         String sortByFromProperties = "${application.constant.defaultSort}";
         String[] sortBy;
         try {
             sortBy = sortByFromProperties.split(",");
         } catch (NullPointerException e) {
-            throw new NotFoundException("ins-03", "defaultSort", null);
+            throw new NotFoundException("aps-03", "defaultSort", null);
         }
         return searchEntities(filter, sortBy, pageSize, pageNumber);
     }
 
 
     @Override
-    public InstitutionDto update(String id, InstitutionDto institutionDto) {
-        Institution request = mapper.toEntity(institutionDto);
+    public ApplicationDto update(String id, ApplicationDto applicationDto) {
+        Application request = mapper.toEntity(applicationDto);
 
-        Institution response = updateEntity(id, request);
+        Application response = updateEntity(id, request);
 
         return mapper.toDto(response);
     }
 
     @Override
-    public Institution updateEntity(String id, Institution institution) {
+    public Application updateEntity(String id, Application application) {
         if (repository.existsById(id)) {
-            institution.setId(id);
-            return repository.save(institution);
+            application.setId(id);
+            return repository.save(application);
         } else {
-            throw new NotFoundException("ins-04", "id", id);
+            throw new NotFoundException("aps-04", "id", id);
         }
     }
 
@@ -119,7 +124,7 @@ public class InstitutionServiceImpl implements InstitutionService {
         if (repository.existsById(id)) {
             repository.deleteById(id);
         } else {
-            throw new NotFoundException("ins-05", "id", id);
+            throw new NotFoundException("aps-05", "id", id);
         }
     }
 

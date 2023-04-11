@@ -3,7 +3,6 @@ package ru.zalimannard.rkibappointmentbackend.schema.favor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,7 +18,7 @@ public interface FavorRepository extends JpaRepository<Favor, String> {
             WHERE
                 (:name IS NULL OR lower(f.name) LIKE lower(concat('%', :name, '%')))
             """)
-    List<Favor> search(@Param("name") String name,
+    List<Favor> search(String name,
                        Pageable pageable);
 
 }
