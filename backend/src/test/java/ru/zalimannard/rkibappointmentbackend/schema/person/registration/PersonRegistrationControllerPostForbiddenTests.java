@@ -46,7 +46,7 @@ class PersonRegistrationControllerPostForbiddenTests {
     @Test
     @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Негативный тест. Регистрация под войденным аккаунтом")
-    void correctRegistrationWithoutUsername() {
+    void registrationWithoutUsername() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = PersonRegistrationDto.builder()

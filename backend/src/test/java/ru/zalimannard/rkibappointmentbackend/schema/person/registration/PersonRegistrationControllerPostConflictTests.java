@@ -38,7 +38,7 @@ class PersonRegistrationControllerPostConflictTests {
     @Test
     @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Негативный тест. Регистрация одинакового пользователя 2 раза")
-    void correctRegistrationWithoutUsername() {
+    void registrationWithoutUsername() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = PersonRegistrationDto.builder()

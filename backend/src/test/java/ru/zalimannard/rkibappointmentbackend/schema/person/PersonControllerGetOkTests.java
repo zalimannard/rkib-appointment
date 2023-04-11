@@ -2,6 +2,7 @@ package ru.zalimannard.rkibappointmentbackend.schema.person;
 
 import io.qameta.allure.*;
 import io.restassured.RestAssured;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Epic("Человек")
 @Feature("Получение человека")
-@Story("Успешное Получение")
+@Story("Успешное получение")
 public class PersonControllerGetOkTests {
 
     private final String defaultPassword = "password";
@@ -57,21 +58,141 @@ public class PersonControllerGetOkTests {
                 .occupation("Рабочий завода")
                 .roles(List.of(PersonRole.PATIENT))
                 .build();
+        RestAssured.requestSpecification = Specifications.requestSpec();
     }
 
     @Test
     @Severity(SeverityLevel.BLOCKER)
-    @DisplayName("Позитивный тест. Добавление пользователя с полными корректными параметрами админом")
-    void correctCreateUserByAdmin() {
-        RestAssured.requestSpecification = Specifications.requestSpec();
-
-        String username = "userPostO1";
+    @DisplayName("Позитивный тест. Получение пациента админом")
+    void getUserByAdmin() {
+        String patientUsername = "userGetOk-1";
         PersonDto requestPerson = defaultPersonRequest.toBuilder()
-                .username(username)
+                .username(patientUsername)
                 .build();
 
-        PersonDto createdPerson = PersonSteps.post(requestPerson, adminAuth);
-        assertThat(createdPerson).isNotNull();
+        PersonDto createdPatient = PersonSteps.post(requestPerson, adminAuth);
+        assertThat(createdPatient).isNotNull();
+
+        PersonDto gotPatient = PersonSteps.get(createdPatient.getId(), adminAuth);
+        Assertions.assertEquals(createdPatient, gotPatient);
+    }
+
+    @Test
+    @Severity(SeverityLevel.BLOCKER)
+    @DisplayName("Позитивный тест. Получение пациента регистратором")
+    void getUserByRegistrar() {
+        String registrarUsername = "registrarGetOk-2";
+        String patientUsername = "patientGetOk-2";
+
+        PersonDto registrar = defaultPersonRequest.toBuilder()
+                .username(registrarUsername)
+                .roles(List.of(PersonRole.REGISTRAR))
+                .build();
+        String registrarAuth = passwordEncoder.encode(PersonDtoToAuthConverter.convert(registrar));
+        PersonSteps.post(registrar, adminAuth);
+
+        PersonDto patient = defaultPersonRequest.toBuilder()
+                .username(patientUsername)
+                .build();
+        PersonDto createdPatient = PersonSteps.post(patient, adminAuth);
+
+        PersonDto gotPatient = PersonSteps.get(createdPatient.getId(), registrarAuth);
+        Assertions.assertEquals(createdPatient, gotPatient);
+    }
+
+    @Test
+    @Severity(SeverityLevel.BLOCKER)
+    @DisplayName("Позитивный тест. Получение пациента доктором")
+    void getUserByDoctor() {
+        String doctorUsername = "doctorGetOk-3";
+        String patientUsername = "patientGetOk-3";
+
+        PersonDto doctor = defaultPersonRequest.toBuilder()
+                .username(doctorUsername)
+                .roles(List.of(PersonRole.DOCTOR))
+                .build();
+        String doctorAuth = passwordEncoder.encode(PersonDtoToAuthConverter.convert(doctor));
+        PersonSteps.post(doctor, adminAuth);
+
+        PersonDto patient = defaultPersonRequest.toBuilder()
+                .username(patientUsername)
+                .build();
+        PersonDto createdPatient = PersonSteps.post(patient, adminAuth);
+
+        PersonDto gotPatient = PersonSteps.get(createdPatient.getId(), doctorAuth);
+        Assertions.assertEquals(createdPatient, gotPatient);
+    }
+
+    @Test
+    @Severity(SeverityLevel.BLOCKER)
+    @DisplayName("Позитивный тест. Получение регистратора доктором")
+    void getRegistrarByDoctor() {
+        String doctorUsername = "doctorGetOk-4";
+        String registrarUsername = "registrarGetOk-4";
+
+        PersonDto doctor = defaultPersonRequest.toBuilder()
+                .username(doctorUsername)
+                .roles(List.of(PersonRole.DOCTOR))
+                .build();
+        String doctorAuth = passwordEncoder.encode(PersonDtoToAuthConverter.convert(doctor));
+        PersonSteps.post(doctor, adminAuth);
+
+        PersonDto registrar = defaultPersonRequest.toBuilder()
+                .username(registrarUsername)
+                .roles(List.of(PersonRole.REGISTRAR))
+                .build();
+        PersonDto createdRegistrar = PersonSteps.post(registrar, adminAuth);
+
+        PersonDto gotRegistrar = PersonSteps.get(createdRegistrar.getId(), doctorAuth);
+        Assertions.assertEquals(createdRegistrar, gotRegistrar);
+    }
+
+    @Test
+    @Severity(SeverityLevel.BLOCKER)
+    @DisplayName("Позитивный тест. Получение доктора регистратором")
+    void getDoctorByRegistrar() {
+        String registrarUsername = "registrarGetOk-5";
+        String doctorUsername = "doctorGetOk-5";
+
+        PersonDto registrar = defaultPersonRequest.toBuilder()
+                .username(doctorUsername)
+                .roles(List.of(PersonRole.REGISTRAR))
+                .build();
+        String registrarAuth = passwordEncoder.encode(PersonDtoToAuthConverter.convert(registrar));
+        PersonSteps.post(registrar, adminAuth);
+
+        PersonDto doctor = defaultPersonRequest.toBuilder()
+                .username(registrarUsername)
+                .roles(List.of(PersonRole.DOCTOR))
+                .build();
+        PersonDto createdDoctor = PersonSteps.post(doctor, adminAuth);
+
+        PersonDto gotDoctor = PersonSteps.get(createdDoctor.getId(), registrarAuth);
+        Assertions.assertEquals(createdDoctor, gotDoctor);
+    }
+
+    @Test
+    @Severity(SeverityLevel.BLOCKER)
+    @DisplayName("Позитивный тест. Пациент получает человека с ролями пациент и доктор")
+    void getDoctorAndPatientByPatient() {
+        String patientUsername = "patientGetOk-6";
+        String doctorPatientUsername = "doctorPatientGetOk-6";
+
+        PersonDto patient = defaultPersonRequest.toBuilder()
+                .username(patientUsername)
+                .roles(List.of(PersonRole.PATIENT))
+                .build();
+        String patientAuth = passwordEncoder.encode(PersonDtoToAuthConverter.convert(patient));
+        PersonSteps.post(patient, adminAuth);
+
+        PersonDto doctorPatient = defaultPersonRequest.toBuilder()
+                .username(doctorPatientUsername)
+                .roles(List.of(PersonRole.DOCTOR, PersonRole.PATIENT))
+                .build();
+        PersonDto createdDoctorPatient = PersonSteps.post(doctorPatient, adminAuth);
+
+        PersonDto gotDoctorPatient = PersonSteps.get(createdDoctorPatient.getId(), patientAuth);
+        Assertions.assertEquals(createdDoctorPatient, gotDoctorPatient);
     }
 
 }

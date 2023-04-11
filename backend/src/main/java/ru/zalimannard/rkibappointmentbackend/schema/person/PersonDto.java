@@ -20,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 public class PersonDto {
 
-    @JsonProperty("id")
+    @JsonProperty(value = "id", access = JsonProperty.Access.READ_ONLY)
     private String id;
 
     @JsonProperty("username")

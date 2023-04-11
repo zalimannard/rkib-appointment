@@ -49,7 +49,7 @@ class PersonRegistrationControllerPostBadRequestTests {
     @Test
     @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Негативный тест. Регистрация без имени пользователя")
-    void correctRegistrationWithoutUsername() {
+    void registrationWithoutUsername() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -63,7 +63,7 @@ class PersonRegistrationControllerPostBadRequestTests {
     @Test
     @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Негативный тест. Регистрация с пустым именем пользователя")
-    void correctRegistrationEmptyUsername() {
+    void registrationEmptyUsername() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -77,7 +77,7 @@ class PersonRegistrationControllerPostBadRequestTests {
     @Test
     @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Негативный тест. Регистрация без пароля")
-    void correctRegistrationWithoutPassword() {
+    void registrationWithoutPassword() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -92,7 +92,7 @@ class PersonRegistrationControllerPostBadRequestTests {
     @Test
     @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Негативный тест. Регистрация с пустым паролем")
-    void correctRegistrationEmptyPassword() {
+    void registrationEmptyPassword() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -106,7 +106,7 @@ class PersonRegistrationControllerPostBadRequestTests {
 
     @Test
     @DisplayName("Негативный тест. Регистрация без фамилии")
-    void correctRegistrationWithoutLastname() {
+    void registrationWithoutLastname() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -120,7 +120,7 @@ class PersonRegistrationControllerPostBadRequestTests {
 
     @Test
     @DisplayName("Негативный тест. Регистрация с пустой фамилией")
-    void correctRegistrationEmptyLastname() {
+    void registrationEmptyLastname() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -134,7 +134,7 @@ class PersonRegistrationControllerPostBadRequestTests {
 
     @Test
     @DisplayName("Негативный тест. Регистрация без имени")
-    void correctRegistrationWithoutFirstname() {
+    void registrationWithoutFirstname() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -148,7 +148,7 @@ class PersonRegistrationControllerPostBadRequestTests {
 
     @Test
     @DisplayName("Негативный тест. Регистрация с пустым именем")
-    void correctRegistrationEmptyFirstname() {
+    void registrationEmptyFirstname() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -162,7 +162,7 @@ class PersonRegistrationControllerPostBadRequestTests {
 
     @Test
     @DisplayName("Негативный тест. Регистрация с пустым отчеством")
-    void correctRegistrationEmptyPatronymic() {
+    void registrationEmptyPatronymic() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -176,7 +176,7 @@ class PersonRegistrationControllerPostBadRequestTests {
 
     @Test
     @DisplayName("Негативный тест. Регистрация без пола")
-    void correctRegistrationWithoutGender() {
+    void registrationWithoutGender() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -190,7 +190,7 @@ class PersonRegistrationControllerPostBadRequestTests {
 
     @Test
     @DisplayName("Негативный тест. Регистрация с пустым номером телефона")
-    void correctRegistrationEmptyPhoneNumber() {
+    void registrationEmptyPhoneNumber() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -204,7 +204,7 @@ class PersonRegistrationControllerPostBadRequestTests {
 
     @Test
     @DisplayName("Негативный тест. Регистрация с номером телефона недостаточной длины")
-    void correctRegistrationSmallPhoneNumber() {
+    void registrationSmallPhoneNumber() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -218,7 +218,7 @@ class PersonRegistrationControllerPostBadRequestTests {
 
     @Test
     @DisplayName("Негативный тест. Регистрация с номером телефона избыточной длины")
-    void correctRegistrationLargePhoneNumber() {
+    void registrationLargePhoneNumber() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -232,7 +232,7 @@ class PersonRegistrationControllerPostBadRequestTests {
 
     @Test
     @DisplayName("Негативный тест. Регистрация с номером телефона содержащим не только цифры")
-    void correctRegistrationNotDigitPhoneNumber() {
+    void registrationNotDigitPhoneNumber() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -246,7 +246,7 @@ class PersonRegistrationControllerPostBadRequestTests {
 
     @Test
     @DisplayName("Негативный тест. Дата рождения в будущем")
-    void correctRegistrationFutureBirthdate() {
+    void registrationFutureBirthdate() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -260,7 +260,7 @@ class PersonRegistrationControllerPostBadRequestTests {
 
     @Test
     @DisplayName("Негативный тест. Регистрация с пустым адресом")
-    void correctRegistrationEmptyAddress() {
+    void registrationEmptyAddress() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -274,7 +274,7 @@ class PersonRegistrationControllerPostBadRequestTests {
 
     @Test
     @DisplayName("Негативный тест. Регистрация с пустой занятостью")
-    void correctRegistrationEmptyOccupation() {
+    void registrationEmptyOccupation() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -289,7 +289,7 @@ class PersonRegistrationControllerPostBadRequestTests {
     @Test
     @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Негативный тест. Регистрация с пробельным именем пользователя")
-    void correctRegistrationSpacedUsername() {
+    void registrationSpacedUsername() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -303,7 +303,7 @@ class PersonRegistrationControllerPostBadRequestTests {
     @Test
     @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Негативный тест. Регистрация с пробельным паролем")
-    void correctRegistrationSpacedPassword() {
+    void registrationSpacedPassword() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -317,7 +317,7 @@ class PersonRegistrationControllerPostBadRequestTests {
 
     @Test
     @DisplayName("Негативный тест. Регистрация с пробельной фамилией")
-    void correctRegistrationSpacedLastname() {
+    void registrationSpacedLastname() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -331,7 +331,7 @@ class PersonRegistrationControllerPostBadRequestTests {
 
     @Test
     @DisplayName("Негативный тест. Регистрация с пробельным именем")
-    void correctRegistrationSpacedFirstname() {
+    void registrationSpacedFirstname() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -345,7 +345,7 @@ class PersonRegistrationControllerPostBadRequestTests {
 
     @Test
     @DisplayName("Негативный тест. Регистрация с пробельным отчеством")
-    void correctRegistrationSpacedPatronymic() {
+    void registrationSpacedPatronymic() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -359,7 +359,7 @@ class PersonRegistrationControllerPostBadRequestTests {
 
     @Test
     @DisplayName("Негативный тест. Регистрация с пробельным номером телефона")
-    void correctRegistrationSpacedPhoneNumber() {
+    void registrationSpacedPhoneNumber() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -373,7 +373,7 @@ class PersonRegistrationControllerPostBadRequestTests {
 
     @Test
     @DisplayName("Негативный тест. Регистрация с пробельным адресом")
-    void correctRegistrationSpacedAddress() {
+    void registrationSpacedAddress() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -387,7 +387,7 @@ class PersonRegistrationControllerPostBadRequestTests {
 
     @Test
     @DisplayName("Негативный тест. Регистрация с пробельным занятостью")
-    void correctRegistrationSpacedOccupation() {
+    void registrationSpacedOccupation() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -402,7 +402,7 @@ class PersonRegistrationControllerPostBadRequestTests {
     @Test
     @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Негативный тест. Регистрация с именем пользователя на русском")
-    void correctRegistrationRussianUsername() {
+    void registrationRussianUsername() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -416,7 +416,7 @@ class PersonRegistrationControllerPostBadRequestTests {
     @Test
     @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Негативный тест. Регистрация с именем пользователя с пробелом")
-    void correctRegistrationUsernameWithSpace() {
+    void registrationUsernameWithSpace() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -430,7 +430,7 @@ class PersonRegistrationControllerPostBadRequestTests {
     @Test
     @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Негативный тест. Регистрация с паролем с русскими символами")
-    void correctRegistrationRussianPassword() {
+    void registrationRussianPassword() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
@@ -445,7 +445,7 @@ class PersonRegistrationControllerPostBadRequestTests {
     @Test
     @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Негативный тест. Регистрация с паролем с пробелами")
-    void correctRegistrationPasswordWithSpace() {
+    void registrationPasswordWithSpace() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()

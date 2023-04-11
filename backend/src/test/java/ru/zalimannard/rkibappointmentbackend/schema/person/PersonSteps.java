@@ -82,6 +82,13 @@ public class PersonSteps {
     }
 
     @Step
+    public static ExceptionResponse getExpectedForbidden(String id, String auth) {
+        return baseGet(id, auth)
+                .statusCode(403)
+                .extract().as(ExceptionResponse.class);
+    }
+
+    @Step
     public static ExceptionResponse getExpectedNotFound(String id, String auth) {
         return baseGet(id, auth)
                 .statusCode(404)
