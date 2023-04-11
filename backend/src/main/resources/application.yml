@@ -1,3 +1,6 @@
+server:
+  port: 8116
+
 spring:
   application:
     name: rkib-appointment-backend
@@ -8,3 +11,20 @@ spring:
   jpa:
     hibernate:
       ddl-auto: ${DDL_BEHAVIOUR}
+
+springdoc:
+  swagger-ui:
+    path: /docs/api
+
+application:
+  constant:
+    defaultSort: id,asc
+  endpoint:
+    registration: /registration
+    persons: /persons
+    institution: /institutions
+    schedule: /schedules
+    scheduleStatus: /scheduleStatuses
+    favor: /favors
+    application: /applications
+    applicationStatus: /applicationStatuses
