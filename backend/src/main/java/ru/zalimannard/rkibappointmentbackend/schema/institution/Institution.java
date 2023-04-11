@@ -2,11 +2,17 @@ package ru.zalimannard.rkibappointmentbackend.schema.institution;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.EqualsAndHashCode;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "institution")
-@EqualsAndHashCode(of = "id")
+@Table(name = "institutions")
+@Builder(toBuilder = true)
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class Institution {
 
     @Id

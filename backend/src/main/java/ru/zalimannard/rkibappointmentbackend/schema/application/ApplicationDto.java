@@ -21,6 +21,9 @@ public class ApplicationDto {
     @JsonProperty("patient")
     private Person patient;
 
+    @JsonProperty("patientId")
+    private Person patientId;
+
     @JsonProperty(value = "sendingInstitutionId", access = JsonProperty.Access.WRITE_ONLY)
     private String sendingInstitutionId;
 

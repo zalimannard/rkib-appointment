@@ -2,7 +2,10 @@ package ru.zalimannard.rkibappointmentbackend.schema.application;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import ru.zalimannard.rkibappointmentbackend.schema.application.status.ApplicationStatus;
 import ru.zalimannard.rkibappointmentbackend.schema.institution.Institution;
@@ -10,6 +13,9 @@ import ru.zalimannard.rkibappointmentbackend.schema.person.Person;
 
 @Entity
 @Table(name = "applications")
+@Builder(toBuilder = true)
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class Application {
 

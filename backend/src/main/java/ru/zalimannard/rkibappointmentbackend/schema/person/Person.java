@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "people")
+@Table(name = "persons")
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
@@ -59,7 +59,7 @@ public class Person {
 
     @Column(name = "address")
     @Length(min = 1, message = "Если указан адрес, то он должен быть ненулевой длины")
-    @Pattern(regexp = "[a-zA-Zа-яА-ЯЁё().,-]+([ ]?[a-zA-Zа-яА-ЯЁё().,-]+)*", message = "Недопустимые символы в адресе")
+    @Pattern(regexp = "[a-zA-Z0-9а-яА-ЯЁё/().,-]+([ ]?[a-zA-Z0-9а-яА-ЯЁё/().,-]*)*", message = "Недопустимые символы в адресе")
     private String address;
 
     @Column(name = "occupation")

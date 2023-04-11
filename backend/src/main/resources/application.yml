@@ -17,6 +17,14 @@ springdoc:
     path: /docs/api
 
 application:
+  constant:
+    defaultSort: id,asc
   endpoint:
     registration: /registration
     persons: /persons
+    institution: /institutions
+    schedule: /schedule
+    scheduleStatus: /scheduleStatuses
+    favor: /favors
+    application: /applications
+    applicationStatus: /applicationStatuses

@@ -3,11 +3,17 @@ package ru.zalimannard.rkibappointmentbackend.schema.schedule.status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.zalimannard.rkibappointmentbackend.schema.schedule.status.type.ScheduleStatusType;
 
 @Entity
-@Table(name = "оchedule_statuses")
+@Table(name = "schedule_statuses")
+@Builder(toBuilder = true)
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class ScheduleStatus {
 

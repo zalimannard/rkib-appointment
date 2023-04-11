@@ -40,9 +40,7 @@ public class WebSecurityConfig {
                         .anyRequest().denyAll()
                 )
                 .httpBasic(Customizer.withDefaults())
-                .sessionManagement().disable()
-                .exceptionHandling().authenticationEntryPoint(new RestAuthenticationEntryPoint())
-                .accessDeniedHandler(new RestAccessDeniedHandler());
+                .sessionManagement().disable();
         return http.build();
     }
 
