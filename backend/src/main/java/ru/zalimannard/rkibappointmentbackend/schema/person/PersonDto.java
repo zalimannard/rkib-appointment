@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import ru.zalimannard.rkibappointmentbackend.schema.person.gender.PersonGender;
 import ru.zalimannard.rkibappointmentbackend.schema.person.role.PersonRole;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +19,22 @@ import java.util.List;
 @AllArgsConstructor
 public class PersonDto {
 
-    @JsonProperty(value = "id", access = JsonProperty.Access.READ_ONLY)
+    public PersonDto(PersonDto other) {
+        id = other.getId();
+        username = other.getUsername();
+        password = other.getPassword();
+        lastName = other.getLastName();
+        firstName = other.getFirstName();
+        patronymic = other.getPatronymic();
+        phoneNumber = other.getPhoneNumber();
+        birthdate = other.getBirthdate();
+        address = other.getAddress();
+        occupation = other.getOccupation();
+        gender = other.getGender();
+        roles = other.getRoles().stream().toList();
+    }
+
+    @JsonProperty("id")
     private String id;
 
     @JsonProperty("username")

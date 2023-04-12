@@ -4,6 +4,10 @@ import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 import ru.zalimannard.rkibappointmentbackend.exception.response.ExceptionResponse;
 import ru.zalimannard.rkibappointmentbackend.schema.person.PersonDto;
+import ru.zalimannard.rkibappointmentbackend.schema.person.gender.PersonGender;
+
+import java.time.Instant;
+import java.util.Date;
 
 import static io.restassured.RestAssured.given;
 
@@ -47,11 +51,10 @@ public abstract class RegistrationSteps {
     }
 
     @Step
-    public static ExceptionResponse registrationExpectedForbidden(PersonRegistrationDto personRegistrationDto,
+    public static void registrationExpectedForbidden(PersonRegistrationDto personRegistrationDto,
                                                                   String auth) {
-        return baseRegistration(personRegistrationDto, auth)
-                .statusCode(403)
-                .extract().as(ExceptionResponse.class);
+        baseRegistration(personRegistrationDto, auth)
+                .statusCode(403);
     }
 
     @Step

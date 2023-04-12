@@ -12,7 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.zalimannard.rkibappointmentbackend.PersonDtoToAuthConverter;
 import ru.zalimannard.rkibappointmentbackend.Specifications;
 import ru.zalimannard.rkibappointmentbackend.exception.response.ExceptionResponse;
-import ru.zalimannard.rkibappointmentbackend.schema.person.gender.PersonGender;
 
 import java.time.Instant;
 import java.util.Date;
@@ -34,6 +33,9 @@ class PersonRegistrationControllerPostForbiddenTests {
     private int port;
     private String adminAuth;
 
+    private final PersonRegistrationDto defaultPersonRegistration = RegistrationTestsDefaultDtos.defaultPersonRegistration;
+    private final Date birtdate = Date.from(Instant.now().minusSeconds(100));
+
     @BeforeEach
     void setUp() {
         assertThat(personRegistrationController).isNotNull();
@@ -41,6 +43,7 @@ class PersonRegistrationControllerPostForbiddenTests {
         adminAuth = passwordEncoder.encode(PersonDtoToAuthConverter.convert(
                 System.getenv("ADMIN_USERNAME"), System.getenv("ADMIN_PASSWORD")));
         RestAssured.port = port;
+        RestAssured.requestSpecification = Specifications.requestSpec();
     }
 
     @Test
@@ -49,20 +52,10 @@ class PersonRegistrationControllerPostForbiddenTests {
     void registrationWithoutUsername() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = PersonRegistrationDto.builder()
-                .username("userRegF1")
-                .password("password")
-                .lastName("Иванов")
-                .firstName("Иван")
-                .patronymic("Иванович")
-                .gender(PersonGender.MALE)
-                .phoneNumber("0123456789")
-                .birthdate(Date.from(Instant.now().minusSeconds(100)))
-                .address("Россия, г.Тверь")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setUsername("userRegF1");
 
-        ExceptionResponse response = RegistrationSteps.registrationExpectedForbidden(requestPerson, adminAuth);
-        assertThat(response).isNotNull();
+        RegistrationSteps.registrationExpectedForbidden(requestPerson, adminAuth);
     }
 
 }

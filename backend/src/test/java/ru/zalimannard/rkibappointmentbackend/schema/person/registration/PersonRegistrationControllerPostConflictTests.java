@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import ru.zalimannard.rkibappointmentbackend.Specifications;
 import ru.zalimannard.rkibappointmentbackend.exception.response.ExceptionResponse;
-import ru.zalimannard.rkibappointmentbackend.schema.person.gender.PersonGender;
 
 import java.time.Instant;
 import java.util.Date;
@@ -29,10 +28,14 @@ class PersonRegistrationControllerPostConflictTests {
     @LocalServerPort
     private int port;
 
+    private final PersonRegistrationDto defaultPersonRegistration = RegistrationTestsDefaultDtos.defaultPersonRegistration;
+    private final Date birtdate = Date.from(Instant.now().minusSeconds(100));
+
     @BeforeEach
     void setUp() {
         assertThat(personRegistrationController).isNotNull();
         RestAssured.port = port;
+        RestAssured.requestSpecification = Specifications.requestSpec();
     }
 
     @Test
@@ -41,17 +44,9 @@ class PersonRegistrationControllerPostConflictTests {
     void registrationWithoutUsername() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = PersonRegistrationDto.builder()
-                .username("userRegCon1")
-                .password("password")
-                .lastName("Иванов")
-                .firstName("Иван")
-                .patronymic("Иванович")
-                .gender(PersonGender.MALE)
-                .phoneNumber("0123456789")
-                .birthdate(Date.from(Instant.now().minusSeconds(100)))
-                .address("Россия, г.Тверь")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegCon1");
 
         RegistrationSteps.registration(requestPerson, null);
         ExceptionResponse response = RegistrationSteps.registrationExpectedConflict(requestPerson, null);

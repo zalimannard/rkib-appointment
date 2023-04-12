@@ -7,15 +7,28 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.zalimannard.rkibappointmentbackend.schema.person.PersonDto;
 import ru.zalimannard.rkibappointmentbackend.schema.person.gender.PersonGender;
 
 import java.util.Date;
 
 @Data
-@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class PersonRegistrationDto {
+
+    public PersonRegistrationDto(PersonRegistrationDto other) {
+        username = other.getUsername();
+        password = other.getPassword();
+        lastName = other.getLastName();
+        firstName = other.getFirstName();
+        patronymic = other.getPatronymic();
+        phoneNumber = other.getPhoneNumber();
+        birthdate = other.getBirthdate();
+        address = other.getAddress();
+        occupation = other.getOccupation();
+        gender = other.getGender();
+    }
 
     @JsonProperty("username")
     private String username;

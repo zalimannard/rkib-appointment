@@ -12,8 +12,8 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.zalimannard.rkibappointmentbackend.PersonDtoToAuthConverter;
 import ru.zalimannard.rkibappointmentbackend.Specifications;
-import ru.zalimannard.rkibappointmentbackend.schema.person.gender.PersonGender;
 import ru.zalimannard.rkibappointmentbackend.schema.person.registration.PersonRegistrationController;
+import ru.zalimannard.rkibappointmentbackend.schema.person.registration.RegistrationTestsDefaultDtos;
 import ru.zalimannard.rkibappointmentbackend.schema.person.role.PersonRole;
 
 import java.time.Instant;
@@ -26,9 +26,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Epic("Человек")
 @Feature("Добавление человека")
 @Story("Успешное добавление")
-class ScheduleControllerPostCreatedTests {
+class PersonControllerPostCreatedTests {
 
-    private final String defaultPassword = "password";
     @Autowired
     private PersonRegistrationController personRegistrationController;
     @Autowired
@@ -36,8 +35,8 @@ class ScheduleControllerPostCreatedTests {
     @LocalServerPort
     private int port;
     private String adminAuth;
-    private PersonDto defaultPersonRequest;
-    private PersonDto defaultPersonResponse;
+    private final PersonDto defaultPersonRequest = PersonTestsDefaultDtos.defaultPerson;
+    private final Date birtdate = Date.from(Instant.now().minusSeconds(100));
 
     @BeforeEach
     void setUp() {
@@ -45,23 +44,7 @@ class ScheduleControllerPostCreatedTests {
         adminAuth = passwordEncoder.encode(PersonDtoToAuthConverter.convert(
                 System.getenv("ADMIN_USERNAME"), System.getenv("ADMIN_PASSWORD")));
         RestAssured.port = port;
-
-        Date birthdate = Date.from(Instant.now().minusSeconds(100));
-        defaultPersonRequest = PersonDto.builder()
-                .password(defaultPassword)
-                .lastName("Иванов")
-                .firstName("Иван")
-                .patronymic("Иванович")
-                .gender(PersonGender.MALE)
-                .phoneNumber("0123456789")
-                .birthdate(birthdate)
-                .address("Россия, г.Тверь")
-                .occupation("Рабочий завода")
-                .roles(List.of(PersonRole.PATIENT))
-                .build();
-        defaultPersonResponse = defaultPersonRequest.toBuilder()
-                .password(null)
-                .build();
+        RestAssured.requestSpecification = Specifications.requestSpec();
     }
 
     @Test
@@ -71,19 +54,20 @@ class ScheduleControllerPostCreatedTests {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         String username = "userPostC1";
-        PersonDto requestPerson = defaultPersonRequest.toBuilder()
-                .username(username)
-                .build();
-        PersonDto expectedPerson = defaultPersonResponse.toBuilder()
-                .username(username)
-                .build();
+        PersonDto requestPerson = new PersonDto(defaultPersonRequest);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername(username);
+        PersonDto expectedPerson = new PersonDto(defaultPersonRequest);
+        expectedPerson.setBirthdate(birtdate);
+        expectedPerson.setUsername(username);
+        expectedPerson.setPassword(null);
 
         PersonDto createdPerson = PersonSteps.post(requestPerson, adminAuth);
-
         expectedPerson.setId(createdPerson.getId());
         Assertions.assertEquals(expectedPerson, createdPerson);
 
         PersonDto existedPerson = PersonSteps.get(createdPerson.getId(), adminAuth);
+        existedPerson.setPassword(null);
         Assertions.assertEquals(expectedPerson, existedPerson);
     }
 
@@ -94,14 +78,15 @@ class ScheduleControllerPostCreatedTests {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         String username = "doctorPostC2";
-        PersonDto requestPerson = defaultPersonRequest.toBuilder()
-                .username(username)
-                .roles(List.of(PersonRole.DOCTOR))
-                .build();
-        PersonDto expectedPerson = defaultPersonResponse.toBuilder()
-                .username(username)
-                .roles(List.of(PersonRole.DOCTOR))
-                .build();
+        PersonDto requestPerson = new PersonDto(defaultPersonRequest);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername(username);
+        requestPerson.setRoles(List.of(PersonRole.DOCTOR));
+        PersonDto expectedPerson = new PersonDto(defaultPersonRequest);
+        expectedPerson.setBirthdate(birtdate);
+        expectedPerson.setUsername(username);
+        expectedPerson.setPassword(null);
+        expectedPerson.setRoles(List.of(PersonRole.DOCTOR));
 
         PersonDto createdPerson = PersonSteps.post(requestPerson, adminAuth);
 
@@ -109,6 +94,7 @@ class ScheduleControllerPostCreatedTests {
         Assertions.assertEquals(expectedPerson, createdPerson);
 
         PersonDto existedPerson = PersonSteps.get(createdPerson.getId(), adminAuth);
+        existedPerson.setPassword(null);
         Assertions.assertEquals(expectedPerson, existedPerson);
     }
 
@@ -119,14 +105,15 @@ class ScheduleControllerPostCreatedTests {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         String username = "registrarPostC3";
-        PersonDto requestPerson = defaultPersonRequest.toBuilder()
-                .username(username)
-                .roles(List.of(PersonRole.REGISTRAR))
-                .build();
-        PersonDto expectedPerson = defaultPersonResponse.toBuilder()
-                .username(username)
-                .roles(List.of(PersonRole.REGISTRAR))
-                .build();
+        PersonDto requestPerson = new PersonDto(defaultPersonRequest);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername(username);
+        requestPerson.setRoles(List.of(PersonRole.REGISTRAR));
+        PersonDto expectedPerson = new PersonDto(defaultPersonRequest);
+        expectedPerson.setBirthdate(birtdate);
+        expectedPerson.setUsername(username);
+        expectedPerson.setPassword(null);
+        expectedPerson.setRoles(List.of(PersonRole.REGISTRAR));
 
         PersonDto createdPerson = PersonSteps.post(requestPerson, adminAuth);
 
@@ -134,6 +121,7 @@ class ScheduleControllerPostCreatedTests {
         Assertions.assertEquals(expectedPerson, createdPerson);
 
         PersonDto existedPerson = PersonSteps.get(createdPerson.getId(), adminAuth);
+        existedPerson.setPassword(null);
         Assertions.assertEquals(expectedPerson, existedPerson);
     }
 
@@ -144,14 +132,15 @@ class ScheduleControllerPostCreatedTests {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
         String username = "adminPostC4";
-        PersonDto requestPerson = defaultPersonRequest.toBuilder()
-                .username(username)
-                .roles(List.of(PersonRole.ADMIN))
-                .build();
-        PersonDto expectedPerson = defaultPersonResponse.toBuilder()
-                .username(username)
-                .roles(List.of(PersonRole.ADMIN))
-                .build();
+        PersonDto requestPerson = new PersonDto(defaultPersonRequest);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername(username);
+        requestPerson.setRoles(List.of(PersonRole.ADMIN));
+        PersonDto expectedPerson = new PersonDto(defaultPersonRequest);
+        expectedPerson.setBirthdate(birtdate);
+        expectedPerson.setUsername(username);
+        expectedPerson.setPassword(null);
+        expectedPerson.setRoles(List.of(PersonRole.ADMIN));
 
         PersonDto createdPerson = PersonSteps.post(requestPerson, adminAuth);
 
@@ -159,6 +148,7 @@ class ScheduleControllerPostCreatedTests {
         Assertions.assertEquals(expectedPerson, createdPerson);
 
         PersonDto existedPerson = PersonSteps.get(createdPerson.getId(), adminAuth);
+        existedPerson.setPassword(null);
         Assertions.assertEquals(expectedPerson, existedPerson);
     }
 
@@ -168,25 +158,25 @@ class ScheduleControllerPostCreatedTests {
     void correctRegistrationUserByRegistrar() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonDto registrar = defaultPersonRequest.toBuilder()
-                .username("registrarPostC5")
-                .password("password")
-                .build();
+        PersonDto registrar = new PersonDto(defaultPersonRequest);
+        registrar.setBirthdate(birtdate);
+        registrar.setUsername("registrarPostC5");
+        registrar.setRoles(List.of(PersonRole.REGISTRAR));
         String registrarAuth = passwordEncoder.encode(PersonDtoToAuthConverter.convert(registrar));
         PersonSteps.post(registrar, adminAuth);
 
-
-        String userUsername = "userPostC5";
-        PersonDto requestPerson = defaultPersonRequest.toBuilder()
-                .username(userUsername)
-                .build();
-        PersonDto expectedPerson = defaultPersonResponse.toBuilder()
-                .username(userUsername)
-                .build();
-
+        String username = "userPostC5";
+        PersonDto requestPerson = new PersonDto(defaultPersonRequest);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername(username);
+        PersonDto expectedPerson = new PersonDto(defaultPersonRequest);
+        expectedPerson.setBirthdate(birtdate);
+        expectedPerson.setUsername(username);
+        expectedPerson.setPassword(null);
 
         PersonDto createdPerson = PersonSteps.post(requestPerson, registrarAuth);
         expectedPerson.setId(createdPerson.getId());
+        expectedPerson.setPassword(null);
         Assertions.assertEquals(expectedPerson, createdPerson);
     }
 
@@ -196,25 +186,25 @@ class ScheduleControllerPostCreatedTests {
     void correctRegistrationUserByDoctor() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonDto doctor = defaultPersonRequest.toBuilder()
-                .username("doctorPostC6")
-                .password("password")
-                .build();
+        PersonDto doctor = new PersonDto(defaultPersonRequest);
+        doctor.setBirthdate(birtdate);
+        doctor.setUsername("doctorPostC6");
+        doctor.setRoles(List.of(PersonRole.REGISTRAR));
         String doctorAuth = passwordEncoder.encode(PersonDtoToAuthConverter.convert(doctor));
         PersonSteps.post(doctor, adminAuth);
 
-
-        String userUsername = "userPostC6";
-        PersonDto requestPerson = defaultPersonRequest.toBuilder()
-                .username(userUsername)
-                .build();
-        PersonDto expectedPerson = defaultPersonResponse.toBuilder()
-                .username(userUsername)
-                .build();
-
+        String username = "userPostC6";
+        PersonDto requestPerson = new PersonDto(defaultPersonRequest);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername(username);
+        PersonDto expectedPerson = new PersonDto(defaultPersonRequest);
+        expectedPerson.setBirthdate(birtdate);
+        expectedPerson.setUsername(username);
+        expectedPerson.setPassword(null);
 
         PersonDto createdPerson = PersonSteps.post(requestPerson, doctorAuth);
         expectedPerson.setId(createdPerson.getId());
+        expectedPerson.setPassword(null);
         Assertions.assertEquals(expectedPerson, createdPerson);
     }
 

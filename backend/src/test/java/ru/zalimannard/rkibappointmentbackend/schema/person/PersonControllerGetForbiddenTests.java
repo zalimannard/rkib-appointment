@@ -14,13 +14,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.zalimannard.rkibappointmentbackend.PersonDtoToAuthConverter;
 import ru.zalimannard.rkibappointmentbackend.Specifications;
 import ru.zalimannard.rkibappointmentbackend.exception.response.ExceptionResponse;
-import ru.zalimannard.rkibappointmentbackend.schema.person.gender.PersonGender;
 import ru.zalimannard.rkibappointmentbackend.schema.person.registration.PersonRegistrationController;
-import ru.zalimannard.rkibappointmentbackend.schema.person.role.PersonRole;
 
 import java.time.Instant;
 import java.util.Date;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -28,9 +25,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Epic("Человек")
 @Feature("Получение человека")
 @Story("Неудачное получение")
-class ScheduleControllerGetForbiddenTests {
+class PersonControllerGetForbiddenTests {
 
-    private final String defaultPassword = "password";
     @Autowired
     private PersonRegistrationController personRegistrationController;
     @Autowired
@@ -38,7 +34,8 @@ class ScheduleControllerGetForbiddenTests {
     @LocalServerPort
     private int port;
     private String adminAuth;
-    private PersonDto defaultPerson;
+    private final PersonDto defaultPerson = PersonTestsDefaultDtos.defaultPerson;
+    private final Date birtdate = Date.from(Instant.now().minusSeconds(100));
 
     @BeforeEach
     void setUp() {
@@ -46,34 +43,20 @@ class ScheduleControllerGetForbiddenTests {
         adminAuth = passwordEncoder.encode(PersonDtoToAuthConverter.convert(
                 System.getenv("ADMIN_USERNAME"), System.getenv("ADMIN_PASSWORD")));
         RestAssured.port = port;
-
-        Date birthdate = Date.from(Instant.now().minusSeconds(100));
-        defaultPerson = PersonDto.builder()
-                .password(defaultPassword)
-                .lastName("Иванов")
-                .firstName("Иван")
-                .patronymic("Иванович")
-                .gender(PersonGender.MALE)
-                .phoneNumber("0123456789")
-                .birthdate(birthdate)
-                .address("Россия, г.Тверь")
-                .occupation("Рабочий завода")
-                .roles(List.of(PersonRole.PATIENT))
-                .build();
         RestAssured.requestSpecification = Specifications.requestSpec();
     }
 
     @Test
     @DisplayName("Негативный тест. Пациент пытается получить другого пациента")
     void getUserByOtherUser() {
-        String usernameA = "patientGetForbidden-1-1";
-        String usernameB = "patientGetForbidden-1-2";
-        PersonDto personA = defaultPerson.toBuilder()
-                .username(usernameA)
-                .build();
-        PersonDto personB = defaultPerson.toBuilder()
-                .username(usernameB)
-                .build();
+        Date birthdate = Date.from(Instant.now().minusSeconds(100));
+        PersonDto personA = new PersonDto(defaultPerson);
+        personA.setUsername("patientGetForbidden-1-1");
+        personA.setBirthdate(birthdate);
+        PersonDto personB = new PersonDto(defaultPerson);
+        personB.setUsername("patientGetForbidden-1-2");
+        personB.setBirthdate(birthdate);
+
         String personBAuth = passwordEncoder.encode(PersonDtoToAuthConverter.convert(personB));
 
         PersonDto createdPersonA = PersonSteps.post(personA, adminAuth);

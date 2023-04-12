@@ -14,12 +14,9 @@ import ru.zalimannard.rkibappointmentbackend.PersonDtoToAuthConverter;
 import ru.zalimannard.rkibappointmentbackend.Specifications;
 import ru.zalimannard.rkibappointmentbackend.schema.person.PersonDto;
 import ru.zalimannard.rkibappointmentbackend.schema.person.PersonSteps;
-import ru.zalimannard.rkibappointmentbackend.schema.person.gender.PersonGender;
-import ru.zalimannard.rkibappointmentbackend.schema.person.role.PersonRole;
 
 import java.time.Instant;
 import java.util.Date;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -37,8 +34,10 @@ class PersonRegistrationControllerPostCreatedTests {
     @LocalServerPort
     private int port;
     private String adminAuth;
-    private PersonRegistrationDto defaultPersonRegistration;
-    private PersonDto defaultPerson;
+
+    private final PersonRegistrationDto defaultPersonRegistration = RegistrationTestsDefaultDtos.defaultPersonRegistration;
+    private final Date birtdate = Date.from(Instant.now().minusSeconds(100));
+    private final PersonDto defaultPerson = RegistrationTestsDefaultDtos.defaultCreatedPerson;
 
     @BeforeEach
     void setUp() {
@@ -46,30 +45,7 @@ class PersonRegistrationControllerPostCreatedTests {
         adminAuth = passwordEncoder.encode(PersonDtoToAuthConverter.convert(
                 System.getenv("ADMIN_USERNAME"), System.getenv("ADMIN_PASSWORD")));
         RestAssured.port = port;
-
-        Date birthdate = Date.from(Instant.now().minusSeconds(100));
-        defaultPersonRegistration = PersonRegistrationDto.builder()
-                .password("password")
-                .lastName("Иванов")
-                .firstName("Иван")
-                .patronymic("Иванович")
-                .gender(PersonGender.MALE)
-                .phoneNumber("0123456789")
-                .birthdate(birthdate)
-                .address("Россия, г.Тверь")
-                .occupation("Рабочий завода")
-                .build();
-        defaultPerson = PersonDto.builder()
-                .lastName("Иванов")
-                .firstName("Иван")
-                .patronymic("Иванович")
-                .gender(PersonGender.MALE)
-                .phoneNumber("0123456789")
-                .birthdate(birthdate)
-                .address("Россия, г.Тверь")
-                .occupation("Рабочий завода")
-                .roles(List.of(PersonRole.PATIENT))
-                .build();
+        RestAssured.requestSpecification = Specifications.requestSpec();
     }
 
     @Test
@@ -78,19 +54,21 @@ class PersonRegistrationControllerPostCreatedTests {
     void correctRegistrationFull() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegC1")
-                .build();
-        PersonDto expectedPerson = defaultPerson.toBuilder()
-                .username("userRegC1")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegC1");
+        PersonDto expectedPerson = new PersonDto(defaultPerson);
+        expectedPerson.setBirthdate(birtdate);
+        expectedPerson.setUsername("userRegC1");
 
         PersonDto createdPerson = RegistrationSteps.registration(requestPerson, null);
+        createdPerson.setPassword(null);
 
         expectedPerson.setId(createdPerson.getId());
         Assertions.assertEquals(expectedPerson, createdPerson);
 
         PersonDto existedPerson = PersonSteps.get(createdPerson.getId(), adminAuth);
+        existedPerson.setPassword(null);
         Assertions.assertEquals(expectedPerson, existedPerson);
     }
 
@@ -99,21 +77,23 @@ class PersonRegistrationControllerPostCreatedTests {
     void correctRegistrationWithoutPatronymic() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegC2")
-                .patronymic(null)
-                .build();
-        PersonDto expectedPerson = defaultPerson.toBuilder()
-                .username("userRegC2")
-                .patronymic(null)
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegC2");
+        requestPerson.setPatronymic(null);
+        PersonDto expectedPerson = new PersonDto(defaultPerson);
+        expectedPerson.setBirthdate(birtdate);
+        expectedPerson.setUsername("userRegC2");
+        expectedPerson.setPatronymic(null);
 
         PersonDto createdPerson = RegistrationSteps.registration(requestPerson, null);
+        createdPerson.setPassword(null);
 
         expectedPerson.setId(createdPerson.getId());
         Assertions.assertEquals(expectedPerson, createdPerson);
 
         PersonDto existedPerson = PersonSteps.get(createdPerson.getId(), adminAuth);
+        existedPerson.setPassword(null);
         Assertions.assertEquals(expectedPerson, existedPerson);
     }
 
@@ -122,21 +102,23 @@ class PersonRegistrationControllerPostCreatedTests {
     void correctRegistrationWithoutPhone() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegC3")
-                .phoneNumber(null)
-                .build();
-        PersonDto expectedPerson = defaultPerson.toBuilder()
-                .username("userRegC3")
-                .phoneNumber(null)
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegC3");
+        requestPerson.setPhoneNumber(null);
+        PersonDto expectedPerson = new PersonDto(defaultPerson);
+        expectedPerson.setBirthdate(birtdate);
+        expectedPerson.setUsername("userRegC3");
+        expectedPerson.setPhoneNumber(null);
 
         PersonDto createdPerson = RegistrationSteps.registration(requestPerson, null);
+        createdPerson.setPassword(null);
 
         expectedPerson.setId(createdPerson.getId());
         Assertions.assertEquals(expectedPerson, createdPerson);
 
         PersonDto existedPerson = PersonSteps.get(createdPerson.getId(), adminAuth);
+        existedPerson.setPassword(null);
         Assertions.assertEquals(expectedPerson, existedPerson);
     }
 
@@ -145,21 +127,23 @@ class PersonRegistrationControllerPostCreatedTests {
     void correctRegistrationWithoutAddress() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegC4")
-                .address(null)
-                .build();
-        PersonDto expectedPerson = defaultPerson.toBuilder()
-                .username("userRegC4")
-                .address(null)
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegC4");
+        requestPerson.setAddress(null);
+        PersonDto expectedPerson = new PersonDto(defaultPerson);
+        expectedPerson.setBirthdate(birtdate);
+        expectedPerson.setUsername("userRegC4");
+        expectedPerson.setAddress(null);
 
         PersonDto createdPerson = RegistrationSteps.registration(requestPerson, null);
+        createdPerson.setPassword(null);
 
         expectedPerson.setId(createdPerson.getId());
         Assertions.assertEquals(expectedPerson, createdPerson);
 
         PersonDto existedPerson = PersonSteps.get(createdPerson.getId(), adminAuth);
+        existedPerson.setPassword(null);
         Assertions.assertEquals(expectedPerson, existedPerson);
     }
 
@@ -168,21 +152,23 @@ class PersonRegistrationControllerPostCreatedTests {
     void correctRegistrationWithoutOccupation() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegC5")
-                .occupation(null)
-                .build();
-        PersonDto expectedPerson = defaultPerson.toBuilder()
-                .username("userRegC5")
-                .occupation(null)
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegC5");
+        requestPerson.setOccupation(null);
+        PersonDto expectedPerson = new PersonDto(defaultPerson);
+        expectedPerson.setBirthdate(birtdate);
+        expectedPerson.setUsername("userRegC5");
+        expectedPerson.setOccupation(null);
 
         PersonDto createdPerson = RegistrationSteps.registration(requestPerson, null);
+        createdPerson.setPassword(null);
 
         expectedPerson.setId(createdPerson.getId());
         Assertions.assertEquals(expectedPerson, createdPerson);
 
         PersonDto existedPerson = PersonSteps.get(createdPerson.getId(), adminAuth);
+        existedPerson.setPassword(null);
         Assertions.assertEquals(expectedPerson, existedPerson);
     }
 
@@ -191,21 +177,23 @@ class PersonRegistrationControllerPostCreatedTests {
     void correctRegistrationDoubleLastname() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegC6")
-                .lastName("Чёрный ткач")
-                .build();
-        PersonDto expectedPerson = defaultPerson.toBuilder()
-                .username("userRegC6")
-                .lastName("Чёрный ткач")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegC6");
+        requestPerson.setLastName("Чёрный ткач");
+        PersonDto expectedPerson = new PersonDto(defaultPerson);
+        expectedPerson.setBirthdate(birtdate);
+        expectedPerson.setUsername("userRegC6");
+        expectedPerson.setLastName("Чёрный ткач");
 
         PersonDto createdPerson = RegistrationSteps.registration(requestPerson, null);
+        createdPerson.setPassword(null);
 
         expectedPerson.setId(createdPerson.getId());
         Assertions.assertEquals(expectedPerson, createdPerson);
 
         PersonDto existedPerson = PersonSteps.get(createdPerson.getId(), adminAuth);
+        existedPerson.setPassword(null);
         Assertions.assertEquals(expectedPerson, existedPerson);
     }
 
@@ -214,21 +202,23 @@ class PersonRegistrationControllerPostCreatedTests {
     void correctRegistrationDoubleLastnameInBrace() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegC7")
-                .lastName("Кандеева (Гарипова)")
-                .build();
-        PersonDto expectedPerson = defaultPerson.toBuilder()
-                .username("userRegC7")
-                .lastName("Кандеева (Гарипова)")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegC7");
+        requestPerson.setLastName("Кандеева (Гарипова)");
+        PersonDto expectedPerson = new PersonDto(defaultPerson);
+        expectedPerson.setBirthdate(birtdate);
+        expectedPerson.setUsername("userRegC7");
+        expectedPerson.setLastName("Кандеева (Гарипова)");
 
         PersonDto createdPerson = RegistrationSteps.registration(requestPerson, null);
+        createdPerson.setPassword(null);
 
         expectedPerson.setId(createdPerson.getId());
         Assertions.assertEquals(expectedPerson, createdPerson);
 
         PersonDto existedPerson = PersonSteps.get(createdPerson.getId(), adminAuth);
+        existedPerson.setPassword(null);
         Assertions.assertEquals(expectedPerson, existedPerson);
     }
 
@@ -237,21 +227,23 @@ class PersonRegistrationControllerPostCreatedTests {
     void correctRegistrationDoubleFirstname() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegC8")
-                .firstName("Сань Цзы")
-                .build();
-        PersonDto expectedPerson = defaultPerson.toBuilder()
-                .username("userRegC8")
-                .firstName("Сань Цзы")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegC8");
+        requestPerson.setFirstName("Сань Цзы");
+        PersonDto expectedPerson = new PersonDto(defaultPerson);
+        expectedPerson.setBirthdate(birtdate);
+        expectedPerson.setUsername("userRegC8");
+        expectedPerson.setFirstName("Сань Цзы");
 
         PersonDto createdPerson = RegistrationSteps.registration(requestPerson, null);
+        createdPerson.setPassword(null);
 
         expectedPerson.setId(createdPerson.getId());
         Assertions.assertEquals(expectedPerson, createdPerson);
 
         PersonDto existedPerson = PersonSteps.get(createdPerson.getId(), adminAuth);
+        existedPerson.setPassword(null);
         Assertions.assertEquals(expectedPerson, existedPerson);
     }
 
@@ -260,21 +252,23 @@ class PersonRegistrationControllerPostCreatedTests {
     void correctRegistrationDoublePatronymic() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegC9")
-                .patronymic("Сань Цзынович")
-                .build();
-        PersonDto expectedPerson = defaultPerson.toBuilder()
-                .username("userRegC9")
-                .patronymic("Сань Цзынович")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegC9");
+        requestPerson.setPatronymic("Сань Цзынович");
+        PersonDto expectedPerson = new PersonDto(defaultPerson);
+        expectedPerson.setBirthdate(birtdate);
+        expectedPerson.setUsername("userRegC9");
+        expectedPerson.setPatronymic("Сань Цзынович");
 
         PersonDto createdPerson = RegistrationSteps.registration(requestPerson, null);
+        createdPerson.setPassword(null);
 
         expectedPerson.setId(createdPerson.getId());
         Assertions.assertEquals(expectedPerson, createdPerson);
 
         PersonDto existedPerson = PersonSteps.get(createdPerson.getId(), adminAuth);
+        existedPerson.setPassword(null);
         Assertions.assertEquals(expectedPerson, existedPerson);
     }
 

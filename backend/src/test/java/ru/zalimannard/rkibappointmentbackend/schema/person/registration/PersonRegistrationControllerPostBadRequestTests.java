@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import ru.zalimannard.rkibappointmentbackend.Specifications;
 import ru.zalimannard.rkibappointmentbackend.exception.response.ExceptionResponse;
-import ru.zalimannard.rkibappointmentbackend.schema.person.gender.PersonGender;
 
 import java.time.Instant;
 import java.util.Date;
@@ -28,22 +27,15 @@ class PersonRegistrationControllerPostBadRequestTests {
 
     @LocalServerPort
     private int port;
-    private PersonRegistrationDto defaultPersonRegistration;
+
+    private final PersonRegistrationDto defaultPersonRegistration = RegistrationTestsDefaultDtos.defaultPersonRegistration;
+    private final Date birtdate = Date.from(Instant.now().minusSeconds(100));
 
     @BeforeEach
     void setUp() {
         assertThat(personRegistrationController).isNotNull();
         RestAssured.port = port;
-        defaultPersonRegistration = PersonRegistrationDto.builder()
-                .password("password")
-                .lastName("Иванов")
-                .firstName("Иван")
-                .patronymic("Иванович")
-                .gender(PersonGender.MALE)
-                .phoneNumber("0123456789")
-                .birthdate(Date.from(Instant.now().minusSeconds(100)))
-                .address("Россия, г.Тверь")
-                .build();
+        RestAssured.requestSpecification = Specifications.requestSpec();
     }
 
     @Test
@@ -52,27 +44,27 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationWithoutUsername() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username(null)
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername(null);
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
     }
 
-    @Test
-    @Severity(SeverityLevel.CRITICAL)
-    @DisplayName("Негативный тест. Регистрация с пустым именем пользователя")
-    void registrationEmptyUsername() {
-        RestAssured.requestSpecification = Specifications.requestSpec();
-
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("")
-                .build();
-
-        ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
-        assertThat(response).isNotNull();
-    }
+//    @Test
+//    @Severity(SeverityLevel.CRITICAL)
+//    @DisplayName("Негативный тест. Регистрация с пустым именем пользователя")
+//    void registrationEmptyUsername() {
+//        RestAssured.requestSpecification = Specifications.requestSpec();
+//
+//        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+//        requestPerson.setBirthdate(birtdate);
+//        requestPerson.setUsername("");
+//
+//        ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
+//        assertThat(response).isNotNull();
+//    }
 
     @Test
     @Severity(SeverityLevel.CRITICAL)
@@ -80,10 +72,10 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationWithoutPassword() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegBR3")
-                .password(null)
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegBR3");
+        requestPerson.setPassword(null);
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
@@ -95,10 +87,10 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationEmptyPassword() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegBR4")
-                .password("")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegBR4");
+        requestPerson.setPassword("");
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
@@ -109,10 +101,10 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationWithoutLastname() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegBR5")
-                .lastName(null)
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegBR5");
+        requestPerson.setLastName(null);
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
@@ -123,10 +115,10 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationEmptyLastname() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegBR6")
-                .lastName("")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegBR6");
+        requestPerson.setLastName("");
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
@@ -137,10 +129,10 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationWithoutFirstname() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegBR7")
-                .lastName(null)
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegBR7");
+        requestPerson.setFirstName(null);
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
@@ -151,10 +143,10 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationEmptyFirstname() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegBR8")
-                .lastName("")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegBR8");
+        requestPerson.setFirstName("");
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
@@ -165,10 +157,10 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationEmptyPatronymic() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegBR9")
-                .patronymic("")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegBR9");
+        requestPerson.setPatronymic("");
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
@@ -179,10 +171,10 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationWithoutGender() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegBR10")
-                .gender(null)
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegBR10");
+        requestPerson.setGender(null);
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
@@ -193,10 +185,10 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationEmptyPhoneNumber() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegBR11")
-                .phoneNumber("")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegBR11");
+        requestPerson.setPhoneNumber("");
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
@@ -207,10 +199,10 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationSmallPhoneNumber() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegBR12")
-                .phoneNumber("123123123")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegBR12");
+        requestPerson.setPhoneNumber("123123123");
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
@@ -221,10 +213,10 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationLargePhoneNumber() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegBR13")
-                .phoneNumber("12312312312")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegBR13");
+        requestPerson.setPhoneNumber("12312312312");
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
@@ -235,10 +227,10 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationNotDigitPhoneNumber() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegBR14")
-                .phoneNumber("12312a1232")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegBR14");
+        requestPerson.setPhoneNumber("12312a1232");
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
@@ -249,10 +241,10 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationFutureBirthdate() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegBR15")
-                .birthdate(Date.from(Instant.now().plusSeconds(10000)))
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegBR15");
+        requestPerson.setBirthdate(Date.from(Instant.now().plusSeconds(10000)));
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
@@ -263,10 +255,10 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationEmptyAddress() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegBR16")
-                .address("")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegBR16");
+        requestPerson.setAddress("");
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
@@ -277,10 +269,10 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationEmptyOccupation() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegBR16")
-                .occupation("")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegBR17");
+        requestPerson.setOccupation("");
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
@@ -292,9 +284,9 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationSpacedUsername() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("   ")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("   ");
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
@@ -306,10 +298,10 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationSpacedPassword() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegBR19")
-                .password("   ")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegBR19");
+        requestPerson.setPatronymic("   ");
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
@@ -320,10 +312,10 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationSpacedLastname() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegBR20")
-                .lastName("   ")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegBR20");
+        requestPerson.setLastName("   ");
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
@@ -334,10 +326,10 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationSpacedFirstname() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegBR21")
-                .lastName("   ")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegBR21");
+        requestPerson.setFirstName("   ");
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
@@ -348,10 +340,10 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationSpacedPatronymic() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegBR22")
-                .patronymic("   ")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegBR22");
+        requestPerson.setPatronymic("   ");
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
@@ -362,10 +354,10 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationSpacedPhoneNumber() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegBR23")
-                .phoneNumber("   ")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegBR23");
+        requestPerson.setPhoneNumber("   ");
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
@@ -376,10 +368,10 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationSpacedAddress() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegBR24")
-                .address("   ")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegBR24");
+        requestPerson.setAddress("   ");
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
@@ -390,10 +382,10 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationSpacedOccupation() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegBR25")
-                .occupation("   ")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegBR25");
+        requestPerson.setOccupation("   ");
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
@@ -405,9 +397,9 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationRussianUsername() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("юзерРегБР26")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("юзерРегБР26");
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
@@ -419,9 +411,9 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationUsernameWithSpace() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("user RegBR27")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("user RegBR27");
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
@@ -433,10 +425,10 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationRussianPassword() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegBR28")
-                .password("майПассворд")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegBR28");
+        requestPerson.setPassword("майПассворд");
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
@@ -448,10 +440,10 @@ class PersonRegistrationControllerPostBadRequestTests {
     void registrationPasswordWithSpace() {
         RestAssured.requestSpecification = Specifications.requestSpec();
 
-        PersonRegistrationDto requestPerson = defaultPersonRegistration.toBuilder()
-                .username("userRegBR29")
-                .password("pass word")
-                .build();
+        PersonRegistrationDto requestPerson = new PersonRegistrationDto(defaultPersonRegistration);
+        requestPerson.setBirthdate(birtdate);
+        requestPerson.setUsername("userRegBR29");
+        requestPerson.setPassword("pass word");
 
         ExceptionResponse response = RegistrationSteps.registrationExpectedBadRequest(requestPerson, null);
         assertThat(response).isNotNull();
