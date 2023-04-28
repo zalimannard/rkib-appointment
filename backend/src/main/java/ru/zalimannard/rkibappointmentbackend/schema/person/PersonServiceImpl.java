@@ -92,7 +92,7 @@ public class PersonServiceImpl implements PersonService, UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) {
         Person person = repository.findByUsername(username)
-                .orElseThrow(() -> new NotFoundException("pes-06", "Не найден Person с username=" + username, null));
+                .orElseThrow(() -> new NotFoundException("pes-05", "Не найден Person с username=" + username, null));
         return User.builder()
                 .username(person.getUsername())
                 .password(person.getPassword())
