@@ -9,7 +9,7 @@ import ru.zalimannard.rkibappointmentbackend.schema.institution.dto.InstitutionR
 @Validated
 public interface InstitutionService {
 
-    InstitutionResponseDto create(@NotNull @Valid InstitutionRequestDto procedureDto);
+    InstitutionResponseDto create(@NotNull @Valid InstitutionRequestDto institutionDto);
 
     Institution createEntity(@NotNull Institution institution);
 
@@ -19,7 +19,7 @@ public interface InstitutionService {
     Institution readEntity(@NotNull String id);
 
 
-    InstitutionResponseDto update(@NotNull String id, @NotNull @Valid InstitutionRequestDto procedureDto);
+    InstitutionResponseDto update(@NotNull String id, @NotNull @Valid InstitutionRequestDto institutionDto);
 
     Institution updateEntity(@NotNull Institution institution);
 

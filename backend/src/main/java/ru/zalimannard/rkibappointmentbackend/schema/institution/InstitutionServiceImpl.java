@@ -16,8 +16,8 @@ public class InstitutionServiceImpl implements InstitutionService {
     private final InstitutionRepository repository;
 
     @Override
-    public InstitutionResponseDto create(InstitutionRequestDto procedureDto) {
-        Institution institutionToCreate = mapper.toEntity(procedureDto);
+    public InstitutionResponseDto create(InstitutionRequestDto institutionDto) {
+        Institution institutionToCreate = mapper.toEntity(institutionDto);
         Institution createdInstitution = createEntity(institutionToCreate);
         return mapper.toDto(createdInstitution);
     }
@@ -44,8 +44,8 @@ public class InstitutionServiceImpl implements InstitutionService {
     }
 
     @Override
-    public InstitutionResponseDto update(String id, InstitutionRequestDto procedureDto) {
-        Institution institutionToUpdate = mapper.toEntity(procedureDto);
+    public InstitutionResponseDto update(String id, InstitutionRequestDto institutionDto) {
+        Institution institutionToUpdate = mapper.toEntity(institutionDto);
         institutionToUpdate.setId(id);
         Institution updatedInstitution = updateEntity(institutionToUpdate);
         return mapper.toDto(updatedInstitution);
