@@ -29,3 +29,4 @@ application:
     patients: /patients
     employee: /employee
     procedures: /procedures
+    institutions: /institutions
