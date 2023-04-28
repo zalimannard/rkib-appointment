@@ -1,0 +1,37 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.0.6'
+	id 'io.spring.dependency-management' version '1.1.0'
+	id 'io.qameta.allure' version '2.11.2'
+}
+
+group = 'ru.zalimannard'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'com.github.javafaker:javafaker:1.0.2'
+	implementation 'io.qameta.allure:allure-rest-assured:2.21.0'
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'org.aspectj:aspectjweaver:1.9.19'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'io.rest-assured:rest-assured:5.3.0'
+	testImplementation 'io.qameta.allure:allure-junit5:2.21.0'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

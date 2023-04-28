@@ -1,0 +1,12 @@
+application:
+  serverUrl: ${SERVER_URL}
+  baseApi: /api
+  apiV1: /v1
+  endpoints:
+    people: /people
+    staff: /staff
+    patients: /patients
+  init:
+    admin:
+      username: ${ADMIN_USERNAME}
+      password: ${ADMIN_PASSWORD}

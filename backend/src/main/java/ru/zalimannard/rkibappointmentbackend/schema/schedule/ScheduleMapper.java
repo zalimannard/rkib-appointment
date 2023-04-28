@@ -1,93 +1,53 @@
 package ru.zalimannard.rkibappointmentbackend.schema.schedule;
 
-import org.mapstruct.AfterMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.springframework.beans.factory.annotation.Autowired;
-import ru.zalimannard.rkibappointmentbackend.schema.application.Application;
-import ru.zalimannard.rkibappointmentbackend.schema.application.ApplicationMapper;
-import ru.zalimannard.rkibappointmentbackend.schema.application.ApplicationService;
-import ru.zalimannard.rkibappointmentbackend.schema.favor.Favor;
-import ru.zalimannard.rkibappointmentbackend.schema.favor.FavorMapper;
-import ru.zalimannard.rkibappointmentbackend.schema.favor.FavorService;
-import ru.zalimannard.rkibappointmentbackend.schema.person.Person;
-import ru.zalimannard.rkibappointmentbackend.schema.person.PersonMapper;
-import ru.zalimannard.rkibappointmentbackend.schema.person.PersonService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+import ru.zalimannard.rkibappointmentbackend.schema.appointment.Appointment;
+import ru.zalimannard.rkibappointmentbackend.schema.appointment.AppointmentMapper;
+import ru.zalimannard.rkibappointmentbackend.schema.person.employees.Employee;
+import ru.zalimannard.rkibappointmentbackend.schema.person.employees.EmployeeMapper;
+import ru.zalimannard.rkibappointmentbackend.schema.procedures.Procedure;
+import ru.zalimannard.rkibappointmentbackend.schema.procedures.ProcedureMapper;
+import ru.zalimannard.rkibappointmentbackend.schema.schedule.dto.ScheduleRequestDto;
+import ru.zalimannard.rkibappointmentbackend.schema.schedule.dto.ScheduleResponseDto;
 import ru.zalimannard.rkibappointmentbackend.schema.schedule.status.ScheduleStatus;
 import ru.zalimannard.rkibappointmentbackend.schema.schedule.status.ScheduleStatusMapper;
-import ru.zalimannard.rkibappointmentbackend.schema.schedule.status.ScheduleStatusService;
 
-import java.util.List;
+@Component
+@RequiredArgsConstructor
+public class ScheduleMapper {
 
-@Mapper(componentModel = "spring")
-public abstract class ScheduleMapper {
+    private final EmployeeMapper employeeMapper;
+    private final ProcedureMapper procedureMapper;
+    private final AppointmentMapper appointmentMapper;
+    private final ScheduleStatusMapper scheduleStatusMapper;
 
-    @Autowired
-    private PersonService personService;
-    @Autowired
-    private PersonMapper personMapper;
-    @Autowired
-    private FavorService favorService;
-    @Autowired
-    private FavorMapper favorMapper;
-    @Autowired
-    private ApplicationService applicationService;
-    @Autowired
-    private ApplicationMapper applicationMapper;
-    @Autowired
-    private ScheduleStatusService scheduleStatusService;
-    @Autowired
-    private ScheduleStatusMapper scheduleStatusMapper;
 
-    @Mapping(target = "doctor", ignore = true)
-    @Mapping(target = "favor", ignore = true)
-    @Mapping(target = "application", ignore = true)
-    @Mapping(target = "status", ignore = true)
-    public abstract Schedule toEntity(ScheduleDto dto);
-
-    @Mapping(target = "doctor", ignore = true)
-    @Mapping(target = "favor", ignore = true)
-    @Mapping(target = "application", ignore = true)
-    @Mapping(target = "status", ignore = true)
-    @Mapping(target = "doctorId", ignore = true)
-    @Mapping(target = "favorId", ignore = true)
-    @Mapping(target = "applicationId", ignore = true)
-    @Mapping(target = "statusId", ignore = true)
-    public abstract ScheduleDto toDto(Schedule entity);
-
-    public abstract List<Schedule> toEntityList(List<ScheduleDto> dto);
-
-    public abstract List<ScheduleDto> toDtoList(List<Schedule> entity);
-
-    @AfterMapping
-    protected final void toEntity(@MappingTarget Schedule entity, ScheduleDto dto) {
-        if (dto.getDoctorId() != null) {
-            Person doctor = personService.readEntity(dto.getDoctorId());
-            entity.setDoctor(doctor);
-        }
-
-        if (dto.getFavorId() != null) {
-            Favor favor = favorService.readEntity(dto.getFavorId());
-            entity.setFavor(favor);
-        }
-
-        if (dto.getApplicationId() != null) {
-            Application application = applicationService.readEntity(dto.getApplicationId());
-            entity.setApplication(application);
-        }
-
-        if (dto.getStatusId() != null) {
-            ScheduleStatus status = scheduleStatusService.readEntity(dto.getStatusId());
-            entity.setStatus(status);
-        }
+    public Schedule toEntity(ScheduleRequestDto scheduleRequestDto,
+                             Employee employee,
+                             Procedure procedure,
+                             Appointment appointment,
+                             ScheduleStatus status) {
+        return Schedule.builder()
+                .doctor(employee)
+                .procedure(procedure)
+                .appointment(appointment)
+                .status(status)
+                .appointmentTime(scheduleRequestDto.getAppointmentTime())
+                .commentary(scheduleRequestDto.getCommentary())
+                .build();
     }
 
-    @AfterMapping
-    protected void toDto(@MappingTarget ScheduleDto dto, Schedule entity) {
-        dto.setDoctor(personMapper.toDto(entity.getDoctor()));
-        dto.setFavor(favorMapper.toDto(entity.getFavor()));
-        dto.setApplication(applicationMapper.toDto(entity.getApplication()));
-        dto.setStatus(scheduleStatusMapper.toDto(entity.getStatus()));
+    public ScheduleResponseDto toDto(Schedule schedule) {
+        return ScheduleResponseDto.builder()
+                .id(schedule.getId())
+                .doctor(employeeMapper.toDto(schedule.getDoctor()))
+                .procedure(procedureMapper.toDto(schedule.getProcedure()))
+                .appointment(appointmentMapper.toDto(schedule.getAppointment()))
+                .status(scheduleStatusMapper.toDto(schedule.getStatus()))
+                .appointmentTime(schedule.getAppointmentTime())
+                .commentary(schedule.getCommentary())
+                .build();
     }
+
 }

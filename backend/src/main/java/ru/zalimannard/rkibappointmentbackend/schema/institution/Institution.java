@@ -1,18 +1,18 @@
 package ru.zalimannard.rkibappointmentbackend.schema.institution;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
+
+import java.util.Objects;
 
 @Entity
 @Table(name = "institutions")
+@Getter
+@Setter
+@Builder(toBuilder = true)
+@RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
-@Data
-@EqualsAndHashCode(of = "id")
 public class Institution {
 
     @Id
@@ -20,8 +20,20 @@ public class Institution {
     @Column(name = "id")
     private String id;
 
-    @Column(name = "name", nullable = false)
-    @NotBlank(message = "Не указано название учреждения")
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Institution institution = (Institution) o;
+        return getId() != null && Objects.equals(getId(), institution.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 
 }

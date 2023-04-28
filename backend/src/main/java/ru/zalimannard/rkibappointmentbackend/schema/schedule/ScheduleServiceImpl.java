@@ -2,34 +2,42 @@ package ru.zalimannard.rkibappointmentbackend.schema.schedule;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
-import ru.zalimannard.rkibappointmentbackend.Utils;
 import ru.zalimannard.rkibappointmentbackend.exception.ConflictException;
 import ru.zalimannard.rkibappointmentbackend.exception.NotFoundException;
-
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import ru.zalimannard.rkibappointmentbackend.schema.appointment.Appointment;
+import ru.zalimannard.rkibappointmentbackend.schema.appointment.AppointmentService;
+import ru.zalimannard.rkibappointmentbackend.schema.person.employees.Employee;
+import ru.zalimannard.rkibappointmentbackend.schema.person.employees.EmployeeService;
+import ru.zalimannard.rkibappointmentbackend.schema.procedures.Procedure;
+import ru.zalimannard.rkibappointmentbackend.schema.procedures.ProcedureService;
+import ru.zalimannard.rkibappointmentbackend.schema.schedule.dto.ScheduleRequestDto;
+import ru.zalimannard.rkibappointmentbackend.schema.schedule.dto.ScheduleResponseDto;
+import ru.zalimannard.rkibappointmentbackend.schema.schedule.status.ScheduleStatus;
+import ru.zalimannard.rkibappointmentbackend.schema.schedule.status.ScheduleStatusService;
 
 @Service
-@Validated
 @RequiredArgsConstructor
 public class ScheduleServiceImpl implements ScheduleService {
 
     private final ScheduleMapper mapper;
     private final ScheduleRepository repository;
 
+    private final EmployeeService employeeService;
+    private final ProcedureService procedureService;
+    private final AppointmentService appointmentService;
+    private final ScheduleStatusService scheduleStatusService;
+
     @Override
-    public ScheduleDto create(ScheduleDto scheduleDto) {
-        Schedule request = mapper.toEntity(scheduleDto);
+    public ScheduleResponseDto create(ScheduleRequestDto scheduleDto) {
+        Employee doctor = employeeService.readEntity(scheduleDto.getDoctorId());
+        Procedure procedure = procedureService.readEntity(scheduleDto.getProcedureId());
+        Appointment appointment = appointmentService.readEntity(scheduleDto.getAppointmentId());
+        ScheduleStatus status = scheduleStatusService.readEntity(scheduleDto.getStatusId());
 
-        Schedule response = createEntity(request);
-
-        return mapper.toDto(response);
+        Schedule scheduleToCreate = mapper.toEntity(scheduleDto, doctor, procedure, appointment, status);
+        Schedule createdSchedule = createEntity(scheduleToCreate);
+        return mapper.toDto(createdSchedule);
     }
 
     @Override
@@ -37,96 +45,51 @@ public class ScheduleServiceImpl implements ScheduleService {
         try {
             return repository.save(schedule);
         } catch (DataIntegrityViolationException e) {
-            throw new ConflictException("scs-01", "schedule", e.getLocalizedMessage());
+            throw new ConflictException("scs-01", "Конфликт при добавлении Schedule в базу данных", e.getMessage());
         }
     }
 
-
     @Override
-    public ScheduleDto read(String id) {
-        Schedule response = readEntity(id);
-
-        return mapper.toDto(response);
+    public ScheduleResponseDto read(String id) {
+        Schedule schedule = readEntity(id);
+        return mapper.toDto(schedule);
     }
-
 
     @Override
     public Schedule readEntity(String id) {
-        Optional<Schedule> responseOptional = repository.findById(id);
-        if (responseOptional.isPresent()) {
-            return responseOptional.get();
-        } else {
-            throw new NotFoundException("scs-02", "id", id);
-        }
+        return repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("scs-02", "Не найден Schedule с id=" + id, null));
     }
 
     @Override
-    public List<ScheduleDto> search(ScheduleDto filterDto, Date beginTimestamp, Date endTimestamp, String[] sortBy,
-                                    int pageSize, int pageNumber) {
-        Schedule filter = mapper.toEntity(filterDto);
+    public ScheduleResponseDto update(String id, ScheduleRequestDto scheduleDto) {
+        Employee doctor = employeeService.readEntity(scheduleDto.getDoctorId());
+        Procedure procedure = procedureService.readEntity(scheduleDto.getProcedureId());
+        Appointment appointment = appointmentService.readEntity(scheduleDto.getAppointmentId());
+        ScheduleStatus status = scheduleStatusService.readEntity(scheduleDto.getStatusId());
 
-        List<Schedule> response = searchEntities(filter, beginTimestamp, endTimestamp, sortBy, pageSize, pageNumber);
-
-        return mapper.toDtoList(response);
+        Schedule scheduleToUpdate = mapper.toEntity(scheduleDto, doctor, procedure, appointment, status);
+        scheduleToUpdate.setId(id);
+        Schedule updatedSchedule = updateEntity(scheduleToUpdate);
+        return mapper.toDto(updatedSchedule);
     }
 
     @Override
-    public List<Schedule> searchEntities(Schedule filter, Date beginTimestamp, Date endTimestamp, String[] sortBy,
-                                         int pageSize, int pageNumber) {
-        List<Sort.Order> orders = Utils.ordersByStringArray(sortBy);
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(orders));
-
-        return repository.search(
-                filter.getDoctor(),
-                filter.getFavor(),
-                filter.getApplication(),
-                filter.getStatus(),
-                filter.getCommentary(),
-                beginTimestamp,
-                endTimestamp,
-                pageable);
-    }
-
-    @Override
-    public List<Schedule> searchEntities(Schedule filter, Date beginTimestamp, Date endTimestamp,
-                                         int pageSize, int pageNumber) {
-        String sortByFromProperties = "${schedule.constant.defaultSort}";
-        String[] sortBy;
+    public Schedule updateEntity(Schedule schedule) {
         try {
-            sortBy = sortByFromProperties.split(",");
-        } catch (NullPointerException e) {
-            throw new NotFoundException("scs-03", "defaultSort", null);
-        }
-        return searchEntities(filter, beginTimestamp, endTimestamp, sortBy, pageSize, pageNumber);
-    }
-
-
-    @Override
-    public ScheduleDto update(String id, ScheduleDto scheduleDto) {
-        Schedule request = mapper.toEntity(scheduleDto);
-
-        Schedule response = updateEntity(id, request);
-
-        return mapper.toDto(response);
-    }
-
-    @Override
-    public Schedule updateEntity(String id, Schedule schedule) {
-        if (repository.existsById(id)) {
-            schedule.setId(id);
             return repository.save(schedule);
-        } else {
-            throw new NotFoundException("scs-04", "id", id);
+        } catch (DataIntegrityViolationException e) {
+            throw new ConflictException("scs-03", "Конфликт при обновлении Schedule в базе данных", e.getMessage());
         }
     }
-
 
     @Override
     public void delete(String id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
-        } else {
-            throw new NotFoundException("scs-05", "id", id);
+        try {
+            Schedule schedule = readEntity(id);
+            repository.delete(schedule);
+        } catch (DataIntegrityViolationException e) {
+            throw new ConflictException("scs-04", "Конфликт при удалении Schedule из базы данных", e.getMessage());
         }
     }
 

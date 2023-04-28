@@ -2,20 +2,13 @@ package ru.zalimannard.rkibappointmentbackend.schema.schedule.status;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
-import ru.zalimannard.rkibappointmentbackend.Utils;
 import ru.zalimannard.rkibappointmentbackend.exception.ConflictException;
 import ru.zalimannard.rkibappointmentbackend.exception.NotFoundException;
-
-import java.util.List;
-import java.util.Optional;
+import ru.zalimannard.rkibappointmentbackend.schema.schedule.status.dto.ScheduleStatusRequestDto;
+import ru.zalimannard.rkibappointmentbackend.schema.schedule.status.dto.ScheduleStatusResponseDto;
 
 @Service
-@Validated
 @RequiredArgsConstructor
 public class ScheduleStatusServiceImpl implements ScheduleStatusService {
 
@@ -23,12 +16,10 @@ public class ScheduleStatusServiceImpl implements ScheduleStatusService {
     private final ScheduleStatusRepository repository;
 
     @Override
-    public ScheduleStatusDto create(ScheduleStatusDto scheduleStatusDto) {
-        ScheduleStatus request = mapper.toEntity(scheduleStatusDto);
-
-        ScheduleStatus response = createEntity(request);
-
-        return mapper.toDto(response);
+    public ScheduleStatusResponseDto create(ScheduleStatusRequestDto procedureDto) {
+        ScheduleStatus scheduleStatusToCreate = mapper.toEntity(procedureDto);
+        ScheduleStatus createdScheduleStatus = createEntity(scheduleStatusToCreate);
+        return mapper.toDto(createdScheduleStatus);
     }
 
     @Override
@@ -36,91 +27,46 @@ public class ScheduleStatusServiceImpl implements ScheduleStatusService {
         try {
             return repository.save(scheduleStatus);
         } catch (DataIntegrityViolationException e) {
-            throw new ConflictException("sss-01", "schedule status", e.getLocalizedMessage());
+            throw new ConflictException("sss-01", "Конфликт при добавлении ScheduleStatus в базу данных", e.getMessage());
         }
     }
 
-
     @Override
-    public ScheduleStatusDto read(String id) {
-        ScheduleStatus response = readEntity(id);
-
-        return mapper.toDto(response);
+    public ScheduleStatusResponseDto read(String id) {
+        ScheduleStatus scheduleStatus = readEntity(id);
+        return mapper.toDto(scheduleStatus);
     }
-
 
     @Override
     public ScheduleStatus readEntity(String id) {
-        Optional<ScheduleStatus> responseOptional = repository.findById(id);
-        if (responseOptional.isPresent()) {
-            return responseOptional.get();
-        } else {
-            throw new NotFoundException("sss-02", "id", id);
-        }
+        return repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("sss-02", "Не найден ScheduleStatus с id=" + id, null));
     }
 
     @Override
-    public List<ScheduleStatusDto> search(ScheduleStatusDto filterDto, String[] sortBy,
-                                          int pageSize, int pageNumber) {
-        ScheduleStatus filter = mapper.toEntity(filterDto);
-
-        List<ScheduleStatus> response = searchEntities(filter, sortBy, pageSize, pageNumber);
-
-        return mapper.toDtoList(response);
+    public ScheduleStatusResponseDto update(String id, ScheduleStatusRequestDto procedureDto) {
+        ScheduleStatus scheduleStatusToUpdate = mapper.toEntity(procedureDto);
+        scheduleStatusToUpdate.setId(id);
+        ScheduleStatus updatedScheduleStatus = updateEntity(scheduleStatusToUpdate);
+        return mapper.toDto(updatedScheduleStatus);
     }
 
     @Override
-    public List<ScheduleStatus> searchEntities(ScheduleStatus filter, String[] sortBy,
-                                               int pageSize, int pageNumber) {
-        List<Sort.Order> orders = Utils.ordersByStringArray(sortBy);
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(orders));
-
-        return repository.search(
-                filter.getType(),
-                filter.getName(),
-                pageable);
-    }
-
-    @Override
-    public List<ScheduleStatus> searchEntities(ScheduleStatus filter,
-                                               int pageSize, int pageNumber) {
-        String sortByFromProperties = "${application.constant.defaultSort}";
-        String[] sortBy;
+    public ScheduleStatus updateEntity(ScheduleStatus scheduleStatus) {
         try {
-            sortBy = sortByFromProperties.split(",");
-        } catch (NullPointerException e) {
-            throw new NotFoundException("sss-03", "defaultSort", null);
-        }
-        return searchEntities(filter, sortBy, pageSize, pageNumber);
-    }
-
-
-    @Override
-    public ScheduleStatusDto update(String id, ScheduleStatusDto scheduleStatusDto) {
-        ScheduleStatus request = mapper.toEntity(scheduleStatusDto);
-
-        ScheduleStatus response = updateEntity(id, request);
-
-        return mapper.toDto(response);
-    }
-
-    @Override
-    public ScheduleStatus updateEntity(String id, ScheduleStatus scheduleStatus) {
-        if (repository.existsById(id)) {
-            scheduleStatus.setId(id);
             return repository.save(scheduleStatus);
-        } else {
-            throw new NotFoundException("sss-04", "id", id);
+        } catch (DataIntegrityViolationException e) {
+            throw new ConflictException("sss-03", "Конфликт при обновлении ScheduleStatus в базе данных", e.getMessage());
         }
     }
-
 
     @Override
     public void delete(String id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
-        } else {
-            throw new NotFoundException("sss-05", "id", id);
+        try {
+            ScheduleStatus scheduleStatus = readEntity(id);
+            repository.delete(scheduleStatus);
+        } catch (DataIntegrityViolationException e) {
+            throw new ConflictException("sss-04", "Конфликт при удалении ScheduleStatus из базы данных", e.getMessage());
         }
     }
 

@@ -15,8 +15,6 @@ public abstract class BaseException extends RuntimeException {
 
     private final String code;
 
-    private final String message;
-
     private final List<ExceptionMessage> errors;
 
 }

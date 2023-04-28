@@ -24,13 +24,11 @@ public class ValidationAdvice {
     ) {
         List<ExceptionMessage> errors = e.getConstraintViolations().stream().map(
                 violation -> ExceptionMessage.builder()
-                        .details(violation.getMessage())
-                        .field(violation.getPropertyPath().toString()).build()
+                        .message(violation.getMessage())
+                        .details(violation.getPropertyPath().toString()).build()
         ).toList();
         return ExceptionResponse.builder()
                 .httpCode(HttpCodes.BAD_REQUEST.getCode())
-                .message("Значение не удовлетворяют ограничениям")
-                .code("v-001")
                 .errors(errors)
                 .build();
     }
@@ -43,8 +41,6 @@ public class ValidationAdvice {
     ) {
         return ExceptionResponse.builder()
                 .httpCode(HttpCodes.BAD_REQUEST.getCode())
-                .code("v-002")
-                .message("Некорректные аргументы")
                 .errors(e.getBindingResult().getFieldErrors().stream()
                         .map(error -> ExceptionMessage.builder()
                                 .details(error.getDefaultMessage()).build()

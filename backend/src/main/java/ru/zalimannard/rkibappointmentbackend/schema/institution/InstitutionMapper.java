@@ -1,18 +1,23 @@
 package ru.zalimannard.rkibappointmentbackend.schema.institution;
 
-import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
+import ru.zalimannard.rkibappointmentbackend.schema.institution.dto.InstitutionRequestDto;
+import ru.zalimannard.rkibappointmentbackend.schema.institution.dto.InstitutionResponseDto;
 
-import java.util.List;
+@Component
+public class InstitutionMapper {
 
-@Mapper(componentModel = "spring")
-public interface InstitutionMapper {
+    public Institution toEntity(InstitutionRequestDto institutionRequestDto) {
+        return Institution.builder()
+                .name(institutionRequestDto.getName())
+                .build();
+    }
 
-    Institution toEntity(InstitutionDto dto);
-
-    InstitutionDto toDto(Institution entity);
-
-    List<Institution> toEntityList(List<InstitutionDto> dto);
-
-    List<InstitutionDto> toDtoList(List<Institution> entity);
+    public InstitutionResponseDto toDto(Institution institution) {
+        return InstitutionResponseDto.builder()
+                .id(institution.getId())
+                .name(institution.getName())
+                .build();
+    }
 
 }

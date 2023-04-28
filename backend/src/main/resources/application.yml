@@ -17,14 +17,20 @@ springdoc:
     path: /docs/api
 
 application:
+  default:
+    adminUsername: ${ADMIN_USERNAME}
+    adminPassword: ${ADMIN_PASSWORD}
   constant:
     defaultSort: id,asc
+  baseApi: /api
+  apiV1: /v1
   endpoint:
-    registration: /registration
-    persons: /persons
-    institution: /institutions
-    schedule: /schedules
-    scheduleStatus: /scheduleStatuses
-    favor: /favors
-    application: /applications
-    applicationStatus: /applicationStatuses
+    people: /people
+    patients: /patients
+    employee: /employee
+    procedures: /procedures
+    institutions: /institutions
+    appointmentStatuses: /appointmentStatuses
+    scheduleStatuses: /scheduleStatuses
+    appointments: /appointments
+    schedules: /schedules

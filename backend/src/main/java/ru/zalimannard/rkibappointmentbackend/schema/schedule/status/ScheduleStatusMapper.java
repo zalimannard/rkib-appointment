@@ -1,18 +1,25 @@
 package ru.zalimannard.rkibappointmentbackend.schema.schedule.status;
 
-import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
+import ru.zalimannard.rkibappointmentbackend.schema.schedule.status.dto.ScheduleStatusRequestDto;
+import ru.zalimannard.rkibappointmentbackend.schema.schedule.status.dto.ScheduleStatusResponseDto;
 
-import java.util.List;
+@Component
+public class ScheduleStatusMapper {
 
-@Mapper(componentModel = "spring")
-public interface ScheduleStatusMapper {
+    public ScheduleStatus toEntity(ScheduleStatusRequestDto scheduleStatusRequestDto) {
+        return ScheduleStatus.builder()
+                .type(scheduleStatusRequestDto.getType())
+                .name(scheduleStatusRequestDto.getName())
+                .build();
+    }
 
-    ScheduleStatus toEntity(ScheduleStatusDto dto);
-
-    ScheduleStatusDto toDto(ScheduleStatus entity);
-
-    List<ScheduleStatus> toEntityList(List<ScheduleStatusDto> dto);
-
-    List<ScheduleStatusDto> toDtoList(List<ScheduleStatus> entity);
+    public ScheduleStatusResponseDto toDto(ScheduleStatus scheduleStatus) {
+        return ScheduleStatusResponseDto.builder()
+                .id(scheduleStatus.getId())
+                .type(scheduleStatus.getType())
+                .name(scheduleStatus.getName())
+                .build();
+    }
 
 }

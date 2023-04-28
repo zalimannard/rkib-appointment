@@ -1,58 +1,64 @@
 package ru.zalimannard.rkibappointmentbackend.schema.schedule;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
-import ru.zalimannard.rkibappointmentbackend.schema.application.Application;
-import ru.zalimannard.rkibappointmentbackend.schema.favor.Favor;
-import ru.zalimannard.rkibappointmentbackend.schema.person.Person;
+import lombok.*;
+import org.hibernate.Hibernate;
+import ru.zalimannard.rkibappointmentbackend.schema.appointment.Appointment;
+import ru.zalimannard.rkibappointmentbackend.schema.person.employees.Employee;
+import ru.zalimannard.rkibappointmentbackend.schema.procedures.Procedure;
 import ru.zalimannard.rkibappointmentbackend.schema.schedule.status.ScheduleStatus;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "schedules")
+@Getter
+@Setter
+@Builder(toBuilder = true)
+@RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
-@Data
-@EqualsAndHashCode(of = "id")
 public class Schedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private String id;
+    String id;
 
     @ManyToOne
-    @JoinColumn(name = "doctor_id", nullable = false)
-    @NotNull(message = "Не указан врач")
-    private Person doctor;
+    @JoinColumn(name = "doctor_id", referencedColumnName = "id", nullable = false)
+    Employee doctor;
 
     @ManyToOne
-    @JoinColumn(name = "favor_id", nullable = false)
-    @NotNull(message = "Не указана услуга")
-    private Favor favor;
+    @JoinColumn(name = "procedure_id", referencedColumnName = "id", nullable = false)
+    Procedure procedure;
 
     @ManyToOne
-    @JoinColumn(name = "application_id")
-    private Application application;
+    @JoinColumn(name = "appointment_id", referencedColumnName = "id")
+    Appointment appointment;
 
     @ManyToOne
-    @JoinColumn(name = "status_id", nullable = false)
-    @NotNull(message = "Не указан статус обращения")
-    private ScheduleStatus status;
+    @JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false)
+    ScheduleStatus status;
 
-    @Column(name = "appointment_timestamp", nullable = false)
-    @NotNull(message = "Не указано время приёма")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date appointmentTimestamp;
+    @JsonProperty("appointmentTime")
+    Date appointmentTime;
 
-    @Column(name = "commentary")
-    @Length(min = 1)
-    private String commentary;
+    @JsonProperty("commentary")
+    String commentary;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Schedule schedule = (Schedule) o;
+        return getId() != null && Objects.equals(getId(), schedule.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 
 }

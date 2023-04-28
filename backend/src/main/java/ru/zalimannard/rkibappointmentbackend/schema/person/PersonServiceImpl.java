@@ -1,164 +1,128 @@
 package ru.zalimannard.rkibappointmentbackend.schema.person;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
-import ru.zalimannard.rkibappointmentbackend.Utils;
 import ru.zalimannard.rkibappointmentbackend.exception.ConflictException;
 import ru.zalimannard.rkibappointmentbackend.exception.NotFoundException;
+import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonRequestDto;
+import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonResponseDto;
 
-import java.util.Date;
-import java.util.List;
+import java.util.Collections;
 import java.util.Optional;
 
 @Service
-@Validated
 @RequiredArgsConstructor
-public class PersonServiceImpl implements PersonService {
+@Slf4j
+public class PersonServiceImpl implements PersonService, UserDetailsService {
 
     private final PersonMapper mapper;
     private final PersonRepository repository;
-
     private final PasswordEncoder passwordEncoder;
 
+    @Value("${application.default.adminUsername}")
+    private String defaultAdminUsername;
+    @Value("${application.default.adminPassword}")
+    private String defaultAdminPassword;
+
     @Override
-    public PersonDto create(PersonDto personDto) {
-        Person request = mapper.toEntity(personDto);
-
-        Person response = createEntity(request);
-
-        return mapper.toDto(response);
+    public PersonResponseDto create(PersonRequestDto personDto) {
+        Person personToCreate = mapper.toEntity(personDto);
+        Person createdPerson = createEntity(personToCreate);
+        return mapper.toDto(createdPerson);
     }
 
     @Override
     public Person createEntity(Person person) {
         try {
-            return saveToDatabase(person);
+            Person personToSave = encodePersonsPassword(person);
+            return repository.save(personToSave);
         } catch (DataIntegrityViolationException e) {
-            throw new ConflictException("pes-01", "person", e.getLocalizedMessage());
+            throw new ConflictException("pes-01", "Конфликт при добавлении Person в базу данных", e.getMessage());
         }
     }
 
-
     @Override
-    public PersonDto read(String id) {
-        Person response = readEntity(id);
-
-        return mapper.toDto(response);
+    public PersonResponseDto read(String id) {
+        Person person = readEntity(id);
+        return mapper.toDto(person);
     }
 
     @Override
     public Person readEntity(String id) {
-        Optional<Person> personOpt = repository.findById(id);
-        if (personOpt.isPresent()) {
-            Person person = personOpt.get();
-            return person;
-        } else {
-            throw new NotFoundException("pes-02", "id", id);
-        }
+        return repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("pes-02", "Не найден Person с id=" + id, null));
     }
 
     @Override
-    public Person readEntityByUsername(String username) {
-        return repository.getPersonByUsername(username);
+    public PersonResponseDto update(String id, PersonRequestDto personDto) {
+        Person personToUpdate = mapper.toEntity(personDto);
+        personToUpdate.setId(id);
+        personToUpdate = encodePersonsPassword(personToUpdate);
+        Person updatedPerson = updateEntity(personToUpdate);
+        return mapper.toDto(updatedPerson);
     }
 
     @Override
-    public Person readEntityByEncodedPassword(String encodedPassword) {
-        return repository.getPersonByPassword(encodedPassword);
-    }
-
-
-    @Override
-    public List<PersonDto> search(PersonDto filterDto, Date beginBirthdate, Date endBirthdate, String[] sortBy,
-                                  int pageSize, int pageNumber) {
-        Person filter = mapper.toEntity(filterDto);
-
-        List<Person> response = searchEntities(filter, beginBirthdate, endBirthdate, sortBy, pageSize, pageNumber);
-
-        return mapper.toDtoList(response);
-    }
-
-    @Override
-    public List<Person> searchEntities(Person filter, Date beginBirthdate, Date endBirthdate, String[] sortBy,
-                                       int pageSize, int pageNumber) {
-        List<Sort.Order> orders = Utils.ordersByStringArray(sortBy);
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(orders));
-
-        return repository.search(
-                filter.getUsername(),
-                filter.getLastName(),
-                filter.getFirstName(),
-                filter.getPatronymic(),
-                filter.getPhoneNumber(),
-                filter.getAddress(),
-                filter.getOccupation(),
-                filter.getGender(),
-                beginBirthdate,
-                endBirthdate,
-                pageable);
-    }
-
-    @Override
-    public List<Person> searchEntities(Person filter, Date beginBirthdate, Date endBirthdate,
-                                       int pageSize, int pageNumber) {
-        String sortByFromProperties = "${application.constant.defaultSort}";
-        String[] sortBy;
+    public Person updateEntity(Person person) {
         try {
-            sortBy = sortByFromProperties.split(",");
-        } catch (NullPointerException e) {
-            throw new NotFoundException("pes-03", "defaultSort", null);
-        }
-        return searchEntities(filter, beginBirthdate, endBirthdate, sortBy, pageSize, pageNumber);
-    }
-
-
-    @Override
-    public PersonDto update(String id, PersonDto personDto) {
-        Person request = mapper.toEntity(personDto);
-
-        Person response = updateEntity(id, request);
-
-        return mapper.toDto(response);
-    }
-
-    @Override
-    public Person updateEntity(String id, Person person) {
-        if (repository.existsById(id)) {
-            person.setId(id);
-            return saveToDatabase(person);
-        } else {
-            throw new NotFoundException("pes-04", "id", id);
+            return repository.save(person);
+        } catch (DataIntegrityViolationException e) {
+            throw new ConflictException("pes-03", "Конфликт при обновлении Person в базе данных", e.getMessage());
         }
     }
-
 
     @Override
     public void delete(String id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
-        } else {
-            throw new NotFoundException("pes-05", "id", id);
-        }
-    }
-
-    private Person saveToDatabase(Person person) {
         try {
-            String textToEncode = person.getUsername() + ":" + person.getPassword();
-            String encodedPassword = passwordEncoder.encode(textToEncode);
-            person.setPassword(encodedPassword);
-
-            Person savedPerson = repository.save(person);
-            savedPerson.setPassword(null);
-            return savedPerson;
+            Person person = readEntity(id);
+            repository.delete(person);
         } catch (DataIntegrityViolationException e) {
-            throw new ConflictException("pes-06", "person", e.getLocalizedMessage());
+            throw new ConflictException("pes-04", "Конфликт при удалении Person из базы данных", e.getMessage());
         }
-
     }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+        Person person = repository.findByUsername(username)
+                .orElseThrow(() -> new NotFoundException("pes-05", "Не найден Person с username=" + username, null));
+        return User.builder()
+                .username(person.getUsername())
+                .password(person.getPassword())
+                .authorities(Collections.emptyList())
+                .build();
+    }
+
+    @PostConstruct
+    public void initDefaultAdmin() {
+        Optional<Person> existingPerson = repository.findByUsername(defaultAdminUsername);
+        if (existingPerson.isEmpty()) {
+            String adminTextField = "ADMIN";
+            Person adminToCreate = Person.builder()
+                    .username(defaultAdminUsername)
+                    .password(defaultAdminPassword)
+                    .lastName(adminTextField)
+                    .firstName(adminTextField)
+                    .patronymic(adminTextField)
+                    .build();
+            adminToCreate = encodePersonsPassword(adminToCreate);
+            repository.save(adminToCreate);
+        } else {
+            log.info("Человек с username=" + defaultAdminUsername + " уже существует");
+        }
+    }
+
+    private Person encodePersonsPassword(Person person) {
+        return person.toBuilder()
+                .password(passwordEncoder.encode(person.getPassword()))
+                .build();
+    }
+
 }

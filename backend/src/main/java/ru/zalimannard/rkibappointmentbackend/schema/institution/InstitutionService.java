@@ -1,40 +1,29 @@
 package ru.zalimannard.rkibappointmentbackend.schema.institution;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
+import org.springframework.validation.annotation.Validated;
+import ru.zalimannard.rkibappointmentbackend.schema.institution.dto.InstitutionRequestDto;
+import ru.zalimannard.rkibappointmentbackend.schema.institution.dto.InstitutionResponseDto;
 
-import java.util.List;
-
+@Validated
 public interface InstitutionService {
 
-    InstitutionDto create(InstitutionDto institutionDto);
+    InstitutionResponseDto create(@NotNull @Valid InstitutionRequestDto institutionDto);
 
-    Institution createEntity(@Valid Institution institution);
+    Institution createEntity(@NotNull Institution institution);
 
 
-    InstitutionDto read(String id);
+    InstitutionResponseDto read(@NotNull String id);
 
     Institution readEntity(@NotNull String id);
 
 
-    List<InstitutionDto> search(InstitutionDto filterDto, String[] sortBy,
-                                @Positive int pageSize, @PositiveOrZero int pageNumber);
+    InstitutionResponseDto update(@NotNull String id, @NotNull @Valid InstitutionRequestDto institutionDto);
 
-    List<Institution> searchEntities(Institution filter, String[] sortBy,
-                                     @Positive int pageSize, @PositiveOrZero int pageNumber);
-
-    List<Institution> searchEntities(Institution filter,
-                                     @Positive int pageSize, @PositiveOrZero int pageNumber);
+    Institution updateEntity(@NotNull Institution institution);
 
 
-    InstitutionDto update(String id, @Valid InstitutionDto institutionDto);
-
-    Institution updateEntity(@NotBlank String id, @Valid Institution institution);
-
-
-    void delete(@NotBlank String id);
+    void delete(@NotNull String id);
 
 }

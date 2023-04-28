@@ -1,41 +1,29 @@
 package ru.zalimannard.rkibappointmentbackend.schema.schedule;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
+import org.springframework.validation.annotation.Validated;
+import ru.zalimannard.rkibappointmentbackend.schema.schedule.dto.ScheduleRequestDto;
+import ru.zalimannard.rkibappointmentbackend.schema.schedule.dto.ScheduleResponseDto;
 
-import java.util.Date;
-import java.util.List;
-
+@Validated
 public interface ScheduleService {
 
-    ScheduleDto create(ScheduleDto scheduleDto);
+    ScheduleResponseDto create(@NotNull @Valid ScheduleRequestDto scheduleDto);
 
-    Schedule createEntity(@Valid Schedule schedule);
+    Schedule createEntity(@NotNull Schedule schedule);
 
 
-    ScheduleDto read(String id);
+    ScheduleResponseDto read(@NotNull String id);
 
     Schedule readEntity(@NotNull String id);
 
 
-    List<ScheduleDto> search(ScheduleDto filterDto, Date beginTimestamp, Date endTimestamp, String[] sortBy,
-                             @Positive int pageSize, @PositiveOrZero int pageNumber);
+    ScheduleResponseDto update(@NotNull String id, @NotNull @Valid ScheduleRequestDto scheduleDto);
 
-    List<Schedule> searchEntities(Schedule filter, Date beginTimestamp, Date endTimestamp, String[] sortBy,
-                                  @Positive int pageSize, @PositiveOrZero int pageNumber);
-
-    List<Schedule> searchEntities(Schedule filter, Date beginTimestamp, Date endTimestamp,
-                                  @Positive int pageSize, @PositiveOrZero int pageNumber);
+    Schedule updateEntity(@NotNull Schedule schedule);
 
 
-    ScheduleDto update(String id, @Valid ScheduleDto scheduleDto);
-
-    Schedule updateEntity(@NotBlank String id, @Valid Schedule schedule);
-
-
-    void delete(@NotBlank String id);
+    void delete(@NotNull String id);
 
 }

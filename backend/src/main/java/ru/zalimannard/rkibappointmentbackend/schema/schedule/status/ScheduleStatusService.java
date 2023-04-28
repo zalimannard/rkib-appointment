@@ -1,40 +1,29 @@
 package ru.zalimannard.rkibappointmentbackend.schema.schedule.status;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
+import org.springframework.validation.annotation.Validated;
+import ru.zalimannard.rkibappointmentbackend.schema.schedule.status.dto.ScheduleStatusRequestDto;
+import ru.zalimannard.rkibappointmentbackend.schema.schedule.status.dto.ScheduleStatusResponseDto;
 
-import java.util.List;
-
+@Validated
 public interface ScheduleStatusService {
 
-    ScheduleStatusDto create(ScheduleStatusDto scheduleStatusDto);
+    ScheduleStatusResponseDto create(@NotNull @Valid ScheduleStatusRequestDto procedureDto);
 
-    ScheduleStatus createEntity(@Valid ScheduleStatus scheduleStatus);
+    ScheduleStatus createEntity(@NotNull ScheduleStatus scheduleStatus);
 
 
-    ScheduleStatusDto read(String id);
+    ScheduleStatusResponseDto read(@NotNull String id);
 
     ScheduleStatus readEntity(@NotNull String id);
 
 
-    List<ScheduleStatusDto> search(ScheduleStatusDto filterDto, String[] sortBy,
-                                   @Positive int pageSize, @PositiveOrZero int pageNumber);
+    ScheduleStatusResponseDto update(@NotNull String id, @NotNull @Valid ScheduleStatusRequestDto procedureDto);
 
-    List<ScheduleStatus> searchEntities(ScheduleStatus filter, String[] sortBy,
-                                        @Positive int pageSize, @PositiveOrZero int pageNumber);
-
-    List<ScheduleStatus> searchEntities(ScheduleStatus filter,
-                                        @Positive int pageSize, @PositiveOrZero int pageNumber);
+    ScheduleStatus updateEntity(@NotNull ScheduleStatus scheduleStatus);
 
 
-    ScheduleStatusDto update(String id, @Valid ScheduleStatusDto scheduleStatusDto);
-
-    ScheduleStatus updateEntity(@NotBlank String id, @Valid ScheduleStatus scheduleStatus);
-
-
-    void delete(@NotBlank String id);
+    void delete(@NotNull String id);
 
 }

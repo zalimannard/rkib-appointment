@@ -2,20 +2,13 @@ package ru.zalimannard.rkibappointmentbackend.schema.institution;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
-import ru.zalimannard.rkibappointmentbackend.Utils;
 import ru.zalimannard.rkibappointmentbackend.exception.ConflictException;
 import ru.zalimannard.rkibappointmentbackend.exception.NotFoundException;
-
-import java.util.List;
-import java.util.Optional;
+import ru.zalimannard.rkibappointmentbackend.schema.institution.dto.InstitutionRequestDto;
+import ru.zalimannard.rkibappointmentbackend.schema.institution.dto.InstitutionResponseDto;
 
 @Service
-@Validated
 @RequiredArgsConstructor
 public class InstitutionServiceImpl implements InstitutionService {
 
@@ -23,12 +16,10 @@ public class InstitutionServiceImpl implements InstitutionService {
     private final InstitutionRepository repository;
 
     @Override
-    public InstitutionDto create(InstitutionDto institutionDto) {
-        Institution request = mapper.toEntity(institutionDto);
-
-        Institution response = createEntity(request);
-
-        return mapper.toDto(response);
+    public InstitutionResponseDto create(InstitutionRequestDto institutionDto) {
+        Institution institutionToCreate = mapper.toEntity(institutionDto);
+        Institution createdInstitution = createEntity(institutionToCreate);
+        return mapper.toDto(createdInstitution);
     }
 
     @Override
@@ -36,90 +27,46 @@ public class InstitutionServiceImpl implements InstitutionService {
         try {
             return repository.save(institution);
         } catch (DataIntegrityViolationException e) {
-            throw new ConflictException("ins-01", "institution", e.getLocalizedMessage());
+            throw new ConflictException("ins-01", "Конфликт при добавлении Institution в базу данных", e.getMessage());
         }
     }
 
-
     @Override
-    public InstitutionDto read(String id) {
-        Institution response = readEntity(id);
-
-        return mapper.toDto(response);
+    public InstitutionResponseDto read(String id) {
+        Institution institution = readEntity(id);
+        return mapper.toDto(institution);
     }
-
 
     @Override
     public Institution readEntity(String id) {
-        Optional<Institution> responseOptional = repository.findById(id);
-        if (responseOptional.isPresent()) {
-            return responseOptional.get();
-        } else {
-            throw new NotFoundException("ins-02", "id", id);
-        }
+        return repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("ins-02", "Не найден Institution с id=" + id, null));
     }
 
     @Override
-    public List<InstitutionDto> search(InstitutionDto filterDto, String[] sortBy,
-                                       int pageSize, int pageNumber) {
-        Institution filter = mapper.toEntity(filterDto);
-
-        List<Institution> response = searchEntities(filter, sortBy, pageSize, pageNumber);
-
-        return mapper.toDtoList(response);
+    public InstitutionResponseDto update(String id, InstitutionRequestDto institutionDto) {
+        Institution institutionToUpdate = mapper.toEntity(institutionDto);
+        institutionToUpdate.setId(id);
+        Institution updatedInstitution = updateEntity(institutionToUpdate);
+        return mapper.toDto(updatedInstitution);
     }
 
     @Override
-    public List<Institution> searchEntities(Institution filter, String[] sortBy,
-                                            int pageSize, int pageNumber) {
-        List<Sort.Order> orders = Utils.ordersByStringArray(sortBy);
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(orders));
-
-        return repository.search(
-                filter.getName(),
-                pageable);
-    }
-
-    @Override
-    public List<Institution> searchEntities(Institution filter,
-                                            int pageSize, int pageNumber) {
-        String sortByFromProperties = "${application.constant.defaultSort}";
-        String[] sortBy;
+    public Institution updateEntity(Institution institution) {
         try {
-            sortBy = sortByFromProperties.split(",");
-        } catch (NullPointerException e) {
-            throw new NotFoundException("ins-03", "defaultSort", null);
-        }
-        return searchEntities(filter, sortBy, pageSize, pageNumber);
-    }
-
-
-    @Override
-    public InstitutionDto update(String id, InstitutionDto institutionDto) {
-        Institution request = mapper.toEntity(institutionDto);
-
-        Institution response = updateEntity(id, request);
-
-        return mapper.toDto(response);
-    }
-
-    @Override
-    public Institution updateEntity(String id, Institution institution) {
-        if (repository.existsById(id)) {
-            institution.setId(id);
             return repository.save(institution);
-        } else {
-            throw new NotFoundException("ins-04", "id", id);
+        } catch (DataIntegrityViolationException e) {
+            throw new ConflictException("ins-03", "Конфликт при обновлении Institution в базе данных", e.getMessage());
         }
     }
-
 
     @Override
     public void delete(String id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
-        } else {
-            throw new NotFoundException("ins-05", "id", id);
+        try {
+            Institution institution = readEntity(id);
+            repository.delete(institution);
+        } catch (DataIntegrityViolationException e) {
+            throw new ConflictException("ins-04", "Конфликт при удалении Institution из базы данных", e.getMessage());
         }
     }
 

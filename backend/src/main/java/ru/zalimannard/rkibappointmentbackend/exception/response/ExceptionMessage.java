@@ -1,6 +1,6 @@
 package ru.zalimannard.rkibappointmentbackend.exception.response;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -8,13 +8,13 @@ import lombok.Getter;
 @Getter
 public class ExceptionMessage {
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonProperty("code")
+    private final String code;
+
+    @JsonProperty("message")
+    private final String message;
+
+    @JsonProperty("details")
     private final String details;
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private final String field;
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private final String value;
 
 }
