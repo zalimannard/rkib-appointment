@@ -1,22 +1,22 @@
-package ru.zalimannard.rkibappointmentbackend.schema.person.staffmember;
+package ru.zalimannard.rkibappointmentbackend.schema.person.employees;
 
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 import ru.zalimannard.rkibappointmentbackend.schema.person.Person;
-import ru.zalimannard.rkibappointmentbackend.schema.person.staffmember.role.StaffMemberRole;
+import ru.zalimannard.rkibappointmentbackend.schema.person.employees.role.EmployeeRole;
 
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "staff")
+@Table(name = "employees")
 @Getter
 @Setter
 @Builder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class StaffMember {
+public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -28,13 +28,13 @@ public class StaffMember {
     private Person person;
 
     @Column(name = "roles", nullable = false)
-    private Set<StaffMemberRole> roles;
+    private Set<EmployeeRole> roles;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        StaffMember that = (StaffMember) o;
+        Employee that = (Employee) o;
         return getId() != null && Objects.equals(getId(), that.getId());
     }
 

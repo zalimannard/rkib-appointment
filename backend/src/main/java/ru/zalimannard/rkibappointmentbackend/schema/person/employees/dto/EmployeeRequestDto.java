@@ -1,17 +1,17 @@
-package ru.zalimannard.rkibappointmentbackend.schema.person.staffmember.dto;
+package ru.zalimannard.rkibappointmentbackend.schema.person.employees.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Value;
-import ru.zalimannard.rkibappointmentbackend.schema.person.staffmember.role.StaffMemberRole;
+import ru.zalimannard.rkibappointmentbackend.schema.person.employees.role.EmployeeRole;
 
 import java.util.Set;
 
 @Value
 @Builder(toBuilder = true)
-public class StaffMemberRequestDto {
+public class EmployeeRequestDto {
 
     @JsonProperty("personId")
     @NotBlank(message = "Не указан человек")
@@ -19,6 +19,6 @@ public class StaffMemberRequestDto {
 
     @JsonProperty("roles")
     @NotEmpty(message = "Не указаны роли")
-    Set<StaffMemberRole> roles;
+    Set<EmployeeRole> roles;
 
 }

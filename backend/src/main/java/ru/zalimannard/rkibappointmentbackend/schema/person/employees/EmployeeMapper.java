@@ -1,30 +1,30 @@
-package ru.zalimannard.rkibappointmentbackend.schema.person.staffmember;
+package ru.zalimannard.rkibappointmentbackend.schema.person.employees;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.zalimannard.rkibappointmentbackend.schema.person.Person;
 import ru.zalimannard.rkibappointmentbackend.schema.person.PersonMapper;
-import ru.zalimannard.rkibappointmentbackend.schema.person.staffmember.dto.StaffMemberRequestDto;
-import ru.zalimannard.rkibappointmentbackend.schema.person.staffmember.dto.StaffMemberResponseDto;
+import ru.zalimannard.rkibappointmentbackend.schema.person.employees.dto.EmployeeRequestDto;
+import ru.zalimannard.rkibappointmentbackend.schema.person.employees.dto.EmployeeResponseDto;
 
 import java.util.HashSet;
 
 @Component
 @RequiredArgsConstructor
-public class StaffMemberMapper {
+public class EmployeeMapper {
 
     private final PersonMapper personMapper;
 
-    public StaffMember toEntity(StaffMemberRequestDto patientRequestDto,
-                                Person person) {
-        return StaffMember.builder()
+    public Employee toEntity(EmployeeRequestDto patientRequestDto,
+                             Person person) {
+        return Employee.builder()
                 .person(person)
                 .roles(new HashSet<>(patientRequestDto.getRoles()))
                 .build();
     }
 
-    public StaffMemberResponseDto toDto(StaffMember patient) {
-        return StaffMemberResponseDto.builder()
+    public EmployeeResponseDto toDto(Employee patient) {
+        return EmployeeResponseDto.builder()
                 .id(patient.getId())
                 .person(personMapper.toDto(patient.getPerson()))
                 .roles(new HashSet<>(patient.getRoles()))

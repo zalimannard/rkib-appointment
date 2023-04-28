@@ -1,10 +1,10 @@
-package ru.zalimannard.rkibappointmentbackend.schema.person.staffmember.role;
+package ru.zalimannard.rkibappointmentbackend.schema.person.employees.role;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
-public enum StaffMemberRole {
+public enum EmployeeRole {
 
     ADMIN("A"),
     REGISTRAR("R"),

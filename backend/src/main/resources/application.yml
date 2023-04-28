@@ -27,4 +27,4 @@ application:
   endpoint:
     people: /people
     patients: /patients
-    staff: /staff
+    employee: /employee
