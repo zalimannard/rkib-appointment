@@ -30,3 +30,4 @@ application:
     employee: /employee
     procedures: /procedures
     institutions: /institutions
+    appointmentStatuses: /appointmentStatuses
