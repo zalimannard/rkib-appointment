@@ -115,7 +115,6 @@ public class PersonServiceImpl implements PersonService, UserDetailsService {
             adminToCreate = encodePersonsPassword(adminToCreate);
             repository.save(adminToCreate);
         } else {
-            // TODO: Сделать разделение на пациентов и сотрудников
             log.info("Человек с username=" + defaultAdminUsername + " уже существует");
         }
     }

@@ -9,7 +9,7 @@ import ru.zalimannard.rkibappointmentbackend.schema.person.employees.dto.Employe
 @Validated
 public interface EmployeeService {
 
-    EmployeeResponseDto create(@NotNull @Valid EmployeeRequestDto staffMemberDto);
+    EmployeeResponseDto create(@NotNull @Valid EmployeeRequestDto employeeDto);
 
     Employee createEntity(@NotNull Employee employee);
 
@@ -19,7 +19,7 @@ public interface EmployeeService {
     Employee readEntity(@NotNull String id);
 
 
-    EmployeeResponseDto update(@NotNull String id, @NotNull @Valid EmployeeRequestDto staffMemberDto);
+    EmployeeResponseDto update(@NotNull String id, @NotNull @Valid EmployeeRequestDto employeeDto);
 
     Employee updateEntity(@NotNull Employee employee);
 

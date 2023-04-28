@@ -33,3 +33,4 @@ application:
     appointmentStatuses: /appointmentStatuses
     scheduleStatuses: /scheduleStatuses
     appointments: /appointments
+    schedules: /schedules

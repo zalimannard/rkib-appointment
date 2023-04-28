@@ -9,7 +9,7 @@ import ru.zalimannard.rkibappointmentbackend.schema.appointment.dto.AppointmentR
 @Validated
 public interface AppointmentService {
 
-    AppointmentResponseDto create(@NotNull @Valid AppointmentRequestDto procedureDto);
+    AppointmentResponseDto create(@NotNull @Valid AppointmentRequestDto appointmentDto);
 
     Appointment createEntity(@NotNull Appointment appointment);
 
@@ -19,7 +19,7 @@ public interface AppointmentService {
     Appointment readEntity(@NotNull String id);
 
 
-    AppointmentResponseDto update(@NotNull String id, @NotNull @Valid AppointmentRequestDto procedureDto);
+    AppointmentResponseDto update(@NotNull String id, @NotNull @Valid AppointmentRequestDto appointmentDto);
 
     Appointment updateEntity(@NotNull Appointment appointment);
 

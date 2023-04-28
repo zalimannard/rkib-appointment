@@ -20,9 +20,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final PersonService personService;
 
     @Override
-    public EmployeeResponseDto create(EmployeeRequestDto staffMemberDto) {
-        Person person = personService.readEntity(staffMemberDto.getPersonId());
-        Employee employeeToCreate = mapper.toEntity(staffMemberDto, person);
+    public EmployeeResponseDto create(EmployeeRequestDto employeeDto) {
+        Person person = personService.readEntity(employeeDto.getPersonId());
+        Employee employeeToCreate = mapper.toEntity(employeeDto, person);
         Employee createdEmployee = createEntity(employeeToCreate);
         return mapper.toDto(createdEmployee);
     }
@@ -49,9 +49,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeResponseDto update(String id, EmployeeRequestDto staffMemberDto) {
-        Person person = personService.readEntity(staffMemberDto.getPersonId());
-        Employee employeeToUpdate = mapper.toEntity(staffMemberDto, person);
+    public EmployeeResponseDto update(String id, EmployeeRequestDto employeeDto) {
+        Person person = personService.readEntity(employeeDto.getPersonId());
+        Employee employeeToUpdate = mapper.toEntity(employeeDto, person);
         employeeToUpdate.setId(id);
         Employee updatedEmployee = updateEntity(employeeToUpdate);
         return mapper.toDto(updatedEmployee);
