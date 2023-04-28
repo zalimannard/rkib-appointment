@@ -31,3 +31,4 @@ application:
     procedures: /procedures
     institutions: /institutions
     appointmentStatuses: /appointmentStatuses
+    scheduleStatuses: /scheduleStatuses
