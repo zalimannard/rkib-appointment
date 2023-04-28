@@ -16,7 +16,7 @@ import java.util.Date;
 public class PatientRequestDto {
 
     @JsonProperty("personId")
-    @NotBlank(message = "Не указан пользователь")
+    @NotBlank(message = "Не указан человек")
     String personId;
 
     @JsonProperty("phoneNumber")

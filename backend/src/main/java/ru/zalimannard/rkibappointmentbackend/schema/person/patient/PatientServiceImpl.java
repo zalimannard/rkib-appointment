@@ -75,4 +75,5 @@ public class PatientServiceImpl implements PatientService {
             throw new ConflictException("pas-04", "Конфликт при удалении Patient из базы данных", e.getMessage());
         }
     }
+
 }
