@@ -1,6 +1,6 @@
 package ru.zalimannard.rkibappointmentbackend.exception.response;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -10,16 +10,10 @@ import java.util.List;
 @Getter
 public class ExceptionResponse {
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonProperty("httpCode")
     private final String httpCode;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private final String code;
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private final String message;
-
-    @JsonInclude
+    @JsonProperty("errors")
     private final List<ExceptionMessage> errors;
 
 }

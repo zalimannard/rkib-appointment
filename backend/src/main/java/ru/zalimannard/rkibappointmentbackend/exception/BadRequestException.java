@@ -7,11 +7,11 @@ import ru.zalimannard.rkibappointmentbackend.exception.response.HttpCodes;
 
 import java.util.List;
 
-@ResponseStatus(HttpStatus.CONFLICT)
-public class ConflictException extends BaseException {
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public class BadRequestException extends BaseException {
 
-    public ConflictException(String code, String message, String details) {
-        super(HttpCodes.CONFLICT,
+    public BadRequestException(String code, String message, String details) {
+        super(HttpCodes.BAD_REQUEST,
                 code,
                 List.of(ExceptionMessage.builder()
                         .code(code)

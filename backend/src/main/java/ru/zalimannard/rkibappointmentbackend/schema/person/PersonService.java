@@ -1,44 +1,29 @@
 package ru.zalimannard.rkibappointmentbackend.schema.person;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
+import org.springframework.validation.annotation.Validated;
+import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonRequestDto;
+import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonResponseDto;
 
-import java.util.Date;
-import java.util.List;
-
+@Validated
 public interface PersonService {
 
-    PersonDto create(@Valid PersonDto personDto);
+    PersonResponseDto create(@NotNull @Valid PersonRequestDto personDto);
 
-    Person createEntity(@Valid Person person);
+    Person createEntity(@NotNull Person person);
 
 
-    PersonDto read(@NotBlank String id);
+    PersonResponseDto read(@NotNull String id);
 
     Person readEntity(@NotNull String id);
 
-    Person readEntityByUsername(@NotBlank String username);
 
-    Person readEntityByEncodedPassword(@NotBlank String encodedPassword);
+    PersonResponseDto update(@NotNull String id, @NotNull @Valid PersonRequestDto personDto);
 
-
-    List<PersonDto> search(PersonDto filterDto, Date beginBirthdate, Date endBirthdate, String[] sortBy,
-                           @Positive int pageSize, @PositiveOrZero int pageNumber);
-
-    List<Person> searchEntities(Person filter, Date beginBirthdate, Date endBirthdate, String[] sortBy,
-                                @Positive int pageSize, @PositiveOrZero int pageNumber);
-
-    List<Person> searchEntities(Person filter, Date beginBirthdate, Date endBirthdate,
-                                @Positive int pageSize, @PositiveOrZero int pageNumber);
+    Person updateEntity(@NotNull Person person);
 
 
-    PersonDto update(String id, @Valid PersonDto personDto);
+    void delete(@NotNull String id);
 
-    Person updateEntity(@NotBlank String id, @Valid Person person);
-
-
-    void delete(@NotBlank String id);
 }

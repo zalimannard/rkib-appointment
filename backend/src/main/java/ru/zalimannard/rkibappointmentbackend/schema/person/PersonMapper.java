@@ -1,24 +1,30 @@
 package ru.zalimannard.rkibappointmentbackend.schema.person;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import ru.zalimannard.rkibappointmentbackend.schema.person.registration.PersonRegistrationDto;
+import org.springframework.stereotype.Component;
+import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonRequestDto;
+import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonResponseDto;
 
-import java.util.List;
+@Component
+public class PersonMapper {
 
-@Mapper(componentModel = "spring")
-public interface PersonMapper {
+    public Person toEntity(PersonRequestDto personRequestDto) {
+        return Person.builder()
+                .username(personRequestDto.getUsername())
+                .password(personRequestDto.getPassword())
+                .lastName(personRequestDto.getLastName())
+                .firstName(personRequestDto.getFirstName())
+                .patronymic(personRequestDto.getPatronymic())
+                .build();
+    }
 
-    Person toEntity(PersonDto dto);
-
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "roles", ignore = true)
-    Person toEntity(PersonRegistrationDto dto);
-
-    PersonDto toDto(Person entity);
-
-    List<Person> toEntityList(List<PersonDto> dto);
-
-    List<PersonDto> toDtoList(List<Person> entity);
+    public PersonResponseDto toDto(Person person) {
+        return PersonResponseDto.builder()
+                .id(person.getId())
+                .username(person.getUsername())
+                .lastName(person.getLastName())
+                .firstName(person.getFirstName())
+                .patronymic(person.getPatronymic())
+                .build();
+    }
 
 }
