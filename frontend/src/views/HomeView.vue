@@ -40,6 +40,7 @@
             <v-select
               v-model="role"
               :items="roles"
+              :rules="[required]"
               label="Роль"
               variant="outlined"
             ></v-select>
