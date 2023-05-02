@@ -5,11 +5,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonResponseDto;
 import ru.zalimannard.rkibappointmentbackend.schema.person.employees.dto.EmployeeRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.person.employees.dto.EmployeeResponseDto;
 
 @RestController
-@RequestMapping("${application.baseApi}${application.apiV1}${application.endpoint.employee}")
+@RequestMapping("${application.baseApi}${application.apiV1}${application.endpoint.employees}")
 @Tag(name = "Сотрудник")
 @RequiredArgsConstructor
 public class EmployeeController {
@@ -20,6 +21,12 @@ public class EmployeeController {
     @Operation(summary = "Получение сотрудника")
     public EmployeeResponseDto get(@PathVariable String id) {
         return employeeService.read(id);
+    }
+
+    @GetMapping("${application.endpoint.me}")
+    @Operation(summary = "Получение сотрудником себя")
+    public EmployeeResponseDto getMe() {
+        return employeeService.readMe();
     }
 
     @PostMapping

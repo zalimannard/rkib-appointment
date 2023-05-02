@@ -25,9 +25,10 @@ application:
   baseApi: /api
   apiV1: /v1
   endpoint:
+    me: /me
     people: /people
     patients: /patients
-    employee: /employee
+    employees: /employees
     procedures: /procedures
     institutions: /institutions
     appointmentStatuses: /appointmentStatuses

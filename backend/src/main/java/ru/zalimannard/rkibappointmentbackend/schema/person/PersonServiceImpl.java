@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -59,6 +60,12 @@ public class PersonServiceImpl implements PersonService, UserDetailsService {
     public Person readEntity(String id) {
         return repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("pes-02", "Не найден Person с id=" + id, null));
+    }
+
+    @Override
+    public Person readEntityByUsername(String username) {
+        return repository.findByUsername(username)
+                .orElseThrow(() -> new NotFoundException("pes-06", "Не найден Person с username=" + username, null));
     }
 
     @Override
