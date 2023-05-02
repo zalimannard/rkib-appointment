@@ -140,15 +140,32 @@ export default {
           localStorage.setItem("auth", basicAuth);
           localStorage.setItem("role-ui-name", this.role.key);
           localStorage.setItem("role-api-name", this.role.value);
+          if (this.role.value === "DOCTOR") {
+            this.$router.push({ name: "DoctorView" });
+          } else if (this.role.value === "REGISTRAR") {
+            this.$router.push({ name: "RegistrarView" });
+          } else if (this.role.value === "ADMIN") {
+            this.$router.push({ name: "AdminView" });
+          }
+
         } else {
           this.showErrorAlert = true;
           this.errorText = "У вас нет такой роли";
           setTimeout(() => (this.showErrorAlert = false), 5000);
+
         }
       } catch (error) {
-        this.showErrorAlert = true;
-        this.errorText = "Неверный логин или пароль";
-        setTimeout(() => (this.showErrorAlert = false), 5000);
+        try {
+          if (error.response.status === 401) {
+            this.showErrorAlert = true;
+            this.errorText = "Неверный логин или пароль";
+            setTimeout(() => (this.showErrorAlert = false), 5000);
+          }
+        } catch (error) {
+          this.showErrorAlert = true;
+          this.errorText = "Непредвиденная ошибка";
+          setTimeout(() => (this.showErrorAlert = false), 5000);
+        }
       } finally {
         this.loading = false;
       }
