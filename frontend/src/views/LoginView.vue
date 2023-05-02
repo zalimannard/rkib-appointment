@@ -6,20 +6,11 @@
 
     <v-col>
 
-      <v-fade-transition>
-        <v-alert
-          v-show="showAlert"
-          :text="alertText"
-          class="alert-style"
-          color="red"
-          location="top"
-          position="fixed"
-          rounded="lg"
-          type="error"
-          variant="elevated"
-          width="500"
-        ></v-alert>
-      </v-fade-transition>
+      <CustomAlert
+        :alertText="errorText"
+        :showAlert="showErrorAlert"
+        type="error"
+      />
 
       <v-card
         class="mx-auto px-6 pt-6 pb-4"
@@ -96,15 +87,12 @@
 .login-container {
     height: 100vh;
 }
-
-.alert-style {
-    margin-top: 10pt;
-}
 </style>
 
 <script>
 
 import axios from "axios";
+import CustomAlert from "@/components/CustomAlert.vue";
 
 export default {
   data() {
@@ -121,8 +109,8 @@ export default {
       ],
       form: false,
       loading: false,
-      alertText: "",
-      showAlert: false,
+      errorText: "",
+      showErrorAlert: false,
 
       rules: {
         required: value => !!value || "Поле не должно быть пустым.",
@@ -135,7 +123,9 @@ export default {
 
     };
   },
-
+  components: {
+    CustomAlert
+  },
   methods: {
     async onSubmit() {
       if (!this.form) return;
@@ -151,14 +141,14 @@ export default {
           localStorage.setItem("role-ui-name", this.role.key);
           localStorage.setItem("role-api-name", this.role.value);
         } else {
-          this.showAlert = true;
-          this.alertText = "У вас нет такой роли";
-          setTimeout(() => (this.showAlert = false), 5000);
+          this.showErrorAlert = true;
+          this.errorText = "У вас нет такой роли";
+          setTimeout(() => (this.showErrorAlert = false), 5000);
         }
       } catch (error) {
-        this.showAlert = true;
-        this.alertText = "Неверный логин или пароль";
-        setTimeout(() => (this.showAlert = false), 5000);
+        this.showErrorAlert = true;
+        this.errorText = "Неверный логин или пароль";
+        setTimeout(() => (this.showErrorAlert = false), 5000);
       } finally {
         this.loading = false;
       }
