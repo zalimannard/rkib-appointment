@@ -172,10 +172,7 @@ export default {
     },
 
     submit() {
-      console.log("Логин:", this.username);
-      console.log("Пароль:", this.password);
-      console.log("Роль:", this.role);
-      console.log("Идентификатор:", this.userId);
+
     }
   }
 };

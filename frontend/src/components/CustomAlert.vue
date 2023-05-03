@@ -2,13 +2,13 @@
   <v-fade-transition>
     <v-alert
       v-show="showAlert"
-      :text="alertText"
-      class="alert-style"
       :color="alertColor"
+      :text="alertText"
+      :type="type"
+      class="alert-style"
       location="top"
       position="fixed"
       rounded="lg"
-      :type="type"
       variant="elevated"
       width="500"
     ></v-alert>
@@ -23,7 +23,7 @@ export default {
     type: {
       type: String,
       default: "error"
-    },
+    }
   },
   computed: {
     alertColor() {
@@ -39,8 +39,8 @@ export default {
         default:
           return "indigo";
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
