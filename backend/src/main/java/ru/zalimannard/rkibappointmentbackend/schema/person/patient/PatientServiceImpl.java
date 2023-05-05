@@ -10,6 +10,8 @@ import ru.zalimannard.rkibappointmentbackend.schema.person.PersonService;
 import ru.zalimannard.rkibappointmentbackend.schema.person.patient.dto.PatientRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.person.patient.dto.PatientResponseDto;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PatientServiceImpl implements PatientService {
@@ -46,6 +48,17 @@ public class PatientServiceImpl implements PatientService {
     public Patient readEntity(String id) {
         return repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("pas-02", "Не найден Patient с id=" + id, null));
+    }
+
+    @Override
+    public List<PatientResponseDto> readAll() {
+        List<Patient> patients = readAllEntities();
+        return mapper.toDtoList(patients);
+    }
+
+    @Override
+    public List<Patient> readAllEntities() {
+        return repository.findAll();
     }
 
     @Override

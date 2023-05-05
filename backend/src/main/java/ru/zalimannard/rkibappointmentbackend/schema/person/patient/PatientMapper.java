@@ -7,6 +7,8 @@ import ru.zalimannard.rkibappointmentbackend.schema.person.PersonMapper;
 import ru.zalimannard.rkibappointmentbackend.schema.person.patient.dto.PatientRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.person.patient.dto.PatientResponseDto;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class PatientMapper {
@@ -33,6 +35,10 @@ public class PatientMapper {
                 .occupation(patient.getOccupation())
                 .person(personMapper.toDto(patient.getPerson()))
                 .build();
+    }
+
+    public List<PatientResponseDto> toDtoList(List<Patient> patients) {
+        return patients.stream().map(this::toDto).toList();
     }
 
 }

@@ -11,6 +11,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: ${DDL_BEHAVIOUR}
+  jackson:
+    dateFormat: dd.MM.yyyy
 
 springdoc:
   swagger-ui:
