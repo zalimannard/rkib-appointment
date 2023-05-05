@@ -1,19 +1,21 @@
 <template>
-  <v-app-bar app>
+  <v-app-bar
+    app
+    color="indigo">
     <v-tabs
       v-model="activeTab"
       align-tabs="title">
       <v-tab
-        color="indigo"
-        slider-color="indigo"
+        color="white"
+        slider-color="white"
         to="/registrar/doctor"
         width="150">
         Расписание
       </v-tab>
 
       <v-tab
-        color="indigo"
-        slider-color="indigo"
+        color="white"
+        slider-color="white"
         to="/registrar/patient"
         width="150">
         Пациенты
@@ -28,7 +30,7 @@
       <template
         v-slot:activator="{ props }">
         <v-btn
-          color="indigo"
+          color="white"
           dark
           v-bind="props">
           {{ formattedName }}

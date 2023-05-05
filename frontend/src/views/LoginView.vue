@@ -138,7 +138,6 @@ export default {
 
         if (response.data.roles.includes(this.role.value)) {
           localStorage.setItem("auth", basicAuth);
-          localStorage.setItem("role-ui-name", this.role.key);
           localStorage.setItem("role-api-name", this.role.value);
           if (this.role.value === "DOCTOR") {
             this.$router.push({ name: "DoctorView" });
