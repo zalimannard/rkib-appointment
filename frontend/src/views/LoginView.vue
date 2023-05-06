@@ -114,7 +114,6 @@ export default {
 
       rules: {
         required: value => !!value || "Поле не должно быть пустым.",
-        counter: value => value.length <= 20 || "Max 20 characters",
         latinOrDigitOnly: value => {
           const pattern = /^[a-zA-Z0-9]+$/;
           return pattern.test(value) || "Недопустимые символы";
