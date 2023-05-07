@@ -16,9 +16,12 @@
               <v-row>
                 <v-col cols="12" md="4" sm="6">
                   <v-text-field
+                    ref="lastNameForNewPatient"
                     v-model="lastNameForNewPatient"
                     :rules="[rules.required]"
+                    validate-on-blur
                     variant="outlined"
+                    @input="lastNameForNewPatient = capitalizeFirstLetter(lastNameForNewPatient)"
                   >
                     <template #label>
                       <div>
@@ -30,9 +33,12 @@
 
                 <v-col cols="12" md="4" sm="6">
                   <v-text-field
+                    ref="firstNameForNewPatient"
                     v-model="firstNameForNewPatient"
                     :rules="[rules.required]"
+                    validate-on-blur
                     variant="outlined"
+                    @input="firstNameForNewPatient = capitalizeFirstLetter(firstNameForNewPatient)"
                   >
                     <template #label>
                       <div>
@@ -47,6 +53,7 @@
                     v-model="patronymicForNewPatient"
                     label="Отчество"
                     variant="outlined"
+                    @input="patronymicForNewPatient = capitalizeFirstLetter(patronymicForNewPatient)"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -54,22 +61,29 @@
               <v-row>
                 <v-col cols="12" md="4" sm="6">
                   <v-text-field
+                    ref="birthdateForNewPatient"
                     v-model="birthdateForNewPatient"
                     :rules="[rules.birthdateRules]"
                     label="Дата рождения"
-                    variant="outlined"
                     placeholder="ДД.ММ.ГГГГ"
-                    @keydown="handleBackspace"
+                    validate-on-blur
+                    variant="outlined"
                     @input="birthdateForNewPatient = birthdateMask(birthdateForNewPatient)"
+                    @keydown="handleBackspaceForBirthdateNewPatient"
                   ></v-text-field>
                 </v-col>
 
                 <v-col cols="12" md="4" sm="6">
                   <v-text-field
+                    ref="phoneNumberForNewPatient"
                     v-model="phoneNumberForNewPatient"
-                    :rules="[rules.required]"
+                    :rules="[rules.phoneRules]"
+                    validate-on-blur
                     variant="outlined"
+                    @focus="phoneNumberForNewPatient = phoneMask(phoneNumberForNewPatient === '' ? '+7(' : phoneNumberForNewPatient)"
                     @input="phoneNumberForNewPatient = phoneMask(phoneNumberForNewPatient)"
+                    @keydown="handleBackspaceForPhoneNumberNewPatient"
+                    @update:model-value="val => phoneNumberForNewPatient = val"
                   >
                     <template #label>
                       <div>
@@ -139,6 +153,7 @@
             density="comfortable"
             label="Фамилия"
             variant="outlined"
+            @input="lastNameFilter = capitalizeFirstLetter(lastNameFilter)"
             @update:modelValue="editFilter">
           </v-text-field>
         </th>
@@ -149,6 +164,7 @@
             density="comfortable"
             label="Имя"
             variant="outlined"
+            @input="firstNameFilter = capitalizeFirstLetter(firstNameFilter)"
             @update:modelValue="editFilter">
           </v-text-field>
         </th>
@@ -159,26 +175,35 @@
             density="comfortable"
             label="Отчество"
             variant="outlined"
+            @input="patronymicFilter = capitalizeFirstLetter(patronymicFilter)"
             @update:modelValue="editFilter">
           </v-text-field>
         </th>
         <th class="text-left birthdate-column" scope="col">
           <v-text-field
             v-model="birthdateFilter"
+            :rules="[rules.birthdateRules]"
             class="table-header"
             density="comfortable"
             label="Дата рождения"
+            placeholder="ДД.ММ.ГГГГ"
             variant="outlined"
+            @input="birthdateFilter = birthdateMask(birthdateFilter)"
+            @keydown="handleBackspaceForBirthdateFilter"
             @update:modelValue="editFilter">
           </v-text-field>
         </th>
         <th class="text-left phone-number-column" scope="col">
           <v-text-field
             v-model="phoneNumberFilter"
+            :rules="[rules.phoneRules]"
             class="table-header"
             density="comfortable"
             label="Телефон"
             variant="outlined"
+            @focus="phoneNumberFilter = '+7('"
+            @input="phoneNumberFilter = phoneMask(phoneNumberFilter)"
+            @keydown="handleBackspaceForPhoneNumberFilter"
             @update:modelValue="editFilter">
           </v-text-field>
         </th>
@@ -246,7 +271,7 @@ export default {
       firstNameFilter: "",
       patronymicFilter: "",
       birthdateFilter: "",
-      phoneNumberFilter: "",
+      phoneNumberFilter: "+7(",
 
       patients: [],
       filteredPatients: [],
@@ -257,12 +282,12 @@ export default {
 
       rules: {
         required: value => {
-          return !!value || "Поле не должно быть пустым.";
+          return !!value || "Не должно быть пустым";
         },
         birthdateRules: value => {
-          if (!value) return "Поле не должно быть пустым.";
+          if (!value) return true;
           const pattern = /^(\d{2})\.(\d{2})\.(\d{4})$/;
-          if (!pattern.test(value)) return "Неверный формат даты (дд.мм.гггг).";
+          if (!pattern.test(value)) return "Неполная дата";
           const [, day, month, year] = value.match(pattern);
           const date = new Date(year, month - 1, day);
           if (
@@ -272,6 +297,13 @@ export default {
           ) {
             return "Некорректная дата.";
           }
+          return true;
+        },
+        phoneRules: value => {
+          if (!value) return true;
+          if (value === "+7(") return true;
+          const pattern = /^\+7\((\d{3})\)(\d{3})-(\d{2})-(\d{2})$/;
+          if (!pattern.test(value)) return "Неполный номер";
           return true;
         }
       }
@@ -289,7 +321,7 @@ export default {
           firstName: patient.person.firstName,
           patronymic: patient.person.patronymic,
           birthdate: patient.birthdate,
-          phoneNumber: patient.phoneNumber
+          phoneNumber: this.phoneMask(patient.phoneNumber) // Здесь мы применяем phoneMask к полученному номеру телефона
         };
       });
       this.filteredPatients = this.patients;
@@ -299,44 +331,26 @@ export default {
   },
   methods: {
     async editFilter() {
-      this.filteredPatients = [];
-      this.patients.forEach(value => {
-        let isFit = true;
+      const checkFilter = (fieldValue, filterValue) => {
+        if (!fieldValue && filterValue !== "") return false;
+        return !(fieldValue && fieldValue.toLowerCase().indexOf(filterValue.toLowerCase()) === -1);
+      };
 
-        if (((value.lastName == null)) && (this.lastNameFilter !== "")) {
-          isFit = false;
-        } else if ((value.lastName !== null) && (value.lastName.toLowerCase().indexOf(this.lastNameFilter.toLowerCase()) === -1)) {
-          isFit = false;
-        }
-
-        if (((value.firstName == null)) && (this.firstNameFilter !== "")) {
-          isFit = false;
-        } else if ((value.firstName !== null) && (value.firstName.toLowerCase().indexOf(this.firstNameFilter.toLowerCase()) === -1)) {
-          isFit = false;
-        }
-
-        if (((value.patronymic == null)) && (this.patronymicFilter !== "")) {
-          isFit = false;
-        } else if ((value.patronymic !== null) && (value.patronymic.toLowerCase().indexOf(this.patronymicFilter.toLowerCase()) === -1)) {
-          isFit = false;
-        }
-
-        if (((value.birthdate == null)) && (this.birthdateFilter !== "")) {
-          isFit = false;
-        } else if ((value.birthdate !== null) && (value.birthdate.toLowerCase().indexOf(this.birthdateFilter.toLowerCase()) === -1)) {
-          isFit = false;
-        }
-
-        if (((value.phoneNumber == null)) && (this.phoneNumberFilter !== "")) {
-          isFit = false;
-        } else if ((value.phoneNumber !== null) && (value.phoneNumber.toLowerCase().indexOf(this.phoneNumberFilter.toLowerCase()) === -1)) {
-          isFit = false;
-        }
-
-        if (isFit) {
-          this.filteredPatients.push(value);
-        }
+      this.filteredPatients = this.patients.filter(patient => {
+        return (
+          checkFilter(patient.lastName, this.lastNameFilter) &&
+          checkFilter(patient.firstName, this.firstNameFilter) &&
+          checkFilter(patient.patronymic, this.patronymicFilter) &&
+          checkFilter(patient.birthdate, this.birthdateFilter) &&
+          checkFilter(patient.phoneNumber, this.phoneNumberFilter)
+        );
       });
+    },
+    validateFormFields() {
+      this.$refs.lastNameForNewPatient.validate();
+      this.$refs.firstNameForNewPatient.validate();
+      this.$refs.birthdateForNewPatient.validate();
+      this.$refs.phoneNumberForNewPatient.validate();
     },
     addPerson() {
       this.isDialogForAddingPersonActive = true;
@@ -347,6 +361,10 @@ export default {
       this.phoneNumberForNewPatient = this.phoneNumberFilter;
       this.addressForNewPatient = "";
       this.occupationForNewPatient = "";
+      this.$nextTick(() => {
+        this.validateFormFields();
+      });
+
     },
     confirmAddPerson() {
       this.isDialogForAddingPersonActive = false;
@@ -370,37 +388,63 @@ export default {
         }
       }
 
-      // Добавляем точку после второй и пятой цифры, если длина значения равна 2 или 5
       if (numValue.length === 0 && (formattedValue.length === 2 || formattedValue.length === 5)) {
         formattedValue += ".";
       }
       return formattedValue;
     },
-    handleBackspace(event) {
+    handleBackspaceForBirthdateNewPatient(event) {
       if (event.key === "Backspace" && this.birthdateForNewPatient.slice(-1) === ".") {
         event.preventDefault();
         this.birthdateForNewPatient = this.birthdateForNewPatient.slice(0, -2);
       }
     },
+    handleBackspaceForBirthdateFilter(event) {
+      if (event.key === "Backspace" && this.birthdateFilter.slice(-1) === ".") {
+        event.preventDefault();
+        this.birthdateFilter = this.birthdateFilter.slice(0, -2);
+      }
+    },
     phoneMask(value) {
-      if (!value) return "+7";
+      if (!value) return "+7(";
       const numValue = value.replace(/\D+/g, "").split("").filter((_, i) => i > 0);
-      const mask = ["(", "#", "#", "#", ")", "#", "#", "#", "-", "#", "#", "-", "#", "#"];
+      const mask = ["#", "#", "#", ")", "#", "#", "#", "-", "#", "#", "-", "#", "#"];
 
-      let formattedValue = "+7";
-      let index = 0;
+      let formattedValue = "+7(";
       for (const char of mask) {
         if (!numValue.length) break;
 
         if (char === "#") {
           formattedValue += numValue.shift();
-          index++;
         } else {
           formattedValue += char;
-          index++;
         }
       }
+
+      if (numValue.length === 0 && formattedValue.length === 6) {
+        formattedValue += ")";
+      }
+
+      if (numValue.length === 0 && (formattedValue.length === 10 || formattedValue.length === 13)) {
+        formattedValue += "-";
+      }
+
       return formattedValue;
+    },
+    handleBackspaceForPhoneNumberNewPatient(event) {
+      if (event.key === "Backspace" && (this.phoneNumberForNewPatient.slice(-1) === "-" || this.phoneNumberForNewPatient.slice(-1) === ")")) {
+        event.preventDefault();
+        this.phoneNumberForNewPatient = this.phoneNumberForNewPatient.slice(0, -2);
+      }
+    },
+    handleBackspaceForPhoneNumberFilter(event) {
+      if (event.key === "Backspace" && (this.phoneNumberFilter.slice(-1) === "-" || this.phoneNumberFilter.slice(-1) === ")")) {
+        event.preventDefault();
+        this.phoneNumberFilter = this.phoneNumberFilter.slice(0, -2);
+      }
+    },
+    capitalizeFirstLetter(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
     }
   }
 };
