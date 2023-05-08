@@ -1,262 +1,9 @@
-<template>
-  <div class="table-container">
-    <v-dialog v-model="isDialogForAddingPersonActive" max-width="600">
-      <v-card
-        rounded="lg"
-        width="700">
-        <v-form
-          v-model="isFormOfAddingPatientCorrect"
-        >
-          <v-card-title class="text-center dialog-title">
-            Создание пациента
-          </v-card-title>
-
-          <v-card-text>
-            <v-container>
-              <v-row>
-                <v-col cols="12" md="4" sm="6">
-                  <v-text-field
-                    ref="lastNameForNewPatient"
-                    v-model="lastNameForNewPatient"
-                    :rules="[rules.required]"
-                    validate-on-blur
-                    variant="outlined"
-                    @input="lastNameForNewPatient = capitalizeFirstLetter(lastNameForNewPatient)"
-                  >
-                    <template #label>
-                      <div>
-                        Фамилия <span style="color: red">*</span>
-                      </div>
-                    </template>
-                  </v-text-field>
-                </v-col>
-
-                <v-col cols="12" md="4" sm="6">
-                  <v-text-field
-                    ref="firstNameForNewPatient"
-                    v-model="firstNameForNewPatient"
-                    :rules="[rules.required]"
-                    validate-on-blur
-                    variant="outlined"
-                    @input="firstNameForNewPatient = capitalizeFirstLetter(firstNameForNewPatient)"
-                  >
-                    <template #label>
-                      <div>
-                        Имя <span style="color: red">*</span>
-                      </div>
-                    </template>
-                  </v-text-field>
-                </v-col>
-
-                <v-col cols="12" md="4" sm="6">
-                  <v-text-field
-                    v-model="patronymicForNewPatient"
-                    label="Отчество"
-                    variant="outlined"
-                    @input="patronymicForNewPatient = capitalizeFirstLetter(patronymicForNewPatient)"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-
-              <v-row>
-                <v-col cols="12" md="4" sm="6">
-                  <v-text-field
-                    ref="birthdateForNewPatient"
-                    v-model="birthdateForNewPatient"
-                    :rules="[rules.birthdateRules]"
-                    label="Дата рождения"
-                    placeholder="ДД.ММ.ГГГГ"
-                    validate-on-blur
-                    variant="outlined"
-                    @input="birthdateForNewPatient = birthdateMask(birthdateForNewPatient)"
-                    @keydown="handleBackspaceForBirthdateNewPatient"
-                  ></v-text-field>
-                </v-col>
-
-                <v-col cols="12" md="4" sm="6">
-                  <v-text-field
-                    ref="phoneNumberForNewPatient"
-                    v-model="phoneNumberForNewPatient"
-                    :rules="[rules.phoneRules]"
-                    validate-on-blur
-                    variant="outlined"
-                    @focus="phoneNumberForNewPatient = phoneMask(phoneNumberForNewPatient === '' ? '+7(' : phoneNumberForNewPatient)"
-                    @input="phoneNumberForNewPatient = phoneMask(phoneNumberForNewPatient)"
-                    @keydown="handleBackspaceForPhoneNumberNewPatient"
-                    @update:model-value="val => phoneNumberForNewPatient = val"
-                  >
-                    <template #label>
-                      <div>
-                        Телефон <span style="color: red">*</span>
-                      </div>
-                    </template>
-                  </v-text-field>
-                </v-col>
-              </v-row>
-
-              <v-row>
-                <v-col cols="12" md="12" sm="12">
-                  <v-text-field
-                    v-model="addressForNewPatient"
-                    label="Адрес"
-                    variant="outlined"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-
-              <v-row>
-                <v-col cols="12" md="12" sm="12">
-                  <v-text-field
-                    v-model="occupationForNewPatient"
-                    label="Занятость"
-                    variant="outlined"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-
-              <div>
-                <span style="color: red">*</span> - обязательные поля
-              </div>
-            </v-container>
-          </v-card-text>
-
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn
-              :disabled="!isFormOfAddingPatientCorrect"
-              color="green"
-              type="submit"
-              variant="elevated"
-              width="120"
-              @click="confirmAddPerson">
-              Добавить
-            </v-btn>
-            <v-btn
-              color="red"
-              variant="elevated"
-              width="120"
-              @click="isDialogForAddingPersonActive = false">
-              Отмена
-            </v-btn>
-          </v-card-actions>
-        </v-form>
-      </v-card>
-    </v-dialog>
-
-    <v-table class="sticky-header" fixed-footer>
-      <thead>
-      <tr>
-        <th class="text-left text-column" scope="col">
-          <v-text-field
-            v-model="lastNameFilter"
-            class="table-header"
-            density="comfortable"
-            label="Фамилия"
-            variant="outlined"
-            @input="lastNameFilter = capitalizeFirstLetter(lastNameFilter)"
-            @update:modelValue="editFilter">
-          </v-text-field>
-        </th>
-        <th class="text-left text-column" scope="col">
-          <v-text-field
-            v-model="firstNameFilter"
-            class="table-header"
-            density="comfortable"
-            label="Имя"
-            variant="outlined"
-            @input="firstNameFilter = capitalizeFirstLetter(firstNameFilter)"
-            @update:modelValue="editFilter">
-          </v-text-field>
-        </th>
-        <th class="text-left text-column" scope="col">
-          <v-text-field
-            v-model="patronymicFilter"
-            class="table-header"
-            density="comfortable"
-            label="Отчество"
-            variant="outlined"
-            @input="patronymicFilter = capitalizeFirstLetter(patronymicFilter)"
-            @update:modelValue="editFilter">
-          </v-text-field>
-        </th>
-        <th class="text-left birthdate-column" scope="col">
-          <v-text-field
-            v-model="birthdateFilter"
-            :rules="[rules.birthdateRules]"
-            class="table-header"
-            density="comfortable"
-            label="Дата рождения"
-            placeholder="ДД.ММ.ГГГГ"
-            variant="outlined"
-            @input="birthdateFilter = birthdateMask(birthdateFilter)"
-            @keydown="handleBackspaceForBirthdateFilter"
-            @update:modelValue="editFilter">
-          </v-text-field>
-        </th>
-        <th class="text-left phone-number-column" scope="col">
-          <v-text-field
-            v-model="phoneNumberFilter"
-            :rules="[rules.phoneRules]"
-            class="table-header"
-            density="comfortable"
-            label="Телефон"
-            variant="outlined"
-            @focus="phoneNumberFilter = '+7('"
-            @input="phoneNumberFilter = phoneMask(phoneNumberFilter)"
-            @keydown="handleBackspaceForPhoneNumberFilter"
-            @update:modelValue="editFilter">
-          </v-text-field>
-        </th>
-        <th class="align info-column" scope="col">
-          <v-btn
-            color="green"
-            icon="mdi-plus"
-            size="x-small"
-            variant="elevated"
-            @click="addPerson">
-          </v-btn>
-        </th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr
-        v-for="(item, index) in filteredPatients"
-        :key="item"
-        :class="index % 2 === 0 ? 'light-row' : 'dark-row'"
-      >
-        <td>
-          {{ item.lastName }}
-        </td>
-        <td>
-          {{ item.firstName }}
-        </td>
-        <td>
-          {{ item.patronymic }}
-        </td>
-        <td>
-          {{ item.birthdate }}
-        </td>
-        <td>
-          {{ item.phoneNumber }}
-        </td>
-        <td>
-          <v-btn
-            color="indigo"
-            icon="mdi-account"
-            size="x-small"
-            variant="elevated">
-          </v-btn>
-        </td>
-      </tr>
-      </tbody>
-    </v-table>
-  </div>
-</template>
-
 <script>
 import axios from "axios";
+import BaseTextField from "@/components/base/BaseTextField.vue";
 
 export default {
+  components: { BaseTextField },
   data() {
     return {
       lastNameForNewPatient: "",
@@ -364,7 +111,14 @@ export default {
       this.$nextTick(() => {
         this.validateFormFields();
       });
-
+    },
+    clearFilter() {
+      this.lastNameFilter = "";
+      this.firstNameFilter = "";
+      this.patronymicFilter = "";
+      this.birthdateFilter = "";
+      this.phoneNumberFilter = "";
+      this.editFilter();
     },
     confirmAddPerson() {
       this.isDialogForAddingPersonActive = false;
@@ -393,18 +147,6 @@ export default {
       }
       return formattedValue;
     },
-    handleBackspaceForBirthdateNewPatient(event) {
-      if (event.key === "Backspace" && this.birthdateForNewPatient.slice(-1) === ".") {
-        event.preventDefault();
-        this.birthdateForNewPatient = this.birthdateForNewPatient.slice(0, -2);
-      }
-    },
-    handleBackspaceForBirthdateFilter(event) {
-      if (event.key === "Backspace" && this.birthdateFilter.slice(-1) === ".") {
-        event.preventDefault();
-        this.birthdateFilter = this.birthdateFilter.slice(0, -2);
-      }
-    },
     phoneMask(value) {
       if (!value) return "+7(";
       const numValue = value.replace(/\D+/g, "").split("").filter((_, i) => i > 0);
@@ -431,29 +173,238 @@ export default {
 
       return formattedValue;
     },
-    handleBackspaceForPhoneNumberNewPatient(event) {
-      if (event.key === "Backspace" && (this.phoneNumberForNewPatient.slice(-1) === "-" || this.phoneNumberForNewPatient.slice(-1) === ")")) {
+    handleBackspaceForDate(event) {
+      if (event.key === "Backspace" && event.target.value.slice(-1) === ".") {
         event.preventDefault();
-        this.phoneNumberForNewPatient = this.phoneNumberForNewPatient.slice(0, -2);
+        event.target.value = event.target.value.slice(0, -2);
       }
     },
-    handleBackspaceForPhoneNumberFilter(event) {
-      if (event.key === "Backspace" && (this.phoneNumberFilter.slice(-1) === "-" || this.phoneNumberFilter.slice(-1) === ")")) {
+    handleBackspaceForPhoneNumber(event) {
+      if (event.key === "Backspace" && (event.target.value.slice(-1) === "-" || event.target.value.slice(-1) === ")")) {
         event.preventDefault();
-        this.phoneNumberFilter = this.phoneNumberFilter.slice(0, -2);
+        event.target.value = event.target.value.slice(0, -2);
       }
-    },
-    capitalizeFirstLetter(str) {
-      return str.charAt(0).toUpperCase() + str.slice(1);
     }
   }
 };
 </script>
 
+<template>
+  <v-dialog v-model="isDialogForAddingPersonActive" max-width="720">
+    <v-card
+      rounded="lg">
+      <v-form v-model="isFormOfAddingPatientCorrect">
+        <v-card-title class="text-center dialog-title">
+          СОЗДАНИЕ ПАЦИЕНТА
+        </v-card-title>
+
+        <v-card-text>
+          <v-container class="pb-0">
+            <v-row>
+              <v-col class="pt-0 pb-0" cols="4">
+                <BaseTextField
+                  v-model="lastNameForNewPatient"
+                  :rules="[rules.required]"
+                  capitalize-first-letter
+                  label="Фамилия"
+                  requiredMark
+                  validate-on-blur
+                />
+              </v-col>
+
+              <v-col class="pt-0 pb-0" cols="4">
+                <BaseTextField
+                  v-model="firstNameForNewPatient"
+                  :rules="[rules.required]"
+                  capitalize-first-letter
+                  label="Имя"
+                  requiredMark
+                  validate-on-blur
+                />
+              </v-col>
+
+              <v-col class="pt-0 pb-0" cols="4">
+                <BaseTextField
+                  v-model="patronymicForNewPatient"
+                  capitalize-first-letter
+                  label="Отчество"
+                  validate-on-blur
+                />
+              </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col class="pt-0 pb-0" cols="4">
+                <BaseTextField
+                  v-model="birthdateForNewPatient"
+                  :handle-backspace="handleBackspaceForDate"
+                  :mask="birthdateMask"
+                  :rules="[rules.birthdateRules]"
+                  capitalize-first-letter
+                  label="Дата рождения"
+                  placeholder="ДД.ММ.ГГГГ"
+                  validate-on-blur
+                />
+              </v-col>
+
+              <v-col class="pt-0 pb-0" cols="4">
+                <BaseTextField
+                  v-model="phoneNumberForNewPatient"
+                  :handle-backspace="handleBackspaceForPhoneNumber"
+                  :mask="phoneMask"
+                  :rules="[rules.phoneRules]"
+                  capitalize-first-letter
+                  label="Телефон"
+                  required-mark
+                  validate-on-blur
+                />
+              </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col class="pt-0 pb-0" cols="12">
+                <BaseTextField
+                  v-model="addressForNewPatient"
+                  label="Адрес"
+                />
+              </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col class="pt-0 pb-0" cols="12">
+                <BaseTextField
+                  v-model="occupationForNewPatient"
+                  capitalize-first-letter
+                  label="Занятость"
+                />
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            :disabled="!isFormOfAddingPatientCorrect"
+            color="green"
+            type="submit"
+            variant="elevated"
+            width="120"
+            @click="confirmAddPerson">
+            Добавить
+          </v-btn>
+          <v-btn
+            color="red"
+            variant="elevated"
+            width="120"
+            @click="isDialogForAddingPersonActive = false">
+            Отмена
+          </v-btn>
+        </v-card-actions>
+      </v-form>
+    </v-card>
+  </v-dialog>
+
+  <v-container class="main-container" fluid>
+    <v-row>
+      <v-col>
+        <v-table class="sticky-header table-container" fixed-footer>
+          <thead>
+          <tr>
+            <th class="text-left text-column" scope="col">
+              <BaseTextField
+                v-model="lastNameFilter"
+                capitalize-first-letter
+                class="table-header"
+                label="Фамилия"
+                @input="editFilter"
+              />
+            </th>
+            <th class="text-left text-column" scope="col">
+              <BaseTextField
+                v-model="firstNameFilter"
+                capitalize-first-letter
+                class="table-header"
+                label="Имя"
+                @input="editFilter"
+              />
+            </th>
+            <th class="text-left text-column" scope="col">
+              <BaseTextField
+                v-model="patronymicFilter"
+                capitalize-first-letter
+                class="table-header"
+                label="Отчество"
+                @input="editFilter"
+              />
+            </th>
+            <th class="text-left birthdate-column" scope="col">
+              <BaseTextField
+                v-model="birthdateFilter"
+                :handle-backspace="handleBackspaceForDate"
+                :mask="birthdateMask"
+                class="table-header"
+                label="Дата рождения"
+                placeholder="ДД.ММ.ГГГГ"
+                @input="editFilter"
+              />
+            </th>
+            <th class="text-left phone-number-column" scope="col">
+              <BaseTextField
+                v-model="phoneNumberFilter"
+                :handle-backspace="handleBackspaceForPhoneNumber"
+                :mask="phoneMask"
+                class="table-header"
+                label="Телефон"
+                @input="editFilter"
+              />
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr
+            v-for="(item, index) in filteredPatients"
+            :key="item"
+            :class="index % 2 === 0 ? 'light-row' : 'dark-row'"
+          >
+            <td>{{ item.lastName }}</td>
+            <td>{{ item.firstName }}</td>
+            <td>{{ item.patronymic }}</td>
+            <td>{{ item.birthdate }}</td>
+            <td>{{ item.phoneNumber }}</td>
+          </tr>
+          </tbody>
+        </v-table>
+      </v-col>
+      <v-col class="d-flex align-start flex-column" cols="auto">
+        <v-btn
+          class="mb-4"
+          color="green"
+          text="Создать пациента"
+          variant="elevated"
+          width="200"
+          @click="addPerson">
+        </v-btn>
+        <v-btn
+          color="blue-grey"
+          text="Убрать фильтры"
+          variant="elevated"
+          width="200"
+          @click="clearFilter">
+        </v-btn>
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
+
 <style scoped>
-.table-container {
-    width: 60%;
+
+.main-container {
+    width: 1452px;
     margin: 5vh auto 0;
+}
+
+.table-container {
     border: 1px solid #ccc;
     border-radius: 5pt;
 }
@@ -463,8 +414,12 @@ export default {
 }
 
 .dialog-title {
-    margin-top: 2vh;
-    font-size: 20pt;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    margin-bottom: 4vh;
+    background-color: #3F51B5;
+    font-size: 14pt;
+    color: #FFFFFF;
 }
 
 .text-column {
@@ -472,15 +427,11 @@ export default {
 }
 
 .birthdate-column {
-    width: 17%;
+    width: 16%;
 }
 
 .phone-number-column {
-    width: 17%;
-}
-
-.info-column {
-    width: 6%;
+    width: 20%;
 }
 
 .sticky-header thead {
@@ -491,10 +442,10 @@ export default {
 }
 
 .light-row {
-    background-color: #FAFAFA;
+    background-color: #FFFFFF;
 }
 
 .dark-row {
-    background-color: #EEEEEE;
+    background-color: #E8EAF6;
 }
 </style>
