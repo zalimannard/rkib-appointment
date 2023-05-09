@@ -6,6 +6,8 @@ import org.springframework.validation.annotation.Validated;
 import ru.zalimannard.rkibappointmentbackend.schema.person.patient.dto.PatientRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.person.patient.dto.PatientResponseDto;
 
+import java.util.List;
+
 @Validated
 public interface PatientService {
 
@@ -17,6 +19,10 @@ public interface PatientService {
     PatientResponseDto read(@NotNull String id);
 
     Patient readEntity(@NotNull String id);
+
+    List<PatientResponseDto> readAll();
+
+    List<Patient> readAllEntities();
 
 
     PatientResponseDto update(@NotNull String id, @NotNull @Valid PatientRequestDto patientDto);

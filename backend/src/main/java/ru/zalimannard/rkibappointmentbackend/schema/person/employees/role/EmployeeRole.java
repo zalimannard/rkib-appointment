@@ -8,7 +8,8 @@ public enum EmployeeRole {
 
     ADMIN("A"),
     REGISTRAR("R"),
-    DOCTOR("D");
+    DOCTOR("D"),
+    USER("U");
 
     @Getter
     private final String code;

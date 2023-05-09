@@ -1,5 +1,6 @@
 package ru.zalimannard.rkibappointmentbackend.schema.person.patient.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,8 +8,10 @@ import jakarta.validation.constraints.Past;
 import lombok.Builder;
 import lombok.Value;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 import ru.zalimannard.rkibappointmentbackend.validator.Phone;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Value
@@ -26,7 +29,7 @@ public class PatientRequestDto {
 
     @JsonProperty("birthdate")
     @Past(message = "Дата рождения должна быть в прошлом")
-    Date birthdate;
+    LocalDate birthdate;
 
     @JsonProperty("address")
     @Length(min = 1)
@@ -36,7 +39,7 @@ public class PatientRequestDto {
     @Length(min = 1)
     String occupation;
 
-    public PatientRequestDto(String personId, String phoneNumber, Date birthdate, String address, String occupation) {
+    public PatientRequestDto(String personId, String phoneNumber, LocalDate birthdate, String address, String occupation) {
         this.personId = personId;
         this.phoneNumber = phoneNumber != null ? phoneNumber.trim() : null;
         this.birthdate = birthdate;

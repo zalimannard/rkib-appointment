@@ -2,6 +2,8 @@ package ru.zalimannard.rkibappointmentbackend.schema.person.employees;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ru.zalimannard.rkibappointmentbackend.exception.ConflictException;
 import ru.zalimannard.rkibappointmentbackend.exception.NotFoundException;
@@ -43,9 +45,23 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public EmployeeResponseDto readMe() {
+        Employee employee = readMeEntity();
+        return mapper.toDto(employee);
+    }
+
+    @Override
     public Employee readEntity(String id) {
         return repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("sms-02", "Не найден StaffMember с id=" + id, null));
+    }
+
+    @Override
+    public Employee readMeEntity() {
+        String currentUsername = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        Person person = personService.readEntityByUsername(currentUsername);
+        return repository.findByPerson(person)
+                .orElseThrow(() -> new NotFoundException("sms-06", "Не найден Employee с username=" + currentUsername, null));
     }
 
     @Override

@@ -18,6 +18,8 @@ public interface PersonService {
 
     Person readEntity(@NotNull String id);
 
+    Person readEntityByUsername(String username);
+
 
     PersonResponseDto update(@NotNull String id, @NotNull @Valid PersonRequestDto personDto);
 
