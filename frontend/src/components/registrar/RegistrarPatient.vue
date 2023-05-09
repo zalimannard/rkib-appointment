@@ -1,9 +1,10 @@
 <script>
 import axios from "axios";
-import BaseTextField from "@/components/custom/CustomTextField.vue";
+import CustomTextField from "@/components/custom/textfield/MaskedTextField.vue";
+import CustomButton from "@/components/custom/button/CustomButton.vue";
 
 export default {
-  components: { BaseTextField },
+  components: { CustomButton, CustomTextField },
   data() {
     return {
       lastNameForNewPatient: "",
@@ -247,7 +248,7 @@ export default {
           <v-container class="pb-0">
             <v-row>
               <v-col class="pt-0 pb-0" cols="4">
-                <BaseTextField
+                <CustomTextField
                   v-model="lastNameForNewPatient"
                   :rules="[rules.required]"
                   capitalize-first-letter
@@ -258,7 +259,7 @@ export default {
               </v-col>
 
               <v-col class="pt-0 pb-0" cols="4">
-                <BaseTextField
+                <CustomTextField
                   v-model="firstNameForNewPatient"
                   :rules="[rules.required]"
                   capitalize-first-letter
@@ -269,7 +270,7 @@ export default {
               </v-col>
 
               <v-col class="pt-0 pb-0" cols="4">
-                <BaseTextField
+                <CustomTextField
                   v-model="patronymicForNewPatient"
                   capitalize-first-letter
                   label="Отчество"
@@ -280,7 +281,7 @@ export default {
 
             <v-row>
               <v-col class="pt-0 pb-0" cols="4">
-                <BaseTextField
+                <CustomTextField
                   v-model="birthdateForNewPatient"
                   :handle-backspace="handleBackspaceForDate"
                   :mask="birthdateMask"
@@ -293,7 +294,7 @@ export default {
               </v-col>
 
               <v-col class="pt-0 pb-0" cols="4">
-                <BaseTextField
+                <CustomTextField
                   v-model="phoneNumberForNewPatient"
                   :handle-backspace="handleBackspaceForPhoneNumber"
                   :mask="phoneMask"
@@ -308,7 +309,7 @@ export default {
 
             <v-row>
               <v-col class="pt-0 pb-0" cols="12">
-                <BaseTextField
+                <CustomTextField
                   v-model="addressForNewPatient"
                   label="Адрес"
                 />
@@ -317,7 +318,7 @@ export default {
 
             <v-row>
               <v-col class="pt-0 pb-0" cols="12">
-                <BaseTextField
+                <CustomTextField
                   v-model="occupationForNewPatient"
                   capitalize-first-letter
                   label="Занятость"
@@ -329,22 +330,23 @@ export default {
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
+          <custom-button
             :disabled="!isFormOfAddingPatientCorrect"
-            color="green"
-            type="submit"
-            variant="elevated"
+            size="comfortable"
+            type="confirm"
             width="120"
-            @click="confirmAddPerson">
+            @click="confirmAddPerson"
+          >
             Добавить
-          </v-btn>
-          <v-btn
-            color="red"
-            variant="elevated"
+          </custom-button>
+          <custom-button
+            size="comfortable"
+            type="cancel"
             width="120"
-            @click="isDialogForAddingPersonActive = false">
+            @click="isDialogForAddingPersonActive = false"
+          >
             Отмена
-          </v-btn>
+          </custom-button>
         </v-card-actions>
       </v-form>
     </v-card>
@@ -357,7 +359,7 @@ export default {
           <thead>
           <tr>
             <th class="text-left table-column" scope="col">
-              <BaseTextField
+              <CustomTextField
                 v-model="lastNameFilter"
                 capitalize-first-letter
                 class="table-header"
@@ -366,7 +368,7 @@ export default {
               />
             </th>
             <th class="text-left table-column" scope="col">
-              <BaseTextField
+              <CustomTextField
                 v-model="firstNameFilter"
                 capitalize-first-letter
                 class="table-header"
@@ -375,7 +377,7 @@ export default {
               />
             </th>
             <th class="text-left table-column" scope="col">
-              <BaseTextField
+              <CustomTextField
                 v-model="patronymicFilter"
                 capitalize-first-letter
                 class="table-header"
@@ -384,7 +386,7 @@ export default {
               />
             </th>
             <th class="text-left table-column" scope="col">
-              <BaseTextField
+              <CustomTextField
                 v-model="birthdateFilter"
                 :handle-backspace="handleBackspaceForDate"
                 :mask="birthdateMask"
@@ -395,7 +397,7 @@ export default {
               />
             </th>
             <th class="text-left table-column" scope="col">
-              <BaseTextField
+              <CustomTextField
                 v-model="phoneNumberFilter"
                 :handle-backspace="handleBackspaceForPhoneNumber"
                 :mask="phoneMask"
@@ -422,21 +424,23 @@ export default {
         </v-table>
       </v-col>
       <v-col class="d-flex align-start flex-column" cols="auto">
-        <v-btn
+        <custom-button
           class="mb-4"
-          color="green"
-          text="Создать пациента"
-          variant="elevated"
+          size="compact"
+          type="confirm"
           width="200"
-          @click="addPerson">
-        </v-btn>
-        <v-btn
-          color="blue-grey"
-          text="Убрать фильтры"
-          variant="elevated"
+          @click="addPerson"
+        >
+          Создать пациента
+        </custom-button>
+        <custom-button
+          size="compact"
+          type="regular"
           width="200"
-          @click="clearFilter">
-        </v-btn>
+          @click="clearFilter"
+        >
+          Убрать фильтры
+        </custom-button>
       </v-col>
     </v-row>
   </v-container>

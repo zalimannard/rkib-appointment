@@ -1,18 +1,18 @@
 <template>
 
+  <custom-alert
+    v-model="showErrorAlert"
+    alertType="error"
+  />
+
   <div
     class="d-flex align-center justify-center login-container"
   >
 
     <v-col>
 
-      <custom-alert
-        v-model="showErrorAlert"
-        alertType="error"
-      />
-
       <v-card
-        class="mx-auto px-6 pt-6 pb-4"
+        class="mx-auto"
         rounded="lg"
         variant="outlined"
         width="500"
@@ -20,34 +20,28 @@
 
         <v-form
           v-model="form"
+          class="pa-6"
           @submit.prevent="onSubmit"
         >
-          <v-text-field
+
+          <base-text-field
             v-model="username"
             :readonly="loading"
-            :rules="[rules.required, rules.latinOrDigitOnly]"
+            :rules="[rules.required, rules.username]"
             autofocus
-            class="mb-2"
-            clearable
             label="Логин"
-            rounded="lg"
-            variant="outlined"
-          ></v-text-field>
+          />
 
-          <v-text-field
+          <password-text-field
             v-model="password"
-            :append-inner-icon="passwordShow ?'mdi-eye':'mdi-eye-off'"
             :readonly="loading"
-            :rules="[rules.required, rules.latinOrDigitOnly]"
-            :type="passwordShow ?'text': 'password'"
-            clearable
+            :rules="[rules.required, rules.password]"
+            autofocus
             label="Пароль"
-            variant="outlined"
-            @click:append-inner="passwordShow=!passwordShow"
-          ></v-text-field>
+          />
 
           <v-row>
-            <v-col class="pt-5 pb-0">
+            <v-col class="pb-0 mb-0">
               <v-select
                 v-model="role"
                 :items="roles"
@@ -60,19 +54,29 @@
                 variant="outlined"
               ></v-select>
             </v-col>
-            <v-col class="pt-5 pb-0">
-              <v-btn
+            <v-col>
+              <base-button
                 :disabled="!form"
                 :loading="loading"
                 block
-                color="indigo"
-                rounded="lg"
-                size="x-large"
-                type="submit"
-                variant="elevated"
-                @click="submit"
-              >Войти
-              </v-btn>
+                type="regular"
+                @click="onSubmit"
+              >
+                Войти
+              </base-button>
+
+              <!--              <v-btn-->
+              <!--                :disabled="!form"-->
+              <!--                :loading="loading"-->
+              <!--                block-->
+              <!--                color="indigo"-->
+              <!--                rounded="lg"-->
+              <!--                size="x-large"-->
+              <!--                type="submit"-->
+              <!--                variant="elevated"-->
+              <!--                @click="submit"-->
+              <!--              >Войти-->
+              <!--              </v-btn>-->
             </v-col>
           </v-row>
 
@@ -91,7 +95,10 @@
 <script>
 
 import axios from "axios";
-import CustomAlert from "@/components/custom/CustomAlert.vue";
+import CustomAlert from "@/components/custom/alert/CustomAlert.vue";
+import BaseTextField from "@/components/custom/textfield/BaseTextField.vue";
+import PasswordTextField from "@/components/custom/textfield/PasswordTextField.vue";
+import BaseButton from "@/components/custom/button/CustomButton.vue";
 
 export default {
   data() {
@@ -112,16 +119,22 @@ export default {
       showErrorAlert: false,
 
       rules: {
-        required: value => !!value || "Поле не должно быть пустым.",
-        latinOrDigitOnly: value => {
+        required: value => !!value || "Не должно быть пустым",
+        username: value => {
           const pattern = /^[a-zA-Z0-9]+$/;
+          return pattern.test(value) || "Недопустимые символы";
+        },
+        password: value => {
+          const pattern = /^[a-zA-Z0-9!@#$%^&*]+$/;
           return pattern.test(value) || "Недопустимые символы";
         }
       }
-
     };
   },
   components: {
+    BaseButton,
+    BaseTextField,
+    PasswordTextField,
     CustomAlert
   },
   methods: {
@@ -166,10 +179,6 @@ export default {
       } finally {
         this.loading = false;
       }
-    },
-
-    submit() {
-
     }
   }
 };
