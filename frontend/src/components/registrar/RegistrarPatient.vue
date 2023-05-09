@@ -26,7 +26,6 @@ export default {
       isDialogForAddingPersonActive: false,
       isFormOfAddingPatientCorrect: false,
 
-
       rules: {
         required: value => {
           return !!value || "Не должно быть пустым";
@@ -63,11 +62,15 @@ export default {
         headers: { "Authorization": "Basic " + basicAuth }
       });
       this.patients = response.data.map(patient => {
+        let dateParts = [];
+        if (patient.birthdate) {
+          dateParts = patient.birthdate.split("-");
+        }
         return {
           lastName: patient.person.lastName,
           firstName: patient.person.firstName,
           patronymic: patient.person.patronymic,
-          birthdate: patient.birthdate,
+          birthdate: dateParts.length === 3 ? `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}` : "",
           phoneNumber: this.phoneMask(patient.phoneNumber) // Здесь мы применяем phoneMask к полученному номеру телефона
         };
       });
@@ -121,6 +124,48 @@ export default {
       this.editFilter();
     },
     confirmAddPerson() {
+      event.preventDefault();
+      let basicAuth = localStorage.getItem("auth");
+      axios({
+        method: "post",
+        url: import.meta.env.VITE_API_URL + "/api/v1/people",
+        headers: { "Authorization": "Basic " + basicAuth },
+        data: {
+          // TODO: Потом убрать username и password отсюда вообще
+          username: (Math.random() + 1).toString(36).substring(7),
+          password: "password",
+          lastName: this.lastNameForNewPatient,
+          firstName: this.firstNameForNewPatient,
+          patronymic: this.patronymicForNewPatient
+        }
+      }).then((response) => {
+        let personId = response.data.id;
+        let phoneNumber = this.phoneNumberForNewPatient
+          .replaceAll("(", "")
+          .replaceAll(")", "")
+          .replaceAll("-", "");
+        let dateParts = this.birthdateForNewPatient.split(".");
+        let birthdate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+        console.log(personId);
+        console.log(phoneNumber);
+        console.log(birthdate);
+        axios({
+          method: "post",
+          url: import.meta.env.VITE_API_URL + "/api/v1/patients",
+          headers: { "Authorization": "Basic " + basicAuth },
+          data: {
+            personId: personId,
+            phoneNumber: phoneNumber,
+            birthdate: birthdate,
+            address: this.addressForNewPatient,
+            occupation: this.occupationForNewPatient
+          }
+        }).catch((error) => {
+          console.error("Ошибка при добавлении пациента:", error);
+        });
+      }).catch((error) => {
+        console.error("Ошибка при добавлении человека:", error);
+      });
       this.isDialogForAddingPersonActive = false;
     },
     birthdateMask(value) {
@@ -311,7 +356,7 @@ export default {
         <v-table class="sticky-header table-container" fixed-footer>
           <thead>
           <tr>
-            <th class="text-left text-column" scope="col">
+            <th class="text-left table-column" scope="col">
               <BaseTextField
                 v-model="lastNameFilter"
                 capitalize-first-letter
@@ -320,7 +365,7 @@ export default {
                 @input="editFilter"
               />
             </th>
-            <th class="text-left text-column" scope="col">
+            <th class="text-left table-column" scope="col">
               <BaseTextField
                 v-model="firstNameFilter"
                 capitalize-first-letter
@@ -329,7 +374,7 @@ export default {
                 @input="editFilter"
               />
             </th>
-            <th class="text-left text-column" scope="col">
+            <th class="text-left table-column" scope="col">
               <BaseTextField
                 v-model="patronymicFilter"
                 capitalize-first-letter
@@ -338,7 +383,7 @@ export default {
                 @input="editFilter"
               />
             </th>
-            <th class="text-left birthdate-column" scope="col">
+            <th class="text-left table-column" scope="col">
               <BaseTextField
                 v-model="birthdateFilter"
                 :handle-backspace="handleBackspaceForDate"
@@ -349,7 +394,7 @@ export default {
                 @input="editFilter"
               />
             </th>
-            <th class="text-left phone-number-column" scope="col">
+            <th class="text-left table-column" scope="col">
               <BaseTextField
                 v-model="phoneNumberFilter"
                 :handle-backspace="handleBackspaceForPhoneNumber"
@@ -422,15 +467,7 @@ export default {
     color: #FFFFFF;
 }
 
-.text-column {
-    width: 20%;
-}
-
-.birthdate-column {
-    width: 16%;
-}
-
-.phone-number-column {
+.table-column {
     width: 20%;
 }
 

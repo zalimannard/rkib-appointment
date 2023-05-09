@@ -3,8 +3,10 @@ package ru.zalimannard.rkibappointmentbackend.schema.person.patient;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.springframework.format.annotation.DateTimeFormat;
 import ru.zalimannard.rkibappointmentbackend.schema.person.Person;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -30,7 +32,7 @@ public class Patient {
     private String phoneNumber;
 
     @Column(name = "birthdate")
-    private Date birthdate;
+    LocalDate birthdate;
 
     @Column(name = "address")
     private String address;

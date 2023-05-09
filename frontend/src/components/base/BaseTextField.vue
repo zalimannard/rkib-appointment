@@ -40,7 +40,20 @@ export default {
       default: false
     }
   },
+  mounted() {
+    this.$nextTick(() => {
+      this.validateField();
+    });
+  },
   computed: {
+    innerValue: {
+      get() {
+        return this.formattedValue;
+      },
+      set(value) {
+        this.updateValue({ target: { value } });
+      }
+    },
     formattedValue() {
       if (this.mask) {
         return this.mask(this.modelValue);
@@ -51,6 +64,11 @@ export default {
     }
   },
   methods: {
+    validateField() {
+      if (this.$refs[this.refValue]) {
+        this.$refs[this.refValue].validate();
+      }
+    },
     updateValue(event) {
       let value;
       if (this.mask) {
@@ -78,10 +96,6 @@ export default {
           event.preventDefault();
         }
       }
-    },
-    reset() {
-      this.refValue = "";
-      this.$refs[this.refValue].reset();
     }
   }
 };
@@ -90,14 +104,13 @@ export default {
 <template>
   <v-text-field
     :ref="refValue"
+    v-model="innerValue"
     :rules="rules"
     :validate-on-blur="validateOnBlur"
-    :value="formattedValue"
     class="base-text-field"
     density="comfortable"
     v-bind="$attrs"
     variant="outlined"
-    @input="updateValue"
     @keydown="handleBackspace"
     @keypress="handleKeypress"
   >
@@ -108,6 +121,7 @@ export default {
     <slot></slot>
   </v-text-field>
 </template>
+
 
 <style scoped>
 .required-asterisk {
