@@ -6,10 +6,9 @@
 
     <v-col>
 
-      <CustomAlert
-        :alertText="errorText"
-        :showAlert="showErrorAlert"
-        type="error"
+      <custom-alert
+        v-model="showErrorAlert"
+        alertType="error"
       />
 
       <v-card
@@ -92,7 +91,7 @@
 <script>
 
 import axios from "axios";
-import CustomAlert from "@/components/CustomAlert.vue";
+import CustomAlert from "@/components/custom/CustomAlert.vue";
 
 export default {
   data() {

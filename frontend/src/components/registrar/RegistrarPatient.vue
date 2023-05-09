@@ -1,6 +1,6 @@
 <script>
 import axios from "axios";
-import BaseTextField from "@/components/base/BaseTextField.vue";
+import BaseTextField from "@/components/custom/CustomTextField.vue";
 
 export default {
   components: { BaseTextField },
