@@ -1,8 +1,9 @@
 <template>
   <base-text-field
     v-model="formattedValue"
+    :rules="rules"
     v-bind="$attrs"
-    @keypress="handleKeypress"
+    @input="handleInput"
   />
 </template>
 
@@ -22,6 +23,10 @@ export default {
     mask: {
       type: Function,
       default: null
+    },
+    rules: {
+      type: Array,
+      default: () => []
     }
   },
   computed: {
@@ -38,7 +43,7 @@ export default {
     applyMaskOrCapitalization(value) {
       if (this.mask) {
         return this.mask(value);
-      } else if (this.capitalizeFirstLetter) {
+      } else if (this.capitalizeFirstLetter && value) {
         return this.capitalize(value);
       }
       return value;
@@ -46,16 +51,13 @@ export default {
     capitalize(str) {
       return str.charAt(0).toUpperCase() + str.slice(1);
     },
-    handleKeypress(event) {
-      if (this.mask) {
-        const oldValue = event.target.value;
-        const newChar = String.fromCharCode(event.charCode);
-        const newValue = oldValue + newChar;
-        const maskedValue = this.mask(newValue);
+    handleInput(event) {
+      const oldValue = event.target.value;
+      const newValue = this.applyMaskOrCapitalization(oldValue);
 
-        if (maskedValue.length < newValue.length) {
-          event.preventDefault();
-        }
+      if (newValue !== oldValue) {
+        event.target.value = newValue;
+        this.$emit("update:modelValue", newValue);
       }
     }
   }

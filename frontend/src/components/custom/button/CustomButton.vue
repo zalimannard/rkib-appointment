@@ -7,8 +7,8 @@
     :size="computedSize"
     :width="width"
     v-bind="$attrs"
-    variant="elevated"
-    @click="onClick"
+    variant="flat"
+    @click="emitCustomClick"
   >
     <slot></slot>
   </v-btn>
@@ -18,6 +18,10 @@
 export default {
   inheritAttrs: false,
   props: {
+    buttonType: {
+      type: String,
+      default: "button"
+    },
     block: {
       type: Boolean,
       default: false
@@ -70,8 +74,8 @@ export default {
     }
   },
   methods: {
-    onClick(event) {
-      this.$emit("click", event);
+    emitCustomClick(event) {
+      this.$emit("custom-click", event);
     }
   }
 };
