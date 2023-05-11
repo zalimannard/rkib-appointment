@@ -42,6 +42,7 @@
               <v-col class="pt-0 pb-0" cols="4">
                 <masked-text-field
                   v-model="patient.birthdate"
+                  :handleBackspace="backspaceHandlers.handleBackspaceForDate"
                   :mask="masks.dateMask"
                   :rules="rules.dateRule"
                   label="Дата рождения"
@@ -51,6 +52,7 @@
               <v-col class="pt-0 pb-0" cols="4">
                 <masked-text-field
                   v-model="patient.phoneNumber"
+                  :handleBackspace="backspaceHandlers.handleBackspaceForPhoneNumber"
                   :mask="masks.phoneMask"
                   :rules="rules.phoneRule"
                   label="Телефон"
@@ -112,8 +114,9 @@ import axios from "axios";
 import CustomButton from "@/components/custom/button/CustomButton.vue";
 import MaskedTextField from "@/components/custom/textfield/MaskedTextField.vue";
 
-import { dateRule, phoneRule, requiredRule } from "@/rules.ts";
-import { dateMask, phoneMask } from "@/masks.ts";
+import { dateRule, phoneRule, requiredRule } from "@/rules";
+import { dateMask, phoneMask } from "@/masks";
+import { handleBackspaceForDate, handleBackspaceForPhoneNumber } from "@/backspaceHandlers";
 
 export default {
   components: { MaskedTextField, CustomButton },
@@ -128,16 +131,6 @@ export default {
       internalValue: this.value,
       valid: true,
 
-      rules: {
-        requiredRule,
-        dateRule,
-        phoneRule
-      },
-      masks: {
-        dateMask,
-        phoneMask
-      },
-
       person: {
         lastName: "",
         firstName: "",
@@ -148,6 +141,20 @@ export default {
         phoneNumber: "",
         address: "",
         occupation: ""
+      },
+
+      rules: {
+        requiredRule,
+        dateRule,
+        phoneRule
+      },
+      masks: {
+        dateMask,
+        phoneMask
+      },
+      backspaceHandlers: {
+        handleBackspaceForDate,
+        handleBackspaceForPhoneNumber
       }
     };
   },

@@ -4,6 +4,7 @@
     :rules="rules"
     v-bind="$attrs"
     @input="handleInput"
+    @keydown="handleKeyDown"
   />
 </template>
 
@@ -27,6 +28,10 @@ export default {
     rules: {
       type: Array,
       default: () => []
+    },
+    handleBackspace: {
+      type: Function,
+      default: null
     }
   },
   computed: {
@@ -58,6 +63,20 @@ export default {
       if (newValue !== oldValue) {
         event.target.value = newValue;
         this.$emit("update:modelValue", newValue);
+      }
+    },
+    handleKeyDown(event) {
+      if (event.key === "Backspace") {
+        if (this.handleBackspace) {
+          // Если обработчик нажатия Backspace передан, вызываем его
+          this.handleBackspace(event);
+        } else {
+          // Если обработчик не передан, выполняем действия по умолчанию
+          if (event.target.value.slice(-1) === ".") {
+            event.preventDefault();
+            this.$emit("update:modelValue", event.target.value.slice(0, -2));
+          }
+        }
       }
     }
   }
