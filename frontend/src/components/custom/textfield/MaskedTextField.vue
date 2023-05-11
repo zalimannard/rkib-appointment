@@ -64,6 +64,11 @@ export default {
         event.target.value = newValue;
         this.$emit("update:modelValue", newValue);
       }
+
+      // Если маска задана и значение соответствует маске, вызываем пользовательское событие mask-valid
+      if (this.mask && this.mask(newValue) === newValue) {
+        this.$emit("mask-valid");
+      }
     },
     handleKeyDown(event) {
       if (event.key === "Backspace") {

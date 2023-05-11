@@ -13,7 +13,7 @@
             <v-row>
               <v-col class="pt-5 pb-0" cols="4">
                 <masked-text-field
-                  v-model="person.lastName"
+                  v-model="personLocal.lastName"
                   :rules="rules.requiredRule"
                   capitalize-first-letter
                   label="Фамилия"
@@ -22,7 +22,7 @@
               </v-col>
               <v-col class="pt-5 pb-0" cols="4">
                 <masked-text-field
-                  v-model="person.firstName"
+                  v-model="personLocal.firstName"
                   :rules="rules.requiredRule"
                   capitalize-first-letter
                   label="Имя"
@@ -31,7 +31,7 @@
               </v-col>
               <v-col class="pt-5 pb-0" cols="4">
                 <masked-text-field
-                  v-model="person.patronymic"
+                  v-model="personLocal.patronymic"
                   capitalize-first-letter
                   label="Отчество"
                 />
@@ -41,7 +41,7 @@
             <v-row>
               <v-col class="pt-0 pb-0" cols="4">
                 <masked-text-field
-                  v-model="patient.birthdate"
+                  v-model="patientLocal.birthdate"
                   :handleBackspace="backspaceHandlers.handleBackspaceForDate"
                   :mask="masks.dateMask"
                   :rules="rules.dateRule"
@@ -51,7 +51,7 @@
               </v-col>
               <v-col class="pt-0 pb-0" cols="4">
                 <masked-text-field
-                  v-model="patient.phoneNumber"
+                  v-model="patientLocal.phoneNumber"
                   :handleBackspace="backspaceHandlers.handleBackspaceForPhoneNumber"
                   :mask="masks.phoneMask"
                   :rules="rules.phoneRule"
@@ -64,7 +64,7 @@
             <v-row>
               <v-col class="pt-0 pb-0" cols="12">
                 <masked-text-field
-                  v-model="patient.address"
+                  v-model="patientLocal.address"
                   label="Адрес"
                 />
               </v-col>
@@ -73,7 +73,7 @@
             <v-row>
               <v-col class="pt-0 pb-0" cols="12">
                 <masked-text-field
-                  v-model="patient.occupation"
+                  v-model="patientLocal.occupation"
                   capitalize-first-letter
                   label="Занятость"
                 />
@@ -109,6 +109,7 @@
   </v-dialog>
 </template>
 
+
 <script>
 import axios from "axios";
 import CustomButton from "@/components/custom/button/CustomButton.vue";
@@ -121,22 +122,17 @@ import { handleBackspaceForDate, handleBackspaceForPhoneNumber } from "@/backspa
 export default {
   components: { MaskedTextField, CustomButton },
   props: {
-    is: {
-      type: Boolean,
-      default: false
-    }
+    value: Boolean,
+    person: Object,
+    patient: Object
   },
   data() {
     return {
       internalValue: this.value,
       valid: true,
 
-      person: {
-        lastName: "",
-        firstName: "",
-        patronymic: ""
-      },
-      patient: {
+      personLocal: this.person ? { ...this.person } : { lastName: "", firstName: "", patronymic: "" },
+      patientLocal: this.patient ? { ...this.patient } : {
         birthdate: "",
         phoneNumber: "",
         address: "",
@@ -159,6 +155,18 @@ export default {
     };
   },
   watch: {
+    person: {
+      handler(newVal) {
+        this.personLocal = { ...newVal };
+      },
+      deep: true
+    },
+    patient: {
+      handler(newVal) {
+        this.patientLocal = { ...newVal };
+      },
+      deep: true
+    },
     value(newVal) {
       this.internalValue = newVal;
     },
@@ -178,26 +186,23 @@ export default {
             // TODO: Потом убрать username и password отсюда вообще
             username: (Math.random() + 1).toString(36).substring(7),
             password: "password",
-            lastName: this.person.lastName,
-            firstName: this.person.firstName,
-            patronymic: this.person.patronymic
+            lastName: this.personLocal.lastName,
+            firstName: this.personLocal.firstName,
+            patronymic: this.personLocal.patronymic
           }
         }).then((response) => {
           let personId = response.data.id;
-          let phoneNumber = this.patient.phoneNumber
+          let phoneNumber = this.patientLocal.phoneNumber
             .replaceAll("(", "")
             .replaceAll(")", "")
             .replaceAll("-", "");
           let birthdate = null;
-          if (this.patient.birthdate) {
-            let dateParts = this.patient.birthdate.split(".");
+          if (this.patientLocal.birthdate) {
+            let dateParts = this.patientLocal.birthdate.split(".");
             if (dateParts.length === 3) {
               birthdate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
             }
           }
-          console.log(personId);
-          console.log(phoneNumber);
-          console.log(birthdate);
           axios({
             method: "post",
             url: import.meta.env.VITE_API_URL + "/api/v1/patients",
@@ -206,9 +211,36 @@ export default {
               personId: personId,
               phoneNumber: phoneNumber,
               birthdate: birthdate,
-              address: this.patient.address,
-              occupation: this.patient.occupation
+              address: this.patientLocal.address,
+              occupation: this.patientLocal.occupation
             }
+          }).then(() => {
+            this.$emit("input", {
+              person: {
+                lastName: this.personLocal.lastName,
+                firstName: this.personLocal.firstName,
+                patronymic: this.personLocal.patronymic
+              },
+              patient: {
+                birthdate: this.patientLocal.birthdate,
+                phoneNumber: this.patientLocal.phoneNumber,
+                address: this.patientLocal.address,
+                occupation: this.patientLocal.occupation
+              }
+            });
+            this.$emit("update:onNewPatient", {
+              person: {
+                lastName: this.personLocal.lastName,
+                firstName: this.personLocal.firstName,
+                patronymic: this.personLocal.patronymic
+              },
+              patient: {
+                birthdate: this.patientLocal.birthdate,
+                phoneNumber: this.patientLocal.phoneNumber,
+                address: this.patientLocal.address,
+                occupation: this.patientLocal.occupation
+              }
+            });
           }).catch((error) => {
             console.error("Ошибка при добавлении пациента:", error);
           });

@@ -1,6 +1,9 @@
 <template>
   <create-patient-dialog
     v-model="isDialogForAddingPersonActive"
+    :patient="patient"
+    :person="person"
+    @update:onNewPatient="requestPatients"
   />
 
   <v-container class="main-container" fluid>
@@ -10,8 +13,8 @@
           <thead>
           <tr>
             <th class="text-left table-column" scope="col">
-              <CustomTextField
-                v-model="lastNameFilter"
+              <masked-text-field
+                v-model="person.lastName"
                 capitalize-first-letter
                 class="table-header"
                 label="Фамилия"
@@ -19,8 +22,8 @@
               />
             </th>
             <th class="text-left table-column" scope="col">
-              <CustomTextField
-                v-model="firstNameFilter"
+              <masked-text-field
+                v-model="person.firstName"
                 capitalize-first-letter
                 class="table-header"
                 label="Имя"
@@ -28,8 +31,8 @@
               />
             </th>
             <th class="text-left table-column" scope="col">
-              <CustomTextField
-                v-model="patronymicFilter"
+              <masked-text-field
+                v-model="person.patronymic"
                 capitalize-first-letter
                 class="table-header"
                 label="Отчество"
@@ -37,24 +40,24 @@
               />
             </th>
             <th class="text-left table-column" scope="col">
-              <CustomTextField
-                v-model="birthdateFilter"
+              <masked-text-field
+                v-model="patient.birthdate"
                 :handle-backspace="backspaceHandlers.handleBackspaceForDate"
                 :mask="masks.dateMask"
                 class="table-header"
                 label="Дата рождения"
                 placeholder="ДД.ММ.ГГГГ"
-                @input="editFilter"
+                @mask-valid="editFilter"
               />
             </th>
             <th class="text-left table-column" scope="col">
-              <CustomTextField
-                v-model="phoneNumberFilter"
+              <masked-text-field
+                v-model="patient.phoneNumber"
                 :handle-backspace="backspaceHandlers.handleBackspaceForPhoneNumber"
                 :mask="masks.phoneMask"
                 class="table-header"
                 label="Телефон"
-                @input="editFilter"
+                @mask-valid="editFilter"
               />
             </th>
           </tr>
@@ -99,7 +102,7 @@
 
 <script>
 import axios from "axios";
-import CustomTextField from "@/components/custom/textfield/MaskedTextField.vue";
+import MaskedTextField from "@/components/custom/textfield/MaskedTextField.vue";
 import CustomButton from "@/components/custom/button/CustomButton.vue";
 import CreatePatientDialog from "@/components/custom/CreatePatientDialog.vue";
 import { dateRule, phoneRule, requiredRule } from "@/rules";
@@ -107,14 +110,20 @@ import { dateMask, phoneMask } from "@/masks";
 import { handleBackspaceForDate, handleBackspaceForPhoneNumber } from "@/backspaceHandlers";
 
 export default {
-  components: { CreatePatientDialog, CustomButton, CustomTextField },
+  components: { CreatePatientDialog, CustomButton, MaskedTextField },
   data() {
     return {
-      lastNameFilter: "",
-      firstNameFilter: "",
-      patronymicFilter: "",
-      birthdateFilter: "",
-      phoneNumberFilter: "+7(",
+      person: {
+        lastName: "",
+        firstName: "",
+        patronymic: ""
+      },
+      patient: {
+        birthdate: "",
+        phoneNumber: "+7(",
+        address: "",
+        occupation: ""
+      },
 
       patients: [],
       filteredPatients: [],
@@ -134,47 +143,62 @@ export default {
       backspaceHandlers: {
         handleBackspaceForDate,
         handleBackspaceForPhoneNumber
-      },
+      }
     };
   },
   async created() {
-    try {
-      let basicAuth = localStorage.getItem("auth");
-      const response = await axios.get(import.meta.env.VITE_API_URL + "/api/v1/patients", {
-        headers: { "Authorization": "Basic " + basicAuth }
-      });
-      this.patients = response.data.map(patient => {
-        let dateParts = [];
-        if (patient.birthdate) {
-          dateParts = patient.birthdate.split("-");
-        }
-        return {
-          lastName: patient.person.lastName,
-          firstName: patient.person.firstName,
-          patronymic: patient.person.patronymic,
-          birthdate: dateParts.length === 3 ? `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}` : "",
-          phoneNumber: this.masks.phoneMask(patient.phoneNumber)
-        };
-      });
-      this.filteredPatients = this.patients;
-    } catch (error) {
-      console.error("Ошибка при получении данных:", error);
-    }
+    await this.requestPatients();
   },
   methods: {
+    async requestPatients() {
+      try {
+        let basicAuth = localStorage.getItem("auth");
+        const response = await axios.get(import.meta.env.VITE_API_URL + "/api/v1/patients", {
+          headers: { "Authorization": "Basic " + basicAuth }
+        });
+        console.log("request");
+        this.patients = response.data.map(patient => {
+          let dateParts = [];
+          if (patient.birthdate) {
+            dateParts = patient.birthdate.split("-");
+          }
+          return {
+            lastName: patient.person.lastName,
+            firstName: patient.person.firstName,
+            patronymic: patient.person.patronymic,
+            birthdate: dateParts.length === 3 ? `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}` : "",
+            phoneNumber: this.masks.phoneMask(patient.phoneNumber)
+          };
+        });
+        this.filteredPatients = this.patients;
+        await this.editFilter(); // вызовите здесь
+      } catch (error) {
+        console.error("Ошибка при получении данных:", error);
+      }
+    },
+    async onNewPatient(newData) {
+      if (newData.person) {
+        this.person = Object.assign({}, this.person, newData.person);
+      }
+      if (newData.patient) {
+        this.patient = Object.assign({}, this.patient, newData.patient);
+      }
+      await this.requestPatients();
+    },
     async editFilter() {
       const checkFilter = (fieldValue, filterValue) => {
         if (!fieldValue && filterValue !== "") return false;
         return !(fieldValue && fieldValue.toLowerCase().indexOf(filterValue.toLowerCase()) === -1);
       };
 
+      console.log(this.patients);
       this.filteredPatients = this.patients.filter(patient => {
         return (
-          checkFilter(patient.lastName, this.lastNameFilter) &&
-          checkFilter(patient.firstName, this.firstNameFilter) &&
-          checkFilter(patient.patronymic, this.patronymicFilter) &&
-          checkFilter(patient.birthdate, this.birthdateFilter) &&
-          checkFilter(patient.phoneNumber, this.phoneNumberFilter)
+          checkFilter(patient.lastName, this.person.lastName) &&
+          checkFilter(patient.firstName, this.person.firstName) &&
+          checkFilter(patient.patronymic, this.person.patronymic) &&
+          checkFilter(patient.birthdate, this.patient.birthdate) &&
+          checkFilter(patient.phoneNumber, this.patient.phoneNumber)
         );
       });
     },
@@ -182,11 +206,17 @@ export default {
       this.isDialogForAddingPersonActive = true;
     },
     clearFilter() {
-      this.lastNameFilter = "";
-      this.firstNameFilter = "";
-      this.patronymicFilter = "";
-      this.birthdateFilter = "";
-      this.phoneNumberFilter = "+7(";
+      this.person = {
+        lastName: "",
+        firstName: "",
+        patronymic: ""
+      };
+      this.patient = {
+        birthdate: "",
+        phoneNumber: "+7(",
+        address: "",
+        occupation: ""
+      };
       this.editFilter();
     }
   }
