@@ -5,8 +5,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.zalimannard.rkibappointmentbackend.schema.person.patient.dto.PatientResponseDto;
 import ru.zalimannard.rkibappointmentbackend.schema.procedures.dto.ProcedureRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.procedures.dto.ProcedureResponseDto;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("${application.baseApi}${application.apiV1}${application.endpoint.procedures}")
@@ -20,6 +23,12 @@ public class ProcedureController {
     @Operation(summary = "Получение процедуры")
     public ProcedureResponseDto get(@PathVariable String id) {
         return procedureService.read(id);
+    }
+
+    @GetMapping
+    @Operation(summary = "Получение всех процедур")
+    public List<ProcedureResponseDto> getAll() {
+        return procedureService.readAll();
     }
 
     @PostMapping

@@ -8,6 +8,8 @@ import ru.zalimannard.rkibappointmentbackend.exception.NotFoundException;
 import ru.zalimannard.rkibappointmentbackend.schema.procedures.dto.ProcedureRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.procedures.dto.ProcedureResponseDto;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ProcedureServiceImpl implements ProcedureService {
@@ -68,6 +70,17 @@ public class ProcedureServiceImpl implements ProcedureService {
         } catch (DataIntegrityViolationException e) {
             throw new ConflictException("prs-04", "Конфликт при удалении Procedure из базы данных", e.getMessage());
         }
+    }
+
+    @Override
+    public List<ProcedureResponseDto> readAll() {
+        List<Procedure> procedures = readAllEntities();
+        return mapper.toDtoList(procedures);
+    }
+
+    @Override
+    public List<Procedure> readAllEntities() {
+        return repository.findAll();
     }
 
 }

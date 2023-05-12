@@ -1,7 +1,7 @@
 <template>
-  <div class="about">
-    <h1>Админ. Услуги</h1>
-  </div>
+  <procedure-table
+
+  />
 </template>
 
 <style>
@@ -14,4 +14,5 @@
 }
 </style>
 <script lang="ts" setup>
+import ProcedureTable from "@/components/tables/ProcedureTable.vue";
 </script>
