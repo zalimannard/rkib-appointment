@@ -253,7 +253,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .v-card-title {
     padding-top: 1vh;
     padding-bottom: 1vh;

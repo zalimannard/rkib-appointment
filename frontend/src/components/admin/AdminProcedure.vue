@@ -1,18 +1,37 @@
-<template>
-  <procedure-table
+<script>
+import ProcedureTable from "@/components/tables/ProcedureTable.vue";
+import EntityTableActions from "@/components/tables/EntityTableActions.vue";
+import CreateProcedureDialog from "@/components/custom/dialog/CreateProcedureDialog.vue";
 
-  />
+export default {
+  components: { CreateProcedureDialog, EntityTableActions, ProcedureTable },
+  data() {
+    return {
+      valid: true
+    };
+  }
+};
+</script>
+
+<template>
+  <create-procedure-dialog/>
+
+  <v-container class="container">
+    <v-col>
+      <v-row>
+        <entity-table-actions />
+      </v-row>
+      <v-row>
+        <procedure-table />
+      </v-row>
+    </v-col>
+  </v-container>
 </template>
 
 <style>
-@media (min-width: 1024px) {
-    .about {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-    }
+.container {
+    display: grid;
+    width: 1152px;
+    margin: 20pt auto 0;
 }
 </style>
-<script lang="ts" setup>
-import ProcedureTable from "@/components/tables/ProcedureTable.vue";
-</script>

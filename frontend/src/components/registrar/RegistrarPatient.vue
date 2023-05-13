@@ -104,7 +104,7 @@
 import axios from "axios";
 import MaskedTextField from "@/components/custom/textfield/MaskedTextField.vue";
 import CustomButton from "@/components/custom/button/CustomButton.vue";
-import CreatePatientDialog from "@/components/custom/CreatePatientDialog.vue";
+import CreatePatientDialog from "@/components/custom/dialog/CreatePatientDialog.vue";
 import { dateRule, phoneRule, requiredRule } from "@/rules";
 import { dateMask, phoneMask } from "@/masks";
 import { handleBackspaceForDate, handleBackspaceForPhoneNumber } from "@/backspaceHandlers";
