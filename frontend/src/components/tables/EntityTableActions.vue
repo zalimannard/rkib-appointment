@@ -37,7 +37,3 @@ export default defineComponent({
     margin-right: 20px; /* Change this value to the desired space */
 }
 </style>
-
-<style scoped>
-
-</style>

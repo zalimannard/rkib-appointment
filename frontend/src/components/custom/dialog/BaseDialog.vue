@@ -9,7 +9,7 @@
       </v-card-title>
 
       <v-card-text>
-        <v-form>
+        <v-form ref="form">
           <slot>
 
           </slot>
@@ -79,8 +79,11 @@ export default {
     };
   },
   methods: {
-    onOkClick() {
-      this.okDialog();
+    async onOkClick() {
+      const valid = await this.$refs.form.validate();
+      if (valid.valid) {
+        this.okDialog();
+      }
     },
     onCancelClick() {
       this.closeDialog();

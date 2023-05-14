@@ -8,6 +8,7 @@
   >
     <masked-text-field
       v-model="procedure.inputName"
+      :rules="rules.requiredRule"
       capitalize-first-letter
       label="Название"
       required-asterisk
