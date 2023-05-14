@@ -71,14 +71,14 @@ export default {
       set(val) {
         this.$emit("input", val);
         if (!val) {
-          this.$emit("updateSearchInput", this.inputValue);
+          this.$emit("updateSearchInput", this.procedure.inputName);
         }
       }
     }
   },
   watch: {
     searchInput(newVal) {
-      this.inputValue = newVal;
+      this.procedure.inputName = newVal;
     }
   }
 };

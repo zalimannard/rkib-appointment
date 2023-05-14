@@ -10,7 +10,7 @@
             class="header-cell"
             density="comfortable"
             label="Название"
-            @input="editFilter"
+            @input="updateSearchInput"
           />
         </th>
       </tr>
@@ -71,6 +71,9 @@ export default {
     await this.requestProcedures();
   },
   methods: {
+    updateSearchInput() {
+      this.$emit("updateSearchInput", this.localSearchInput);
+    },
     async requestProcedures() {
       try {
         let basicAuth = localStorage.getItem("auth");

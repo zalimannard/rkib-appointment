@@ -11,12 +11,12 @@
     <v-col>
       <v-row>
         <entity-table-actions
-          @openCreateDialog="showCreateDialog = true"
+          @openCreateDialog="openCreateDialog"
           @resetFilters="$refs.procedureTable.resetFilters()"
         />
       </v-row>
       <v-row>
-        <procedure-table ref="procedureTable" />
+        <procedure-table ref="procedureTable" @updateSearchInput="updateSearchInput" />
       </v-row>
     </v-col>
   </v-container>
@@ -43,7 +43,9 @@ export default {
     onCreateEntity() {
       this.showCreateDialog = false;
       this.$refs.procedureTable.requestProcedures();
-      this.$refs.procedureTable.editFilter();
+    },
+    openCreateDialog() {
+      this.showCreateDialog = true;
     },
     closeDialog() {
       this.showCreateDialog = false;
