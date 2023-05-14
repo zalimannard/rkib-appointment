@@ -61,6 +61,7 @@ export default {
       }).catch((error) => {
         console.error("Ошибка при добавлении процедуры:", error);
       });
+      this.$emit("updateSearchInput", this.procedure.inputName);
     }
   },
   computed: {

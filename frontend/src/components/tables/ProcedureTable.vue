@@ -63,8 +63,12 @@ export default {
     };
   },
   watch: {
-    searchInput(newVal) {
-      this.localSearchInput = newVal;
+    searchInput: {
+      immediate: true,
+      handler(newVal) {
+        this.localSearchInput = newVal;
+        this.editFilter();
+      }
     }
   },
   async created() {
@@ -73,6 +77,7 @@ export default {
   methods: {
     updateSearchInput() {
       this.$emit("updateSearchInput", this.localSearchInput);
+      this.editFilter();
     },
     async requestProcedures() {
       try {
