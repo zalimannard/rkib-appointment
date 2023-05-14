@@ -1,3 +1,27 @@
+<template>
+  <create-procedure-dialog
+    v-model="showCreateDialog"
+    :close-dialog="closeDialog"
+    :on-create-entity="onCreateEntity"
+    :search-input="searchInput"
+    @updateSearchInput="updateSearchInput"
+  />
+
+  <v-container class="container">
+    <v-col>
+      <v-row>
+        <entity-table-actions
+          @openCreateDialog="showCreateDialog = true"
+          @resetFilters="$refs.procedureTable.resetFilters()"
+        />
+      </v-row>
+      <v-row>
+        <procedure-table ref="procedureTable" />
+      </v-row>
+    </v-col>
+  </v-container>
+</template>
+
 <script>
 import ProcedureTable from "@/components/tables/ProcedureTable.vue";
 import EntityTableActions from "@/components/tables/EntityTableActions.vue";
@@ -7,26 +31,26 @@ export default {
   components: { CreateProcedureDialog, EntityTableActions, ProcedureTable },
   data() {
     return {
+      showCreateDialog: false,
+      searchInput: "",
       valid: true
     };
+  },
+  methods: {
+    updateSearchInput(value) {
+      this.searchInput = value;
+    },
+    onCreateEntity() {
+      this.showCreateDialog = false;
+      this.$refs.procedureTable.requestProcedures();
+      this.$refs.procedureTable.editFilter();
+    },
+    closeDialog() {
+      this.showCreateDialog = false;
+    }
   }
 };
 </script>
-
-<template>
-  <create-procedure-dialog/>
-
-  <v-container class="container">
-    <v-col>
-      <v-row>
-        <entity-table-actions />
-      </v-row>
-      <v-row>
-        <procedure-table />
-      </v-row>
-    </v-col>
-  </v-container>
-</template>
 
 <style>
 .container {

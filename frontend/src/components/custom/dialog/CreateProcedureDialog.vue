@@ -1,10 +1,13 @@
 <template>
   <base-dialog
+    v-model="internalValue"
+    :close-dialog="closeDialog"
+    :ok-dialog="createProcedure"
     ok-button-text="Создать"
     title="Создание новой услуги"
-    value
   >
     <masked-text-field
+      v-model="procedure.inputName"
       capitalize-first-letter
       label="Название"
       required-asterisk
@@ -14,25 +17,69 @@
 
 <script>
 import MaskedTextField from "@/components/custom/textfield/MaskedTextField.vue";
-
 import { requiredRule } from "@/rules";
 import BaseDialog from "@/components/custom/dialog/BaseDialog.vue";
+import axios from "axios";
 
 export default {
   components: { BaseDialog, MaskedTextField },
   props: {
-    value: Boolean
+    value: Boolean,
+    searchInput: String,
+    onCreateEntity: {
+      type: Function,
+      required: false
+    },
+    closeDialog: {
+      type: Function,
+      required: true
+    }
   },
   data() {
     return {
+      procedure: {
+        inputName: this.searchInput
+      },
       rules: {
         requiredRule
       }
     };
+  },
+  methods: {
+    createProcedure() {
+      let basicAuth = localStorage.getItem("auth");
+      axios({
+        method: "post",
+        url: import.meta.env.VITE_API_URL + "/api/v1/procedures",
+        headers: { "Authorization": "Basic " + basicAuth },
+        data: {
+          name: this.procedure.inputName
+        }
+      }).then((response) => {
+        console.error("Создана процедура:", response);
+        this.onCreateEntity();
+      }).catch((error) => {
+        console.error("Ошибка при добавлении процедуры:", error);
+      });
+    }
+  },
+  computed: {
+    internalValue: {
+      get() {
+        return this.value;
+      },
+      set(val) {
+        this.$emit("input", val);
+        if (!val) {
+          this.$emit("updateSearchInput", this.inputValue);
+        }
+      }
+    }
+  },
+  watch: {
+    searchInput(newVal) {
+      this.inputValue = newVal;
+    }
   }
 };
 </script>
-
-<style scoped>
-
-</style>

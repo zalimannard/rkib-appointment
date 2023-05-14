@@ -5,7 +5,7 @@
       <tr>
         <th class="text-left header-cell" scope="col">
           <masked-text-field
-            v-model="procedure.name"
+            v-model="localSearchInput"
             capitalize-first-letter
             class="header-cell"
             density="comfortable"
@@ -37,9 +37,19 @@ import axios from "axios";
 import CustomTable from "@/components/custom/table/CustomTable.vue";
 
 export default {
-  components: { CustomTable, MaskedTextField },
+  components: {
+    CustomTable,
+    MaskedTextField
+  },
+  props: {
+    searchInput: {
+      type: String,
+      default: ""
+    }
+  },
   data() {
     return {
+      localSearchInput: this.searchInput,
       procedure: {
         id: "",
         name: ""
@@ -51,6 +61,11 @@ export default {
         requiredRule
       }
     };
+  },
+  watch: {
+    searchInput(newVal) {
+      this.localSearchInput = newVal;
+    }
   },
   async created() {
     await this.requestProcedures();
@@ -76,16 +91,28 @@ export default {
 
     async editFilter() {
       const checkFilter = (fieldValue, filterValue) => {
+        if (filterValue === "") return true;
         if (!fieldValue && filterValue !== "") return false;
-        return !(fieldValue && fieldValue.toLowerCase().indexOf(filterValue.toLowerCase()) === -1);
+        if (fieldValue && typeof fieldValue === "string" && filterValue && typeof filterValue === "string") {
+          return fieldValue.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1;
+        }
+        return false;
       };
 
       this.filteredProcedures = this.procedures.filter(procedure => {
         return (
-          checkFilter(procedure.name, this.procedure.name)
+          checkFilter(procedure.name, this.localSearchInput)
         );
       });
+    },
+    resetFilters() {
+      this.localSearchInput = "";
+      this.editFilter();
     }
   }
 };
 </script>
+
+<style scoped>
+
+</style>

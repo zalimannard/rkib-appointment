@@ -1,6 +1,6 @@
 <template>
   <v-dialog
-    v-model="internalValue"
+    :value="value"
     width="700"
   >
     <v-card variant="flat">
@@ -20,6 +20,7 @@
                   block
                   size="default"
                   type="confirm"
+                  @click="onOkClick"
                 >
                   {{ okButtonText }}
                 </custom-button>
@@ -29,6 +30,7 @@
                   block
                   size="default"
                   type="cancel"
+                  @click="onCancelClick"
                 >
                   {{ cancelButtonText }}
                 </custom-button>
@@ -61,12 +63,28 @@ export default {
     cancelButtonText: {
       type: String,
       default: "Отмена"
+    },
+    okDialog: {
+      type: Function,
+      required: true
+    },
+    closeDialog: {
+      type: Function,
+      required: true
     }
   },
   data() {
     return {
       valid: true
     };
+  },
+  methods: {
+    onOkClick() {
+      this.okDialog();
+    },
+    onCancelClick() {
+      this.closeDialog();
+    }
   },
   computed: {
     internalValue: {

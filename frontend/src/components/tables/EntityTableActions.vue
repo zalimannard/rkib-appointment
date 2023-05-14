@@ -5,6 +5,7 @@
       size="compact"
       type="confirm"
       width="200"
+      @click="$emit('openCreateDialog')"
     >
       Создать
     </custom-button>
@@ -14,6 +15,7 @@
       size="compact"
       type="regular"
       width="200"
+      @click="$emit('resetFilters')"
     >
       Очистить фильтры
     </custom-button>

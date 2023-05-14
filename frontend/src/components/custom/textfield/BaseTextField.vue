@@ -6,7 +6,6 @@
     :placeholder="placeholder"
     :readonly="readonly"
     :rules="rules"
-    clearable
     v-bind="$attrs"
     variant="outlined"
   >
