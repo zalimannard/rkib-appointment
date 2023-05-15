@@ -1,9 +1,9 @@
 <template>
-  <create-procedure-dialog
+  <create-person-dialog
     v-model="showCreateDialog"
     :close-dialog="closeDialog"
     :on-create-entity="onCreateEntity"
-    :search-input="searchInput"
+    :search-person="searchInput"
     @updateSearchInput="updateSearchInput"
   />
 
@@ -12,7 +12,7 @@
       <v-row>
         <entity-table-actions
           @openCreateDialog="openCreateDialog"
-          @resetFilters="$refs.procedureTable.resetFilters()"
+          @resetFilters="$refs.personAdminTable.resetFilters()"
         />
       </v-row>
       <v-row>
@@ -26,13 +26,12 @@
 </template>
 
 <script>
-import ProcedureTable from "@/components/tables/ProcedureTable.vue";
 import EntityTableActions from "@/components/tables/EntityTableActions.vue";
-import CreateProcedureDialog from "@/components/custom/dialog/CreateProcedureDialog.vue";
 import PersonAdminTable from "@/components/tables/PersonAdminTable.vue";
+import CreatePersonDialog from "@/components/custom/dialog/CreatePersonDialog.vue";
 
 export default {
-  components: { PersonAdminTable, CreateProcedureDialog, EntityTableActions, ProcedureTable },
+  components: { CreatePersonDialog, PersonAdminTable, EntityTableActions },
   data() {
     return {
       showCreateDialog: false,
@@ -46,7 +45,7 @@ export default {
     },
     onCreateEntity() {
       this.showCreateDialog = false;
-      this.$refs.procedureTable.requestProcedures();
+      this.$refs.personAdminTable.requestPeople();
     },
     openCreateDialog() {
       this.showCreateDialog = true;
