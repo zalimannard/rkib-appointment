@@ -1,6 +1,5 @@
 package ru.zalimannard.rkibappointmentbackend.schema.person.patient.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -8,11 +7,9 @@ import jakarta.validation.constraints.Past;
 import lombok.Builder;
 import lombok.Value;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.format.annotation.DateTimeFormat;
 import ru.zalimannard.rkibappointmentbackend.validator.Phone;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Value
 @Builder(toBuilder = true)

@@ -4,6 +4,8 @@ import org.springframework.stereotype.Component;
 import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonResponseDto;
 
+import java.util.List;
+
 @Component
 public class PersonMapper {
 
@@ -25,6 +27,10 @@ public class PersonMapper {
                 .firstName(person.getFirstName())
                 .patronymic(person.getPatronymic())
                 .build();
+    }
+
+    public List<PersonResponseDto> toDtoList(List<Person> person) {
+        return person.stream().map(this::toDto).toList();
     }
 
 }

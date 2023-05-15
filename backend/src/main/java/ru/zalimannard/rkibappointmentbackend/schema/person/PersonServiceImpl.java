@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,6 +16,7 @@ import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonResponseDto;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -66,6 +66,17 @@ public class PersonServiceImpl implements PersonService, UserDetailsService {
     public Person readEntityByUsername(String username) {
         return repository.findByUsername(username)
                 .orElseThrow(() -> new NotFoundException("pes-06", "Не найден Person с username=" + username, null));
+    }
+
+    @Override
+    public List<PersonResponseDto> readAll() {
+        List<Person> procedures = readAllEntities();
+        return mapper.toDtoList(procedures);
+    }
+
+    @Override
+    public List<Person> readAllEntities() {
+        return repository.findAll();
     }
 
     @Override

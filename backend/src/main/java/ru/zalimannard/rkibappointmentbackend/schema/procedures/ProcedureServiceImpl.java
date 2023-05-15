@@ -46,6 +46,17 @@ public class ProcedureServiceImpl implements ProcedureService {
     }
 
     @Override
+    public List<ProcedureResponseDto> readAll() {
+        List<Procedure> procedures = readAllEntities();
+        return mapper.toDtoList(procedures);
+    }
+
+    @Override
+    public List<Procedure> readAllEntities() {
+        return repository.findAll();
+    }
+
+    @Override
     public ProcedureResponseDto update(String id, ProcedureRequestDto procedureDto) {
         Procedure procedureToUpdate = mapper.toEntity(procedureDto);
         procedureToUpdate.setId(id);
@@ -70,17 +81,6 @@ public class ProcedureServiceImpl implements ProcedureService {
         } catch (DataIntegrityViolationException e) {
             throw new ConflictException("prs-04", "Конфликт при удалении Procedure из базы данных", e.getMessage());
         }
-    }
-
-    @Override
-    public List<ProcedureResponseDto> readAll() {
-        List<Procedure> procedures = readAllEntities();
-        return mapper.toDtoList(procedures);
-    }
-
-    @Override
-    public List<Procedure> readAllEntities() {
-        return repository.findAll();
     }
 
 }

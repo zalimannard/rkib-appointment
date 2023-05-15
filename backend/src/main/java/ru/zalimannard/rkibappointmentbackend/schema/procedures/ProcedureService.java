@@ -20,6 +20,10 @@ public interface ProcedureService {
 
     Procedure readEntity(@NotNull String id);
 
+    List<ProcedureResponseDto> readAll();
+
+    List<Procedure> readAllEntities();
+
 
     ProcedureResponseDto update(@NotNull String id, @NotNull @Valid ProcedureRequestDto procedureDto);
 
@@ -28,7 +32,4 @@ public interface ProcedureService {
 
     void delete(@NotNull String id);
 
-    List<ProcedureResponseDto> readAll();
-
-    List<Procedure> readAllEntities();
 }

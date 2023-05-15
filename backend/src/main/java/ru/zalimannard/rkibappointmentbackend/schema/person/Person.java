@@ -3,8 +3,6 @@ package ru.zalimannard.rkibappointmentbackend.schema.person;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
-import ru.zalimannard.rkibappointmentbackend.schema.person.employees.Employee;
-import ru.zalimannard.rkibappointmentbackend.schema.person.patient.Patient;
 
 import java.util.Objects;
 
