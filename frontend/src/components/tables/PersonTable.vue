@@ -67,11 +67,11 @@
                 </th>
                 <th class="text-left header-cell role-field" scope="col">
                     <role-select
-                        :role="person.role"
-                        :update-search-input="updateSearchInput"
-                        :include-patient="true"
-                        class="header-cell"
-                        @update:role="person.role = $event"
+                            :include-patient="true"
+                            :role="person.role"
+                            :update-search-input="updateSearchInput"
+                            class="header-cell"
+                            @update:role="person.role = $event"
                     />
                 </th>
             </tr>
@@ -204,6 +204,14 @@ export default {
                     }
                     let birthdate = (dateParts.length === 3 ? `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}` : "");
 
+                    let roles = []
+                    if (person.patient !== undefined) {
+                        roles.push("PATIENT");
+                    }
+                    if (person.employee !== undefined) {
+                        roles.push(person.employee.roles);
+                    }
+
                     return {
                         id: person.id,
                         username: person.username,
@@ -216,7 +224,7 @@ export default {
                         phoneNumber: person.patient !== undefined
                             ? this.masks.phoneMask(person.patient.phoneNumber)
                             : null,
-                        roles: person.employee !== undefined ? person.employee.roles : null,
+                        roles: roles
                     };
                 });
                 await this.editFilter();

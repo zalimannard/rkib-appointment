@@ -156,7 +156,6 @@ export default {
                 const response = await axios.get(import.meta.env.VITE_API_URL + "/api/v1/patients", {
                     headers: {"Authorization": "Basic " + basicAuth}
                 });
-                console.log("request");
                 this.patients = response.data.map(patient => {
                     let dateParts = [];
                     if (patient.birthdate) {
@@ -191,7 +190,6 @@ export default {
                 return !(fieldValue && fieldValue.toLowerCase().indexOf(filterValue.toLowerCase()) === -1);
             };
 
-            console.log(this.patients);
             this.filteredPatients = this.patients.filter(patient => {
                 return (
                     checkFilter(patient.lastName, this.person.lastName) &&

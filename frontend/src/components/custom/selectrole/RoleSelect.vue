@@ -1,15 +1,15 @@
 <template>
     <v-select
-        :value="selectedRole"
-        @update:modelValue="updateRole"
-        :items="availableRoles"
-        density="comfortable"
-        item-title="key"
-        item-value="value"
-        label="Роль"
-        persistent-hint
-        return-object
-        variant="outlined"
+            :items="availableRoles"
+            :value="selectedRole"
+            density="comfortable"
+            item-title="key"
+            item-value="value"
+            label="Роль"
+            persistent-hint
+            return-object
+            variant="outlined"
+            @update:modelValue="updateRole"
     ></v-select>
 </template>
 
