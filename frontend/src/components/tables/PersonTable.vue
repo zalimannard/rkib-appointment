@@ -36,17 +36,20 @@
                 <th class="text-left header-cell" scope="col">
                     <masked-text-field
                             v-model="person.birthdate"
-                            capitalize-first-letter
+                            :handle-backspace="backspaceHandlers.handleBackspaceForDate"
+                            :mask="masks.dateMask"
                             class="header-cell"
                             density="comfortable"
                             label="Дата рождения"
+                            placeholder="ДД.ММ.ГГГГ"
                             @input="updateSearchInput"
                     />
                 </th>
                 <th class="text-left header-cell" scope="col">
                     <masked-text-field
                             v-model="person.phoneNumber"
-                            capitalize-first-letter
+                            :handle-backspace="backspaceHandlers.handleBackspaceForPhoneNumber"
+                            :mask="masks.phoneMask"
                             class="header-cell"
                             density="comfortable"
                             label="Телефон"
@@ -95,11 +98,13 @@
 </template>
 
 <script>
-import {requiredRule} from "@/rules";
+import {dateRule, phoneRule, requiredRule} from "@/rules";
 import MaskedTextField from "@/components/custom/textfield/MaskedTextField.vue";
 import axios from "axios";
 import CustomTable from "@/components/custom/table/CustomTable.vue";
 import RoleSelect from "@/components/custom/selectrole/RoleSelect.vue";
+import {dateMask, phoneMask} from "@/masks";
+import {handleBackspaceForDate, handleBackspaceForPhoneNumber} from "@/backspaceHandlers";
 
 export default {
     components: {
@@ -140,7 +145,17 @@ export default {
             filteredPeople: [],
 
             rules: {
-                requiredRule
+                requiredRule,
+                dateRule,
+                phoneRule
+            },
+            masks: {
+                dateMask,
+                phoneMask
+            },
+            backspaceHandlers: {
+                handleBackspaceForDate,
+                handleBackspaceForPhoneNumber
             }
         };
     },
@@ -154,6 +169,7 @@ export default {
         }
     },
     async created() {
+        this.person = this.defaultPerson
         await this.requestPeople();
     },
     methods: {
@@ -180,14 +196,26 @@ export default {
                     headers: {"Authorization": "Basic " + basicAuth}
                 });
                 this.people = response.data.map(person => {
+                    let dateParts = [];
+                    if (person.patient !== undefined) {
+                        if (person.patient.birthdate) {
+                            dateParts = person.patient.birthdate.split("-");
+                        }
+                    }
+                    let birthdate = (dateParts.length === 3 ? `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}` : "");
+
                     return {
                         id: person.id,
                         username: person.username,
                         lastName: person.lastName,
                         firstName: person.firstName,
                         patronymic: person.patronymic,
-                        birthdate: person.patient !== undefined ? person.patient.birthdate : null,
-                        phoneNumber: person.patient !== undefined ? person.patient.phoneNumber : null,
+                        birthdate: person.patient !== undefined
+                            ? birthdate
+                            : null,
+                        phoneNumber: person.patient !== undefined
+                            ? this.masks.phoneMask(person.patient.phoneNumber)
+                            : null,
                         roles: person.employee !== undefined ? person.employee.roles : null,
                     };
                 });
@@ -213,7 +241,7 @@ export default {
                     checkFilter(person.firstName, this.person.firstName) &&
                     checkFilter(person.patronymic, this.person.patronymic) &&
                     checkFilter(person.birthdate, this.person.birthdate) &&
-                    checkFilter(person.phoneNumber, this.person.phoneNumber) &&
+                    ((this.person.phoneNumber === this.defaultPerson.phoneNumber) || checkFilter(person.phoneNumber, this.person.phoneNumber)) &&
                     checkFilter(person.username, this.person.username) &&
                     (this.person.role === "NONE" || this.person.role === "" || (person.roles && person.roles.indexOf(this.person.role) >= 0))
                 );

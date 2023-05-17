@@ -44,6 +44,16 @@ export default {
             ],
         };
     },
+    created() {
+        if (this.includePatient) {
+            this.availableRoles.push({key: "Пациент", value: "PATIENT"});
+        }
+    },
+    methods: {
+        updateRole(value) {
+            this.selectedRole = value;
+        }
+    },
     computed: {
         selectedRole: {
             get() {
@@ -54,16 +64,6 @@ export default {
                 this.updateSearchInput();
             },
         },
-    },
-    created() {
-        if (this.includePatient) {
-            this.availableRoles.push({key: "Пациент", value: "PATIENT"});
-        }
-    },
-    methods: {
-        updateRole(value) {
-            this.selectedRole = value;
-        }
     }
 };
 </script>
