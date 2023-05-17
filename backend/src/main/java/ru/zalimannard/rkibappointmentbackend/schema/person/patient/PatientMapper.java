@@ -27,13 +27,16 @@ public class PatientMapper {
     }
 
     public PatientResponseDto toDto(Patient patient) {
+        if (patient == null) {
+            return null;
+        }
         return PatientResponseDto.builder()
                 .id(patient.getId())
                 .phoneNumber(patient.getPhoneNumber())
                 .birthdate(patient.getBirthdate())
                 .address(patient.getAddress())
                 .occupation(patient.getOccupation())
-                .person(personMapper.toDto(patient.getPerson()))
+                .person(personMapper.toDto(patient.getPerson(), null, null))
                 .build();
     }
 

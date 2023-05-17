@@ -3,6 +3,8 @@ package ru.zalimannard.rkibappointmentbackend.schema.person;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
+import ru.zalimannard.rkibappointmentbackend.schema.person.employees.Employee;
+import ru.zalimannard.rkibappointmentbackend.schema.person.patient.Patient;
 
 import java.util.Objects;
 
@@ -34,6 +36,12 @@ public class Person {
 
     @Column(name = "patronymic")
     private String patronymic;
+
+    @OneToOne(mappedBy = "person")
+    private Patient patient;
+
+    @OneToOne(mappedBy = "person")
+    private Employee employee;
 
     @Override
     public boolean equals(Object o) {

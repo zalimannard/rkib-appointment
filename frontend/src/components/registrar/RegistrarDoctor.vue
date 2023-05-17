@@ -1,7 +1,7 @@
 <template>
-  <div class="about">
-    <h1>Регистратор. Панель с врачами</h1>
-  </div>
+    <div class="about">
+        <h1>Регистратор. Панель с врачами</h1>
+    </div>
 </template>
 
 <style>

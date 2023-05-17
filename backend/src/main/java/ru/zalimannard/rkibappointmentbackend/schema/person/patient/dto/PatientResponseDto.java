@@ -1,5 +1,6 @@
 package ru.zalimannard.rkibappointmentbackend.schema.person.patient.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Value;
@@ -27,6 +28,7 @@ public class PatientResponseDto {
     String occupation;
 
     @JsonProperty("person")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     PersonResponseDto person;
 
 }

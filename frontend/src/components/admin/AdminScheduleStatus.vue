@@ -1,7 +1,7 @@
 <template>
-  <div class="about">
-    <h1>Админ. Статусы элементов графика</h1>
-  </div>
+    <div class="about">
+        <h1>Админ. Статусы элементов графика</h1>
+    </div>
 </template>
 
 <style>

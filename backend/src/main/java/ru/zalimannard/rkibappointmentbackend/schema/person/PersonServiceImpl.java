@@ -14,7 +14,12 @@ import ru.zalimannard.rkibappointmentbackend.exception.ConflictException;
 import ru.zalimannard.rkibappointmentbackend.exception.NotFoundException;
 import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonResponseDto;
+import ru.zalimannard.rkibappointmentbackend.schema.person.employees.EmployeeMapper;
+import ru.zalimannard.rkibappointmentbackend.schema.person.employees.dto.EmployeeResponseDto;
+import ru.zalimannard.rkibappointmentbackend.schema.person.patient.PatientMapper;
+import ru.zalimannard.rkibappointmentbackend.schema.person.patient.dto.PatientResponseDto;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +33,9 @@ public class PersonServiceImpl implements PersonService, UserDetailsService {
     private final PersonRepository repository;
     private final PasswordEncoder passwordEncoder;
 
+    private final PatientMapper patientMapper;
+    private final EmployeeMapper employeeMapper;
+
     @Value("${application.default.adminUsername}")
     private String defaultAdminUsername;
     @Value("${application.default.adminPassword}")
@@ -37,7 +45,7 @@ public class PersonServiceImpl implements PersonService, UserDetailsService {
     public PersonResponseDto create(PersonRequestDto personDto) {
         Person personToCreate = mapper.toEntity(personDto);
         Person createdPerson = createEntity(personToCreate);
-        return mapper.toDto(createdPerson);
+        return mapper.toDto(createdPerson, null, null);
     }
 
     @Override
@@ -53,7 +61,15 @@ public class PersonServiceImpl implements PersonService, UserDetailsService {
     @Override
     public PersonResponseDto read(String id) {
         Person person = readEntity(id);
-        return mapper.toDto(person);
+        PatientResponseDto patientDto = patientMapper.toDto(
+                person.getPatient() != null
+                        ? person.getPatient().toBuilder().person(null).build()
+                        : null);
+        EmployeeResponseDto employeeDto = employeeMapper.toDto(
+                person.getEmployee() != null
+                        ? person.getEmployee().toBuilder().person(null).build()
+                        : null);
+        return mapper.toDto(person, patientDto, employeeDto);
     }
 
     @Override
@@ -70,8 +86,20 @@ public class PersonServiceImpl implements PersonService, UserDetailsService {
 
     @Override
     public List<PersonResponseDto> readAll() {
-        List<Person> procedures = readAllEntities();
-        return mapper.toDtoList(procedures);
+        List<Person> people = readAllEntities();
+        List<PatientResponseDto> patientDtos = new ArrayList<>();
+        List<EmployeeResponseDto> employeeDtos = new ArrayList<>();
+        for (Person person : people) {
+            patientDtos.add(patientMapper.toDto(
+                    person.getPatient() != null
+                            ? person.getPatient().toBuilder().person(null).build()
+                            : null));
+            employeeDtos.add(employeeMapper.toDto(
+                    person.getEmployee() != null
+                            ? person.getEmployee().toBuilder().person(null).build()
+                            : null));
+        }
+        return mapper.toDtoList(people, patientDtos, employeeDtos);
     }
 
     @Override
@@ -85,7 +113,15 @@ public class PersonServiceImpl implements PersonService, UserDetailsService {
         personToUpdate.setId(id);
         personToUpdate = encodePersonsPassword(personToUpdate);
         Person updatedPerson = updateEntity(personToUpdate);
-        return mapper.toDto(updatedPerson);
+        PatientResponseDto patientDto = patientMapper.toDto(
+                updatedPerson.getPatient() != null
+                        ? updatedPerson.getPatient().toBuilder().person(null).build()
+                        : null);
+        EmployeeResponseDto employeeDto = employeeMapper.toDto(
+                updatedPerson.getEmployee() != null
+                        ? updatedPerson.getEmployee().toBuilder().person(null).build()
+                        : null);
+        return mapper.toDto(updatedPerson, patientDto, employeeDto);
     }
 
     @Override
