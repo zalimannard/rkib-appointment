@@ -64,9 +64,11 @@
                 </th>
                 <th class="text-left header-cell role-field" scope="col">
                     <role-select
-                            v-model:role="person.role"
-                            :include-patient="true"
-                            class="header-cell"
+                        :role="person.role"
+                        :update-search-input="updateSearchInput"
+                        :include-patient="true"
+                        class="header-cell"
+                        @update:role="person.role = $event"
                     />
                 </th>
             </tr>
@@ -156,7 +158,6 @@ export default {
     },
     methods: {
         calcRoles(item) {
-            // console.log(item)
             let roles = [];
             if (item.phoneNumber != null) {
                 roles.push("PATIENT");
@@ -179,7 +180,6 @@ export default {
                     headers: {"Authorization": "Basic " + basicAuth}
                 });
                 this.people = response.data.map(person => {
-                    console.log(person)
                     return {
                         id: person.id,
                         username: person.username,
@@ -209,10 +209,13 @@ export default {
 
             this.filteredPeople = this.people.filter(person => {
                 return (
-                    checkFilter(person.username, this.person.username) &&
                     checkFilter(person.lastName, this.person.lastName) &&
                     checkFilter(person.firstName, this.person.firstName) &&
-                    checkFilter(person.patronymic, this.person.patronymic)
+                    checkFilter(person.patronymic, this.person.patronymic) &&
+                    checkFilter(person.birthdate, this.person.birthdate) &&
+                    checkFilter(person.phoneNumber, this.person.phoneNumber) &&
+                    checkFilter(person.username, this.person.username) &&
+                    (this.person.role === "NONE" || this.person.role === "" || (person.roles && person.roles.indexOf(this.person.role) >= 0))
                 );
             });
         },

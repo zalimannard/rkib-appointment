@@ -34,6 +34,6 @@ export default defineComponent({
 
 <style scoped>
 .button-margin {
-    margin-right: 20px; /* Change this value to the desired space */
+    margin-right: 12px; /* Change this value to the desired space */
 }
 </style>

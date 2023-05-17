@@ -1,14 +1,15 @@
 <template>
     <v-select
-            v-model="selectedRole"
-            :items="availableRoles"
-            density="comfortable"
-            item-title="key"
-            item-value="value"
-            label="Роль"
-            persistent-hint
-            return-object
-            variant="outlined"
+        :value="selectedRole"
+        @update:modelValue="updateRole"
+        :items="availableRoles"
+        density="comfortable"
+        item-title="key"
+        item-value="value"
+        label="Роль"
+        persistent-hint
+        return-object
+        variant="outlined"
     ></v-select>
 </template>
 
@@ -28,10 +29,15 @@ export default {
             type: Number,
             default: null,
         },
+        updateSearchInput: {
+            type: Function,
+            required: true,
+        },
     },
     data() {
         return {
             availableRoles: [
+                {key: "Не выбрано", value: "NONE"},
                 {key: "Врач", value: "DOCTOR"},
                 {key: "Регистратор", value: "REGISTRAR"},
                 {key: "Админ", value: "ADMIN"},
@@ -41,10 +47,11 @@ export default {
     computed: {
         selectedRole: {
             get() {
-                return this.role;
+                return this.availableRoles.find(role => role.value === this.role);
             },
             set(value) {
-                this.$emit('update:role', value);
+                this.$emit('update:role', value.value);
+                this.updateSearchInput();
             },
         },
     },
@@ -53,6 +60,11 @@ export default {
             this.availableRoles.push({key: "Пациент", value: "PATIENT"});
         }
     },
+    methods: {
+        updateRole(value) {
+            this.selectedRole = value;
+        }
+    }
 };
 </script>
 
