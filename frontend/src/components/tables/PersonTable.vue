@@ -177,9 +177,6 @@ export default {
   methods: {
     calcRoles(item) {
       let roles = [];
-      if (item.phoneNumber != null) {
-        roles.push("PATIENT");
-      }
       if (item.roles) {
         for (let role of item.roles) {
           roles.push(role);
@@ -214,9 +211,10 @@ export default {
             roles.push("PATIENT");
           }
           if (person.employee !== undefined) {
-            roles.push(person.employee.roles);
+            for (let role of person.employee.roles) {
+              roles.push(role);
+            }
           }
-
           return {
             id: person.id,
             username: person.username,
@@ -249,6 +247,9 @@ export default {
       };
 
       this.filteredPeople = this.people.filter(person => {
+        console.log("Человек: " + person.roles);
+        console.log("Искомая роль: " + this.person.role)
+        console.log(person.roles.indexOf(this.person.role))
         return (
             checkFilter(person.lastName, this.person.lastName) &&
             checkFilter(person.firstName, this.person.firstName) &&
