@@ -1,10 +1,5 @@
 <template>
 
-  <custom-alert
-      v-model="showErrorAlert"
-      alertType="error"
-  />
-
   <div
       class="d-flex align-center justify-center login-container"
   >
@@ -82,10 +77,11 @@
 <script>
 
 import axios from "axios";
-import CustomAlert from "@/components/custom/alert/CustomAlert.vue";
 import BaseTextField from "@/components/custom/textfield/BaseTextField.vue";
 import PasswordTextField from "@/components/custom/textfield/PasswordTextField.vue";
 import BaseButton from "@/components/custom/button/CustomButton.vue";
+import {inject} from "vue";
+import {setAlertShow, setAlertText, setAlertType} from "@/components/custom/alert/AlertState";
 
 export default {
   data() {
@@ -118,11 +114,17 @@ export default {
       }
     };
   },
+  setup() {
+    const alertState = inject('alertState');
+
+    return {
+      alertState
+    };
+  },
   components: {
     BaseButton,
     BaseTextField,
-    PasswordTextField,
-    CustomAlert
+    PasswordTextField
   },
   methods: {
     async onSubmit() {
@@ -146,22 +148,21 @@ export default {
           }
 
         } else {
-          this.showErrorAlert = true;
-          this.errorText = "У вас нет такой роли";
-          setTimeout(() => (this.showErrorAlert = false), 5000);
-
+          setAlertText("У вас нет такой роли");
+          setAlertType("error");
+          setAlertShow(true);
         }
       } catch (error) {
         try {
           if (error.response.status === 401) {
-            this.showErrorAlert = true;
-            this.errorText = "Неверный логин или пароль";
-            setTimeout(() => (this.showErrorAlert = false), 5000);
+            setAlertText("Неверный логин или пароль");
+            setAlertType("error");
+            setAlertShow(true);
           }
         } catch (error) {
-          this.showErrorAlert = true;
-          this.errorText = "Непредвиденная ошибка";
-          setTimeout(() => (this.showErrorAlert = false), 5000);
+          setAlertText("Непредвиденная ошибка");
+          setAlertType("error");
+          setAlertShow(true);
         }
       } finally {
         this.loading = false;

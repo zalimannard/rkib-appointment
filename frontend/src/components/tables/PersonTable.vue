@@ -3,37 +3,37 @@
     <template v-slot:header>
       <thead>
       <tr>
-        <th class="text-left header-cell" scope="col">
+        <th class="text-left" scope="col">
           <masked-text-field
               v-model="person.lastName"
               capitalize-first-letter
               class="header-cell"
               density="comfortable"
               label="Фамилия"
-              @input="updateSearchInput"
+              @input="updateSearch"
           />
         </th>
-        <th class="text-left header-cell" scope="col">
+        <th class="text-left" scope="col">
           <masked-text-field
               v-model="person.firstName"
               capitalize-first-letter
               class="header-cell"
               density="comfortable"
               label="Имя"
-              @input="updateSearchInput"
+              @input="updateSearch"
           />
         </th>
-        <th class="text-left header-cell" scope="col">
+        <th class="text-left" scope="col">
           <masked-text-field
               v-model="person.patronymic"
               capitalize-first-letter
               class="header-cell"
               density="comfortable"
               label="Отчество"
-              @input="updateSearchInput"
+              @input="updateSearch"
           />
         </th>
-        <th class="text-left header-cell" scope="col">
+        <th class="text-left" scope="col">
           <masked-text-field
               v-model="person.birthdate"
               :handle-backspace="backspaceHandlers.handleBackspaceForDate"
@@ -42,10 +42,10 @@
               density="comfortable"
               label="Дата рождения"
               placeholder="ДД.ММ.ГГГГ"
-              @input="updateSearchInput"
+              @input="updateSearch"
           />
         </th>
-        <th class="text-left header-cell" scope="col">
+        <th class="text-left" scope="col">
           <masked-text-field
               v-model="person.phoneNumber"
               :handle-backspace="backspaceHandlers.handleBackspaceForPhoneNumber"
@@ -53,24 +53,25 @@
               class="header-cell"
               density="comfortable"
               label="Телефон"
-              @input="updateSearchInput"
+              @input="updateSearch"
           />
         </th>
-        <th class="text-left header-cell" scope="col">
+        <th class="text-left" scope="col">
           <masked-text-field
               v-model="person.username"
               class="header-cell"
               density="comfortable"
               label="Логин"
-              @input="updateSearchInput"
+              @input="updateSearch"
           />
         </th>
-        <th class="text-left header-cell role-field" scope="col">
+        <th class="text-left role-field" scope="col">
           <role-select
               :include-patient="true"
               :role="person.role"
-              :update-search-input="updateSearchInput"
+              :update-search-input="updateSearch"
               class="header-cell"
+              density="comfortable"
               @update:role="person.role = $event"
           />
         </th>
@@ -82,7 +83,7 @@
       <tr
           v-for="(item, index) in filteredPeople"
           :key="item"
-          :class="index % 2 === 0 ? 'light-row' : 'dark-row'"
+          :class="{ 'light-row': index % 2 === 0, 'dark-row': index % 2 !== 0 }"
           :style="{ cursor: handleClick ? 'pointer' : 'default' }"
           @click="handleClick(item)"
       >
@@ -107,6 +108,7 @@ import CustomTable from "@/components/custom/table/CustomTable.vue";
 import RoleSelect from "@/components/custom/selectrole/RoleSelect.vue";
 import {dateMask, phoneMask} from "@/masks";
 import {handleBackspaceForDate, handleBackspaceForPhoneNumber} from "@/backspaceHandlers";
+import {fromIsoToDefault} from "@/utils";
 
 export default {
   components: {
@@ -123,16 +125,6 @@ export default {
   data() {
     return {
       localSearchLastName: this.searchInput,
-      defaultPerson: {
-        id: "",
-        username: "",
-        lastName: "",
-        firstName: "",
-        patronymic: "",
-        birthdate: "",
-        phoneNumber: "+7(",
-        role: ""
-      },
       person: {
         id: "",
         username: "",
@@ -158,7 +150,7 @@ export default {
       backspaceHandlers: {
         handleBackspaceForDate,
         handleBackspaceForPhoneNumber
-      }
+      },
     };
   },
   watch: {
@@ -170,24 +162,32 @@ export default {
       }
     }
   },
-  async created() {
-    this.person = this.defaultPerson
-    await this.requestPeople();
+  created() {
+    this.person = this.createDefaultPerson();
+    this.requestPeople();
   },
   methods: {
+    createDefaultPerson() {
+      return {
+        id: "",
+        username: "",
+        lastName: "",
+        firstName: "",
+        patronymic: "",
+        birthdate: "",
+        phoneNumber: "+7(",
+        role: ""
+      };
+    },
     calcRoles(item) {
-      let roles = [];
-      if (item.roles) {
-        for (let role of item.roles) {
-          roles.push(role);
-        }
-      }
-      return roles.join(", ");
+      return item.roles
+          ? item.roles.join(", ")
+          : '';
     },
     handleClick(item) {
       this.$emit('rowClick', item);
     },
-    updateSearchInput() {
+    updateSearch() {
       this.$emit("updateSearchInput", this.localSearchLastName);
       this.editFilter();
     },
@@ -198,13 +198,10 @@ export default {
           headers: {"Authorization": "Basic " + basicAuth}
         });
         this.people = response.data.map(person => {
-          let dateParts = [];
-          if (person.patient !== undefined) {
-            if (person.patient.birthdate) {
-              dateParts = person.patient.birthdate.split("-");
-            }
+          let birthdate;
+          if ((person.patient !== undefined) && (person.patient.birthdate)) {
+            birthdate = fromIsoToDefault(person.patient.birthdate);
           }
-          let birthdate = (dateParts.length === 3 ? `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}` : "");
 
           let roles = []
           if (person.patient !== undefined) {
@@ -221,9 +218,7 @@ export default {
             lastName: person.lastName,
             firstName: person.firstName,
             patronymic: person.patronymic,
-            birthdate: person.patient !== undefined
-                ? birthdate
-                : null,
+            birthdate: birthdate,
             phoneNumber: person.patient !== undefined
                 ? this.masks.phoneMask(person.patient.phoneNumber)
                 : null,
@@ -236,7 +231,7 @@ export default {
       }
     },
 
-    async editFilter() {
+    editFilter() {
       const checkFilter = (fieldValue, filterValue) => {
         if (filterValue === "") return true;
         if (!fieldValue && filterValue !== "") return false;
@@ -247,22 +242,19 @@ export default {
       };
 
       this.filteredPeople = this.people.filter(person => {
-        console.log("Человек: " + person.roles);
-        console.log("Искомая роль: " + this.person.role)
-        console.log(person.roles.indexOf(this.person.role))
         return (
             checkFilter(person.lastName, this.person.lastName) &&
             checkFilter(person.firstName, this.person.firstName) &&
             checkFilter(person.patronymic, this.person.patronymic) &&
             checkFilter(person.birthdate, this.person.birthdate) &&
-            ((this.person.phoneNumber === this.defaultPerson.phoneNumber) || checkFilter(person.phoneNumber, this.person.phoneNumber)) &&
+            ((this.person.phoneNumber === this.createDefaultPerson().phoneNumber) || checkFilter(person.phoneNumber, this.person.phoneNumber)) &&
             checkFilter(person.username, this.person.username) &&
             (this.person.role === "NONE" || this.person.role === "" || (person.roles && person.roles.indexOf(this.person.role) >= 0))
         );
       });
     },
     resetFilters() {
-      this.person = this.defaultPerson;
+      this.person = this.createDefaultPerson();
       this.editFilter();
     }
   }

@@ -1,8 +1,8 @@
 <template>
   <v-select
+      :density="computedDensity"
       :items="availableRoles"
       :value="selectedRole"
-      density="comfortable"
       item-title="key"
       item-value="value"
       label="Роль"
@@ -14,6 +14,9 @@
 </template>
 
 <script>
+const validDensity = ["default", "comfortable", "compact"];
+const defaultDensity = "default";
+
 export default {
   name: 'RoleSelect',
   props: {
@@ -28,6 +31,10 @@ export default {
     fieldWidth: {
       type: Number,
       default: null,
+    },
+    density: {
+      type: String,
+      default: defaultDensity
     },
     updateSearchInput: {
       type: Function,
@@ -52,9 +59,15 @@ export default {
   methods: {
     updateRole(value) {
       this.selectedRole = value;
+    },
+    ensureValidDensity(type) {
+      return validDensity.includes(type) ? type : defaultDensity;
     }
   },
   computed: {
+    computedDensity() {
+      return this.ensureValidDensity(this.density);
+    },
     selectedRole: {
       get() {
         return this.availableRoles.find(role => role.value === this.role);
