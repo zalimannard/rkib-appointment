@@ -83,6 +83,8 @@
           v-for="(item, index) in filteredPeople"
           :key="item"
           :class="index % 2 === 0 ? 'light-row' : 'dark-row'"
+          :style="{ cursor: handleClick ? 'pointer' : 'default' }"
+          @click="handleClick(item)"
       >
         <td>{{ item.lastName }}</td>
         <td>{{ item.firstName }}</td>
@@ -184,6 +186,9 @@ export default {
         }
       }
       return roles.join(", ");
+    },
+    handleClick(item) {
+      this.$emit('rowClick', item);
     },
     updateSearchInput() {
       this.$emit("updateSearchInput", this.localSearchLastName);

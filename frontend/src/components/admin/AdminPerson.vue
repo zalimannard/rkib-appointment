@@ -18,6 +18,7 @@
       <v-row>
         <person-table
             ref="personAdminTable"
+            @rowClick="handleRowClick"
             @updateSearchInput="updateSearchInput"
         />
       </v-row>
@@ -40,6 +41,9 @@ export default {
     };
   },
   methods: {
+    handleRowClick(item) {
+      console.log(item);
+    },
     updateSearchInput(value) {
       this.searchInput = value;
     },
