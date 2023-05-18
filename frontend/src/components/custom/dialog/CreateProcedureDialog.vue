@@ -1,19 +1,19 @@
 <template>
-    <base-dialog
-            v-model="internalValue"
-            :close-dialog="closeDialog"
-            :ok-dialog="createProcedure"
-            ok-button-text="Создать"
-            title="Создание новой услуги"
-    >
-        <masked-text-field
-                v-model="procedure.inputName"
-                :rules="rules.requiredRule"
-                capitalize-first-letter
-                label="Название"
-                required-asterisk
-        />
-    </base-dialog>
+  <base-dialog
+      v-model="internalValue"
+      :close-dialog="closeDialog"
+      :ok-dialog="createProcedure"
+      ok-button-text="Создать"
+      title="Создание новой услуги"
+  >
+    <masked-text-field
+        v-model="procedure.inputName"
+        :rules="rules.requiredRule"
+        capitalize-first-letter
+        label="Название"
+        required-asterisk
+    />
+  </base-dialog>
 </template>
 
 <script>
@@ -23,65 +23,65 @@ import BaseDialog from "@/components/custom/dialog/BaseDialog.vue";
 import axios from "axios";
 
 export default {
-    components: {BaseDialog, MaskedTextField},
-    props: {
-        value: Boolean,
-        searchInput: String,
-        onCreateEntity: {
-            type: Function,
-            required: false
-        },
-        closeDialog: {
-            type: Function,
-            required: true
-        }
+  components: {BaseDialog, MaskedTextField},
+  props: {
+    value: Boolean,
+    searchInput: String,
+    onCreateEntity: {
+      type: Function,
+      required: false
     },
-    data() {
-        return {
-            procedure: {
-                inputName: this.searchInput
-            },
-            rules: {
-                requiredRule
-            }
-        };
-    },
-    methods: {
-        createProcedure() {
-            let basicAuth = localStorage.getItem("auth");
-            axios({
-                method: "post",
-                url: import.meta.env.VITE_API_URL + "/api/v1/procedures",
-                headers: {"Authorization": "Basic " + basicAuth},
-                data: {
-                    name: this.procedure.inputName
-                }
-            }).then((response) => {
-                console.error("Создана процедура:", response);
-                this.onCreateEntity();
-            }).catch((error) => {
-                console.error("Ошибка при добавлении процедуры:", error);
-            });
-            this.$emit("updateSearchInput", this.procedure.inputName);
-        }
-    },
-    computed: {
-        internalValue: {
-            get() {
-                return this.value;
-            },
-            set(val) {
-                this.$emit("input", val);
-                if (!val) {
-                    this.$emit("updateSearchInput", this.procedure.inputName);
-                }
-            }
-        }
-    },
-    watch: {
-        searchInput(newVal) {
-            this.procedure.inputName = newVal;
-        }
+    closeDialog: {
+      type: Function,
+      required: true
     }
+  },
+  data() {
+    return {
+      procedure: {
+        inputName: this.searchInput
+      },
+      rules: {
+        requiredRule
+      }
+    };
+  },
+  methods: {
+    createProcedure() {
+      let basicAuth = localStorage.getItem("auth");
+      axios({
+        method: "post",
+        url: import.meta.env.VITE_API_URL + "/api/v1/procedures",
+        headers: {"Authorization": "Basic " + basicAuth},
+        data: {
+          name: this.procedure.inputName
+        }
+      }).then((response) => {
+        console.error("Создана процедура:", response);
+        this.onCreateEntity();
+      }).catch((error) => {
+        console.error("Ошибка при добавлении процедуры:", error);
+      });
+      this.$emit("updateSearchInput", this.procedure.inputName);
+    }
+  },
+  computed: {
+    internalValue: {
+      get() {
+        return this.value;
+      },
+      set(val) {
+        this.$emit("input", val);
+        if (!val) {
+          this.$emit("updateSearchInput", this.procedure.inputName);
+        }
+      }
+    }
+  },
+  watch: {
+    searchInput(newVal) {
+      this.procedure.inputName = newVal;
+    }
+  }
 };
 </script>

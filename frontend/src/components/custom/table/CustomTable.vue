@@ -1,40 +1,40 @@
 <template>
-    <v-container class="main-container pl-0 pr-0 pt-6">
-        <v-table class="table-container pa-0 ma-0" fixed-footer>
-            <slot name="header"></slot>
-            <slot name="body"></slot>
-        </v-table>
-    </v-container>
+  <v-container class="main-container pl-0 pr-0 pt-6">
+    <v-table class="table-container pa-0 ma-0" fixed-footer>
+      <slot name="header"></slot>
+      <slot name="body"></slot>
+    </v-table>
+  </v-container>
 </template>
 
 <script>
 export default {
-    data() {
+  data() {
 
-    }
+  }
 };
 </script>
 
 <style>
 .main-container {
-    width: 100%;
+  width: 100%;
 }
 
 .table-container {
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 4pt;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4pt;
 }
 
 .header-cell {
-    padding-top: 20px;
+  padding-top: 20px;
 }
 
 .light-row {
-    background-color: #FFFFFF;
+  background-color: #FFFFFF;
 }
 
 .dark-row {
-    background-color: #ECEFF1;
+  background-color: #ECEFF1;
 }
 </style>
