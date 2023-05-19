@@ -160,7 +160,7 @@ export default {
       immediate: true,
       handler(newVal) {
         this.localSearchLastName = newVal;
-        this.editFilter();
+        this.onEditFilter();
       }
     }
   },
@@ -178,9 +178,7 @@ export default {
         patronymic: "",
         birthdate: "",
         phoneNumber: "+7(",
-        roles: [
-          {value: "NONE"}
-        ]
+        roles: []
       };
     },
     calcRoles(item) {
@@ -193,50 +191,70 @@ export default {
     },
     updateSearch() {
       this.$emit("updateSearchInput", this.localSearchLastName);
-      this.editFilter();
+      this.onEditFilter();
     },
     async requestPeople() {
       try {
         let basicAuth = localStorage.getItem("auth");
-        const response = await axios.get(import.meta.env.VITE_API_URL + "/api/v1/people", {
-          headers: {"Authorization": "Basic " + basicAuth}
-        });
-        this.people = response.data.map(person => {
-          let birthdate;
-          if ((person.patient !== undefined) && (person.patient.birthdate)) {
-            birthdate = fromIsoToDefault(person.patient.birthdate);
-          }
-
-          let roles = []
-          if (person.patient !== undefined) {
-            roles.push({value: "PATIENT"});
-          }
-          if (person.employee !== undefined) {
-            for (let role of person.employee.roles) {
-              roles.push({value: role});
-            }
-          }
-          return {
-            id: person.id,
-            username: person.username,
-            lastName: person.lastName,
-            firstName: person.firstName,
-            patronymic: person.patronymic,
-            birthdate: birthdate,
-            phoneNumber: person.patient !== undefined
-                ? this.masks.phoneMask(person.patient.phoneNumber)
-                : null,
-            roles: roles
-          };
-        });
-        await this.editFilter();
+        const response = await this.fetchPeople(basicAuth);
+        this.people = this.processPeople(response.data);
+        await this.onEditFilter();
       } catch (error) {
         setAlertText("Не удалось получить данные");
         setAlertType("error");
         setAlertShow(true);
       }
     },
-    editFilter() {
+
+    fetchPeople(basicAuth) {
+      return axios.get(import.meta.env.VITE_API_URL + "/api/v1/people", {
+        headers: {"Authorization": "Basic " + basicAuth}
+      });
+    },
+
+    processPeople(people) {
+      return people.map(person => this.processPerson(person));
+    },
+
+    processPerson(person) {
+      let birthdate;
+      if ((person.patient !== undefined) && (person.patient.birthdate)) {
+        birthdate = fromIsoToDefault(person.patient.birthdate);
+      }
+
+      let roles = [];
+      if (person.patient !== undefined) {
+        roles.push({value: "PATIENT"});
+      }
+      if (person.employee !== undefined) {
+        for (let role of person.employee.roles) {
+          roles.push({value: role});
+        }
+      }
+
+      return {
+        id: person.id,
+        username: person.username,
+        lastName: person.lastName,
+        firstName: person.firstName,
+        patronymic: person.patronymic,
+        birthdate: birthdate,
+        phoneNumber: person.patient !== undefined
+            ? this.masks.phoneMask(person.patient.phoneNumber)
+            : null,
+        roles: roles
+      };
+    },
+
+    onEditFilter() {
+      this.filteredPeople = this.filterPeople(this.people);
+    },
+
+    filterPeople(people) {
+      return people.filter(person => this.filterPerson(person));
+    },
+
+    filterPerson(person) {
       const checkFilter = (fieldValue, filterValue) => {
         if (filterValue === "") return true;
         if (!fieldValue && filterValue !== "") return false;
@@ -246,23 +264,21 @@ export default {
         return false;
       };
 
-      this.filteredPeople = this.people.filter(person => {
-        return (
-            checkFilter(person.lastName, this.person.lastName) &&
-            checkFilter(person.firstName, this.person.firstName) &&
-            checkFilter(person.patronymic, this.person.patronymic) &&
-            checkFilter(person.birthdate, this.person.birthdate) &&
-            ((this.person.phoneNumber === this.createDefaultPerson().phoneNumber) || checkFilter(person.phoneNumber, this.person.phoneNumber)) &&
-            checkFilter(person.username, this.person.username) &&
-            (this.person.roles.length === 0 ||
-                this.person.roles[0].value === "NONE" ||
-                person.roles.some(r => this.person.roles.map(role => role.value).includes(r.value)))
-        );
-      });
+      return (
+          checkFilter(person.lastName, this.person.lastName) &&
+          checkFilter(person.firstName, this.person.firstName) &&
+          checkFilter(person.patronymic, this.person.patronymic) &&
+          checkFilter(person.birthdate, this.person.birthdate) &&
+          ((this.person.phoneNumber === this.createDefaultPerson().phoneNumber) || checkFilter(person.phoneNumber, this.person.phoneNumber)) &&
+          checkFilter(person.username, this.person.username) &&
+          (this.person.roles.length === 0 || (this.person.roles.length === 1 && this.person.roles[0].value === null) ||
+              person.roles.some(r => this.person.roles.map(role => role.value).includes(r.value)))
+      );
     },
+
     resetFilters() {
       this.person = this.createDefaultPerson();
-      this.editFilter();
+      this.onEditFilter();
     }
   }
 };

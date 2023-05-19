@@ -58,7 +58,7 @@ export default {
   created() {
     if (this.includeNone) {
       this.availableRoles.reverse();
-      this.availableRoles.push({text: "Не выбрано", value: "NONE"});
+      this.availableRoles.push({text: "Не выбрано", value: null});
       this.availableRoles.reverse();
     }
     if (this.includePatient) {
