@@ -6,26 +6,38 @@
       ok-button-text="Создать"
       title="Создание нового человека"
   >
-    <masked-text-field
-        v-model="person.lastName"
-        :rules="rules.requiredRule"
-        capitalize-first-letter
-        label="Фамилия"
-        required-asterisk
-    />
-    <masked-text-field
-        v-model="person.firstName"
-        :rules="rules.requiredRule"
-        capitalize-first-letter
-        label="Имя"
-        required-asterisk
-    />
-    <masked-text-field
-        v-model="person.patronymic"
-        :rules="rules.requiredRule"
-        capitalize-first-letter
-        label="Отчество"
-    />
+    <v-row>
+      <v-col>
+        <masked-text-field
+            v-model="person.lastName"
+            :rules="rules.requiredRule"
+            capitalize-first-letter
+            label="Фамилия"
+            required-asterisk
+        />
+      </v-col>
+      <v-col>
+        <masked-text-field
+            v-model="person.firstName"
+            :rules="rules.requiredRule"
+            capitalize-first-letter
+            label="Имя"
+            required-asterisk
+        />
+      </v-col>
+      <v-col>
+        <masked-text-field
+            v-model="person.patronymic"
+            :rules="rules.requiredRule"
+            capitalize-first-letter
+            label="Отчество"
+        />
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+      </v-col>
+    </v-row>
   </base-dialog>
 </template>
 
@@ -34,15 +46,17 @@ import MaskedTextField from "@/components/custom/textfield/MaskedTextField.vue";
 import {requiredRule} from "@/rules";
 import BaseDialog from "@/components/custom/dialog/BaseDialog.vue";
 import axios from "axios";
+import RoleSelect from "@/components/custom/selectrole/RoleSelect.vue";
 
 export default {
-  components: {BaseDialog, MaskedTextField},
+  components: {RoleSelect, BaseDialog, MaskedTextField},
   props: {
     value: Boolean,
     searchPerson: {
       lastName: "",
       firstName: "",
-      patronymic: ""
+      patronymic: "",
+      roles: []
     },
     onCreateEntity: {
       type: Function,
@@ -58,7 +72,8 @@ export default {
       person: {
         lastName: this.searchPerson.lastName,
         firstName: this.searchPerson.firstName,
-        patronymic: this.searchPerson.patronymic
+        patronymic: this.searchPerson.patronymic,
+        roles: this.searchPerson.roles
       },
       rules: {
         requiredRule

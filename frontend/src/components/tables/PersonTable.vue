@@ -67,12 +67,13 @@
         </th>
         <th class="text-left role-field" scope="col">
           <role-select
-              :include-patient="true"
-              :role="person.role"
+              :roles="[person.roles]"
               :update-search-input="updateSearch"
               class="header-cell"
               density="comfortable"
-              @update:role="person.role = $event"
+              include-none
+              include-patient
+              @update:roles="person.roles = $event"
           />
         </th>
       </tr>
@@ -109,6 +110,7 @@ import RoleSelect from "@/components/custom/selectrole/RoleSelect.vue";
 import {dateMask, phoneMask} from "@/masks";
 import {handleBackspaceForDate, handleBackspaceForPhoneNumber} from "@/backspaceHandlers";
 import {fromIsoToDefault} from "@/utils";
+import {setAlertShow, setAlertText, setAlertType} from "@/components/custom/alert/AlertState";
 
 export default {
   components: {
@@ -133,7 +135,7 @@ export default {
         patronymic: "",
         birthdate: "",
         phoneNumber: "",
-        role: ""
+        roles: []
       },
       people: [],
       filteredPeople: [],
@@ -176,12 +178,14 @@ export default {
         patronymic: "",
         birthdate: "",
         phoneNumber: "+7(",
-        role: ""
+        roles: [
+          {value: "NONE"}
+        ]
       };
     },
     calcRoles(item) {
       return item.roles
-          ? item.roles.join(", ")
+          ? item.roles.map(role => role.value).join(", ")
           : '';
     },
     handleClick(item) {
@@ -205,11 +209,11 @@ export default {
 
           let roles = []
           if (person.patient !== undefined) {
-            roles.push("PATIENT");
+            roles.push({value: "PATIENT"});
           }
           if (person.employee !== undefined) {
             for (let role of person.employee.roles) {
-              roles.push(role);
+              roles.push({value: role});
             }
           }
           return {
@@ -227,10 +231,11 @@ export default {
         });
         await this.editFilter();
       } catch (error) {
-        console.error("Ошибка при получении данных:", error);
+        setAlertText("Не удалось получить данные");
+        setAlertType("error");
+        setAlertShow(true);
       }
     },
-
     editFilter() {
       const checkFilter = (fieldValue, filterValue) => {
         if (filterValue === "") return true;
@@ -249,7 +254,9 @@ export default {
             checkFilter(person.birthdate, this.person.birthdate) &&
             ((this.person.phoneNumber === this.createDefaultPerson().phoneNumber) || checkFilter(person.phoneNumber, this.person.phoneNumber)) &&
             checkFilter(person.username, this.person.username) &&
-            (this.person.role === "NONE" || this.person.role === "" || (person.roles && person.roles.indexOf(this.person.role) >= 0))
+            (this.person.roles.length === 0 ||
+                this.person.roles[0].value === "NONE" ||
+                person.roles.some(r => this.person.roles.map(role => role.value).includes(r.value)))
         );
       });
     },

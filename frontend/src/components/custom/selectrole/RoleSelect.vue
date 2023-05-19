@@ -2,14 +2,15 @@
   <v-select
       :density="computedDensity"
       :items="availableRoles"
-      :value="selectedRole"
-      item-title="key"
+      :multiple="multiple"
+      :value="selectedRoles"
+      item-title="text"
       item-value="value"
       label="Роль"
       persistent-hint
       return-object
       variant="outlined"
-      @update:modelValue="updateRole"
+      @update:modelValue="onSelectChange"
   ></v-select>
 </template>
 
@@ -20,17 +21,21 @@ const defaultDensity = "default";
 export default {
   name: 'RoleSelect',
   props: {
-    role: {
-      type: Object,
+    roles: {
+      type: Array,
       required: true,
+    },
+    includeNone: {
+      type: Boolean,
+      default: false,
     },
     includePatient: {
       type: Boolean,
       default: false,
     },
-    fieldWidth: {
-      type: Number,
-      default: null,
+    multiple: {
+      type: Boolean,
+      default: false,
     },
     density: {
       type: String,
@@ -44,38 +49,43 @@ export default {
   data() {
     return {
       availableRoles: [
-        {key: "Не выбрано", value: "NONE"},
-        {key: "Врач", value: "DOCTOR"},
-        {key: "Регистратор", value: "REGISTRAR"},
-        {key: "Админ", value: "ADMIN"},
+        {text: "Врач", value: "DOCTOR"},
+        {text: "Регистратор", value: "REGISTRAR"},
+        {text: "Админ", value: "ADMIN"},
       ],
     };
   },
   created() {
+    if (this.includeNone) {
+      this.availableRoles.reverse();
+      this.availableRoles.push({text: "Не выбрано", value: "NONE"});
+      this.availableRoles.reverse();
+    }
     if (this.includePatient) {
-      this.availableRoles.push({key: "Пациент", value: "PATIENT"});
+      this.availableRoles.push({text: "Пациент", value: "PATIENT"});
     }
   },
   methods: {
-    updateRole(value) {
-      this.selectedRole = value;
+    onSelectChange(value) {
+      let roles = Array.isArray(value) ? value : [value];
+      this.$emit('update:roles', roles);
+      this.updateSearchInput();
     },
-    ensureValidDensity(type) {
-      return validDensity.includes(type) ? type : defaultDensity;
-    }
   },
   computed: {
     computedDensity() {
-      return this.ensureValidDensity(this.density);
+      return validDensity.includes(this.density) ? this.density : defaultDensity;
     },
-    selectedRole: {
-      get() {
-        return this.availableRoles.find(role => role.value === this.role);
-      },
-      set(value) {
-        this.$emit('update:role', value.value);
-        this.updateSearchInput();
-      },
+    selectedRoles() {
+      if (!this.roles || !Array.isArray(this.roles)) {
+        return [];
+      }
+      return this.roles.map(role => {
+        if (role.value) {
+          return this.availableRoles.find(availRole => availRole.value === role.value)
+        }
+        return null;
+      });
     },
   }
 };
