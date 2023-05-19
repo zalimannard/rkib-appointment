@@ -1,25 +1,25 @@
 import {reactive, readonly} from 'vue';
 
 interface Alert {
-    text: string;
     type: string;
+    text: string;
     show: boolean;
 }
 
 const state = reactive<Alert>({
-    text: '',
     type: '',
+    text: '',
     show: false,
 });
 
 let timerId: number | null = null;
 
-const setAlertText = (newText: string) => {
-    state.text = newText;
-};
-
 const setAlertType = (newType: string) => {
     state.type = newType;
+};
+
+const setAlertText = (newText: string) => {
+    state.text = newText;
 };
 
 function setAlertShow(value: boolean) {
@@ -38,6 +38,12 @@ function setAlertShow(value: boolean) {
     }
 }
 
-export {setAlertText, setAlertType, setAlertShow};
+function showAlert(type: string, text: string) {
+    setAlertType(type);
+    setAlertText(text);
+    setAlertShow(true);
+}
+
+export {setAlertType, setAlertText, setAlertShow, showAlert};
 
 export default readonly(state);

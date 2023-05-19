@@ -3,14 +3,14 @@
     <template v-slot:header>
       <thead>
       <tr>
-        <th class="text-left header-cell" scope="col">
+        <th class="text-left fixed-col" scope="col">
           <masked-text-field
-              v-model="localSearchInput"
+              v-model="procedure.name"
               capitalize-first-letter
               class="header-cell"
               density="comfortable"
               label="Название"
-              @input="updateSearchInput"
+              @input="updateSearch"
           />
         </th>
       </tr>
@@ -20,8 +20,8 @@
       <tbody>
       <tr
           v-for="(item, index) in filteredProcedures"
-          :key="item"
-          :class="index % 2 === 0 ? 'light-row' : 'dark-row'"
+          :key="item.id"
+          :class="{ 'light-row': index % 2 === 0, 'dark-row': index % 2 !== 0 }"
       >
         <td>{{ item.name }}</td>
       </tr>
@@ -49,14 +49,12 @@ export default {
   },
   data() {
     return {
-      localSearchInput: this.searchInput,
       procedure: {
         id: "",
         name: ""
       },
       procedures: [],
       filteredProcedures: [],
-
       rules: {
         requiredRule
       }
@@ -66,8 +64,8 @@ export default {
     searchInput: {
       immediate: true,
       handler(newVal) {
-        this.localSearchInput = newVal;
-        this.editFilter();
+        this.procedure.name = newVal;
+        this.onEditFilter();
       }
     }
   },
@@ -75,9 +73,9 @@ export default {
     await this.requestProcedures();
   },
   methods: {
-    updateSearchInput() {
-      this.$emit("updateSearchInput", this.localSearchInput);
-      this.editFilter();
+    updateSearch() {
+      this.$emit("updateSearchInput", this.procedure.name);
+      this.onEditFilter();
     },
     async requestProcedures() {
       try {
@@ -85,19 +83,23 @@ export default {
         const response = await axios.get(import.meta.env.VITE_API_URL + "/api/v1/procedures", {
           headers: {"Authorization": "Basic " + basicAuth}
         });
-        this.procedures = response.data.map(procedure => {
-          return {
-            id: procedure.id,
-            name: procedure.name
-          };
-        });
-        await this.editFilter();
+        this.procedures = response.data;
+        await this.onEditFilter();
       } catch (error) {
+
         console.error("Ошибка при получении данных:", error);
       }
     },
 
-    async editFilter() {
+    onEditFilter() {
+      this.filteredProcedures = this.filterProcedures(this.procedures);
+    },
+
+    filterProcedures(procedures) {
+      return procedures.filter(procedure => this.filterProcedure(procedure));
+    },
+
+    filterProcedure(procedure) {
       const checkFilter = (fieldValue, filterValue) => {
         if (filterValue === "") return true;
         if (!fieldValue && filterValue !== "") return false;
@@ -107,15 +109,17 @@ export default {
         return false;
       };
 
-      this.filteredProcedures = this.procedures.filter(procedure => {
-        return (
-            checkFilter(procedure.name, this.localSearchInput)
-        );
-      });
+      return (
+          checkFilter(procedure.name, this.procedure.name)
+      );
     },
+
     resetFilters() {
-      this.localSearchInput = "";
-      this.editFilter();
+      this.procedure = {
+        id: "",
+        name: ""
+      };
+      this.onEditFilter();
     }
   }
 };

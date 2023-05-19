@@ -21,7 +21,7 @@ import MaskedTextField from "@/components/custom/textfield/MaskedTextField.vue";
 import {requiredRule} from "@/rules";
 import BaseDialog from "@/components/custom/dialog/BaseDialog.vue";
 import axios from "axios";
-import {setAlertShow, setAlertText, setAlertType} from "@/components/custom/alert/AlertState";
+import {showAlert} from "@/components/custom/alert/AlertState";
 
 export default {
   components: {BaseDialog, MaskedTextField},
@@ -58,14 +58,10 @@ export default {
           name: this.procedure.inputName
         }
       }).then(() => {
-        setAlertText("Процедура успешно создана");
-        setAlertType("success");
-        setAlertShow(true);
+        showAlert("success", "Процедура успешно создана");
         this.onCreateEntity();
       }).catch(() => {
-        setAlertText("Ошибка при добавлении процедуры");
-        setAlertType("error");
-        setAlertShow(true);
+        showAlert("error", "Ошибка при добавлении процедуры");
       });
       this.$emit("updateSearchInput", this.procedure.inputName);
     }

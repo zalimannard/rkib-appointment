@@ -68,20 +68,13 @@
   </div>
 </template>
 
-<style scoped>
-.login-container {
-  height: 100vh;
-}
-</style>
-
 <script>
-
 import axios from "axios";
 import BaseTextField from "@/components/custom/textfield/BaseTextField.vue";
 import PasswordTextField from "@/components/custom/textfield/PasswordTextField.vue";
 import BaseButton from "@/components/custom/button/CustomButton.vue";
 import {inject} from "vue";
-import {setAlertShow, setAlertText, setAlertType} from "@/components/custom/alert/AlertState";
+import {showAlert} from "@/components/custom/alert/AlertState";
 
 export default {
   data() {
@@ -148,21 +141,15 @@ export default {
           }
 
         } else {
-          setAlertText("У вас нет такой роли");
-          setAlertType("error");
-          setAlertShow(true);
+          showAlert("error", "У вас нет такой роли");
         }
       } catch (error) {
         try {
           if (error.response.status === 401) {
-            setAlertText("Неверный логин или пароль");
-            setAlertType("error");
-            setAlertShow(true);
+            showAlert("error", "Неверный логин или пароль");
           }
         } catch (error) {
-          setAlertText("Непредвиденная ошибка");
-          setAlertType("error");
-          setAlertShow(true);
+          showAlert("error", "Непредвиденная ошибка");
         }
       } finally {
         this.loading = false;
@@ -171,3 +158,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.login-container {
+  height: 100vh;
+}
+</style>

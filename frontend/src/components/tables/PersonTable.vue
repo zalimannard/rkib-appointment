@@ -110,7 +110,7 @@ import RoleSelect from "@/components/custom/selectrole/RoleSelect.vue";
 import {dateMask, phoneMask} from "@/masks";
 import {handleBackspaceForDate, handleBackspaceForPhoneNumber} from "@/backspaceHandlers";
 import {fromIsoToDefault} from "@/utils";
-import {setAlertShow, setAlertText, setAlertType} from "@/components/custom/alert/AlertState";
+import {showAlert} from "@/components/custom/alert/AlertState";
 
 export default {
   components: {
@@ -200,9 +200,7 @@ export default {
         this.people = this.processPeople(response.data);
         await this.onEditFilter();
       } catch (error) {
-        setAlertText("Не удалось получить данные");
-        setAlertType("error");
-        setAlertShow(true);
+        showAlert("error", "Не удалось получить данные")
       }
     },
 
