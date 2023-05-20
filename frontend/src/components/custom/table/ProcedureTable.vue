@@ -35,6 +35,7 @@ import {requiredRule} from "@/rules";
 import MaskedTextField from "@/components/custom/textfield/MaskedTextField.vue";
 import axios from "axios";
 import CustomTable from "@/components/custom/table/CustomTable.vue";
+import {showAlert} from "@/components/custom/alert/AlertState";
 
 export default {
   components: {
@@ -86,8 +87,7 @@ export default {
         this.procedures = response.data;
         await this.onEditFilter();
       } catch (error) {
-
-        console.error("Ошибка при получении данных:", error);
+        showAlert("error", "Не удалось получить данные")
       }
     },
 

@@ -6,6 +6,8 @@ import org.springframework.validation.annotation.Validated;
 import ru.zalimannard.rkibappointmentbackend.schema.institution.dto.InstitutionRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.institution.dto.InstitutionResponseDto;
 
+import java.util.List;
+
 @Validated
 public interface InstitutionService {
 
@@ -17,6 +19,10 @@ public interface InstitutionService {
     InstitutionResponseDto read(@NotNull String id);
 
     Institution readEntity(@NotNull String id);
+
+    List<InstitutionResponseDto> readAll();
+
+    List<Institution> readAllEntities();
 
 
     InstitutionResponseDto update(@NotNull String id, @NotNull @Valid InstitutionRequestDto institutionDto);

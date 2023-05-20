@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.zalimannard.rkibappointmentbackend.schema.institution.dto.InstitutionRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.institution.dto.InstitutionResponseDto;
+import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonResponseDto;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("${application.baseApi}${application.apiV1}${application.endpoint.institutions}")
@@ -20,6 +23,12 @@ public class InstitutionController {
     @Operation(summary = "Получение учреждения")
     public InstitutionResponseDto get(@PathVariable String id) {
         return institutionService.read(id);
+    }
+
+    @GetMapping
+    @Operation(summary = "Получение всех учреждений")
+    public List<InstitutionResponseDto> getAll() {
+        return institutionService.readAll();
     }
 
     @PostMapping

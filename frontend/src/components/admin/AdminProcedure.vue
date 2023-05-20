@@ -23,8 +23,8 @@
 </template>
 
 <script>
-import ProcedureTable from "@/components/tables/ProcedureTable.vue";
-import EntityTableActions from "@/components/tables/EntityTableActions.vue";
+import ProcedureTable from "@/components/custom/table/ProcedureTable.vue";
+import EntityTableActions from "@/components/custom/table/EntityTableActions.vue";
 import CreateProcedureDialog from "@/components/custom/dialog/CreateProcedureDialog.vue";
 
 export default {
