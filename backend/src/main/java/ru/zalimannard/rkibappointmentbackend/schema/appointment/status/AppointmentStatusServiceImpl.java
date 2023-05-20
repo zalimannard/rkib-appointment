@@ -8,6 +8,8 @@ import ru.zalimannard.rkibappointmentbackend.exception.NotFoundException;
 import ru.zalimannard.rkibappointmentbackend.schema.appointment.status.dto.AppointmentStatusRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.appointment.status.dto.AppointmentStatusResponseDto;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AppointmentStatusServiceImpl implements AppointmentStatusService {
@@ -41,6 +43,17 @@ public class AppointmentStatusServiceImpl implements AppointmentStatusService {
     public AppointmentStatus readEntity(String id) {
         return repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("ass-02", "Не найден AppointmentStatus с id=" + id, null));
+    }
+
+    @Override
+    public List<AppointmentStatusResponseDto> readAll() {
+        List<AppointmentStatus> appointmentStatuses = readAllEntities();
+        return mapper.toDtoList(appointmentStatuses);
+    }
+
+    @Override
+    public List<AppointmentStatus> readAllEntities() {
+        return repository.findAll();
     }
 
     @Override

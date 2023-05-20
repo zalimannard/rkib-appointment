@@ -67,7 +67,7 @@
         </th>
         <th class="text-left role-field" scope="col">
           <role-select
-              :roles="[person.roles]"
+              :roles="person.roles"
               :update-search-input="updateSearch"
               class="header-cell"
               density="comfortable"
@@ -106,7 +106,7 @@ import {dateRule, phoneRule, requiredRule} from "@/rules";
 import MaskedTextField from "@/components/custom/textfield/MaskedTextField.vue";
 import axios from "axios";
 import CustomTable from "@/components/custom/table/CustomTable.vue";
-import RoleSelect from "@/components/custom/selectrole/RoleSelect.vue";
+import RoleSelect from "@/components/custom/select/RoleSelect.vue";
 import {dateMask, phoneMask} from "@/masks";
 import {handleBackspaceForDate, handleBackspaceForPhoneNumber} from "@/backspaceHandlers";
 import {fromIsoToDefault} from "@/utils";

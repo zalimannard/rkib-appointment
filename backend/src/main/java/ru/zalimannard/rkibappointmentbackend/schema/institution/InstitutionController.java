@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.zalimannard.rkibappointmentbackend.schema.institution.dto.InstitutionRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.institution.dto.InstitutionResponseDto;
-import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonResponseDto;
 
 import java.util.List;
 

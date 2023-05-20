@@ -1,25 +1,22 @@
 <template>
-  <v-select
-      :density="computedDensity"
+  <base-select
+      :density="density"
       :items="availableRoles"
       :multiple="multiple"
-      :value="selectedRoles"
-      item-title="text"
-      item-value="value"
+      :onChange="onSelectChange"
+      :selected="roles"
       label="Роль"
-      persistent-hint
-      return-object
-      variant="outlined"
-      @update:modelValue="onSelectChange"
-  ></v-select>
+  ></base-select>
 </template>
 
 <script>
-const validDensity = ["default", "comfortable", "compact"];
-const defaultDensity = "default";
+import BaseSelect from './BaseSelect.vue'
 
 export default {
   name: 'RoleSelect',
+  components: {
+    BaseSelect,
+  },
   props: {
     roles: {
       type: Array,
@@ -39,7 +36,7 @@ export default {
     },
     density: {
       type: String,
-      default: defaultDensity
+      default: "default"
     },
     updateSearchInput: {
       type: Function,
@@ -66,31 +63,10 @@ export default {
     }
   },
   methods: {
-    onSelectChange(value) {
-      let roles = Array.isArray(value) ? value : [value];
+    onSelectChange(roles) {
       this.$emit('update:roles', roles);
       this.updateSearchInput();
     },
   },
-  computed: {
-    computedDensity() {
-      return validDensity.includes(this.density) ? this.density : defaultDensity;
-    },
-    selectedRoles() {
-      if (!this.roles || !Array.isArray(this.roles)) {
-        return [];
-      }
-      return this.roles.map(role => {
-        if (role.value) {
-          return this.availableRoles.find(availRole => availRole.value === role.value)
-        }
-        return null;
-      });
-    },
-  }
 };
 </script>
-
-<style scoped>
-
-</style>

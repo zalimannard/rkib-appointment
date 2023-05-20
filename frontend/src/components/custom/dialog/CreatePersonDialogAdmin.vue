@@ -46,7 +46,7 @@ import MaskedTextField from "@/components/custom/textfield/MaskedTextField.vue";
 import {requiredRule} from "@/rules";
 import BaseDialog from "@/components/custom/dialog/BaseDialog.vue";
 import axios from "axios";
-import RoleSelect from "@/components/custom/selectrole/RoleSelect.vue";
+import RoleSelect from "@/components/custom/select/RoleSelect.vue";
 
 export default {
   components: {RoleSelect, BaseDialog, MaskedTextField},

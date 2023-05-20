@@ -7,7 +7,6 @@ import ru.zalimannard.rkibappointmentbackend.exception.ConflictException;
 import ru.zalimannard.rkibappointmentbackend.exception.NotFoundException;
 import ru.zalimannard.rkibappointmentbackend.schema.institution.dto.InstitutionRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.institution.dto.InstitutionResponseDto;
-import ru.zalimannard.rkibappointmentbackend.schema.procedures.Procedure;
 
 import java.util.List;
 
