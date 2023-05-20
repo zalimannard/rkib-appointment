@@ -6,7 +6,7 @@
       :value="selectedItems"
       item-title="text"
       item-value="value"
-      label="label"
+      :label="label"
       persistent-hint
       return-object
       variant="outlined"
