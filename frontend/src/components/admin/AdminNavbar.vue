@@ -37,6 +37,13 @@
       <v-tab
           color="white"
           slider-color="white"
+          to="/admin/schedulestatus">
+        Статусы графиков
+      </v-tab>
+
+      <v-tab
+          color="white"
+          slider-color="white"
           to="/admin/appointment">
         Обращения
       </v-tab>
@@ -46,13 +53,6 @@
           slider-color="white"
           to="/admin/appointmentstatus">
         Статусы обращений
-      </v-tab>
-
-      <v-tab
-          color="white"
-          slider-color="white"
-          to="/admin/schedulestatus">
-        Статусы графиков
       </v-tab>
     </v-tabs>
 
