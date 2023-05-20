@@ -15,11 +15,12 @@
         </th>
         <th class="text-left appointment-type-select-field" scope="col">
           <appointment-type-select
+              :status="appointmentStatus.type"
               :update-search-input="updateSearch"
-              roles=""
               class="header-cell"
               density="comfortable"
               include-none
+              @update:status="appointmentStatus.type = $event"
           />
         </th>
       </tr>
@@ -33,6 +34,7 @@
           :class="{ 'light-row': index % 2 === 0, 'dark-row': index % 2 !== 0 }"
       >
         <td>{{ item.name }}</td>
+        <td>{{ item.type }}</td>
       </tr>
       </tbody>
     </template>
@@ -61,11 +63,7 @@ export default {
   },
   data() {
     return {
-      appointmentStatus: {
-        id: "",
-        name: "",
-        type: []
-      },
+      appointmentStatus: this.createDefaultAppointmentStatus(),
       appointmentStatuses: [],
       filteredAppointmentStatuses: [],
       rules: {
@@ -86,6 +84,13 @@ export default {
     await this.requestProcedures();
   },
   methods: {
+    createDefaultAppointmentStatus() {
+      return {
+        id: "",
+        name: "",
+        type: []
+      };
+    },
     updateSearch() {
       this.$emit("updateSearchInput", this.appointmentStatus.name);
       this.onEditFilter();
@@ -104,14 +109,14 @@ export default {
     },
 
     onEditFilter() {
-      this.filteredAppointmentStatuses = this.filterProcedures(this.appointmentStatuses);
+      this.filteredAppointmentStatuses = this.filterAppointmentStatuses(this.appointmentStatuses);
     },
 
-    filterProcedures(procedures) {
-      return procedures.filter(procedure => this.filterProcedure(procedure));
+    filterAppointmentStatuses(procedures) {
+      return procedures.filter(procedure => this.filterAppointmentStatus(procedure));
     },
 
-    filterProcedure(procedure) {
+    filterAppointmentStatus(appointmentStatus) {
       const checkFilter = (fieldValue, filterValue) => {
         if (filterValue === "") return true;
         if (!fieldValue && filterValue !== "") return false;
@@ -122,15 +127,15 @@ export default {
       };
 
       return (
-          checkFilter(procedure.name, this.appointmentStatus.name)
+          checkFilter(appointmentStatus.name, this.appointmentStatus.name) &&
+          ((this.appointmentStatus.type.length === 0) ||
+              ((this.appointmentStatus.type.length === 1) && (this.appointmentStatus.type[0].value === null)) ||
+              (this.appointmentStatus.type[0].value === appointmentStatus.type))
       );
     },
 
     resetFilters() {
-      this.appointmentStatus = {
-        id: "",
-        name: ""
-      };
+      this.appointmentStatus = this.createDefaultAppointmentStatus()
       this.onEditFilter();
     }
   }

@@ -127,16 +127,7 @@ export default {
   data() {
     return {
       localSearchLastName: this.searchInput,
-      person: {
-        id: "",
-        username: "",
-        lastName: "",
-        firstName: "",
-        patronymic: "",
-        birthdate: "",
-        phoneNumber: "",
-        roles: []
-      },
+      person: this.createDefaultPerson(),
       people: [],
       filteredPeople: [],
 

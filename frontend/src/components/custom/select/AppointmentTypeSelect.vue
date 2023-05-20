@@ -2,9 +2,8 @@
   <base-select
       :density="density"
       :items="availableStatuses"
-      :multiple="multiple"
       :onChange="onSelectChange"
-      :selected="statuses"
+      :selected="status"
       label="Статус"
   ></base-select>
 </template>
@@ -18,15 +17,11 @@ export default {
     BaseSelect,
   },
   props: {
-    statuses: {
+    status: {
       type: Array,
       required: true,
     },
     includeNone: {
-      type: Boolean,
-      default: false,
-    },
-    multiple: {
       type: Boolean,
       default: false,
     },
@@ -44,7 +39,7 @@ export default {
       availableStatuses: [
         {text: "Активно", value: "ACTIVE"},
         {text: "Ожидает", value: "PENDING"},
-        {text: "Отменено", value: "CANCELLED"},
+        {text: "Отменено", value: "CANCELED"},
       ],
     };
   },
@@ -57,7 +52,7 @@ export default {
   },
   methods: {
     onSelectChange(statuses) {
-      this.$emit('update:statuses', statuses);
+      this.$emit('update:status', statuses);
       this.updateSearchInput();
     },
   },

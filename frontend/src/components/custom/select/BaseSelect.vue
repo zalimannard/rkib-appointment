@@ -2,11 +2,11 @@
   <v-select
       :density="computedDensity"
       :items="items"
+      :label="label"
       :multiple="multiple"
       :value="selectedItems"
       item-title="text"
       item-value="value"
-      :label="label"
       persistent-hint
       return-object
       variant="outlined"

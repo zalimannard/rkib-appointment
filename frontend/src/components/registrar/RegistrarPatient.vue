@@ -205,7 +205,7 @@ export default {
     },
     clearFilter() {
       this.person = {
-        lastName: "",
+        type: "",
         firstName: "",
         patronymic: ""
       };
