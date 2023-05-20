@@ -4,6 +4,8 @@ import org.springframework.stereotype.Component;
 import ru.zalimannard.rkibappointmentbackend.schema.schedule.status.dto.ScheduleStatusRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.schedule.status.dto.ScheduleStatusResponseDto;
 
+import java.util.List;
+
 @Component
 public class ScheduleStatusMapper {
 
@@ -20,6 +22,10 @@ public class ScheduleStatusMapper {
                 .type(scheduleStatus.getType())
                 .name(scheduleStatus.getName())
                 .build();
+    }
+
+    public List<ScheduleStatusResponseDto> toDtoList(List<ScheduleStatus> scheduleStatuses) {
+        return scheduleStatuses.stream().map(this::toDto).toList();
     }
 
 }
