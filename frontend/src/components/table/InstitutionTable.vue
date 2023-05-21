@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref, watch} from 'vue';
+import {defineComponent, ref, watch} from 'vue';
 import {requiredRule} from "@/rules";
 import MaskedTextField from "@/components/textfield/MaskedTextField.vue";
 import axios from "axios";
@@ -39,6 +39,7 @@ import CustomTable from "@/components/table/CustomTable.vue";
 import {showAlert} from "@/components/alert/AlertState";
 import {checkFilter} from "@/utils";
 import type {InstitutionRequest, InstitutionResponse} from '@/types/institutions';
+import {onMounted, provide} from "vue-demi";
 
 export default defineComponent({
   components: {
@@ -62,19 +63,12 @@ export default defineComponent({
       requiredRule
     };
 
-    watch(() => props.searchInput, newVal => {
+    watch(() => props.searchInput, (newVal) => {
       institutionRequest.value.name = newVal;
       onEditFilter();
     }, {immediate: true});
 
-    onMounted(requestInstitution);
-
-    function updateSearch() {
-      emit("updateSearchInput", institutionRequest.value.name);
-      onEditFilter();
-    }
-
-    async function requestInstitution() {
+    const requestInstitution = async () => {
       try {
         let basicAuth = localStorage.getItem("auth");
         const response = await axios.get(import.meta.env.VITE_API_URL + "/api/v1/institutions", {
@@ -83,8 +77,18 @@ export default defineComponent({
         institutions.value = response.data;
         onEditFilter();
       } catch (error) {
-        showAlert("error", "Не удалось получить данные")
+        showAlert("error", "Не удалось получить данные");
       }
+    }
+
+    onMounted(() => {
+      emit('provideRequestInstitution', requestInstitution);
+      requestInstitution();
+    });
+
+    function updateSearch() {
+      emit("updateSearchInput", institutionRequest.value.name);
+      onEditFilter();
     }
 
     function onEditFilter() {
@@ -108,6 +112,8 @@ export default defineComponent({
       onEditFilter();
     }
 
+    provide('requestInstitution', requestInstitution);
+
     return {
       institutionRequest,
       institutions,
@@ -116,11 +122,9 @@ export default defineComponent({
       updateSearch,
       requestInstitution,
       onEditFilter,
-      filterInstitutions,
-      filterInstitution,
       resetFilters
-    }
-  }
+    };
+  },
 });
 </script>
 

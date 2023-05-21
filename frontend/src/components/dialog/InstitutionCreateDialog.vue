@@ -29,11 +29,6 @@ export default defineComponent({
   props: {
     value: Boolean,
     searchInput: String,
-    onCreateEntity: {
-      type: Function,
-      default: () => {
-      },
-    },
     closeDialog: {
       type: Function,
       required: true
@@ -63,7 +58,7 @@ export default defineComponent({
         }
       }).then(() => {
         showAlert("success", "Учреждение успешно создано");
-        props.onCreateEntity();
+        emit('institutionCreated');
       }).catch((error) => {
         console.error(error)
         showAlert("error", "Ошибка при добавлении учреждения");

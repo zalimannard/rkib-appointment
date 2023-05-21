@@ -2,8 +2,8 @@
   <create-institution-dialog
       v-model="showCreateDialog"
       :close-dialog="closeDialog"
-      :on-create-entity="onCreateEntity"
       :search-input="searchInput"
+      @institutionCreated="onInstitutionCreated"
       @updateSearchInput="updateSearchInput"
   />
 
@@ -16,7 +16,12 @@
         />
       </v-row>
       <v-row>
-        <institution-table ref="institutionTable" @updateSearchInput="updateSearchInput"/>
+        <institution-table
+            ref="institutionTable"
+            @requestInstitution="onInstitutionCreated"
+            @provideRequestInstitution="onProvideRequestInstitution"
+            @updateSearchInput="updateSearchInput"
+        />
       </v-row>
     </v-col>
   </v-container>
@@ -35,17 +40,22 @@ export default defineComponent({
     const showCreateDialog = ref(false);
     const searchInput = ref('');
     const valid = ref(true);
-    const institutionTableRef = ref<typeof InstitutionTable | null>(null);
 
     const updateSearchInput = (value: string) => {
       searchInput.value = value;
     };
 
-    const onCreateEntity = () => {
-      showCreateDialog.value = false;
-      if (institutionTableRef.value) {
-        institutionTableRef.value.requestInstitution();
+    let requestInstitution: (() => Promise<void>) | undefined;
+
+    const onInstitutionCreated = () => {
+      closeDialog()
+      if (requestInstitution) {
+        requestInstitution();
       }
+    };
+
+    const onProvideRequestInstitution = (func: () => Promise<void>) => {
+      requestInstitution = func;
     };
 
     const openCreateDialog = () => {
@@ -60,11 +70,11 @@ export default defineComponent({
       showCreateDialog,
       searchInput,
       valid,
-      institutionTableRef,
       updateSearchInput,
-      onCreateEntity,
       openCreateDialog,
-      closeDialog
+      closeDialog,
+      onInstitutionCreated,
+      onProvideRequestInstitution,
     };
   },
 });
