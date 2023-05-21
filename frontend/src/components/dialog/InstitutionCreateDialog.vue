@@ -7,7 +7,7 @@
       title="Создание нового учреждения"
   >
     <masked-text-field
-        v-model="institution.name"
+        v-model="institutionName"
         :rules="rules.requiredRule"
         capitalize-first-letter
         label="Название"
@@ -17,21 +17,19 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, ref, watch} from 'vue';
+import {computed, defineComponent, ref} from 'vue';
 import MaskedTextField from "@/components/textfield/MaskedTextField.vue";
 import {requiredRule} from "@/rules";
 import BaseDialog from "@/components/dialog/BaseDialog.vue";
 import axios from "axios";
 import {showAlert} from "@/components/alert/AlertState";
+import type {InstitutionRequest, InstitutionResponse} from "@/types/institutions";
+import {onMounted, provide} from "vue-demi";
 
 export default defineComponent({
   components: {BaseDialog, MaskedTextField},
   props: {
     value: Boolean,
-    institutionRequest: {
-      type: Object,
-      required: true
-    },
     closeDialog: {
       type: Function,
       required: true
@@ -39,14 +37,24 @@ export default defineComponent({
   },
 
   setup(props, {emit}) {
-    const institution = ref({...props.institutionRequest});
+    const institution = ref<InstitutionRequest>();
 
     const rules = {
       requiredRule
     };
 
-    watch(() => props.institutionRequest, (newVal) => {
-      institution.value = {...newVal};
+    const setData = (data: InstitutionResponse) => {
+      institution.value = {
+        ...institution.value,
+        name: data.name
+      };
+    }
+
+    const institutionName = computed({
+      get: () => institution.value?.name || "",
+      set: (value) => {
+        institution.value = {...institution.value, name: value};
+      }
     });
 
     function createInstitution() {
@@ -56,7 +64,7 @@ export default defineComponent({
         url: import.meta.env.VITE_API_URL + "/api/v1/institutions",
         headers: {"Authorization": "Basic " + basicAuth},
         data: {
-          name: institution.value.name
+          name: institution.value?.name
         }
       }).then(() => {
         showAlert("success", "Учреждение успешно создано");
@@ -65,25 +73,34 @@ export default defineComponent({
         console.error(error)
         showAlert("error", "Ошибка при добавлении учреждения");
       });
-      emit("updateSearchInput", institution.value.name);
+      emit("updateSearchInput", institution.value);
     }
+
+    onMounted(() => {
+      console.log("Ура")
+      emit('provideSetData', setData);
+    });
 
     const internalValue = computed({
       get: () => props.value,
       set: (val) => {
         emit("input", val);
         if (!val) {
-          emit("updateSearchInput", institution.value.name);
+          emit("updateSearchInput", institution.value);
         }
       }
     });
 
+    provide('setData', setData);
+
     return {
       institution,
       rules,
+      internalValue,
+      institutionName,
       createInstitution,
-      internalValue
-    }
+      setData
+    };
   }
 });
 </script>

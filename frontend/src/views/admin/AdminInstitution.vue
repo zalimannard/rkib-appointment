@@ -3,8 +3,8 @@
       v-model="showCreateDialog"
       :close-dialog="closeDialog"
       :institution-request="searchInput"
-      :search-input="searchInput"
       @institutionCreated="onInstitutionCreated"
+      @provideSetData="onProvideSetData"
       @updateSearchInput="updateSearchInput"
   />
 
@@ -33,7 +33,7 @@ import {defineComponent, ref} from 'vue';
 import InstitutionTable from "@/components/table/InstitutionTable.vue";
 import EntityTableActions from "@/components/table/EntityTableActions.vue";
 import CreateInstitutionDialog from "@/components/dialog/InstitutionCreateDialog.vue";
-import type {InstitutionRequest} from "@/types/institutions";
+import type {InstitutionResponse} from "@/types/institutions";
 
 export default defineComponent({
   name: 'AdminInstitution',
@@ -41,16 +41,18 @@ export default defineComponent({
   setup() {
     const showCreateDialog = ref(false);
     const searchInput = ref({
-      name: ''
-    });
+      id: "",
+      name: ""
+    } as InstitutionResponse);
     const valid = ref(true);
 
-    const updateSearchInput = (value: InstitutionRequest) => {
+    const updateSearchInput = (value: InstitutionResponse) => {
+      console.log("updateSearchInput " + value.name)
       searchInput.value = value;
     };
 
-
     let requestInstitution: (() => Promise<void>) | undefined;
+    let setData: ((arg: InstitutionResponse) => Promise<void>) | undefined;
 
     const onInstitutionCreated = () => {
       closeDialog()
@@ -63,7 +65,14 @@ export default defineComponent({
       requestInstitution = func;
     };
 
+    const onProvideSetData = (func: () => Promise<void>) => {
+      setData = func;
+    };
+
     const openCreateDialog = () => {
+      if (setData) {
+        setData(searchInput.value);
+      }
       showCreateDialog.value = true;
     };
 
@@ -80,6 +89,7 @@ export default defineComponent({
       closeDialog,
       onInstitutionCreated,
       onProvideRequestInstitution,
+      onProvideSetData
     };
   },
 });

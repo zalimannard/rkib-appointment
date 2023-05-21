@@ -66,6 +66,8 @@ export default {
         this.$emit("update:modelValue", newValue);
       }
 
+      this.$emit('input', newValue);
+
       // Если маска задана и значение соответствует маске, вызываем пользовательское событие mask-valid
       if (this.mask && this.mask(newValue) === newValue) {
         this.$emit("mask-valid");
