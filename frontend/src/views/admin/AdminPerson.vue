@@ -27,9 +27,9 @@
 </template>
 
 <script>
-import EntityTableActions from "@/components/custom/table/EntityTableActions.vue";
-import PersonTable from "@/components/custom/table/PersonTable.vue";
-import CreatePersonDialog from "@/components/custom/dialog/CreatePersonDialogAdmin.vue";
+import EntityTableActions from "@/components/table/EntityTableActions.vue";
+import PersonTable from "@/components/table/PersonTable.vue";
+import CreatePersonDialog from "@/components/dialog/CreatePersonDialogAdmin.vue";
 
 export default {
   components: {CreatePersonDialog, PersonTable, EntityTableActions},

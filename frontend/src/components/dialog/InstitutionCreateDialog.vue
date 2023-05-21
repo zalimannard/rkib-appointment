@@ -2,7 +2,7 @@
   <base-dialog
       v-model="internalValue"
       :close-dialog="closeDialog"
-      :ok-dialog="createProcedure"
+      :ok-dialog="createInstitution"
       ok-button-text="Создать"
       title="Создание нового учреждения"
   >
@@ -16,73 +16,81 @@
   </base-dialog>
 </template>
 
-<script>
-import MaskedTextField from "@/components/custom/textfield/MaskedTextField.vue";
+<script lang="ts">
+import {computed, defineComponent, ref, watch} from 'vue';
+import MaskedTextField from "@/components/textfield/MaskedTextField.vue";
 import {requiredRule} from "@/rules";
-import BaseDialog from "@/components/custom/dialog/BaseDialog.vue";
+import BaseDialog from "@/components/dialog/BaseDialog.vue";
 import axios from "axios";
-import {showAlert} from "@/components/custom/alert/AlertState";
+import {showAlert} from "@/components/alert/AlertState";
 
-export default {
+export default defineComponent({
   components: {BaseDialog, MaskedTextField},
   props: {
     value: Boolean,
     searchInput: String,
     onCreateEntity: {
       type: Function,
-      required: false
+      default: () => {
+      },
     },
     closeDialog: {
       type: Function,
       required: true
     }
   },
-  data() {
-    return {
-      institution: {
-        inputName: this.searchInput
-      },
-      rules: {
-        requiredRule
-      }
+  setup(props, {emit}) {
+    const institution = ref({
+      inputName: props.searchInput
+    });
+
+    const rules = {
+      requiredRule
     };
-  },
-  methods: {
-    createProcedure() {
+
+    watch(() => props.searchInput, (newVal) => {
+      institution.value.inputName = newVal;
+    });
+
+    function createInstitution() {
       let basicAuth = localStorage.getItem("auth");
       axios({
         method: "post",
         url: import.meta.env.VITE_API_URL + "/api/v1/institutions",
         headers: {"Authorization": "Basic " + basicAuth},
         data: {
-          name: this.institution.inputName
+          name: institution.value.inputName
         }
       }).then(() => {
         showAlert("success", "Учреждение успешно создано");
-        this.onCreateEntity();
-      }).catch(() => {
+        props.onCreateEntity();
+      }).catch((error) => {
+        console.error(error)
         showAlert("error", "Ошибка при добавлении учреждения");
       });
-      this.$emit("updateSearchInput", this.institution.inputName);
+      emit("updateSearchInput", institution.value.inputName);
     }
-  },
-  computed: {
-    internalValue: {
-      get() {
-        return this.value;
-      },
-      set(val) {
-        this.$emit("input", val);
+
+    const internalValue = computed({
+      get: () => props.value,
+      set: (val) => {
+        emit("input", val);
         if (!val) {
-          this.$emit("updateSearchInput", this.institution.inputName);
+          emit("updateSearchInput", institution.value.inputName);
         }
       }
-    }
-  },
-  watch: {
-    searchInput(newVal) {
-      this.institution.inputName = newVal;
+    });
+
+    return {
+      institution,
+      rules,
+      createInstitution,
+      internalValue
     }
   }
-};
+});
 </script>
+
+<style scoped>
+
+</style>

@@ -23,9 +23,9 @@
 </template>
 
 <script>
-import ProcedureTable from "@/components/custom/table/ProcedureTable.vue";
-import EntityTableActions from "@/components/custom/table/EntityTableActions.vue";
-import CreateProcedureDialog from "@/components/custom/dialog/CreateProcedureDialog.vue";
+import ProcedureTable from "@/components/table/ProcedureTable.vue";
+import EntityTableActions from "@/components/table/EntityTableActions.vue";
+import CreateProcedureDialog from "@/components/dialog/CreateProcedureDialog.vue";
 
 export default {
   components: {CreateProcedureDialog, EntityTableActions, ProcedureTable},

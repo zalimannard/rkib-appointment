@@ -17,11 +17,11 @@
 </template>
 
 <script>
-import MaskedTextField from "@/components/custom/textfield/MaskedTextField.vue";
+import MaskedTextField from "@/components/textfield/MaskedTextField.vue";
 import {requiredRule} from "@/rules";
-import BaseDialog from "@/components/custom/dialog/BaseDialog.vue";
+import BaseDialog from "@/components/dialog/BaseDialog.vue";
 import axios from "axios";
-import {showAlert} from "@/components/custom/alert/AlertState";
+import {showAlert} from "@/components/alert/AlertState";
 
 export default {
   components: {BaseDialog, MaskedTextField},

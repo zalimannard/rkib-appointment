@@ -25,7 +25,7 @@
 <script>
 
 import {defineComponent} from "vue";
-import CustomButton from "@/components/custom/button/CustomButton.vue";
+import CustomButton from "@/components/button/CustomButton.vue";
 
 export default defineComponent({
   components: {CustomButton}

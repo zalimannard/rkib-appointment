@@ -5,7 +5,7 @@
       <tr>
         <th class="text-left" scope="col">
           <masked-text-field
-              v-model="scheduleStatus.name"
+              v-model="appointmentStatus.name"
               capitalize-first-letter
               class="header-cell"
               density="comfortable"
@@ -14,13 +14,13 @@
           />
         </th>
         <th class="text-left schedule-type-select-field" scope="col">
-          <schedule-type-select
-              :status="scheduleStatus.type"
+          <appointment-type-select
+              :status="appointmentStatus.type"
               :update-search-input="updateSearch"
               class="header-cell"
               density="comfortable"
               include-none
-              @update:status="scheduleStatus.type = $event"
+              @update:status="appointmentStatus.type = $event"
           />
         </th>
       </tr>
@@ -29,7 +29,7 @@
     <template v-slot:body>
       <tbody>
       <tr
-          v-for="(item, index) in filteredScheduleStatuses"
+          v-for="(item, index) in filteredAppointmentStatuses"
           :key="item.id"
           :class="{ 'light-row': index % 2 === 0, 'dark-row': index % 2 !== 0 }"
       >
@@ -43,15 +43,15 @@
 
 <script>
 import {requiredRule} from "@/rules";
-import MaskedTextField from "@/components/custom/textfield/MaskedTextField.vue";
+import MaskedTextField from "@/components/textfield/MaskedTextField.vue";
 import axios from "axios";
-import CustomTable from "@/components/custom/table/CustomTable.vue";
-import {showAlert} from "@/components/custom/alert/AlertState";
-import ScheduleTypeSelect from "@/components/custom/select/ScheduleTypeSelect.vue";
+import CustomTable from "@/components/table/CustomTable.vue";
+import {showAlert} from "@/components/alert/AlertState";
+import AppointmentTypeSelect from "@/components/select/AppointmentTypeSelect.vue";
 
 export default {
   components: {
-    ScheduleTypeSelect,
+    AppointmentTypeSelect,
     CustomTable,
     MaskedTextField
   },
@@ -63,9 +63,9 @@ export default {
   },
   data() {
     return {
-      scheduleStatus: this.createDefaultScheduleStatus(),
-      scheduleStatuses: [],
-      filteredScheduleStatuses: [],
+      appointmentStatus: this.createDefaultAppointmentStatus(),
+      appointmentStatuses: [],
+      filteredAppointmentStatuses: [],
       rules: {
         requiredRule
       }
@@ -75,7 +75,7 @@ export default {
     searchInput: {
       immediate: true,
       handler(newVal) {
-        this.scheduleStatus.name = newVal;
+        this.appointmentStatus.name = newVal;
         this.onEditFilter();
       }
     }
@@ -84,7 +84,7 @@ export default {
     await this.requestProcedures();
   },
   methods: {
-    createDefaultScheduleStatus() {
+    createDefaultAppointmentStatus() {
       return {
         id: "",
         name: "",
@@ -92,16 +92,16 @@ export default {
       };
     },
     updateSearch() {
-      this.$emit("updateSearchInput", this.scheduleStatus.name);
+      this.$emit("updateSearchInput", this.appointmentStatus.name);
       this.onEditFilter();
     },
     async requestProcedures() {
       try {
         let basicAuth = localStorage.getItem("auth");
-        const response = await axios.get(import.meta.env.VITE_API_URL + "/api/v1/scheduleStatuses", {
+        const response = await axios.get(import.meta.env.VITE_API_URL + "/api/v1/appointmentStatuses", {
           headers: {"Authorization": "Basic " + basicAuth}
         });
-        this.scheduleStatuses = response.data;
+        this.appointmentStatuses = response.data;
         await this.onEditFilter();
       } catch (error) {
         showAlert("error", "Не удалось получить данные")
@@ -109,14 +109,14 @@ export default {
     },
 
     onEditFilter() {
-      this.filteredScheduleStatuses = this.filterScheduleStatuses(this.scheduleStatuses);
+      this.filteredAppointmentStatuses = this.filterAppointmentStatuses(this.appointmentStatuses);
     },
 
-    filterScheduleStatuses(procedures) {
-      return procedures.filter(procedure => this.filterScheduleStatus(procedure));
+    filterAppointmentStatuses(procedures) {
+      return procedures.filter(procedure => this.filterAppointmentStatus(procedure));
     },
 
-    filterScheduleStatus(scheduleStatus) {
+    filterAppointmentStatus(appointmentStatus) {
       const checkFilter = (fieldValue, filterValue) => {
         if (filterValue === "") return true;
         if (!fieldValue && filterValue !== "") return false;
@@ -127,15 +127,15 @@ export default {
       };
 
       return (
-          checkFilter(scheduleStatus.name, this.scheduleStatus.name) &&
-          ((this.scheduleStatus.type.length === 0) ||
-              ((this.scheduleStatus.type.length === 1) && (this.scheduleStatus.type[0].value === null)) ||
-              (this.scheduleStatus.type[0].value === scheduleStatus.type))
+          checkFilter(appointmentStatus.name, this.appointmentStatus.name) &&
+          ((this.appointmentStatus.type.length === 0) ||
+              ((this.appointmentStatus.type.length === 1) && (this.appointmentStatus.type[0].value === null)) ||
+              (this.appointmentStatus.type[0].value === appointmentStatus.type))
       );
     },
 
     resetFilters() {
-      this.scheduleStatus = this.createDefaultScheduleStatus()
+      this.appointmentStatus = this.createDefaultAppointmentStatus()
       this.onEditFilter();
     }
   }

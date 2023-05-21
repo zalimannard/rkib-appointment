@@ -23,10 +23,10 @@
 </template>
 
 <script>
-import InstitutionTable from "@/components/custom/table/InstitutionTable.vue";
-import EntityTableActions from "@/components/custom/table/EntityTableActions.vue";
-import CreateAppointmentStatusDialog from "@/components/custom/dialog/CreateAppointmentStatusDialog.vue";
-import AppointmentStatusTable from "@/components/custom/table/AppointmentStatusTable.vue";
+import InstitutionTable from "@/components/table/InstitutionTable.vue";
+import EntityTableActions from "@/components/table/EntityTableActions.vue";
+import CreateAppointmentStatusDialog from "@/components/dialog/CreateAppointmentStatusDialog.vue";
+import AppointmentStatusTable from "@/components/table/AppointmentStatusTable.vue";
 
 export default {
   components: {AppointmentStatusTable, CreateAppointmentStatusDialog, EntityTableActions, InstitutionTable},

@@ -112,8 +112,8 @@
 
 <script>
 import axios from "axios";
-import CustomButton from "@/components/custom/button/CustomButton.vue";
-import MaskedTextField from "@/components/custom/textfield/MaskedTextField.vue";
+import CustomButton from "@/components/button/CustomButton.vue";
+import MaskedTextField from "@/components/textfield/MaskedTextField.vue";
 
 import {dateRule, phoneRule, requiredRule} from "@/rules";
 import {dateMask, phoneMask} from "@/masks";

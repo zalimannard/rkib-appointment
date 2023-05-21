@@ -70,11 +70,11 @@
 
 <script>
 import axios from "axios";
-import BaseTextField from "@/components/custom/textfield/BaseTextField.vue";
-import PasswordTextField from "@/components/custom/textfield/PasswordTextField.vue";
-import BaseButton from "@/components/custom/button/CustomButton.vue";
+import BaseTextField from "@/components/textfield/BaseTextField.vue";
+import PasswordTextField from "@/components/textfield/PasswordTextField.vue";
+import BaseButton from "@/components/button/CustomButton.vue";
 import {inject} from "vue";
-import {showAlert} from "@/components/custom/alert/AlertState";
+import {showAlert} from "@/components/alert/AlertState";
 
 export default {
   data() {

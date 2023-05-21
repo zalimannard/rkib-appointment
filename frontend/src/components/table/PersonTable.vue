@@ -103,14 +103,14 @@
 
 <script>
 import {dateRule, phoneRule, requiredRule} from "@/rules";
-import MaskedTextField from "@/components/custom/textfield/MaskedTextField.vue";
+import MaskedTextField from "@/components/textfield/MaskedTextField.vue";
 import axios from "axios";
-import CustomTable from "@/components/custom/table/CustomTable.vue";
-import RoleSelect from "@/components/custom/select/RoleSelect.vue";
+import CustomTable from "@/components/table/CustomTable.vue";
+import RoleSelect from "@/components/select/RoleSelect.vue";
 import {dateMask, phoneMask} from "@/masks";
 import {handleBackspaceForDate, handleBackspaceForPhoneNumber} from "@/backspaceHandlers";
 import {fromIsoToDefault} from "@/utils";
-import {showAlert} from "@/components/custom/alert/AlertState";
+import {showAlert} from "@/components/alert/AlertState";
 
 export default {
   components: {

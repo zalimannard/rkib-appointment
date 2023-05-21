@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import {defineComponent} from "vue";
-import TheAlert from "@/components/custom/alert/TheAlert.vue";
+import TheAlert from "@/components/alert/TheAlert.vue";
 
 export default defineComponent({
   name: "App",

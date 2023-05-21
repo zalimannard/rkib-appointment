@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Navbar from "@/components/doctor/DoctorNavbar.vue";
+import Navbar from "@/views/doctor/DoctorNavbar.vue";
 
 export default {
   components: {

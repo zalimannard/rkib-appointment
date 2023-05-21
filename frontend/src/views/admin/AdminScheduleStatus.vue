@@ -23,9 +23,9 @@
 </template>
 
 <script>
-import EntityTableActions from "@/components/custom/table/EntityTableActions.vue";
-import CreateScheduleStatusDialog from "@/components/custom/dialog/CreateScheduleStatusDialog.vue";
-import ScheduleStatusTable from "@/components/custom/table/ScheduleStatusTable.vue";
+import EntityTableActions from "@/components/table/EntityTableActions.vue";
+import CreateScheduleStatusDialog from "@/components/dialog/CreateScheduleStatusDialog.vue";
+import ScheduleStatusTable from "@/components/table/ScheduleStatusTable.vue";
 
 export default {
   components: {

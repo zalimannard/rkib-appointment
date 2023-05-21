@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Navbar from "@/components/registrar/RegistrarNavbar.vue";
+import Navbar from "@/views/registrar/RegistrarNavbar.vue";
 
 export default {
   components: {

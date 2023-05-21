@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import {computed} from 'vue';
-import alertState from "@/components/custom/alert/AlertState";
+import alertState from "@/components/alert/AlertState";
 
 export default {
   setup() {

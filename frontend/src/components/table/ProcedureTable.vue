@@ -32,10 +32,10 @@
 
 <script>
 import {requiredRule} from "@/rules";
-import MaskedTextField from "@/components/custom/textfield/MaskedTextField.vue";
+import MaskedTextField from "@/components/textfield/MaskedTextField.vue";
 import axios from "axios";
-import CustomTable from "@/components/custom/table/CustomTable.vue";
-import {showAlert} from "@/components/custom/alert/AlertState";
+import CustomTable from "@/components/table/CustomTable.vue";
+import {showAlert} from "@/components/alert/AlertState";
 
 export default {
   components: {

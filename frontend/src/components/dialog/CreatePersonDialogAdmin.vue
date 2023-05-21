@@ -42,11 +42,11 @@
 </template>
 
 <script>
-import MaskedTextField from "@/components/custom/textfield/MaskedTextField.vue";
+import MaskedTextField from "@/components/textfield/MaskedTextField.vue";
 import {requiredRule} from "@/rules";
-import BaseDialog from "@/components/custom/dialog/BaseDialog.vue";
+import BaseDialog from "@/components/dialog/BaseDialog.vue";
 import axios from "axios";
-import RoleSelect from "@/components/custom/select/RoleSelect.vue";
+import RoleSelect from "@/components/select/RoleSelect.vue";
 
 export default {
   components: {RoleSelect, BaseDialog, MaskedTextField},
