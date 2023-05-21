@@ -7,7 +7,7 @@
       title="Создание нового учреждения"
   >
     <masked-text-field
-        v-model="institution.inputName"
+        v-model="institution.name"
         :rules="rules.requiredRule"
         capitalize-first-letter
         label="Название"
@@ -28,23 +28,25 @@ export default defineComponent({
   components: {BaseDialog, MaskedTextField},
   props: {
     value: Boolean,
-    searchInput: String,
+    institutionRequest: {
+      type: Object,
+      required: true
+    },
     closeDialog: {
       type: Function,
       required: true
     }
   },
+
   setup(props, {emit}) {
-    const institution = ref({
-      inputName: props.searchInput
-    });
+    const institution = ref({...props.institutionRequest});
 
     const rules = {
       requiredRule
     };
 
-    watch(() => props.searchInput, (newVal) => {
-      institution.value.inputName = newVal;
+    watch(() => props.institutionRequest, (newVal) => {
+      institution.value = {...newVal};
     });
 
     function createInstitution() {
@@ -54,7 +56,7 @@ export default defineComponent({
         url: import.meta.env.VITE_API_URL + "/api/v1/institutions",
         headers: {"Authorization": "Basic " + basicAuth},
         data: {
-          name: institution.value.inputName
+          name: institution.value.name
         }
       }).then(() => {
         showAlert("success", "Учреждение успешно создано");
@@ -63,7 +65,7 @@ export default defineComponent({
         console.error(error)
         showAlert("error", "Ошибка при добавлении учреждения");
       });
-      emit("updateSearchInput", institution.value.inputName);
+      emit("updateSearchInput", institution.value.name);
     }
 
     const internalValue = computed({
@@ -71,7 +73,7 @@ export default defineComponent({
       set: (val) => {
         emit("input", val);
         if (!val) {
-          emit("updateSearchInput", institution.value.inputName);
+          emit("updateSearchInput", institution.value.name);
         }
       }
     });

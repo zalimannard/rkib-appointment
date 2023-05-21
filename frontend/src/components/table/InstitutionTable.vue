@@ -48,25 +48,28 @@ export default defineComponent({
   },
   props: {
     searchInput: {
-      type: String,
-      default: ""
+      type: Object,
+      default: () => ({
+        name: ''
+      })
     }
   },
   setup(props, {emit}) {
     const institutionRequest = ref<InstitutionRequest>({
-      name: ""
+      name: props.searchInput.name
     });
 
     const institutions = ref<InstitutionResponse[]>([]);
     const filteredInstitutions = ref<InstitutionResponse[]>([]);
+
+    watch(() => props.searchInput, (newVal) => {
+      institutionRequest.value.name = newVal.name;
+      onEditFilter();
+    }, {immediate: true});
+
     const rules = {
       requiredRule
     };
-
-    watch(() => props.searchInput, (newVal) => {
-      institutionRequest.value.name = newVal;
-      onEditFilter();
-    }, {immediate: true});
 
     const requestInstitution = async () => {
       try {
@@ -87,7 +90,7 @@ export default defineComponent({
     });
 
     function updateSearch() {
-      emit("updateSearchInput", institutionRequest.value.name);
+      emit("updateSearchInput", institutionRequest.value);
       onEditFilter();
     }
 

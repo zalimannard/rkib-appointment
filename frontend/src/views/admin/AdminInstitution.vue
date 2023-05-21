@@ -2,6 +2,7 @@
   <create-institution-dialog
       v-model="showCreateDialog"
       :close-dialog="closeDialog"
+      :institution-request="searchInput"
       :search-input="searchInput"
       @institutionCreated="onInstitutionCreated"
       @updateSearchInput="updateSearchInput"
@@ -18,8 +19,8 @@
       <v-row>
         <institution-table
             ref="institutionTable"
-            @requestInstitution="onInstitutionCreated"
             @provideRequestInstitution="onProvideRequestInstitution"
+            @requestInstitution="onInstitutionCreated"
             @updateSearchInput="updateSearchInput"
         />
       </v-row>
@@ -32,18 +33,22 @@ import {defineComponent, ref} from 'vue';
 import InstitutionTable from "@/components/table/InstitutionTable.vue";
 import EntityTableActions from "@/components/table/EntityTableActions.vue";
 import CreateInstitutionDialog from "@/components/dialog/InstitutionCreateDialog.vue";
+import type {InstitutionRequest} from "@/types/institutions";
 
 export default defineComponent({
   name: 'AdminInstitution',
   components: {CreateInstitutionDialog, EntityTableActions, InstitutionTable},
   setup() {
     const showCreateDialog = ref(false);
-    const searchInput = ref('');
+    const searchInput = ref({
+      name: ''
+    });
     const valid = ref(true);
 
-    const updateSearchInput = (value: string) => {
+    const updateSearchInput = (value: InstitutionRequest) => {
       searchInput.value = value;
     };
+
 
     let requestInstitution: (() => Promise<void>) | undefined;
 

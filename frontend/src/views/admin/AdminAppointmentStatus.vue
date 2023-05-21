@@ -25,7 +25,7 @@
 <script>
 import InstitutionTable from "@/components/table/InstitutionTable.vue";
 import EntityTableActions from "@/components/table/EntityTableActions.vue";
-import CreateAppointmentStatusDialog from "@/components/dialog/CreateAppointmentStatusDialog.vue";
+import CreateAppointmentStatusDialog from "@/components/dialog/AppointmentStatusCreateDialog.vue";
 import AppointmentStatusTable from "@/components/table/AppointmentStatusTable.vue";
 
 export default {
