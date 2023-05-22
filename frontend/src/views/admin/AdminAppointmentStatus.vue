@@ -1,9 +1,9 @@
 <template>
   <create-appointment-status-dialog
       v-model="showCreateDialog"
+      :appointment-status-request="searchInput"
       :close-dialog="closeDialog"
-      :institution-request="searchInput"
-      @institutionCreated="onAppointmentStatusCreated"
+      @appointmentStatusCreated="onAppointmentStatusCreated"
       @provideSetData="onProvideSetData"
       @updateSearchInput="updateSearchInput"
   />
@@ -13,12 +13,12 @@
       <v-row>
         <entity-table-actions
             @openCreateDialog="openCreateDialog"
-            @resetFilters="$refs.procedureTable.resetFilters()"
+            @resetFilters="$refs.appointmentStatusTable.resetFilters()"
         />
       </v-row>
       <v-row>
         <appointment-status-table
-            ref="institutionTable"
+            ref="appointmentStatusTable"
             @provideRequestAppointmentStatus="onProvideRequestAppointmentStatus"
             @requestAppointmentStatus="onAppointmentStatusCreated"
             @updateSearchInput="updateSearchInput"

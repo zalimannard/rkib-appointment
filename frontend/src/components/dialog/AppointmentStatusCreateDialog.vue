@@ -19,7 +19,7 @@
       <v-row>
         <appointment-type-select
             :status="appointmentStatusTypeName"
-            update-search-input=""
+            @update:status="appointmentStatusTypeName = $event"
         />
       </v-row>
     </v-col>
@@ -69,14 +69,22 @@ export default defineComponent({
     const appointmentStatusName = computed({
       get: () => appointmentStatus.value?.name || "",
       set: (value) => {
-        appointmentStatus.value = {...appointmentStatus.value, name: value};
+        let typeValue = '';
+        if (appointmentStatus.value) {
+          typeValue = appointmentStatus.value.type;
+        }
+        appointmentStatus.value = {...appointmentStatus.value, name: value, type: typeValue};
       }
     });
 
     const appointmentStatusTypeName = computed({
-      get: () => appointmentStatus.value?.name || "",
+      get: () => appointmentStatus.value?.type || "",
       set: (value) => {
-        appointmentStatus.value = {...appointmentStatus.value, type: value};
+        let nameValue = '';
+        if (appointmentStatus.value) {
+          nameValue = appointmentStatus.value.name;
+        }
+        appointmentStatus.value = {...appointmentStatus.value, name: nameValue, type: value};
       }
     });
 

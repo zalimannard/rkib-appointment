@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import {defineComponent} from 'vue'
 import BaseSelect from './BaseSelect.vue'
 
 export default defineComponent({
@@ -27,11 +27,11 @@ export default defineComponent({
     },
     density: {
       type: String,
-      default: "default"
+      default: "default",
     },
     updateSearchInput: {
       type: Function,
-      required: true,
+      required: false,
     },
   },
   data() {
@@ -56,7 +56,9 @@ export default defineComponent({
   methods: {
     onSelectChange(statuses: string[]) {
       this.$emit('update:status', statuses[0] || '');
-      this.updateSearchInput();
+      if (this.updateSearchInput) {
+        this.updateSearchInput();
+      }
     },
   },
 });
