@@ -1,5 +1,6 @@
 package ru.zalimannard.rkibappointmentbackend.schema.person.employees.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Value;
@@ -16,6 +17,7 @@ public class EmployeeResponseDto {
     String id;
 
     @JsonProperty("person")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     PersonResponseDto person;
 
     @JsonProperty("roles")

@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <Navbar />
+    <Navbar/>
     <v-main>
       <router-view></router-view>
     </v-main>
@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Navbar from "@/components/doctor/DoctorNavbar.vue";
+import Navbar from "@/views/doctor/DoctorNavbar.vue";
 
 export default {
   components: {

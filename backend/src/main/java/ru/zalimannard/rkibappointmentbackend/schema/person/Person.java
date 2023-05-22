@@ -37,6 +37,12 @@ public class Person {
     @Column(name = "patronymic")
     private String patronymic;
 
+    @OneToOne(mappedBy = "person")
+    private Patient patient;
+
+    @OneToOne(mappedBy = "person")
+    private Employee employee;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

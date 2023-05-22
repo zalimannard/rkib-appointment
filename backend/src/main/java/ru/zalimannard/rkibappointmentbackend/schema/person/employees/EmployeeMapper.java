@@ -24,9 +24,12 @@ public class EmployeeMapper {
     }
 
     public EmployeeResponseDto toDto(Employee patient) {
+        if (patient == null) {
+            return null;
+        }
         return EmployeeResponseDto.builder()
                 .id(patient.getId())
-                .person(personMapper.toDto(patient.getPerson()))
+                .person(personMapper.toDto(patient.getPerson(), null, null))
                 .roles(new HashSet<>(patient.getRoles()))
                 .build();
     }

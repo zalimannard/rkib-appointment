@@ -6,6 +6,8 @@ import org.springframework.validation.annotation.Validated;
 import ru.zalimannard.rkibappointmentbackend.schema.procedures.dto.ProcedureRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.procedures.dto.ProcedureResponseDto;
 
+import java.util.List;
+
 @Validated
 public interface ProcedureService {
 
@@ -17,6 +19,10 @@ public interface ProcedureService {
     ProcedureResponseDto read(@NotNull String id);
 
     Procedure readEntity(@NotNull String id);
+
+    List<ProcedureResponseDto> readAll();
+
+    List<Procedure> readAllEntities();
 
 
     ProcedureResponseDto update(@NotNull String id, @NotNull @Valid ProcedureRequestDto procedureDto);

@@ -4,6 +4,8 @@ import org.springframework.stereotype.Component;
 import ru.zalimannard.rkibappointmentbackend.schema.procedures.dto.ProcedureRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.procedures.dto.ProcedureResponseDto;
 
+import java.util.List;
+
 @Component
 public class ProcedureMapper {
 
@@ -20,4 +22,7 @@ public class ProcedureMapper {
                 .build();
     }
 
+    public List<ProcedureResponseDto> toDtoList(List<Procedure> procedures) {
+        return procedures.stream().map(this::toDto).toList();
+    }
 }

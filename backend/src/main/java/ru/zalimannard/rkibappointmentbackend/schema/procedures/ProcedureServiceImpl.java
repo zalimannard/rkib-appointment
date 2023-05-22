@@ -8,6 +8,8 @@ import ru.zalimannard.rkibappointmentbackend.exception.NotFoundException;
 import ru.zalimannard.rkibappointmentbackend.schema.procedures.dto.ProcedureRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.procedures.dto.ProcedureResponseDto;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ProcedureServiceImpl implements ProcedureService {
@@ -41,6 +43,17 @@ public class ProcedureServiceImpl implements ProcedureService {
     public Procedure readEntity(String id) {
         return repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("prs-02", "Не найден Procedure с id=" + id, null));
+    }
+
+    @Override
+    public List<ProcedureResponseDto> readAll() {
+        List<Procedure> procedures = readAllEntities();
+        return mapper.toDtoList(procedures);
+    }
+
+    @Override
+    public List<Procedure> readAllEntities() {
+        return repository.findAll();
     }
 
     @Override

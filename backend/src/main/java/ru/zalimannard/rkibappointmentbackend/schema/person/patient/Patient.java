@@ -3,11 +3,9 @@ package ru.zalimannard.rkibappointmentbackend.schema.person.patient;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
-import org.springframework.format.annotation.DateTimeFormat;
 import ru.zalimannard.rkibappointmentbackend.schema.person.Person;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -19,21 +17,17 @@ import java.util.Objects;
 @AllArgsConstructor
 public class Patient {
 
+    @Column(name = "birthdate")
+    LocalDate birthdate;
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private String id;
-
     @OneToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id", nullable = false)
     private Person person;
-
     @Column(name = "phoneNumber", nullable = false)
     private String phoneNumber;
-
-    @Column(name = "birthdate")
-    LocalDate birthdate;
-
     @Column(name = "address")
     private String address;
 

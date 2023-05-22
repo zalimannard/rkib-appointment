@@ -8,6 +8,8 @@ import ru.zalimannard.rkibappointmentbackend.exception.NotFoundException;
 import ru.zalimannard.rkibappointmentbackend.schema.institution.dto.InstitutionRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.institution.dto.InstitutionResponseDto;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class InstitutionServiceImpl implements InstitutionService {
@@ -41,6 +43,17 @@ public class InstitutionServiceImpl implements InstitutionService {
     public Institution readEntity(String id) {
         return repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("ins-02", "Не найден Institution с id=" + id, null));
+    }
+
+    @Override
+    public List<InstitutionResponseDto> readAll() {
+        List<Institution> institutions = readAllEntities();
+        return mapper.toDtoList(institutions);
+    }
+
+    @Override
+    public List<Institution> readAllEntities() {
+        return repository.findAll();
     }
 
     @Override

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonResponseDto;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("${application.baseApi}${application.apiV1}${application.endpoint.people}")
 @Tag(name = "Человек")
@@ -20,6 +22,12 @@ public class PersonController {
     @Operation(summary = "Получение человека")
     public PersonResponseDto get(@PathVariable String id) {
         return personService.read(id);
+    }
+
+    @GetMapping
+    @Operation(summary = "Получение всех людей")
+    public List<PersonResponseDto> getAll() {
+        return personService.readAll();
     }
 
     @PostMapping

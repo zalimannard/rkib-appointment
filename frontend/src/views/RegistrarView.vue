@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <Navbar />
+    <Navbar/>
     <v-main>
       <router-view></router-view>
     </v-main>
@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Navbar from "@/components/registrar/RegistrarNavbar.vue";
+import Navbar from "@/views/registrar/RegistrarNavbar.vue";
 
 export default {
   components: {
