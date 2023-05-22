@@ -36,8 +36,11 @@ import CreateInstitutionDialog from "@/components/dialog/InstitutionCreateDialog
 import type {InstitutionResponse} from "@/types/institutions";
 
 export default defineComponent({
-  name: 'AdminInstitution',
-  components: {CreateInstitutionDialog, EntityTableActions, InstitutionTable},
+  components: {
+    CreateInstitutionDialog,
+    EntityTableActions,
+    InstitutionTable
+  },
   setup() {
     const showCreateDialog = ref(false);
     const searchInput = ref({
@@ -47,7 +50,6 @@ export default defineComponent({
     const valid = ref(true);
 
     const updateSearchInput = (value: InstitutionResponse) => {
-      console.log("updateSearchInput " + value.name)
       searchInput.value = value;
     };
 

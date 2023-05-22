@@ -5,7 +5,7 @@
       <tr>
         <th class="text-left" scope="col">
           <masked-text-field
-              v-model="appointmentStatus.name"
+              v-model="appointmentStatusRequest.name"
               capitalize-first-letter
               class="header-cell"
               density="comfortable"
@@ -15,12 +15,12 @@
         </th>
         <th class="text-left schedule-type-select-field" scope="col">
           <appointment-type-select
-              :status="appointmentStatus.type"
+              :status="appointmentStatusRequest.type"
               :update-search-input="updateSearch"
               class="header-cell"
               density="comfortable"
               include-none
-              @update:status="appointmentStatus.type = $event"
+              @update:status="appointmentStatusRequest.type = $event"
           />
         </th>
       </tr>
@@ -41,15 +41,18 @@
   </custom-table>
 </template>
 
-<script>
-import {requiredRule} from "@/rules";
+<script lang="ts">
+import {defineComponent, ref, watch} from 'vue';
 import MaskedTextField from "@/components/textfield/MaskedTextField.vue";
 import axios from "axios";
 import CustomTable from "@/components/table/CustomTable.vue";
 import {showAlert} from "@/components/alert/AlertState";
+import {checkFilter} from "@/utils";
+import type {AppointmentStatusRequest, AppointmentStatusResponse} from "@/types/appointmentstatus";
+import {onMounted, provide} from "vue-demi";
 import AppointmentTypeSelect from "@/components/select/AppointmentTypeSelect.vue";
 
-export default {
+export default defineComponent({
   components: {
     AppointmentTypeSelect,
     CustomTable,
@@ -57,89 +60,86 @@ export default {
   },
   props: {
     searchInput: {
-      type: String,
-      default: ""
-    }
-  },
-  data() {
-    return {
-      appointmentStatus: this.createDefaultAppointmentStatus(),
-      appointmentStatuses: [],
-      filteredAppointmentStatuses: [],
-      rules: {
-        requiredRule
-      }
-    };
-  },
-  watch: {
-    searchInput: {
-      immediate: true,
-      handler(newVal) {
-        this.appointmentStatus.name = newVal;
-        this.onEditFilter();
-      }
-    }
-  },
-  async created() {
-    await this.requestProcedures();
-  },
-  methods: {
-    createDefaultAppointmentStatus() {
-      return {
-        id: "",
+      type: Object,
+      default: () => ({
         name: "",
-        type: []
-      };
-    },
-    updateSearch() {
-      this.$emit("updateSearchInput", this.appointmentStatus.name);
-      this.onEditFilter();
-    },
-    async requestProcedures() {
+        type: ""
+      })
+    }
+  },
+  setup(props, {emit}) {
+    const appointmentStatusRequest = ref<AppointmentStatusRequest>({
+      name: "",
+      type: ""
+    });
+
+    const appointmentStatuses = ref<AppointmentStatusResponse[]>([]);
+    const filteredAppointmentStatuses = ref<AppointmentStatusResponse[]>([]);
+
+    watch(() => props.searchInput, (newVal) => {
+      appointmentStatusRequest.value.name = newVal.name;
+      appointmentStatusRequest.value.type = newVal.type;
+    }, {immediate: true});
+
+    const requestAppointmentStatus = async () => {
       try {
         let basicAuth = localStorage.getItem("auth");
         const response = await axios.get(import.meta.env.VITE_API_URL + "/api/v1/appointmentStatuses", {
           headers: {"Authorization": "Basic " + basicAuth}
         });
-        this.appointmentStatuses = response.data;
-        await this.onEditFilter();
+        appointmentStatuses.value = response.data;
+        onEditFilter();
       } catch (error) {
         showAlert("error", "Не удалось получить данные")
       }
-    },
+    }
 
-    onEditFilter() {
-      this.filteredAppointmentStatuses = this.filterAppointmentStatuses(this.appointmentStatuses);
-    },
+    onMounted(() => {
+      emit("provideRequestAppointmentStatus", requestAppointmentStatus);
+      requestAppointmentStatus();
+    });
 
-    filterAppointmentStatuses(procedures) {
-      return procedures.filter(procedure => this.filterAppointmentStatus(procedure));
-    },
+    function updateSearch() {
+      emit("updateSearchInput", appointmentStatusRequest.value);
+      onEditFilter();
+    }
 
-    filterAppointmentStatus(appointmentStatus) {
-      const checkFilter = (fieldValue, filterValue) => {
-        if (filterValue === "") return true;
-        if (!fieldValue && filterValue !== "") return false;
-        if (fieldValue && typeof fieldValue === "string" && filterValue && typeof filterValue === "string") {
-          return fieldValue.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1;
-        }
-        return false;
-      };
+    function onEditFilter() {
+      filteredAppointmentStatuses.value = filterAppointmentStatuses(appointmentStatuses.value);
+    }
 
+    function filterAppointmentStatuses(appointmentStatuses: AppointmentStatusResponse[]) {
+      return appointmentStatuses.filter(filterAppointmentStatus);
+    }
+
+    function filterAppointmentStatus(appointmentStatus: AppointmentStatusResponse) {
       return (
-          checkFilter(appointmentStatus.name, this.appointmentStatus.name) &&
-          ((this.appointmentStatus.type.length === 0) ||
-              ((this.appointmentStatus.type.length === 1) && (this.appointmentStatus.type[0].value === null)) ||
-              (this.appointmentStatus.type[0].value === appointmentStatus.type))
+          checkFilter(appointmentStatus.name, appointmentStatusRequest.value.name) &&
+          checkFilter(appointmentStatus.type, appointmentStatusRequest.value.type)
       );
-    },
+    }
 
-    resetFilters() {
-      this.appointmentStatus = this.createDefaultAppointmentStatus()
-      this.onEditFilter();
+    function resetFilters() {
+      appointmentStatusRequest.value = {
+        name: "",
+        type: ""
+      }
+      onEditFilter();
+    }
+
+    provide("requestAppointmentStatus", requestAppointmentStatus);
+
+    return {
+      appointmentStatusRequest,
+      appointmentStatuses,
+      filteredAppointmentStatuses,
+      updateSearch,
+      requestAppointmentStatus,
+      onEditFilter,
+      resetFilters
     }
   }
-};
+});
 </script>
 
 <style scoped>

@@ -2,8 +2,9 @@
   <create-appointment-status-dialog
       v-model="showCreateDialog"
       :close-dialog="closeDialog"
-      :on-create-entity="onCreateEntity"
-      :search-input="searchInput"
+      :institution-request="searchInput"
+      @institutionCreated="onAppointmentStatusCreated"
+      @provideSetData="onProvideSetData"
       @updateSearchInput="updateSearchInput"
   />
 
@@ -16,43 +17,85 @@
         />
       </v-row>
       <v-row>
-        <appointment-status-table ref="procedureTable" @updateSearchInput="updateSearchInput"/>
+        <appointment-status-table
+            ref="institutionTable"
+            @provideRequestAppointmentStatus="onProvideRequestAppointmentStatus"
+            @requestAppointmentStatus="onAppointmentStatusCreated"
+            @updateSearchInput="updateSearchInput"
+        />
       </v-row>
     </v-col>
   </v-container>
 </template>
 
-<script>
-import InstitutionTable from "@/components/table/InstitutionTable.vue";
+<script lang="ts">
+import {defineComponent, ref} from 'vue';
 import EntityTableActions from "@/components/table/EntityTableActions.vue";
 import CreateAppointmentStatusDialog from "@/components/dialog/AppointmentStatusCreateDialog.vue";
 import AppointmentStatusTable from "@/components/table/AppointmentStatusTable.vue";
+import type {AppointmentStatusResponse} from "@/types/appointmentstatus";
 
-export default {
-  components: {AppointmentStatusTable, CreateAppointmentStatusDialog, EntityTableActions, InstitutionTable},
-  data() {
-    return {
-      showCreateDialog: false,
-      searchInput: "",
-      valid: true
-    };
+export default defineComponent({
+  components: {
+    AppointmentStatusTable,
+    CreateAppointmentStatusDialog,
+    EntityTableActions
   },
-  methods: {
-    updateSearchInput(value) {
-      this.searchInput = value;
-    },
-    onCreateEntity() {
-      this.showCreateDialog = false;
-      this.$refs.procedureTable.requestProcedures();
-    },
-    openCreateDialog() {
-      this.showCreateDialog = true;
-    },
-    closeDialog() {
-      this.showCreateDialog = false;
-    }
+  setup() {
+    const showCreateDialog = ref(false);
+    const searchInput = ref({
+      id: "",
+      name: "",
+      type: "",
+    } as AppointmentStatusResponse);
+    const valid = ref(true);
+
+    const updateSearchInput = (value: AppointmentStatusResponse) => {
+      searchInput.value = value;
+    };
+
+    let requestAppointmentStatus: (() => Promise<void>) | undefined;
+    let setData: ((arg: AppointmentStatusResponse) => Promise<void>) | undefined;
+
+    const onAppointmentStatusCreated = () => {
+      closeDialog()
+      if (requestAppointmentStatus) {
+        requestAppointmentStatus();
+      }
+    };
+
+    const onProvideRequestAppointmentStatus = (func: () => Promise<void>) => {
+      requestAppointmentStatus = func;
+    };
+
+    const onProvideSetData = (func: () => Promise<void>) => {
+      setData = func;
+    };
+
+    const openCreateDialog = () => {
+      if (setData) {
+        setData(searchInput.value);
+      }
+      showCreateDialog.value = true;
+    };
+
+    const closeDialog = () => {
+      showCreateDialog.value = false;
+    };
+
+    return {
+      showCreateDialog,
+      searchInput,
+      valid,
+      updateSearchInput,
+      openCreateDialog,
+      closeDialog,
+      onAppointmentStatusCreated,
+      onProvideRequestAppointmentStatus,
+      onProvideSetData
+    };
   }
-};
+});
 </script>
 
 <style scoped>

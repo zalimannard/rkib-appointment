@@ -32,7 +32,6 @@
 
 <script lang="ts">
 import {defineComponent, ref, watch} from 'vue';
-import {requiredRule} from "@/rules";
 import MaskedTextField from "@/components/textfield/MaskedTextField.vue";
 import axios from "axios";
 import CustomTable from "@/components/table/CustomTable.vue";
@@ -50,7 +49,7 @@ export default defineComponent({
     searchInput: {
       type: Object,
       default: () => ({
-        name: ''
+        name: ""
       })
     }
   },
@@ -67,10 +66,6 @@ export default defineComponent({
       onEditFilter();
     }, {immediate: true});
 
-    const rules = {
-      requiredRule
-    };
-
     const requestInstitution = async () => {
       try {
         let basicAuth = localStorage.getItem("auth");
@@ -85,7 +80,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      emit('provideRequestInstitution', requestInstitution);
+      emit("provideRequestInstitution", requestInstitution);
       requestInstitution();
     });
 
@@ -115,13 +110,12 @@ export default defineComponent({
       onEditFilter();
     }
 
-    provide('requestInstitution', requestInstitution);
+    provide("requestInstitution", requestInstitution);
 
     return {
       institutionRequest,
       institutions,
       filteredInstitutions,
-      rules,
       updateSearch,
       requestInstitution,
       onEditFilter,

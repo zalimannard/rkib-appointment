@@ -2,87 +2,133 @@
   <base-dialog
       v-model="internalValue"
       :close-dialog="closeDialog"
-      :ok-dialog="createProcedure"
+      :ok-dialog="createAppointmentStatus"
       ok-button-text="Создать"
       title="Создание нового статуса обращений"
   >
-    <masked-text-field
-        v-model="institution.inputName"
-        :rules="rules.requiredRule"
-        capitalize-first-letter
-        label="Название"
-        required-asterisk
-    />
+    <v-col>
+      <v-row>
+        <masked-text-field
+            v-model="appointmentStatusName"
+            :rules="rules.requiredRule"
+            capitalize-first-letter
+            label="Название"
+            required-asterisk
+        />
+      </v-row>
+      <v-row>
+        <appointment-type-select
+            :status="appointmentStatusTypeName"
+            update-search-input=""
+        />
+      </v-row>
+    </v-col>
   </base-dialog>
 </template>
 
-<script>
+<script lang="ts">
+import {computed, defineComponent, ref} from 'vue';
 import MaskedTextField from "@/components/textfield/MaskedTextField.vue";
 import {requiredRule} from "@/rules";
 import BaseDialog from "@/components/dialog/BaseDialog.vue";
 import axios from "axios";
 import {showAlert} from "@/components/alert/AlertState";
+import type {AppointmentStatusRequest, AppointmentStatusResponse} from "@/types/appointmentstatus";
+import {onMounted, provide} from "vue-demi";
+import AppointmentTypeSelect from "@/components/select/AppointmentTypeSelect.vue";
 
-export default {
-  components: {BaseDialog, MaskedTextField},
+export default defineComponent({
+  components: {
+    AppointmentTypeSelect,
+    BaseDialog,
+    MaskedTextField
+  },
   props: {
     value: Boolean,
-    searchInput: String,
-    onCreateEntity: {
-      type: Function,
-      required: false
-    },
     closeDialog: {
       type: Function,
       required: true
     }
   },
-  data() {
-    return {
-      institution: {
-        inputName: this.searchInput
-      },
-      rules: {
-        requiredRule
-      }
+
+  setup(props, {emit}) {
+    const appointmentStatus = ref<AppointmentStatusRequest>();
+
+    const rules = {
+      requiredRule
     };
-  },
-  methods: {
-    createProcedure() {
+
+    const setData = (data: AppointmentStatusResponse) => {
+      appointmentStatus.value = {
+        ...appointmentStatus.value,
+        name: data.name,
+        type: data.type
+      };
+    }
+
+    const appointmentStatusName = computed({
+      get: () => appointmentStatus.value?.name || "",
+      set: (value) => {
+        appointmentStatus.value = {...appointmentStatus.value, name: value};
+      }
+    });
+
+    const appointmentStatusTypeName = computed({
+      get: () => appointmentStatus.value?.name || "",
+      set: (value) => {
+        appointmentStatus.value = {...appointmentStatus.value, type: value};
+      }
+    });
+
+    function createAppointmentStatus() {
       let basicAuth = localStorage.getItem("auth");
       axios({
         method: "post",
         url: import.meta.env.VITE_API_URL + "/api/v1/appointmentStatuses",
         headers: {"Authorization": "Basic " + basicAuth},
         data: {
-          name: this.institution.inputName
+          name: appointmentStatus.value?.name,
+          type: appointmentStatus.value?.type
         }
       }).then(() => {
         showAlert("success", "Статус обращений успешно создан");
-        this.onCreateEntity();
-      }).catch(() => {
+        emit("appointmentStatusCreated")
+      }).catch((error) => {
+        console.error(error)
         showAlert("error", "Ошибка при добавлении статуса обращений");
       });
-      this.$emit("updateSearchInput", this.institution.inputName);
+      emit("updateSearchInput", appointmentStatus.value);
     }
-  },
-  computed: {
-    internalValue: {
-      get() {
-        return this.value;
-      },
-      set(val) {
-        this.$emit("input", val);
+
+    onMounted(() => {
+      emit("provideSetData", setData);
+    });
+
+    const internalValue = computed({
+      get: () => props.value,
+      set: (val) => {
+        emit("input", val);
         if (!val) {
-          this.$emit("updateSearchInput", this.institution.inputName);
+          emit("updateSearchInput", appointmentStatus.value);
         }
       }
-    }
-  },
-  watch: {
-    searchInput(newVal) {
-      this.institution.inputName = newVal;
-    }
+    });
+
+    provide("setData", setData);
+
+    return {
+      appointmentStatus,
+      rules,
+      internalValue,
+      appointmentStatusName,
+      appointmentStatusTypeName,
+      createAppointmentStatus,
+      setData
+    };
   }
-};
+});
 </script>
+
+<style scoped>
+
+</style>

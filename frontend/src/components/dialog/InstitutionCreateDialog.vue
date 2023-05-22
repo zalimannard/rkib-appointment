@@ -27,7 +27,10 @@ import type {InstitutionRequest, InstitutionResponse} from "@/types/institutions
 import {onMounted, provide} from "vue-demi";
 
 export default defineComponent({
-  components: {BaseDialog, MaskedTextField},
+  components: {
+    BaseDialog,
+    MaskedTextField
+  },
   props: {
     value: Boolean,
     closeDialog: {
@@ -68,7 +71,7 @@ export default defineComponent({
         }
       }).then(() => {
         showAlert("success", "Учреждение успешно создано");
-        emit('institutionCreated');
+        emit("institutionCreated");
       }).catch((error) => {
         console.error(error)
         showAlert("error", "Ошибка при добавлении учреждения");
@@ -77,8 +80,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      console.log("Ура")
-      emit('provideSetData', setData);
+      emit("provideSetData", setData);
     });
 
     const internalValue = computed({
@@ -91,7 +93,7 @@ export default defineComponent({
       }
     });
 
-    provide('setData', setData);
+    provide("setData", setData);
 
     return {
       institution,

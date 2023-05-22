@@ -18,7 +18,7 @@ public class ScheduleStatusMapper {
 
     public ScheduleStatusResponseDto toDto(ScheduleStatus scheduleStatus) {
         return ScheduleStatusResponseDto.builder()
-                .id(scheduleStatus.getId())
+                .id(scheduleStatus.getId())э
                 .type(scheduleStatus.getType())
                 .name(scheduleStatus.getName())
                 .build();

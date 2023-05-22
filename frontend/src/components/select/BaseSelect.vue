@@ -8,7 +8,6 @@
       item-title="text"
       item-value="value"
       persistent-hint
-      return-object
       variant="outlined"
       @update:modelValue="onSelectChange"
   ></v-select>
