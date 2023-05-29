@@ -102,6 +102,7 @@ export default defineComponent({
         showAlert("success", "Статус обращений успешно создан");
         emit("appointmentStatusCreated")
       }).catch((error) => {
+        error.value.
         console.error(error)
         showAlert("error", "Ошибка при добавлении статуса обращений");
       });
