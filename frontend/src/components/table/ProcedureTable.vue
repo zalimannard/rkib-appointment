@@ -37,7 +37,7 @@ import axios from "axios";
 import CustomTable from "@/components/table/CustomTable.vue";
 import {showAlert} from "@/components/alert/AlertState";
 import {checkFilter} from "@/utils";
-import type {ProcedureRequest, ProcedureResponse} from '@/types/procedures';
+import type {ProcedureRequest, ProcedureResponse} from 'src/types/procedure';
 import {onMounted, provide} from "vue-demi";
 
 export default defineComponent({

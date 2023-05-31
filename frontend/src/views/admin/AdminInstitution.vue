@@ -33,7 +33,7 @@ import {defineComponent, ref} from 'vue';
 import InstitutionTable from "@/components/table/InstitutionTable.vue";
 import EntityTableActions from "@/components/table/EntityTableActions.vue";
 import CreateInstitutionDialog from "@/components/dialog/InstitutionCreateDialog.vue";
-import type {InstitutionResponse} from "@/types/institutions";
+import type {InstitutionResponse} from "src/types/institution";
 
 export default defineComponent({
   components: {

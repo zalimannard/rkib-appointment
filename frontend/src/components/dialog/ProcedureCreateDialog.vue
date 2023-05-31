@@ -23,7 +23,7 @@ import {requiredRule} from "@/rules";
 import BaseDialog from "@/components/dialog/BaseDialog.vue";
 import axios from "axios";
 import {showAlert} from "@/components/alert/AlertState";
-import type {ProcedureRequest, ProcedureResponse} from "@/types/procedures";
+import type {ProcedureRequest, ProcedureResponse} from "src/types/procedure";
 import {onMounted, provide} from "vue-demi";
 
 export default defineComponent({

@@ -23,7 +23,7 @@ import {requiredRule} from "@/rules";
 import BaseDialog from "@/components/dialog/BaseDialog.vue";
 import axios from "axios";
 import {showAlert} from "@/components/alert/AlertState";
-import type {InstitutionRequest, InstitutionResponse} from "@/types/institutions";
+import type {InstitutionRequest, InstitutionResponse} from "src/types/institution";
 import {onMounted, provide} from "vue-demi";
 
 export default defineComponent({

@@ -33,7 +33,7 @@ import {defineComponent, ref} from 'vue';
 import ProcedureTable from "@/components/table/ProcedureTable.vue";
 import EntityTableActions from "@/components/table/EntityTableActions.vue";
 import CreateProcedureDialog from "@/components/dialog/ProcedureCreateDialog.vue";
-import type {ProcedureResponse} from "@/types/procedures";
+import type {ProcedureResponse} from "src/types/procedure";
 
 export default defineComponent({
   components: {
