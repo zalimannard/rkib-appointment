@@ -90,6 +90,9 @@
 % Переносы
 \usepackage{microtype}
 
+% Приложения
+\usepackage{appendix}
+
 \begin{document}
 \begin{sloppypar}
     \begin{titlepage}
@@ -1547,12 +1550,30 @@
     
     \newpage
 
-    \subsection{Сборка и развертывание}\label{Реализация. Сборка и развертывание}
+    \subsection{Развёртывание системы}\label{Реализация. Сборка и развертывание}
+    
+    Для каждой из частей приложения есть возможность запустить его через Docker. Образы загружены на DockerHub, то есть их можно удобно загрузить и сразу запустить.
+    
+    Для разворачивания приложения необходим docker-compose. Для начала нужно создать основной файл, где будут указаны контейнеры и их параметры -- docker-compose.yml. Примерное содержимое этого файла представлено в Приложении~1. Далее нужно вставить свои данные, если они нужны, в параметры в environment.
+    
+    Всё, что остаётся делать дальше - запустить приложение командой <<docker-compose up -d>> в консоли и система будет готова к работе.
 
     \newpage
 
     \section*{Заключение}
     \addcontentsline{toc}{section}{Заключение}
+    
+    Результатом работы является разработанное клиент-серверное приложение для записи на приём в медицинское учреждение.
+    
+    Для реализации изучены предметная область больницы на примере РКИБ, освоены теоретические и практические навыки по написанию частей клиент-серверного приложения. 
+    
+    Серверная часть разработана на Java с помощью фреймворка Spring. В качестве базы данных используется Oracle, работа с ней осуществляется через JPA. С помощью подхода TDD и инструмента RestAssured написаны интеграционные тесты и код, реализующий API для них.
+    
+    Клиентская часть разработана на языке TypeScript с использованием фреймворка Vue и фреймворка компонентов Vuetify. Протестировано с помощью Selenide и ошибки визуализируются с помощью aShot.
+    
+    Разворачиваются части приложения с помощью Docker. Написана подробная инструкция по разворачиванию приложения на любом компьютере с Docker и docker-compose.
+    
+    Исходный код всех частей приложения, тестов, а также этого текста находится на GitHub: https://github.com/zalimannard/rkib-appointment
 
     \newpage
 
@@ -1566,48 +1587,53 @@
     
     \newpage
     
-    \appendix
+    \pagenumbering{gobble}
     
-    \section*{Приложение А}
-    \addcontentsline{toc}{section}{Приложение А}
-    
-    \begin{lstlisting}[]
-    version: "3.9"
-    services:
-      database:
-        image: gvenzl/oracle-xe:21-slim
-        container_name: rkib-appointment-db
-        ports:
-          - 1521:1521
-        environment:
-          ORACLE_PASSWORD: root
-          ORACLE_DATABASE: rkib-appointment-db
-          APP_USER: dbuser
-          APP_USER_PASSWORD: dbuser
-      backend:
-        image: zalimannard/rkib-appointment-backend
-        container_name: rkib-appointment-backend
-        ports:
-          - "8080:8080"
-        depends_on:
-          - database
-        environment:
-          - DB_URL=dbc:oracle:thin://database:1521/rkib-appointment-db
-          - DB_USER=dbuser
-          - DB_PASSWORD=dbuser
-          - DDL_BEHAVIOUR=update
-          - ADMIN_USERNAME=admin
-          - ADMIN_PASSWORD=admin
-      frontend:
-        image: zalimannard/rkib-appointment-frontend
-        container_name: rkib-appointment-frontend
-        ports:
-          - "8090:8090"
-        depends_on:
-          - backend
-        environment:
-          VITE_API_URL: http://backend:8080
-    \end{lstlisting}
+    \titleformat{\section}
+    {\raggedleft\normalfont\bfseries}{\thesection. }{0em}{}
+    \begin{appendices}
+        \renewcommand{\thesection}{Приложение \arabic{section}}
+        \section*{Приложение 1. Код файла docker-compose.yml}\label{dockercomposeyml}
+        \setcounter{section}{1}
+        \addcontentsline{toc}{section}{Приложение \arabic{section}}
+        \begin{lstlisting}[label=as,caption=nide]
+        version: "3.9"
+        services:
+          database:
+            image: gvenzl/oracle-xe:21-slim
+            container_name: rkib-appointment-db
+            ports:
+              - 1521:1521
+            environment:
+              ORACLE_PASSWORD: root
+              ORACLE_DATABASE: rkib-appointment-db
+              APP_USER: dbuser
+              APP_USER_PASSWORD: dbuser
+          backend:
+            image: zalimannard/rkib-appointment-backend
+            container_name: rkib-appointment-backend
+            ports:
+              - "8080:8080"
+            depends_on:
+              - database
+            environment:
+              - DB_URL=dbc:oracle:thin://database:1521/rkib-appointment-db
+              - DB_USER=dbuser
+              - DB_PASSWORD=dbuser
+              - DDL_BEHAVIOUR=update
+              - ADMIN_USERNAME=admin
+              - ADMIN_PASSWORD=admin
+          frontend:
+            image: zalimannard/rkib-appointment-frontend
+            container_name: rkib-appointment-frontend
+            ports:
+              - "8090:8090"
+            depends_on:
+              - backend
+            environment:
+              VITE_API_URL: http://backend:8080
+        \end{lstlisting}
+    \end{appendices}
 
 \end{sloppypar}
 \end{document}
