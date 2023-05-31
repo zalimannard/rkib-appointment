@@ -5,7 +5,7 @@
       <tr>
         <th class="text-left fixed-col" scope="col">
           <masked-text-field
-              v-model="procedure.name"
+              v-model="procedureRequest.name"
               capitalize-first-letter
               class="header-cell"
               density="comfortable"
@@ -30,99 +30,99 @@
   </custom-table>
 </template>
 
-<script>
-import {requiredRule} from "@/rules";
+<script lang="ts">
+import {defineComponent, ref, watch} from 'vue';
 import MaskedTextField from "@/components/textfield/MaskedTextField.vue";
 import axios from "axios";
 import CustomTable from "@/components/table/CustomTable.vue";
 import {showAlert} from "@/components/alert/AlertState";
+import {checkFilter} from "@/utils";
+import type {ProcedureRequest, ProcedureResponse} from '@/types/procedures';
+import {onMounted, provide} from "vue-demi";
 
-export default {
+export default defineComponent({
   components: {
     CustomTable,
     MaskedTextField
   },
   props: {
     searchInput: {
-      type: String,
-      default: ""
-    }
-  },
-  data() {
-    return {
-      procedure: {
-        id: "",
+      type: Object,
+      default: () => ({
         name: ""
-      },
-      procedures: [],
-      filteredProcedures: [],
-      rules: {
-        requiredRule
-      }
-    };
-  },
-  watch: {
-    searchInput: {
-      immediate: true,
-      handler(newVal) {
-        this.procedure.name = newVal;
-        this.onEditFilter();
-      }
+      })
     }
   },
-  async created() {
-    await this.requestProcedures();
-  },
-  methods: {
-    updateSearch() {
-      this.$emit("updateSearchInput", this.procedure.name);
-      this.onEditFilter();
-    },
-    async requestProcedures() {
+  setup(props, {emit}) {
+    const procedureRequest = ref<ProcedureRequest>({
+      name: props.searchInput.name
+    });
+
+    const procedures = ref<ProcedureResponse[]>([]);
+    const filteredProcedures = ref<ProcedureResponse[]>([]);
+
+    watch(() => props.searchInput, (newVal) => {
+      procedureRequest.value.name = newVal.name;
+      onEditFilter();
+    }, {immediate: true});
+
+    const requestProcedure = async () => {
       try {
         let basicAuth = localStorage.getItem("auth");
         const response = await axios.get(import.meta.env.VITE_API_URL + "/api/v1/procedures", {
           headers: {"Authorization": "Basic " + basicAuth}
         });
-        this.procedures = response.data;
-        await this.onEditFilter();
+        procedures.value = response.data;
+        onEditFilter();
       } catch (error) {
-        showAlert("error", "Не удалось получить данные")
+        showAlert("error", "Не удалось получить данные");
       }
-    },
+    }
 
-    onEditFilter() {
-      this.filteredProcedures = this.filterProcedures(this.procedures);
-    },
+    onMounted(() => {
+      emit("provideRequestProcedure", requestProcedure);
+      requestProcedure();
+    });
 
-    filterProcedures(procedures) {
-      return procedures.filter(procedure => this.filterProcedure(procedure));
-    },
+    function updateSearch() {
+      emit("updateSearchInput", procedureRequest.value);
+      onEditFilter();
+    }
 
-    filterProcedure(procedure) {
-      const checkFilter = (fieldValue, filterValue) => {
-        if (filterValue === "") return true;
-        if (!fieldValue && filterValue !== "") return false;
-        if (fieldValue && typeof fieldValue === "string" && filterValue && typeof filterValue === "string") {
-          return fieldValue.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1;
-        }
-        return false;
-      };
+    function onEditFilter() {
+      filteredProcedures.value = filterProcedures(procedures.value);
+    }
 
+    function filterProcedures(procedures: ProcedureResponse[]) {
+      return procedures.filter(filterProcedure);
+    }
+
+    function filterProcedure(procedure: ProcedureResponse) {
       return (
-          checkFilter(procedure.name, this.procedure.name)
+          checkFilter(procedure.name, procedureRequest.value.name)
       );
-    },
+    }
 
-    resetFilters() {
-      this.procedure = {
-        id: "",
+    function resetFilters() {
+      procedureRequest.value = {
         name: ""
       };
-      this.onEditFilter();
+      onEditFilter();
     }
-  }
-};
+
+    provide("requestProcedure", requestProcedure);
+
+    return {
+      procedureRequest,
+      procedures,
+      filteredProcedures,
+      updateSearch,
+      requestProcedure,
+      onEditFilter,
+      resetFilters
+    };
+  },
+});
 </script>
 
 <style scoped>

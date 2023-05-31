@@ -3,21 +3,22 @@
       :density="density"
       :items="availableStatuses"
       :onChange="onSelectChange"
-      :selected="status"
+      :selected="statusAsArray"
       label="Статус"
   ></base-select>
 </template>
 
-<script>
+<script lang="ts">
+import {defineComponent} from 'vue'
 import BaseSelect from './BaseSelect.vue'
 
-export default {
+export default defineComponent({
   components: {
     BaseSelect,
   },
   props: {
     status: {
-      type: Array,
+      type: String,
       required: true,
     },
     includeNone: {
@@ -26,11 +27,11 @@ export default {
     },
     density: {
       type: String,
-      default: "default"
+      default: "default",
     },
     updateSearchInput: {
       type: Function,
-      required: true,
+      required: false,
     },
   },
   data() {
@@ -42,18 +43,23 @@ export default {
       ],
     };
   },
+  computed: {
+    statusAsArray() {
+      return [this.status];
+    },
+  },
   created() {
     if (this.includeNone) {
-      this.availableStatuses.reverse();
-      this.availableStatuses.push({text: "Не выбрано", value: null});
-      this.availableStatuses.reverse();
+      this.availableStatuses.unshift({text: "Не выбрано", value: ""});
     }
   },
   methods: {
-    onSelectChange(statuses) {
-      this.$emit('update:status', statuses);
-      this.updateSearchInput();
+    onSelectChange(statuses: string[]) {
+      this.$emit('update:status', statuses[0] || '');
+      if (this.updateSearchInput) {
+        this.updateSearchInput();
+      }
     },
   },
-};
+});
 </script>

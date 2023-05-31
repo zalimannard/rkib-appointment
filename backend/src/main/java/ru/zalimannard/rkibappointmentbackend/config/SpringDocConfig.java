@@ -12,7 +12,7 @@ public class SpringDocConfig {
     public OpenAPI apiInfo() {
         return new OpenAPI().info(new Info()
                 .title("API для проекта \"Система записи в медицинское учреждение\"")
-                .version("1"));
+                .version("1.0"));
     }
 
 }

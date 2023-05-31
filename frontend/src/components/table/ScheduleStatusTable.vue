@@ -5,7 +5,7 @@
       <tr>
         <th class="text-left" scope="col">
           <masked-text-field
-              v-model="scheduleStatus.name"
+              v-model="scheduleStatusRequest.name"
               capitalize-first-letter
               class="header-cell"
               density="comfortable"
@@ -15,12 +15,12 @@
         </th>
         <th class="text-left schedule-type-select-field" scope="col">
           <schedule-type-select
-              :status="scheduleStatus.type"
+              :status="scheduleStatusRequest.type"
               :update-search-input="updateSearch"
               class="header-cell"
               density="comfortable"
               include-none
-              @update:status="scheduleStatus.type = $event"
+              @update:status="scheduleStatusRequest.type = $event"
           />
         </th>
       </tr>
@@ -41,15 +41,18 @@
   </custom-table>
 </template>
 
-<script>
-import {requiredRule} from "@/rules";
+<script lang="ts">
+import {defineComponent, ref, watch} from 'vue';
 import MaskedTextField from "@/components/textfield/MaskedTextField.vue";
 import axios from "axios";
 import CustomTable from "@/components/table/CustomTable.vue";
 import {showAlert} from "@/components/alert/AlertState";
+import {checkFilter} from "@/utils";
+import type {ScheduleStatusRequest, ScheduleStatusResponse} from "@/types/schedulestatus";
+import {onMounted, provide} from "vue-demi";
 import ScheduleTypeSelect from "@/components/select/ScheduleTypeSelect.vue";
 
-export default {
+export default defineComponent({
   components: {
     ScheduleTypeSelect,
     CustomTable,
@@ -57,89 +60,86 @@ export default {
   },
   props: {
     searchInput: {
-      type: String,
-      default: ""
-    }
-  },
-  data() {
-    return {
-      scheduleStatus: this.createDefaultScheduleStatus(),
-      scheduleStatuses: [],
-      filteredScheduleStatuses: [],
-      rules: {
-        requiredRule
-      }
-    };
-  },
-  watch: {
-    searchInput: {
-      immediate: true,
-      handler(newVal) {
-        this.scheduleStatus.name = newVal;
-        this.onEditFilter();
-      }
-    }
-  },
-  async created() {
-    await this.requestProcedures();
-  },
-  methods: {
-    createDefaultScheduleStatus() {
-      return {
-        id: "",
+      type: Object,
+      default: () => ({
         name: "",
-        type: []
-      };
-    },
-    updateSearch() {
-      this.$emit("updateSearchInput", this.scheduleStatus.name);
-      this.onEditFilter();
-    },
-    async requestProcedures() {
+        type: ""
+      })
+    }
+  },
+  setup(props, {emit}) {
+    const scheduleStatusRequest = ref<ScheduleStatusRequest>({
+      name: "",
+      type: ""
+    });
+
+    const scheduleStatuses = ref<ScheduleStatusResponse[]>([]);
+    const filteredScheduleStatuses = ref<ScheduleStatusResponse[]>([]);
+
+    watch(() => props.searchInput, (newVal) => {
+      scheduleStatusRequest.value.name = newVal.name;
+      scheduleStatusRequest.value.type = newVal.type;
+    }, {immediate: true});
+
+    const requestScheduleStatus = async () => {
       try {
         let basicAuth = localStorage.getItem("auth");
         const response = await axios.get(import.meta.env.VITE_API_URL + "/api/v1/scheduleStatuses", {
           headers: {"Authorization": "Basic " + basicAuth}
         });
-        this.scheduleStatuses = response.data;
-        await this.onEditFilter();
+        scheduleStatuses.value = response.data;
+        onEditFilter();
       } catch (error) {
         showAlert("error", "Не удалось получить данные")
       }
-    },
+    }
 
-    onEditFilter() {
-      this.filteredScheduleStatuses = this.filterScheduleStatuses(this.scheduleStatuses);
-    },
+    onMounted(() => {
+      emit("provideRequestScheduleStatus", requestScheduleStatus);
+      requestScheduleStatus();
+    });
 
-    filterScheduleStatuses(procedures) {
-      return procedures.filter(procedure => this.filterScheduleStatus(procedure));
-    },
+    function updateSearch() {
+      emit("updateSearchInput", scheduleStatusRequest.value);
+      onEditFilter();
+    }
 
-    filterScheduleStatus(scheduleStatus) {
-      const checkFilter = (fieldValue, filterValue) => {
-        if (filterValue === "") return true;
-        if (!fieldValue && filterValue !== "") return false;
-        if (fieldValue && typeof fieldValue === "string" && filterValue && typeof filterValue === "string") {
-          return fieldValue.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1;
-        }
-        return false;
-      };
+    function onEditFilter() {
+      filteredScheduleStatuses.value = filterScheduleStatuses(scheduleStatuses.value);
+    }
 
+    function filterScheduleStatuses(scheduleStatuses: ScheduleStatusResponse[]) {
+      return scheduleStatuses.filter(filterScheduleStatus);
+    }
+
+    function filterScheduleStatus(scheduleStatus: ScheduleStatusResponse) {
       return (
-          checkFilter(scheduleStatus.name, this.scheduleStatus.name) &&
-          ((this.scheduleStatus.type.length === 0) ||
-              ((this.scheduleStatus.type.length === 1) && (this.scheduleStatus.type[0].value === null)) ||
-              (this.scheduleStatus.type[0].value === scheduleStatus.type))
+          checkFilter(scheduleStatus.name, scheduleStatusRequest.value.name) &&
+          checkFilter(scheduleStatus.type, scheduleStatusRequest.value.type)
       );
-    },
+    }
 
-    resetFilters() {
-      this.scheduleStatus = this.createDefaultScheduleStatus()
-      this.onEditFilter();
+    function resetFilters() {
+      scheduleStatusRequest.value = {
+        name: "",
+        type: ""
+      }
+      onEditFilter();
+    }
+
+    provide("requestScheduleStatus", requestScheduleStatus);
+
+    return {
+      scheduleStatusRequest,
+      scheduleStatuses,
+      filteredScheduleStatuses,
+      updateSearch,
+      requestScheduleStatus,
+      onEditFilter,
+      resetFilters
     }
   }
-};
+});
 </script>
 
 <style scoped>

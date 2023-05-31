@@ -2,8 +2,9 @@
   <create-procedure-dialog
       v-model="showCreateDialog"
       :close-dialog="closeDialog"
-      :on-create-entity="onCreateEntity"
-      :search-input="searchInput"
+      :procedure-request="searchInput"
+      @procedureCreated="onProcedureCreated"
+      @provideSetData="onProvideSetData"
       @updateSearchInput="updateSearchInput"
   />
 
@@ -16,42 +17,84 @@
         />
       </v-row>
       <v-row>
-        <procedure-table ref="procedureTable" @updateSearchInput="updateSearchInput"/>
+        <procedure-table
+            ref="procedureTable"
+            @provideRequestProcedure="onProvideRequestProcedure"
+            @requestProcedure="onProcedureCreated"
+            @updateSearchInput="updateSearchInput"
+        />
       </v-row>
     </v-col>
   </v-container>
 </template>
 
-<script>
+<script lang="ts">
+import {defineComponent, ref} from 'vue';
 import ProcedureTable from "@/components/table/ProcedureTable.vue";
 import EntityTableActions from "@/components/table/EntityTableActions.vue";
-import CreateProcedureDialog from "@/components/dialog/CreateProcedureDialog.vue";
+import CreateProcedureDialog from "@/components/dialog/ProcedureCreateDialog.vue";
+import type {ProcedureResponse} from "@/types/procedures";
 
-export default {
-  components: {CreateProcedureDialog, EntityTableActions, ProcedureTable},
-  data() {
+export default defineComponent({
+  components: {
+    CreateProcedureDialog,
+    EntityTableActions,
+    ProcedureTable
+  },
+  setup() {
+    const showCreateDialog = ref(false);
+    const searchInput = ref({
+      id: "",
+      name: ""
+    } as ProcedureResponse);
+    const valid = ref(true);
+
+    const updateSearchInput = (value: ProcedureResponse) => {
+      searchInput.value = value;
+    };
+
+    let requestProcedure: (() => Promise<void>) | undefined;
+    let setData: ((arg: ProcedureResponse) => Promise<void>) | undefined;
+
+    const onProcedureCreated = () => {
+      closeDialog()
+      if (requestProcedure) {
+        requestProcedure();
+      }
+    };
+
+    const onProvideRequestProcedure = (func: () => Promise<void>) => {
+      requestProcedure = func;
+    };
+
+    const onProvideSetData = (func: () => Promise<void>) => {
+      setData = func;
+    };
+
+    const openCreateDialog = () => {
+      if (setData) {
+        setData(searchInput.value);
+      }
+      showCreateDialog.value = true;
+    };
+
+    const closeDialog = () => {
+      showCreateDialog.value = false;
+    };
+
     return {
-      showCreateDialog: false,
-      searchInput: "",
-      valid: true
+      showCreateDialog,
+      searchInput,
+      valid,
+      updateSearchInput,
+      openCreateDialog,
+      closeDialog,
+      onProcedureCreated,
+      onProvideRequestProcedure,
+      onProvideSetData
     };
   },
-  methods: {
-    updateSearchInput(value) {
-      this.searchInput = value;
-    },
-    onCreateEntity() {
-      this.showCreateDialog = false;
-      this.$refs.procedureTable.requestProcedures();
-    },
-    openCreateDialog() {
-      this.showCreateDialog = true;
-    },
-    closeDialog() {
-      this.showCreateDialog = false;
-    }
-  }
-};
+});
 </script>
 
 <style scoped>
