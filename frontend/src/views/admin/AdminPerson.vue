@@ -29,7 +29,7 @@
 <script>
 import EntityTableActions from "@/components/table/EntityTableActions.vue";
 import PersonTable from "@/components/table/PersonTable.vue";
-import CreatePersonDialog from "@/components/dialog/CreatePersonDialogAdmin.vue";
+import CreatePersonDialog from "@/components/dialog/PersonCreateDialog.vue";
 
 export default {
   components: {CreatePersonDialog, PersonTable, EntityTableActions},

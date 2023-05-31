@@ -69,7 +69,7 @@ export default defineComponent({
     const appointmentStatusName = computed({
       get: () => appointmentStatus.value?.name || "",
       set: (value) => {
-        let typeValue = '';
+        let typeValue = "";
         if (appointmentStatus.value) {
           typeValue = appointmentStatus.value.type;
         }
@@ -80,7 +80,7 @@ export default defineComponent({
     const appointmentStatusTypeName = computed({
       get: () => appointmentStatus.value?.type || "",
       set: (value) => {
-        let nameValue = '';
+        let nameValue = "";
         if (appointmentStatus.value) {
           nameValue = appointmentStatus.value.name;
         }
