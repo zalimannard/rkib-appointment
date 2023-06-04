@@ -75,17 +75,24 @@
 % Листинги
 \usepackage{listings}
 \usepackage{caption}
-
-\lstdefinestyle{code}{
+\usepackage{xcolor}
+\definecolor{intellijgreen}{RGB}{106,135,89}
+\definecolor{intellijorange}{RGB}{204,120,50}
+\lstset{
     frame=single,
     breaklines=true,
-    captionpos=b,
-    basicstyle=\small\sffamily,
-    numbers=left,
     captionpos=t,
-    numbersep=-15pt,
+    numbersep=-14pt,
+    numbers=left,
+    numberstyle=\fontsize{12}{14}\selectfont,
+    stepnumber=1,
+    language=Java,
+    basicstyle=\fontsize{12}{14}\selectfont\ttfamily,
+    keywordstyle=\color{intellijorange},
+    commentstyle=\color{gray},
+    stringstyle=\color{intellijgreen},
+    showstringspaces=false,
 }
-\lstset{style=code}
 
 % Переносы
 \usepackage{microtype}
@@ -790,7 +797,7 @@
     Стандартные форматы ошибок могут отличаться от фреймворка к фреймворку, что уменьшает гибкость приложения. Дополнительно, не каждый формат ошибок подходит для каждого приложения -- в некоторых много избыточной информации, в некоторых её недостаточно. Хорошей практикой является написание своих формат ошибок~\cite{httpadderrors}, поэтому для приложения был разработан формат ошибок, использующий JSON. Представлен на Листинге~\ref{errformat}.
     
     \newpage
-
+    
     \begin{lstlisting}[label=errformat,caption=Формат ошибок]
     {
         httpCode: "",
