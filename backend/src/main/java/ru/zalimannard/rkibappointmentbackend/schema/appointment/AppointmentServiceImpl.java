@@ -72,6 +72,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public Appointment updateEntity(Appointment appointment) {
         try {
+            read(appointment.getId());
             return repository.save(appointment);
         } catch (DataIntegrityViolationException e) {
             throw new ConflictException("aps-03", "Конфликт при обновлении Appointment в базе данных", e.getMessage());

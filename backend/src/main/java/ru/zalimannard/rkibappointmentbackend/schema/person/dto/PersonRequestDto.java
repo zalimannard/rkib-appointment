@@ -22,7 +22,6 @@ public class PersonRequestDto {
     String password;
 
     @JsonProperty("email")
-    @NotBlank(message = "Не указан Email")
     @Email(message = "Некорректный Email")
     String email;
 

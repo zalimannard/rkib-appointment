@@ -67,6 +67,7 @@ public class ProcedureServiceImpl implements ProcedureService {
     @Override
     public Procedure updateEntity(Procedure procedure) {
         try {
+            read(procedure.getId());
             return repository.save(procedure);
         } catch (DataIntegrityViolationException e) {
             throw new ConflictException("prs-03", "Конфликт при обновлении Procedure в базе данных", e.getMessage());

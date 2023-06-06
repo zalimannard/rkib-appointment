@@ -77,6 +77,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public Schedule updateEntity(Schedule schedule) {
         try {
+            read(schedule.getId());
             return repository.save(schedule);
         } catch (DataIntegrityViolationException e) {
             throw new ConflictException("scs-03", "Конфликт при обновлении Schedule в базе данных", e.getMessage());

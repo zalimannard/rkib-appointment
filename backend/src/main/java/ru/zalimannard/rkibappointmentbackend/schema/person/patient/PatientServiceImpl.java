@@ -73,6 +73,7 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Patient updateEntity(Patient patient) {
         try {
+            read(patient.getId());
             return repository.save(patient);
         } catch (DataIntegrityViolationException e) {
             throw new ConflictException("pas-03", "Конфликт при обновлении Patient в базе данных", e.getMessage());

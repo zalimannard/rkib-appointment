@@ -67,6 +67,7 @@ public class AppointmentStatusServiceImpl implements AppointmentStatusService {
     @Override
     public AppointmentStatus updateEntity(AppointmentStatus appointmentStatus) {
         try {
+            read(appointmentStatus.getId());
             return repository.save(appointmentStatus);
         } catch (DataIntegrityViolationException e) {
             throw new ConflictException("ass-03", "Конфликт при обновлении AppointmentStatus в базе данных", e.getMessage());

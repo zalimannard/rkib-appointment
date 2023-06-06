@@ -1,6 +1,7 @@
 package ru.zalimannard.api;
 
 import io.restassured.RestAssured;
+import io.restassured.parsing.Parser;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,6 +36,7 @@ public abstract class BaseTest {
     @BeforeEach
     public void setUp() {
         RestAssured.port = port;
+        RestAssured.defaultParser = Parser.JSON;
         RestAssured.requestSpecification = specifications.requestSpecApiV1();
 
         adminAuth = Base64.getEncoder().encodeToString((adminUsername + ":" + adminPassword).getBytes());

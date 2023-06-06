@@ -9,8 +9,6 @@ import io.restassured.specification.ResponseSpecification;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
 import static io.restassured.RestAssured.given;
 
 @Component
@@ -58,12 +56,15 @@ public class InstitutionSteps {
                     "Authorization",
                     "Basic " + auth);
         }
-        return requestSpec
+        Response response = requestSpec
                 .when()
-                .get(endpoint + "/" + id)
-                .then()
-                .spec(responseSpec)
-                .extract().as(responseClass);
+                .get(endpoint + "/" + id);
+        response.then().spec(responseSpec);
+        try {
+            return response.as(responseClass);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Step("Создание учреждения")
@@ -76,13 +77,16 @@ public class InstitutionSteps {
                     "Authorization",
                     "Basic " + auth);
         }
-        return requestSpec
+        Response response = requestSpec
                 .body(body)
                 .when()
-                .post(endpoint)
-                .then()
-                .spec(responseSpec)
-                .extract().as(responseClass);
+                .post(endpoint);
+        response.then().spec(responseSpec);
+        try {
+            return response.as(responseClass);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Step("Изменение учреждения")
@@ -95,19 +99,22 @@ public class InstitutionSteps {
                     "Authorization",
                     "Basic " + auth);
         }
-        return requestSpec
+        Response response = requestSpec
                 .body(body)
                 .when()
-                .put(endpoint + "/" + id)
-                .then()
-                .spec(responseSpec)
-                .extract().as(responseClass);
+                .put(endpoint + "/" + id);
+        response.then().spec(responseSpec);
+        try {
+            return response.as(responseClass);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Step("Удаление учреждения")
-    public <T> Optional<T> delete(String id,
-                                  String auth, ResponseSpecification responseSpec,
-                                  Class<T> responseClass) {
+    public <T> T delete(String id,
+                        String auth, ResponseSpecification responseSpec,
+                        Class<T> responseClass) {
         RequestSpecification requestSpec = given();
         if (auth != null) {
             requestSpec.header(
@@ -118,11 +125,10 @@ public class InstitutionSteps {
                 .when()
                 .delete(endpoint + "/" + id);
         response.then().spec(responseSpec);
-
-        if (response.getStatusCode() == 204) {
-            return Optional.empty();
-        } else {
-            return Optional.of(response.as(responseClass));
+        try {
+            return response.as(responseClass);
+        } catch (Exception e) {
+            return null;
         }
     }
 

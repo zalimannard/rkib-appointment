@@ -4,6 +4,7 @@ import io.qameta.allure.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.zalimannard.api.BaseTest;
+import ru.zalimannard.api.errors.ErrorResponse;
 import ru.zalimannard.api.procedure.ProcedureFactory;
 import ru.zalimannard.api.procedure.ProcedureRequest;
 import ru.zalimannard.api.procedure.ProcedureResponse;
@@ -12,13 +13,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Epic("Услуга")
 @Feature("Добавление")
-@Story("Позитивные тесты")
-class ProcedurePostCreatedTests extends BaseTest {
+@Story("Негативные тесты. Конфликт")
+class ProcedurePostConflictTests extends BaseTest {
 
     @Test
     @Severity(SeverityLevel.CRITICAL)
-    @DisplayName("Успешное добавление от ADMIN")
-    void testCreateProcedure_AllCorrectDataByAdmin_Created() {
+    @DisplayName("Добавление учреждения с занятым названием")
+    void testCreateProcedure_duplicateName_Conflict() {
         ProcedureRequest procedureToCreate = ProcedureFactory.createProcedureRequest();
         ProcedureResponse actual = procedureSteps.post(
                 procedureToCreate,
@@ -26,19 +27,14 @@ class ProcedurePostCreatedTests extends BaseTest {
                 specifications.responseSpecificationV1(201),
                 ProcedureResponse.class
         );
-        assertThat(actual).isNotNull();
-        assertThat(actual.getId()).isNotNull();
 
-        ProcedureResponse expected = ProcedureFactory.createProcedureResponse(actual.getId(), procedureToCreate);
-        assertThat(actual).isEqualTo(expected);
-
-        ProcedureResponse existedProcedure = procedureSteps.get(
-                actual.getId(),
+        ErrorResponse actual2 = procedureSteps.post(
+                procedureToCreate,
                 adminAuth,
-                specifications.responseSpecificationV1(200),
-                ProcedureResponse.class
+                specifications.responseSpecificationV1(409),
+                ErrorResponse.class
         );
-        assertThat(existedProcedure).isEqualTo(expected);
+        assertThat(actual2).isNotNull();
 
         procedureSteps.delete(actual.getId(), adminAuth);
     }

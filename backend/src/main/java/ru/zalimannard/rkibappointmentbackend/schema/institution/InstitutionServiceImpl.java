@@ -67,6 +67,7 @@ public class InstitutionServiceImpl implements InstitutionService {
     @Override
     public Institution updateEntity(Institution institution) {
         try {
+            read(institution.getId());
             return repository.save(institution);
         } catch (DataIntegrityViolationException e) {
             throw new ConflictException("ins-03", "Конфликт при обновлении Institution в базе данных", e.getMessage());

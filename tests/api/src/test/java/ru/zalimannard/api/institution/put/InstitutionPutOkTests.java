@@ -1,4 +1,4 @@
-package ru.zalimannard.api.institution.post;
+package ru.zalimannard.api.institution.put;
 
 import io.qameta.allure.*;
 import org.junit.jupiter.api.DisplayName;
@@ -11,25 +11,29 @@ import ru.zalimannard.api.institution.InstitutionResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Epic("Учреждение")
-@Feature("Добавление")
+@Feature("Изменение")
 @Story("Позитивные тесты")
-class InstitutionPostCreatedTests extends BaseTest {
+class InstitutionPutOkTests extends BaseTest {
 
     @Test
     @Severity(SeverityLevel.CRITICAL)
-    @DisplayName("Успешное добавление от ADMIN")
-    void testCreateInstitution_AllCorrectDataByAdmin_Created() {
-        InstitutionRequest institutionToCreate = InstitutionFactory.createInstitutionRequest();
-        InstitutionResponse actual = institutionSteps.post(
-                institutionToCreate,
+    @DisplayName("Успешное изменение от ADMIN")
+    void testPutInstitution_AllCorrectDataByAdmin_Ok() {
+        InstitutionRequest existedInstitutionRequest = InstitutionFactory.createInstitutionRequest();
+        InstitutionResponse existedInstitutionResponse = institutionSteps.post(existedInstitutionRequest, adminAuth);
+
+        InstitutionRequest institutionToUpdate = InstitutionFactory.createInstitutionRequest();
+        InstitutionResponse actual = institutionSteps.put(
+                existedInstitutionResponse.getId(),
+                institutionToUpdate,
                 adminAuth,
-                specifications.responseSpecificationV1(201),
+                specifications.responseSpecificationV1(200),
                 InstitutionResponse.class
         );
         assertThat(actual).isNotNull();
         assertThat(actual.getId()).isNotNull();
 
-        InstitutionResponse expected = InstitutionFactory.createInstitutionResponse(actual.getId(), institutionToCreate);
+        InstitutionResponse expected = InstitutionFactory.createInstitutionResponse(actual.getId(), institutionToUpdate);
         assertThat(actual).isEqualTo(expected);
 
         InstitutionResponse existedInstitution = institutionSteps.get(

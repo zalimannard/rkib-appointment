@@ -127,6 +127,7 @@ public class PersonServiceImpl implements PersonService, UserDetailsService {
     @Override
     public Person updateEntity(Person person) {
         try {
+            read(person.getId());
             return repository.save(person);
         } catch (DataIntegrityViolationException e) {
             throw new ConflictException("pes-03", "Конфликт при обновлении Person в базе данных", e.getMessage());

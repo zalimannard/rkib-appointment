@@ -71,7 +71,7 @@
 \makeatother
 % Рамка
 \usepackage{adjustbox}
-
+    
 % Листинги
 \usepackage{listings}
 \usepackage{caption}
@@ -1255,6 +1255,8 @@
         \item[--] Пользовательские сложные запросы. Есть возможность с помощью специальной аннотации @Query написать любой SQL-запрос, не отходя от логики созданных сущностей. Полезно, например, для фильтрации.
     \end{itemize}
 
+    \newpage
+
     Пример обычного интерфейса для Repository -- на Листинге~\ref{repository}. Указывается сущность, для которой нужно создать объект доступа к данным и тип его первичного ключа. После этого с помощью инъекции зависимостей~\cite{springguide} можно будет использовать его в слое бизнес-логики.
 
     \begin{lstlisting}[label=repository,caption=Пример интерфейса для репозитория]
@@ -1320,19 +1322,23 @@
     \begin{lstlisting}[label=test,caption=Пример автотеста для разработанной системы]
     @ParameterizedTest
     @Severity(SeverityLevel.CRITICAL)
-    @DisplayName("Successful addition with all data from ADMIN")
-    @CsvSource(value = {"ADMIN", "REGISTRAR",
-    	"DOCTOR", "PATIENT"})
-    void testCreatePerson_AllCorrectDataByAdmin_Created(String role) {
-        PersonRequest personToCreate = PersonFactory.createPersonRequest();
-        PersonResponse actual = personSteps.post(personToCreate, adminAuth, specifications.responseSpecificationV1(201), PersonResponse.class);
+    @DisplayName("Некорректное название услуги")
+    @NullSource
+    @ValueSource(strings = {"", " ", "   ", })
+    void testPutProcedure_invalidName_BadRequest(String name) {
+        ProcedureRequest existedProcedureRequest = ProcedureFactory.createProcedureRequest();
+        ProcedureResponse existedProcedureResponse = procedureSteps.post(existedProcedureRequest, adminAuth);
+        ProcedureRequest procedureToCreate = ProcedureFactory.createProcedureRequest().toBuilder()
+            .name(name)
+            .build();
+        ErrorResponse actual = procedureSteps.put(
+            existedProcedureResponse.getId(),
+            procedureToCreate,
+            adminAuth,
+            specifications.responseSpecificationV1(400),
+            ErrorResponse.class
+        );
         assertThat(actual).isNotNull();
-        assertThat(actual.getId()).isNotNull();
-        PersonResponse expected = PersonFactory.createPersonResponse(actual.getId(), personToCreate);
-        assertThat(actual).isEqualTo(expected);
-        PersonResponse existedPerson = personSteps.get(actual.getId(), adminAuth, specifications.responseSpecificationV1(200), PersonResponse.class);
-        assertThat(existedPerson).isEqualTo(expected);
-        personSteps.delete(actual.getId(), adminAuth);
     }
     \end{lstlisting}
 
@@ -1345,7 +1351,7 @@
         \label{fig:Allure}
     \end{figure}
 
-    Тесты бывают позитивные, которые проверяют нормальный ход работы системы, и негативные, которые проверяют правильность ошибки, появляющийся при том или ином действии. Большую часть всегда занимают негативные, потому что возможных сценариев ошибки значительно больше, чем сценариев нормальной работы. Это тоже можно увидеть на Рисунке~\ref{fig:Allure}.
+    Тесты бывают позитивные, которые проверяют нормальный ход работы системы, и негативные, которые проверяют правильность ошибки, появляющийся при том или ином действии. Большую часть всегда занимают негативные, потому что возможных сценариев ошибки значительно больше, чем сценариев нормальной работы~\cite{baeldungbook}. Это также отражено на Рисунке~\ref{fig:Allure}.
 
     \newpage
 

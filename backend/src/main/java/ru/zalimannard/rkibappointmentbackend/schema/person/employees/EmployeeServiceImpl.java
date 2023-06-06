@@ -76,6 +76,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee updateEntity(Employee employee) {
         try {
+            read(employee.getId());
             return repository.save(employee);
         } catch (DataIntegrityViolationException e) {
             throw new ConflictException("sms-03", "Конфликт при обновлении StaffMember в базе данных", e.getMessage());
