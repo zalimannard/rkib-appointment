@@ -17,6 +17,9 @@ public class PersonResponseDto {
     @JsonProperty("username")
     String username;
 
+    @JsonProperty("email")
+    String email;
+
     @JsonProperty("lastName")
     String lastName;
 

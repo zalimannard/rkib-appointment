@@ -6,6 +6,8 @@ application:
     people: /people
     staff: /staff
     patients: /patients
+    procedures: /procedures
+    institutions: /institutions
   init:
     admin:
       username: ${ADMIN_USERNAME}

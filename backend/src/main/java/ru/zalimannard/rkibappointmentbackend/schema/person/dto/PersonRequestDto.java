@@ -21,6 +21,11 @@ public class PersonRequestDto {
     @Pattern(regexp = "[a-zA-Z0-9!@#%?_]*", message = "Недопустимые символы в пароле")
     String password;
 
+    @JsonProperty("email")
+    @NotBlank(message = "Не указан Email")
+    @Email(message = "Некорректный Email")
+    String email;
+
     @JsonProperty("lastName")
     @NotBlank(message = "Не указана фамилия")
     String lastName;
@@ -33,9 +38,10 @@ public class PersonRequestDto {
     @Length(min = 1)
     String patronymic;
 
-    public PersonRequestDto(String username, String password, String lastName, String firstName, String patronymic) {
+    public PersonRequestDto(String username, String password, String email, String lastName, String firstName, String patronymic) {
         this.username = username != null ? username.trim() : null;
         this.password = password;
+        this.email = email != null ? email.trim() : null;
         this.lastName = lastName != null ? lastName.trim() : null;
         this.firstName = firstName != null ? firstName.trim() : null;
         this.patronymic = patronymic != null ? patronymic.trim() : null;

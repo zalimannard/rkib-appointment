@@ -2,8 +2,7 @@ package ru.zalimannard.api.person.post;
 
 import io.qameta.allure.*;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.api.Test;
 import ru.zalimannard.api.BaseTest;
 import ru.zalimannard.api.person.PersonFactory;
 import ru.zalimannard.api.person.PersonRequest;
@@ -14,24 +13,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Epic("Человек")
 @Feature("Добавление")
 @Story("Успешно")
-class PersonRequestPostCreatedTests extends BaseTest {
+class PersonPostCreatedTests extends BaseTest {
 
-    @ParameterizedTest
+    @Test
     @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Успешное добавление со всеми данными от ADMIN")
-    @CsvSource(value = {
-            "ADMIN",
-            "REGISTRAR",
-            "DOCTOR",
-            "PATIENT"
-    })
-    void testCreatePerson_AllCorrectDataByAdmin_Created(String role) {
+    void testCreatePerson_AllCorrectDataByAdmin_Created() {
         PersonRequest personToCreate = PersonFactory.createPersonRequest();
         PersonResponse actual = personSteps.post(
                 personToCreate,
                 adminAuth,
                 specifications.responseSpecificationV1(201),
-                PersonResponse.class);
+                PersonResponse.class
+        );
         assertThat(actual).isNotNull();
         assertThat(actual.getId()).isNotNull();
 

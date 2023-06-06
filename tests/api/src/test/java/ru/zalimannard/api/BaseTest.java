@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import ru.zalimannard.api.institution.InstitutionSteps;
 import ru.zalimannard.api.person.PersonSteps;
+import ru.zalimannard.api.procedure.ProcedureSteps;
 
 import java.util.Base64;
 
@@ -14,9 +16,13 @@ import java.util.Base64;
 public abstract class BaseTest {
 
     @Autowired
+    protected Specifications specifications;
+    @Autowired
     protected PersonSteps personSteps;
     @Autowired
-    protected Specifications specifications;
+    protected InstitutionSteps institutionSteps;
+    @Autowired
+    protected ProcedureSteps procedureSteps;
     protected String adminAuth;
 
     @LocalServerPort
