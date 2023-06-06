@@ -178,7 +178,7 @@
 
 	Приложение запускается через Docker и доступно на любой системе, где он установлен.
 
-	\textbf{Ключевые слова:} Oracle, Java, Gradle, Spring, JUnit, RestAssured, Allure, TypeScript, Vue.js, Vuetify, Selenide, aShot, Docker.
+	\textbf{Ключевые слова:} Oracle, Java, Gradle, Spring, JUnit, RestAssured, Allure, TypeScript, Vue.js, Vuetify, Selenide, Docker.
 
 
     \newpage
@@ -198,7 +198,7 @@
 
     The application runs through Docker and is available on any system where it is installed.
 
-    \textbf{Keywords:} Oracle, Java, Gradle, Spring, JUnit, RestAssured, Allure, TypeScript, Vue.js, Vuetify, Selenide, aShot, Docker.
+    \textbf{Keywords:} Oracle, Java, Gradle, Spring, JUnit, RestAssured, Allure, TypeScript, Vue.js, Vuetify, Selenide, Docker.
     
     \selectlanguage{russian}
 
@@ -1007,7 +1007,7 @@
         \item[--] \textbf{Vue.js.} Гибкий, самодостаточный фреймворк с возможностью интеграции со сторонними библиотеками. Прост в освоении, хорошая документация, но меньше материала по сравнению с другими.
     \end{itemize}
 
-    На основании личного опыта работы с Vue.js, можно выбрать его как подходящий инструмент для разработки данной системы. С учётом масштаба приложения, встроенных инструментов Vue.js будет достаточно для эффективной реализации всех необходимых функций~\cite{vuejs}. Для тестирования UI будет использоваться Selenide~\cite{selenide} -- удобная обёртка для библиотеки автоматического тестирования Selenium. Для визуализации тестов будет использоваться библиотека aShot. Используемая система сборки -- Vite~\cite{vite}.
+    На основании личного опыта работы с Vue.js, можно выбрать его как подходящий инструмент для разработки данной системы. С учётом масштаба приложения, встроенных инструментов Vue.js будет достаточно для эффективной реализации всех необходимых функций~\cite{vuejs}. Для тестирования UI будет использоваться Selenide~\cite{selenide} -- удобная обёртка для библиотеки автоматического тестирования Selenium. Для визуализации тестов будет использоваться Allure с расширением для Selenide. Используемая система сборки -- Vite~\cite{vite}.
 
     \subsection{База данных}\label{Реализация. База данных}
 
@@ -1513,26 +1513,29 @@
 
     \subsubsection{Тестирование}\label{Реализация. Клиентская часть. Тестирование}
     
-    Тестирование пользовательского интерфейса будет производиться через Selenide -- удобную обёртку для Selenium. С его помощью можно писать пошагово действия в тестах и обозначать ожидаемое поведение. Пример -- на Листинге~\ref{selenide}.
+    Тестирование пользовательского интерфейса будет производиться через Selenide -- удобную обёртку для Selenium. С его помощью можно писать пошагово действия в тестах и обозначать ожидаемое поведение. Пример -- на Листинге~\ref{selenide}. Когда возможно - лучше обращаться к элементам через id, class, text и прочие параметры. В приведённом листинге это строки 4-5. Далее показывается менее желательное, но гарантированное нахождение элементов -- через xpath. Это полный путь до объекта, с которым нужно взаимодействовать.
     
     \begin{lstlisting}[label=selenide,caption=Пример теста на Selenide]
     @Test
-    public void userCanLoginByUsername() {
-        open("/login");
-        $(By.name("user.name")).setValue("johny");
-        $("#submit").click();
-        $(".loading_progress").should(disappear);
-        $("#username").shouldHave(text("Hello, Johny!"));
+    void loginTest() {
+        open(startUrl);
+        $(By.id("input-0")).setValue("admin");
+        $(By.id("input-2")).setValue("admin");
+        $(By.xpath("//*[@id=\"app\"]/div/div/main/div/div/div/form/div[3]/div[1]/div")).click();
+        $(By.xpath("/html/body/div[2]/div/div/div/div[3]")).click();
+        $(By.xpath("//*[@id=\"app\"]/div/div/main/div/div/div/form/div[3]/div[2]/button")).click();
+        $(By.xpath("//*[@id=\"app\"]/div/div/main/div/div/header/div/div[1]/div/div/a[5]")).click();
+        $(By.xpath("//*[@id=\"app\"]/div/div/main/div/div/main/div/div/div[1]/div/button[1]")).shouldHave(text("СЗДТ"));
     }
     \end{lstlisting}
     
-    Проваленные написанные тесты визуализируются с помощью библиотеки aShot~\cite{ashot}. Если тест провален, то автоматически делается скриншот, который потом можно посмотреть, как на Рисунке~\ref{fig:ashot}.
+    Проваленные написанные тесты визуализируются с помощью Allure~\cite{allure}. Если тест провален, то автоматически делается скриншот, который потом можно посмотреть, как на Рисунке~\ref{fig:allure}. Скриншот и код страницы сохраняются, если тест провален. Для всех тестов сохраняется последовательность действий.
     
     \begin{figure}[h]
         \centering
-        \includegraphics[width=0.8\linewidth]{Отчёт aShot.png}        
-        \caption{\centering Пример отчёта aShot}        
-        \label{fig:ashot}
+        \includegraphics[width=0.8\linewidth]{UI. Отчёт Allure.png}        
+        \caption{\centering Пример отчёта Allure о проваленном тесте}        
+        \label{fig:allure}
     \end{figure}
     
     \newpage
@@ -1554,11 +1557,11 @@
     
     Для реализации изучены предметная область больницы на примере РКИБ, освоены теоретические и практические навыки по написанию частей клиент-серверного приложения. 
     
-    Серверная часть разработана на Java с помощью фреймворка Spring. В качестве базы данных используется Oracle, работа с ней осуществляется через JPA. С помощью подхода TDD и инструмента RestAssured написаны интеграционные тесты и код, реализующий API для них.
+    Серверная часть разработана на Java с помощью фреймворка Spring. В качестве системы управления базами данных используется Oracle, взаимодействие с ней осуществляется через JPA. С помощью подхода TDD и инструмента RestAssured написаны интеграционные тесты и код, реализующий API для них.
     
-    Клиентская часть разработана на языке TypeScript с использованием фреймворка Vue и фреймворка компонентов Vuetify. Протестировано с помощью Selenide и ошибки визуализируются с помощью aShot.
+    Клиентская часть разработана на языке TypeScript с использованием фреймворка Vue и фреймворка компонентов Vuetify. Протестировано с помощью Selenide и ошибки визуализируются с помощью Allure и плагина Selenide для него.
     
-    Разворачиваются части приложения с помощью Docker. Написана подробная инструкция по разворачиванию приложения на любом компьютере с Docker и docker-compose.
+    Разворачиваются части приложения с помощью Docker. Написана инструкция по разворачиванию приложения на любом компьютере с Docker и docker-compose.
     
     Исходный код всех частей приложения, тестов, а также этого текста находится на GitHub: https://github.com/zalimannard/rkib-appointment
 
@@ -1568,6 +1571,8 @@
     \addcontentsline{toc}{section}{Список использованных источников}
 
     \begin{enumerate}[leftmargin=*, itemindent=\labelwidth]
+        
+        \bibitem{allure} Allure Framework [Электронный ресурс] -- URL: \url{https://docs.qameta.io/allure-report/} (Дата обращения: 22.05.2023)
         
         \bibitem{dbdiag} Database diagrams [Электронный ресурс] -- URL: \url{https://drawsql.app/diagrams} (Дата обращения: 17.11.2022)
         
@@ -1590,8 +1595,6 @@
         \bibitem{vuejs} Vue.js -- Прогрессивный JavaScript-фреймворк [Электронный ресурс] -- URL: \url{https://ru.vuejs.org} (Дата обращения: 03.04.2023)
         
         \bibitem{vuetify} Vuetify -- A Vue Component Framework [Электронный ресурс] -- URL: \url{https://vuetifyjs.com/en/getting-started/installation/} (Дата обращения: 03.04.2023)
-        
-        \bibitem{ashot} WebDriver Screenshot utilyty. Take screenshots, crop, prettify, compare [Электронный ресурс] -- URL: \url{https://github.com/pazone/ashot} (Дата обращения: 18.05.2023)
         
         \bibitem{tdd} What is TDD? What is Unit Testing? - Simple Programmer [Электронный ресурс] -- URL: \url{https://simpleprogrammer.com/tdd-unit-testing/} (Дата обращения: 13.02.2023)
         
