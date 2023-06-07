@@ -10,6 +10,36 @@ export function fromDefaultToIso(value: string): string {
     return (dateParts.length === 3 ? `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}` : "");
 }
 
+export function roleStringToCode(value: string): string {
+    switch (value) {
+        case "Админ":
+            return "ADMIN"
+        case "Регистратор":
+            return "REGISTRAR"
+        case "Доктор":
+            return "DOCTOR"
+        case "Пациент":
+            return "PATIENT"
+        default:
+            return ""
+    }
+}
+
+export function roleCodeToString(value: string): string {
+    switch (value) {
+        case "ADMIN":
+            return "Админ"
+        case "REGISTRAR":
+            return "Регистратор"
+        case "DOCTOR":
+            return "Доктор"
+        case "PATIENT":
+            return "return"
+        default:
+            return ""
+    }
+}
+
 export function checkFilter(fieldValue: string, filterValue: string): boolean {
     if (filterValue === "") {
         return true;

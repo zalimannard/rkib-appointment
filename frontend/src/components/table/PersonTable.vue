@@ -102,7 +102,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, watch} from 'vue';
+import {defineComponent, ref} from 'vue';
 import MaskedTextField from "@/components/textfield/MaskedTextField.vue";
 import axios from "axios";
 import CustomTable from "@/components/table/CustomTable.vue";
@@ -114,8 +114,8 @@ import {dateMask, phoneMask} from "@/masks";
 import {handleBackspaceForDate, handleBackspaceForPhoneNumber} from "@/backspaceHandlers";
 import RoleSelect from "@/components/select/RoleSelect.vue";
 import type {PersonRequest, PersonResponse} from "@/types/person";
-import type {PatientRequest, PatientResponse} from "@/types/patient";
-import type {EmployeeRequest, EmployeeResponse} from "@/types/employee";
+import type {PatientRequest} from "@/types/patient";
+import type {EmployeeRequest} from "@/types/employee";
 
 export default defineComponent({
   components: {
@@ -181,10 +181,9 @@ export default defineComponent({
         people.value = response.data;
         onEditFilter();
       }).catch((error) => {
-          console.error(error)
-          showAlert("error", "Не удалось получить данные")
+        console.error(error)
+        showAlert("error", "Не удалось получить данные")
       });
-
 
 
       // try {

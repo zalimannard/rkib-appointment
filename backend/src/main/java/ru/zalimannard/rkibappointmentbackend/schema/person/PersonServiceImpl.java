@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,6 +15,7 @@ import ru.zalimannard.rkibappointmentbackend.exception.ConflictException;
 import ru.zalimannard.rkibappointmentbackend.exception.NotFoundException;
 import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonResponseDto;
+import ru.zalimannard.rkibappointmentbackend.schema.person.employees.Employee;
 import ru.zalimannard.rkibappointmentbackend.schema.person.employees.EmployeeMapper;
 import ru.zalimannard.rkibappointmentbackend.schema.person.employees.dto.EmployeeResponseDto;
 import ru.zalimannard.rkibappointmentbackend.schema.person.patient.PatientMapper;
@@ -76,6 +78,26 @@ public class PersonServiceImpl implements PersonService, UserDetailsService {
     public Person readEntity(String id) {
         return repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("pes-02", "Не найден Person с id=" + id, null));
+    }
+
+    @Override
+    public PersonResponseDto readMe() {
+        Person person = readMeEntity();
+        PatientResponseDto patientDto = patientMapper.toDto(
+                person.getPatient() != null
+                        ? person.getPatient().toBuilder().person(null).build()
+                        : null);
+        EmployeeResponseDto employeeDto = employeeMapper.toDto(
+                person.getEmployee() != null
+                        ? person.getEmployee().toBuilder().person(null).build()
+                        : null);
+        return mapper.toDto(person, patientDto, employeeDto);
+    }
+
+    @Override
+    public Person readMeEntity() {
+        String currentUsername = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        return readEntityByUsername(currentUsername);
     }
 
     @Override

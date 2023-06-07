@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
 import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonResponseDto;
+import ru.zalimannard.rkibappointmentbackend.schema.person.employees.Employee;
 
 import java.util.List;
 
@@ -19,6 +20,10 @@ public interface PersonService {
     PersonResponseDto read(@NotNull String id);
 
     Person readEntity(@NotNull String id);
+
+    PersonResponseDto readMe();
+
+    Person readMeEntity();
 
     Person readEntityByUsername(String username);
 

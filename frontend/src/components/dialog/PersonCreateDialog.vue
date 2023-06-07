@@ -38,9 +38,9 @@
       <v-col class="pr-4" cols="4">
         <masked-text-field
             v-model="patientBirthdate"
-            :rules="rules.dateRule"
-            :mask="masks.dateMask"
             :handle-backspace="backspaceHandlers.handleBackspaceForDate"
+            :mask="masks.dateMask"
+            :rules="rules.dateRule"
             label="Дата рождения"
             placeholder="ДД.ММ.ГГГГ"
         />
@@ -48,9 +48,9 @@
       <v-col class="px-2" cols="4">
         <masked-text-field
             v-model="patientPhoneNumber"
-            :rules="rules.phoneRule"
-            :mask="masks.phoneMask"
             :handle-backspace="backspaceHandlers.handleBackspaceForPhoneNumber"
+            :mask="masks.phoneMask"
+            :rules="rules.phoneRule"
             label="Телефон"
             required-asterisk
         />
@@ -87,8 +87,8 @@ import axios from "axios";
 import RoleSelect from "@/components/select/RoleSelect.vue";
 import {showAlert} from "@/components/alert/AlertState";
 import type {PersonRequest, PersonResponse} from "@/types/person";
-import type {PatientRequest, PatientResponse} from "@/types/patient";
-import type {EmployeeRequest, EmployeeResponse} from "@/types/employee";
+import type {PatientRequest} from "@/types/patient";
+import type {EmployeeRequest} from "@/types/employee";
 import {onMounted, provide} from "vue-demi";
 import {dateMask, phoneMask} from "@/masks";
 import {handleBackspaceForDate, handleBackspaceForPhoneNumber} from "@/backspaceHandlers";
@@ -125,11 +125,11 @@ export default defineComponent({
     };
     const masks = {
       dateMask,
-          phoneMask
+      phoneMask
     };
     const backspaceHandlers = {
       handleBackspaceForDate,
-          handleBackspaceForPhoneNumber
+      handleBackspaceForPhoneNumber
     };
 
     const setData = (data: PersonResponse) => {
@@ -154,108 +154,126 @@ export default defineComponent({
     const personLastName = computed({
       get: () => person.value?.lastName || "",
       set: (value) => {
-        person.value = {...person.value,
+        person.value = {
+          ...person.value,
           lastName: value,
           firstName: person.value?.firstName || "",
           patronymic: person.value?.patronymic || "",
           username: person.value?.username || "",
-          password: person.value?.password || ""};
+          password: person.value?.password || ""
+        };
       }
     });
 
     const personFirstName = computed({
       get: () => person.value?.firstName || "",
       set: (value) => {
-        person.value = {...person.value,
+        person.value = {
+          ...person.value,
           lastName: person.value?.lastName || "",
           firstName: value,
           patronymic: person.value?.patronymic || "",
           username: person.value?.username || "",
-          password: person.value?.password || ""};
+          password: person.value?.password || ""
+        };
       }
     });
 
     const personPatronymic = computed({
       get: () => person.value?.patronymic || "",
       set: (value) => {
-        person.value = {...person.value,
+        person.value = {
+          ...person.value,
           lastName: person.value?.lastName || "",
           firstName: person.value?.firstName || "",
           patronymic: value,
           username: person.value?.username || "",
-          password: person.value?.password || ""};
+          password: person.value?.password || ""
+        };
       }
     });
 
     const personUsername = computed({
       get: () => person.value?.username || "",
       set: (value) => {
-        person.value = {...person.value,
+        person.value = {
+          ...person.value,
           lastName: person.value?.lastName || "",
           firstName: person.value?.firstName || "",
           patronymic: person.value?.patronymic || "",
           username: value,
-          password: person.value?.password || ""};
+          password: person.value?.password || ""
+        };
       }
     });
 
     const personPassword = computed({
       get: () => person.value?.password || "",
       set: (value) => {
-        person.value = {...person.value,
+        person.value = {
+          ...person.value,
           lastName: person.value?.lastName || "",
           firstName: person.value?.firstName || "",
           patronymic: person.value?.patronymic || "",
           username: person.value?.username || "",
-          password: value}
+          password: value
+        }
       }
     });
 
     const patientBirthdate = computed({
       get: () => patient.value?.birthdate || "",
       set: (value) => {
-        patient.value = {...patient.value,
+        patient.value = {
+          ...patient.value,
           birthdate: value,
           phoneNumber: patient.value?.phoneNumber || "+7(",
           address: patient.value?.address || "",
           occupation: patient.value?.occupation || "",
-          personId: ""};
+          personId: ""
+        };
       }
     });
 
     const patientPhoneNumber = computed({
       get: () => patient.value?.phoneNumber || "",
       set: (value) => {
-        patient.value = {...patient.value,
+        patient.value = {
+          ...patient.value,
           birthdate: patient.value?.birthdate || "",
           phoneNumber: value,
           address: patient.value?.address || "",
           occupation: patient.value?.occupation || "",
-          personId: ""};
+          personId: ""
+        };
       }
     });
 
     const patientAddress = computed({
       get: () => patient.value?.address || "",
       set: (value) => {
-        patient.value = {...patient.value,
+        patient.value = {
+          ...patient.value,
           birthdate: patient.value?.birthdate || "",
           phoneNumber: patient.value?.phoneNumber || "+7(",
           address: value,
           occupation: patient.value?.occupation || "",
-          personId: ""};
+          personId: ""
+        };
       }
     });
 
     const patientOccupation = computed({
       get: () => patient.value?.occupation || "",
       set: (value) => {
-        patient.value = {...patient.value,
+        patient.value = {
+          ...patient.value,
           birthdate: patient.value?.birthdate || "",
           phoneNumber: patient.value?.phoneNumber || "+7(",
           address: patient.value?.address || "",
           occupation: value,
-          personId: ""};
+          personId: ""
+        };
       }
     });
 

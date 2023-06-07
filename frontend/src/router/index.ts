@@ -14,12 +14,21 @@ import AdminPerson from "@/views/admin/AdminPerson.vue";
 import AdminProcedure from "@/views/admin/AdminProcedure.vue";
 import AdminSchedule from "@/views/admin/AdminSchedule.vue";
 import AdminScheduleStatus from "@/views/admin/AdminScheduleStatus.vue";
+import UserLoginView from "@/views/UserLoginView.vue";
+import PatientView from "@/views/PatientView.vue";
+import PatientHome from "@/views/patient/PatientHome.vue";
+import PatientSchedule from "@/views/patient/PatientSchedule.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
             path: "/login",
+            name: "UserLoginView",
+            component: UserLoginView
+        },
+        {
+            path: "/employeelogin",
             name: "LoginView",
             component: LoginView
         },
@@ -87,7 +96,22 @@ const router = createRouter({
                     component: AdminScheduleStatus
                 }
             ]
-        }
+        },
+        {
+            path: "/patient",
+            name: "PatientView",
+            component: PatientView,
+            children: [
+                {
+                    path: "home",
+                    component: PatientHome
+                },
+                {
+                    path: "schedule",
+                    component: PatientSchedule
+                }
+            ]
+        },
     ]
 });
 

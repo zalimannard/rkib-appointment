@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonResponseDto;
+import ru.zalimannard.rkibappointmentbackend.schema.person.employees.dto.EmployeeResponseDto;
 
 import java.util.List;
 
@@ -22,6 +23,12 @@ public class PersonController {
     @Operation(summary = "Получение человека")
     public PersonResponseDto get(@PathVariable String id) {
         return personService.read(id);
+    }
+
+    @GetMapping("${application.endpoint.me}")
+    @Operation(summary = "Получение человеком себя")
+    public PersonResponseDto getMe() {
+        return personService.readMe();
     }
 
     @GetMapping

@@ -34,7 +34,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         try {
             return repository.save(employee);
         } catch (DataIntegrityViolationException e) {
-            throw new ConflictException("sms-01", "Конфликт при добавлении StaffMember в базу данных", e.getMessage());
+            throw new ConflictException("sms-01", "Конфликт при добавлении Employee в базу данных", e.getMessage());
         }
     }
 
@@ -53,7 +53,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee readEntity(String id) {
         return repository.findById(id)
-                .orElseThrow(() -> new NotFoundException("sms-02", "Не найден StaffMember с id=" + id, null));
+                .orElseThrow(() -> new NotFoundException("sms-02", "Не найден Employee с id=" + id, null));
     }
 
     @Override
@@ -79,7 +79,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             read(employee.getId());
             return repository.save(employee);
         } catch (DataIntegrityViolationException e) {
-            throw new ConflictException("sms-03", "Конфликт при обновлении StaffMember в базе данных", e.getMessage());
+            throw new ConflictException("sms-03", "Конфликт при обновлении Employee в базе данных", e.getMessage());
         }
     }
 
@@ -89,7 +89,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             Employee employee = readEntity(id);
             repository.delete(employee);
         } catch (DataIntegrityViolationException e) {
-            throw new ConflictException("sms-04", "Конфликт при удалении StaffMember из базы данных", e.getMessage());
+            throw new ConflictException("sms-04", "Конфликт при удалении Employee из базы данных", e.getMessage());
         }
     }
 
