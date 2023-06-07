@@ -13,7 +13,7 @@
                 id="username"
                 v-model="username"
                 :readonly="loading"
-                :rules="[rules.requiredRule, rules.usernameRule]"
+                :rules="[rules.required, rules.username]"
                 autofocus
                 label="Логин"
             />
@@ -22,7 +22,7 @@
                 id="password"
                 v-model="password"
                 :readonly="loading"
-                :rules="[rules.requiredRule, rules.passwordRule]"
+                :rules="[rules.required, rules.password]"
                 autofocus
                 label="Пароль"
             />
@@ -44,7 +44,7 @@
           </v-form>
         </v-card>
         <div class="text-right mt-3">
-          <a class="employee-login-link" href="#" @click="onLoginAsEmployee">
+          <a id="loginAsEmployee" class="employee-login-link" href="#" @click="onLoginAsEmployee">
             Войти как сотрудник
           </a>
         </div>
@@ -93,9 +93,9 @@ export default defineComponent({
     const router = useRouter();
 
     const rules = {
-      requiredRule,
-      usernameRule,
-      passwordRule
+      required: requiredRule,
+      username: usernameRule,
+      password: passwordRule
     };
 
     async function onLoginAsEmployee() {
@@ -121,8 +121,8 @@ export default defineComponent({
           showAlert("error", "У вас нет такой роли");
         }
       } catch (error) {
-        if (error instanceof Error) {  // Проверка типа
-          const axiosError = error as AxiosError;  // Утверждение типа
+        if (error instanceof Error) {
+          const axiosError = error as AxiosError;
           if (axiosError && axiosError.response && axiosError.response.status === 401) {
             showAlert("error", "Неверный логин или пароль");
           }
@@ -157,13 +157,13 @@ export default defineComponent({
 }
 
 .employee-login-link {
-  color: #1976d2;
+  color: #2196F3;
   text-decoration: none;
   text-align: right;
 }
 
 .employee-login-link:hover {
-  color: #0d47a1;
+  color: #3F51B5;
 }
 
 .card-container {
