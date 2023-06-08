@@ -210,8 +210,6 @@ export default defineComponent({
     }
 
     function filterPerson(person: PersonResponse) {
-      console.log(calcRoles(person))
-      console.log(employeeRequest.value.roles)
       return (
           checkFilter(person.lastName, personRequest.value.lastName) &&
           checkFilter(person.firstName, personRequest.value.firstName) &&
@@ -241,6 +239,10 @@ export default defineComponent({
         phoneNumber: "+7(",
         address: "",
         occupation: "",
+        personId: ""
+      };
+      employeeRequest.value = {
+        roles: [],
         personId: ""
       };
       onEditFilter();
