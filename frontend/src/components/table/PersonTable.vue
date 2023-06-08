@@ -35,13 +35,21 @@
         </th>
         <th class="text-left" scope="col">
           <masked-text-field
+              v-model="personRequest.username"
+              class="header-cell"
+              density="comfortable"
+              label="Логин"
+              @input="updateSearch"
+          />
+        </th>
+        <th class="text-left" scope="col">
+          <masked-text-field
               v-model="patientRequest.birthdate"
               :handle-backspace="backspaceHandlers.handleBackspaceForDate"
               :mask="masks.dateMask"
               class="header-cell"
               density="comfortable"
               label="Дата рождения"
-              placeholder="ДД.ММ.ГГГГ"
               @input="updateSearch"
           />
         </th>
@@ -56,23 +64,14 @@
               @input="updateSearch"
           />
         </th>
-        <th class="text-left" scope="col">
-          <masked-text-field
-              v-model="personRequest.username"
-              class="header-cell"
-              density="comfortable"
-              label="Логин"
-              @input="updateSearch"
-          />
-        </th>
         <th class="text-left role-field" scope="col">
           <role-select
-              :roles="employeeRequest.roles"
               :update-search-input="updateSearch"
               class="header-cell"
               density="comfortable"
               include-none
               include-patient
+              roles="employeeRequest.roles"
               @update:roles="employeeRequest.roles = $event"
           />
         </th>
@@ -83,18 +82,16 @@
       <tbody>
       <tr
           v-for="(item, index) in filteredPeople"
-          :key="item"
+          :key="item.id"
           :class="{ 'light-row': index % 2 === 0, 'dark-row': index % 2 !== 0 }"
-          :style="{ cursor: handleClick ? 'pointer' : 'default' }"
-          @click="handleClick(item)"
       >
         <td>{{ item.lastName }}</td>
         <td>{{ item.firstName }}</td>
         <td>{{ item.patronymic }}</td>
-        <td>{{ item.patient?.birthdate || "" }}</td>
-        <td>{{ item.patient?.phoneNumber || "" }}</td>
         <td>{{ item.username }}</td>
-        <td>{{ calcRoles(item) }}</td>
+        <td>{{ item.patient?.birthdate ? masks.dateMask(utils.fromIsoToDefault(item.patient.birthdate)) : "" }}</td>
+        <td>{{ item.patient?.phoneNumber ? masks.phoneMask(item.patient.phoneNumber) : "" }}</td>
+        <td>{{ calcRolesToShow(item) }}</td>
       </tr>
       </tbody>
     </template>
@@ -102,44 +99,35 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from 'vue';
-import MaskedTextField from "@/components/textfield/MaskedTextField.vue";
-import axios from "axios";
+
+import {defineComponent, ref} from "vue";
 import CustomTable from "@/components/table/CustomTable.vue";
+import MaskedTextField from "@/components/textfield/MaskedTextField.vue";
+import type {PersonRequest, PersonResponse} from "@/types/person";
+import axios from "axios";
 import {showAlert} from "@/components/alert/AlertState";
-import {checkFilter} from "@/utils";
-import {onMounted, provide} from "vue-demi";
-import AppointmentTypeSelect from "@/components/select/AppointmentTypeSelect.vue";
+import {checkFilter, fromDefaultToIso, fromIsoToDefault, roleCodeToString} from "@/utils";
+import {onMounted} from "vue-demi";
+import type {PatientRequest} from "@/types/patient";
 import {dateMask, phoneMask} from "@/masks";
 import {handleBackspaceForDate, handleBackspaceForPhoneNumber} from "@/backspaceHandlers";
 import RoleSelect from "@/components/select/RoleSelect.vue";
-import type {PersonRequest, PersonResponse} from "@/types/person";
-import type {PatientRequest} from "@/types/patient";
 import type {EmployeeRequest} from "@/types/employee";
 
 export default defineComponent({
   components: {
     RoleSelect,
-    AppointmentTypeSelect,
-    CustomTable,
-    MaskedTextField
+    MaskedTextField,
+    CustomTable
   },
-  props: {
-    searchInput: {
-      type: Object,
-      default: () => ({
-        name: "",
-        type: ""
-      })
-    }
-  },
+
   setup(props, {emit}) {
     const personRequest = ref<PersonRequest>({
       lastName: "",
       firstName: "",
       patronymic: "",
       username: "",
-      password: "",
+      password: ""
     });
     const patientRequest = ref<PatientRequest>({
       birthdate: "",
@@ -164,38 +152,23 @@ export default defineComponent({
       handleBackspaceForDate,
       handleBackspaceForPhoneNumber
     };
-
-    // watch(() => props.searchInput, (newVal) => {
-    //   personRequest.value.lastName = "";//newVal.lastName;
-    //   personRequest.value.firstName = "";//newVal.firstName;
-    //   personRequest.value.patronymic = "";//newVal.patronymic;
-    // }, {immediate: true});
+    const utils = {
+      fromIsoToDefault,
+      fromDefaultToIso,
+      roleCodeToString
+    }
 
     const requestPerson = async () => {
-      let basicAuth = localStorage.getItem("auth");
-      axios({
-        method: "get",
-        url: import.meta.env.VITE_API_URL + "/api/v1/people",
-        headers: {"Authorization": "Basic " + basicAuth}
-      }).then((response) => {
+      try {
+        let basicAuth = localStorage.getItem("auth");
+        const response = await axios.get(import.meta.env.VITE_API_URL + "/api/v1/people", {
+          headers: {"Authorization": "Basic " + basicAuth}
+        });
         people.value = response.data;
         onEditFilter();
-      }).catch((error) => {
-        console.error(error)
+      } catch (error) {
         showAlert("error", "Не удалось получить данные")
-      });
-
-
-      // try {
-      //   let basicAuth = localStorage.getItem("auth");
-      //   const response = await axios.get(import.meta.env.VITE_API_URL + "/api/v1/people", {
-      //     headers: {"Authorization": "Basic " + basicAuth}
-      //   });
-      //   people.value = response.data;
-      //   onEditFilter();
-      // } catch (error) {
-      //   showAlert("error", "Не удалось получить данные")
-      // }
+      }
     }
 
     onMounted(() => {
@@ -204,16 +177,23 @@ export default defineComponent({
     });
 
     function calcRoles(item: PersonResponse) {
-      if (!item.employee) {
-        return "";
+      let roles = []
+      if (item.employee) {
+        for (const element of item.employee.roles) {
+          roles.push(element);
+        }
       }
-      return item.employee.roles
-          ? item.employee.roles.map(role => role).join(", ")
-          : "";
+      if (item.patient) {
+        roles.push("PATIENT")
+      }
+      return roles;
     }
 
-    function handleClick(item: PersonResponse) {
-      emit("rowClick", item);
+    function calcRolesToShow(item: PersonResponse) {
+      let roles = calcRoles(item);
+      return roles
+          ? roles.map(utils.roleCodeToString).join(", ")
+          : "";
     }
 
     function updateSearch() {
@@ -230,16 +210,21 @@ export default defineComponent({
     }
 
     function filterPerson(person: PersonResponse) {
-      console.log(personRequest.value)
+      console.log(calcRoles(person))
+      console.log(employeeRequest.value.roles)
       return (
           checkFilter(person.lastName, personRequest.value.lastName) &&
           checkFilter(person.firstName, personRequest.value.firstName) &&
-          checkFilter(person.patronymic, personRequest.value.patronymic) //&&
-          // checkFilter(person.patient.birthdate, patientRequest.value.birthdate) &&
-          // ((patientRequest.value.phoneNumber === "+7") || checkFilter(person.patient.phoneNumber, patientRequest.value.phoneNumber)) &&
-          // checkFilter(person.username, personRequest.value.username) &&
-          // (employeeRequest.value.roles.length === 0 || (employeeRequest.value.roles.length === 1) ||
-          //     person.employee.roles.some(r => employeeRequest.value.roles.map(role => role).includes(r)))
+          checkFilter(person.patronymic, personRequest.value.patronymic) &&
+          checkFilter(person.username, personRequest.value.username) &&
+          (person.patient
+              ? (checkFilter(utils.fromIsoToDefault(person.patient.birthdate), patientRequest.value.birthdate))
+              : !patientRequest.value.birthdate) &&
+          (person.patient
+              ? (checkFilter(masks.phoneMask(person.patient.phoneNumber), patientRequest.value.phoneNumber))
+              : patientRequest.value.phoneNumber === "+7(") &&
+          ((employeeRequest.value.roles.length === 0) || (employeeRequest.value.roles[0] == null))
+          || (calcRoles(person).includes(employeeRequest.value.roles[0]))
       );
     }
 
@@ -249,7 +234,7 @@ export default defineComponent({
         firstName: "",
         patronymic: "",
         username: "",
-        password: "",
+        password: ""
       }
       patientRequest.value = {
         birthdate: "",
@@ -257,206 +242,27 @@ export default defineComponent({
         address: "",
         occupation: "",
         personId: ""
-      }
-      employeeRequest.value = {
-        roles: [],
-        personId: ""
-      }
+      };
       onEditFilter();
     }
 
-    provide("requestAppointmentStatus", requestPerson());
-
     return {
+      people,
+      filteredPeople,
       personRequest,
       patientRequest,
       employeeRequest,
-      people,
-      filteredPeople,
       updateSearch,
-      requestPerson,
-      onEditFilter,
       resetFilters,
       calcRoles,
-      handleClick,
+      calcRolesToShow,
+      utils,
       masks,
       backspaceHandlers
     }
   }
-});
+})
 </script>
-
-<!--<script>-->
-<!--import {dateRule, phoneRule, requiredRule} from "@/rules";-->
-<!--import MaskedTextField from "@/components/textfield/MaskedTextField.vue";-->
-<!--import axios from "axios";-->
-<!--import CustomTable from "@/components/table/CustomTable.vue";-->
-<!--import RoleSelect from "@/components/select/RoleSelect.vue";-->
-<!--import {dateMask, phoneMask} from "@/masks";-->
-<!--import {handleBackspaceForDate, handleBackspaceForPhoneNumber} from "@/backspaceHandlers";-->
-<!--import {fromIsoToDefault} from "@/utils";-->
-<!--import {showAlert} from "@/components/alert/AlertState";-->
-
-<!--export default {-->
-<!--  components: {-->
-<!--    RoleSelect,-->
-<!--    CustomTable,-->
-<!--    MaskedTextField-->
-<!--  },-->
-<!--  props: {-->
-<!--    searchInput: {-->
-<!--      type: String,-->
-<!--      default: ""-->
-<!--    }-->
-<!--  },-->
-<!--  data() {-->
-<!--    return {-->
-<!--      localSearchLastName: this.searchInput,-->
-<!--      person: this.createDefaultPerson(),-->
-<!--      people: [],-->
-<!--      filteredPeople: [],-->
-
-<!--      rules: {-->
-<!--        requiredRule,-->
-<!--        dateRule,-->
-<!--        phoneRule-->
-<!--      },-->
-<!--      masks: {-->
-<!--        dateMask,-->
-<!--        phoneMask-->
-<!--      },-->
-<!--      backspaceHandlers: {-->
-<!--        handleBackspaceForDate,-->
-<!--        handleBackspaceForPhoneNumber-->
-<!--      },-->
-<!--    };-->
-<!--  },-->
-<!--  watch: {-->
-<!--    searchInput: {-->
-<!--      immediate: true,-->
-<!--      handler(newVal) {-->
-<!--        this.localSearchLastName = newVal;-->
-<!--        this.onEditFilter();-->
-<!--      }-->
-<!--    }-->
-<!--  },-->
-<!--  created() {-->
-<!--    this.person = this.createDefaultPerson();-->
-<!--    this.requestPeople();-->
-<!--  },-->
-<!--  methods: {-->
-<!--    createDefaultPerson() {-->
-<!--      return {-->
-<!--        id: "",-->
-<!--        username: "",-->
-<!--        lastName: "",-->
-<!--        firstName: "",-->
-<!--        patronymic: "",-->
-<!--        birthdate: "",-->
-<!--        phoneNumber: "+7(",-->
-<!--        roles: []-->
-<!--      };-->
-<!--    },-->
-<!--    calcRoles(item) {-->
-<!--      return item.roles-->
-<!--          ? item.roles.map(role => role.value).join(", ")-->
-<!--          : '';-->
-<!--    },-->
-<!--    handleClick(item) {-->
-<!--      this.$emit('rowClick', item);-->
-<!--    },-->
-<!--    updateSearch() {-->
-<!--      this.$emit("updateSearchInput", this.localSearchLastName);-->
-<!--      this.onEditFilter();-->
-<!--    },-->
-<!--    async requestPeople() {-->
-<!--      try {-->
-<!--        let basicAuth = localStorage.getItem("auth");-->
-<!--        const response = await this.fetchPeople(basicAuth);-->
-<!--        this.people = this.processPeople(response.data);-->
-<!--        await this.onEditFilter();-->
-<!--      } catch (error) {-->
-<!--        showAlert("error", "Не удалось получить данные")-->
-<!--      }-->
-<!--    },-->
-
-<!--    fetchPeople(basicAuth) {-->
-<!--      return axios.get(import.meta.env.VITE_API_URL + "/api/v1/people", {-->
-<!--        headers: {"Authorization": "Basic " + basicAuth}-->
-<!--      });-->
-<!--    },-->
-
-<!--    processPeople(people) {-->
-<!--      return people.map(person => this.processPerson(person));-->
-<!--    },-->
-
-<!--    processPerson(person) {-->
-<!--      let birthdate;-->
-<!--      if ((person.patient !== undefined) && (person.patient.birthdate)) {-->
-<!--        birthdate = fromIsoToDefault(person.patient.birthdate);-->
-<!--      }-->
-
-<!--      let roles = [];-->
-<!--      if (person.patient !== undefined) {-->
-<!--        roles.push({value: "PATIENT"});-->
-<!--      }-->
-<!--      if (person.employee !== undefined) {-->
-<!--        for (let role of person.employee.roles) {-->
-<!--          roles.push({value: role});-->
-<!--        }-->
-<!--      }-->
-
-<!--      return {-->
-<!--        id: person.id,-->
-<!--        username: person.username,-->
-<!--        lastName: person.lastName,-->
-<!--        firstName: person.firstName,-->
-<!--        patronymic: person.patronymic,-->
-<!--        birthdate: birthdate,-->
-<!--        phoneNumber: person.patient !== undefined-->
-<!--            ? this.masks.phoneMask(person.patient.phoneNumber)-->
-<!--            : null,-->
-<!--        roles: roles-->
-<!--      };-->
-<!--    },-->
-
-<!--    onEditFilter() {-->
-<!--      this.filteredPeople = this.filterPeople(this.people);-->
-<!--    },-->
-
-<!--    filterPeople(people) {-->
-<!--      return people.filter(person => this.filterPerson(person));-->
-<!--    },-->
-
-<!--    filterPerson(person) {-->
-<!--      const checkFilter = (fieldValue, filterValue) => {-->
-<!--        if (filterValue === "") return true;-->
-<!--        if (!fieldValue && filterValue !== "") return false;-->
-<!--        if (fieldValue && typeof fieldValue === "string" && filterValue && typeof filterValue === "string") {-->
-<!--          return fieldValue.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1;-->
-<!--        }-->
-<!--        return false;-->
-<!--      };-->
-
-<!--      return (-->
-<!--          checkFilter(person.lastName, this.person.lastName) &&-->
-<!--          checkFilter(person.firstName, this.person.firstName) &&-->
-<!--          checkFilter(person.patronymic, this.person.patronymic) &&-->
-<!--          checkFilter(person.birthdate, this.person.birthdate) &&-->
-<!--          ((this.person.phoneNumber === this.createDefaultPerson().phoneNumber) || checkFilter(person.phoneNumber, this.person.phoneNumber)) &&-->
-<!--          checkFilter(person.username, this.person.username) &&-->
-<!--          (this.person.roles.length === 0 || (this.person.roles.length === 1 && this.person.roles[0].value === null) ||-->
-<!--              person.roles.some(r => this.person.roles.map(role => role.value).includes(r.value)))-->
-<!--      );-->
-<!--    },-->
-
-<!--    resetFilters() {-->
-<!--      this.person = this.createDefaultPerson();-->
-<!--      this.onEditFilter();-->
-<!--    }-->
-<!--  }-->
-<!--};-->
-<!--</script>-->
 
 <style scoped>
 .role-field {

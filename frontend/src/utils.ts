@@ -1,13 +1,27 @@
 export function fromIsoToDefault(value: string): string {
+    if (!value) {
+        return "";
+    }
     let dateParts = [];
     dateParts = value.split("-");
-    return (dateParts.length === 3 ? `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}` : "");
+    try {
+        return (dateParts.length === 3 ? `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}` : "");
+    } catch (e) {
+        return "";
+    }
 }
 
 export function fromDefaultToIso(value: string): string {
+    if (!value) {
+        return "";
+    }
     let dateParts = [];
     dateParts = value.split(".");
-    return (dateParts.length === 3 ? `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}` : "");
+    try {
+        return (dateParts.length === 3 ? `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}` : "");
+    } catch (e) {
+        return "";
+    }
 }
 
 export function roleStringToCode(value: string): string {
@@ -34,7 +48,7 @@ export function roleCodeToString(value: string): string {
         case "DOCTOR":
             return "Доктор"
         case "PATIENT":
-            return "return"
+            return "Пациент"
         default:
             return ""
     }
