@@ -73,7 +73,10 @@ export default defineComponent({
         if (appointmentStatus.value) {
           typeValue = appointmentStatus.value.type;
         }
-        appointmentStatus.value = {...appointmentStatus.value, name: value, type: typeValue};
+        appointmentStatus.value = {
+          ...appointmentStatus.value,
+          name: value,
+          type: typeValue};
       }
     });
 
@@ -84,7 +87,10 @@ export default defineComponent({
         if (appointmentStatus.value) {
           nameValue = appointmentStatus.value.name;
         }
-        appointmentStatus.value = {...appointmentStatus.value, name: nameValue, type: value};
+        appointmentStatus.value = {
+          ...appointmentStatus.value,
+          name: nameValue,
+          type: value};
       }
     });
 
