@@ -28,7 +28,7 @@ const router = createRouter({
             component: UserLoginView
         },
         {
-            path: "/employee-login",
+            path: "/employeelogin",
             name: "LoginView",
             component: LoginView
         },
@@ -72,7 +72,7 @@ const router = createRouter({
                     component: AdminAppointment
                 },
                 {
-                    path: "appointment-status",
+                    path: "appointmentstatus",
                     component: AdminAppointmentStatus
                 },
                 {
@@ -92,7 +92,7 @@ const router = createRouter({
                     component: AdminSchedule
                 },
                 {
-                    path: "schedule-status",
+                    path: "schedulestatus",
                     component: AdminScheduleStatus
                 }
             ]

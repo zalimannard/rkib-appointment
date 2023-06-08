@@ -8,7 +8,7 @@
   >
     <masked-text-field
         v-model="procedureName"
-        :rules="rules.requiredRule"
+        :rules="[rules.required]"
         capitalize-first-letter
         label="Название"
         required-asterisk
@@ -43,7 +43,7 @@ export default defineComponent({
     const procedure = ref<ProcedureRequest>();
 
     const rules = {
-      requiredRule
+      required: requiredRule
     };
 
     const setData = (data: ProcedureResponse) => {

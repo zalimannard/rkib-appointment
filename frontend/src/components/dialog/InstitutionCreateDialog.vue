@@ -8,7 +8,7 @@
   >
     <masked-text-field
         v-model="institutionName"
-        :rules="rules.requiredRule"
+        :rules="[rules.required]"
         capitalize-first-letter
         label="Название"
         required-asterisk
@@ -43,7 +43,7 @@ export default defineComponent({
     const institution = ref<InstitutionRequest>();
 
     const rules = {
-      requiredRule
+      required: requiredRule
     };
 
     const setData = (data: InstitutionResponse) => {

@@ -4,7 +4,7 @@
       width="700"
   >
     <v-card variant="flat">
-      <v-card-title class="mb-2">
+      <v-card-title class="mb-2 ml-6 mt-6 mr-6 pt-3 pb-3">
         {{ title }}
       </v-card-title>
 
@@ -104,11 +104,10 @@ export default {
 
 <style scoped>
 .v-card-title {
-  padding-top: 8pt;
-  padding-bottom: 8pt;
   background-color: #3F51B5;
   font-size: 16pt;
   color: #FFFFFF;
   text-align: center;
+  border-radius: 4px;
 }
 </style>

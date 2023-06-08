@@ -10,7 +10,7 @@
       <v-row>
         <masked-text-field
             v-model="scheduleStatusName"
-            :rules="rules.requiredRule"
+            :rules="[rules.required]"
             capitalize-first-letter
             label="Название"
             required-asterisk
@@ -55,7 +55,7 @@ export default defineComponent({
     const scheduleStatus = ref<ScheduleStatusRequest>();
 
     const rules = {
-      requiredRule
+      required: requiredRule
     };
 
     const setData = (data: ScheduleStatusResponse) => {
