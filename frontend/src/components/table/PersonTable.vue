@@ -197,7 +197,11 @@ export default defineComponent({
     }
 
     function updateSearch() {
-      emit("updateSearchInput", personRequest.value);
+      emit("updateSearchInput", {
+        ...personRequest.value,
+        patient: patientRequest.value,
+        employee: employeeRequest.value
+      });
       onEditFilter();
     }
 

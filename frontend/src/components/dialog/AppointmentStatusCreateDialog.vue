@@ -76,7 +76,8 @@ export default defineComponent({
         appointmentStatus.value = {
           ...appointmentStatus.value,
           name: value,
-          type: typeValue};
+          type: typeValue
+        };
       }
     });
 
@@ -90,7 +91,8 @@ export default defineComponent({
         appointmentStatus.value = {
           ...appointmentStatus.value,
           name: nameValue,
-          type: value};
+          type: value
+        };
       }
     });
 

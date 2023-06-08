@@ -37,6 +37,8 @@ import CreatePersonDialog from "@/components/dialog/PersonCreateDialog.vue";
 import CreateAppointmentStatusDialog from "@/components/dialog/AppointmentStatusCreateDialog.vue";
 import AppointmentStatusTable from "@/components/table/AppointmentStatusTable.vue";
 import type {PersonResponse} from "@/types/person";
+import type {PatientResponse} from "@/types/patient";
+import type {EmployeeResponse} from "@/types/employee";
 
 export default defineComponent({
   components: {
@@ -60,11 +62,11 @@ export default defineComponent({
         phoneNumber: "",
         address: "",
         occupation: ""
-      },
+      } as PatientResponse,
       employee: {
         id: "",
         roles: []
-      }
+      } as EmployeeResponse
     } as PersonResponse);
     const valid = ref(true);
 
@@ -95,6 +97,7 @@ export default defineComponent({
     };
 
     const openCreateDialog = () => {
+      console.log(searchInput.value)
       if (setData) {
         setData(searchInput.value)
       }
