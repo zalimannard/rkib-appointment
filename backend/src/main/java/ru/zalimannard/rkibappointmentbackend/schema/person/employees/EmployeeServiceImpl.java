@@ -1,6 +1,9 @@
 package ru.zalimannard.rkibappointmentbackend.schema.person.employees;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,15 +14,25 @@ import ru.zalimannard.rkibappointmentbackend.schema.person.Person;
 import ru.zalimannard.rkibappointmentbackend.schema.person.PersonService;
 import ru.zalimannard.rkibappointmentbackend.schema.person.employees.dto.EmployeeRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.person.employees.dto.EmployeeResponseDto;
+import ru.zalimannard.rkibappointmentbackend.schema.person.employees.role.EmployeeRole;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeMapper mapper;
     private final EmployeeRepository repository;
 
     private final PersonService personService;
+
+    @Value("${application.default.adminEmail}")
+    private String defaultAdminUsername;
+    @Value("${application.default.adminPassword}")
+    private String defaultAdminPassword;
 
     @Override
     public EmployeeResponseDto create(EmployeeRequestDto employeeDto) {
@@ -61,7 +74,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         String currentUsername = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         Person person = personService.readEntityByUsername(currentUsername);
         return repository.findByPerson(person)
-                .orElseThrow(() -> new NotFoundException("sms-06", "Не найден Employee с username=" + currentUsername, null));
+                .orElseThrow(() -> new NotFoundException("sms-06", "Не найден Employee с email=" + currentUsername, null));
     }
 
     @Override
@@ -90,6 +103,36 @@ public class EmployeeServiceImpl implements EmployeeService {
             repository.delete(employee);
         } catch (DataIntegrityViolationException e) {
             throw new ConflictException("sms-04", "Конфликт при удалении Employee из базы данных", e.getMessage());
+        }
+    }
+
+    @PostConstruct
+    public void initDefaultAdmin() {
+        Person existingPerson = null;
+        try {
+            existingPerson = personService.readEntityByUsername(defaultAdminUsername);
+        } catch (Exception e) {
+            log.info(e.getMessage());
+        }
+
+        if (existingPerson == null) {
+            String adminTextField = "ADMIN";
+            Person adminToCreate = Person.builder()
+                    .email(defaultAdminUsername)
+                    .password(defaultAdminPassword)
+                    .lastName(adminTextField)
+                    .firstName(adminTextField)
+                    .patronymic(adminTextField)
+                    .build();
+            Person createdAdminPerson = personService.createEntity(adminToCreate);
+
+            Employee adminEmployee = Employee.builder()
+                    .person(createdAdminPerson)
+                    .roles(new HashSet<>(Set.of(EmployeeRole.ADMIN)))
+                    .build();
+            createEntity(adminEmployee);
+        } else {
+            log.info("Человек с email=" + defaultAdminUsername + " уже существует");
         }
     }
 

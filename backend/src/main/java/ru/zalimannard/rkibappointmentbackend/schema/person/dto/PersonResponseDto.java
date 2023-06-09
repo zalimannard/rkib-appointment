@@ -14,9 +14,6 @@ public class PersonResponseDto {
     @JsonProperty("id")
     String id;
 
-    @JsonProperty("username")
-    String username;
-
     @JsonProperty("email")
     String email;
 

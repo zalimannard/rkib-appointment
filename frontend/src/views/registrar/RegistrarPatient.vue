@@ -170,7 +170,7 @@ export default {
           };
         });
         this.filteredPatients = this.patients;
-        await this.editFilter(); // вызовите здесь
+        await this.editFilter();
       } catch (error) {
         console.error("Ошибка при получении данных:", error);
       }

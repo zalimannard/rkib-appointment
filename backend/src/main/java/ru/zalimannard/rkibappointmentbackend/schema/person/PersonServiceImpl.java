@@ -1,9 +1,7 @@
 package ru.zalimannard.rkibappointmentbackend.schema.person;
 
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -15,7 +13,6 @@ import ru.zalimannard.rkibappointmentbackend.exception.ConflictException;
 import ru.zalimannard.rkibappointmentbackend.exception.NotFoundException;
 import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonResponseDto;
-import ru.zalimannard.rkibappointmentbackend.schema.person.employees.Employee;
 import ru.zalimannard.rkibappointmentbackend.schema.person.employees.EmployeeMapper;
 import ru.zalimannard.rkibappointmentbackend.schema.person.employees.dto.EmployeeResponseDto;
 import ru.zalimannard.rkibappointmentbackend.schema.person.patient.PatientMapper;
@@ -24,7 +21,6 @@ import ru.zalimannard.rkibappointmentbackend.schema.person.patient.dto.PatientRe
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -37,11 +33,6 @@ public class PersonServiceImpl implements PersonService, UserDetailsService {
 
     private final PatientMapper patientMapper;
     private final EmployeeMapper employeeMapper;
-
-    @Value("${application.default.adminUsername}")
-    private String defaultAdminUsername;
-    @Value("${application.default.adminPassword}")
-    private String defaultAdminPassword;
 
     @Override
     public PersonResponseDto create(PersonRequestDto personDto) {
@@ -102,8 +93,8 @@ public class PersonServiceImpl implements PersonService, UserDetailsService {
 
     @Override
     public Person readEntityByUsername(String username) {
-        return repository.findByUsername(username)
-                .orElseThrow(() -> new NotFoundException("pes-06", "Не найден Person с username=" + username, null));
+        return repository.findByEmail(username)
+                .orElseThrow(() -> new NotFoundException("pes-06", "Не найден Person с email=" + username, null));
     }
 
     @Override
@@ -168,32 +159,13 @@ public class PersonServiceImpl implements PersonService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        Person person = repository.findByUsername(username)
+        Person person = repository.findByEmail(username)
                 .orElseThrow(() -> new NotFoundException("pes-05", "Не найден Person с username=" + username, null));
         return User.builder()
-                .username(person.getUsername())
+                .username(person.getEmail())
                 .password(person.getPassword())
                 .authorities(Collections.emptyList())
                 .build();
-    }
-
-    @PostConstruct
-    public void initDefaultAdmin() {
-        Optional<Person> existingPerson = repository.findByUsername(defaultAdminUsername);
-        if (existingPerson.isEmpty()) {
-            String adminTextField = "ADMIN";
-            Person adminToCreate = Person.builder()
-                    .username(defaultAdminUsername)
-                    .password(defaultAdminPassword)
-                    .lastName(adminTextField)
-                    .firstName(adminTextField)
-                    .patronymic(adminTextField)
-                    .build();
-            adminToCreate = encodePersonsPassword(adminToCreate);
-            repository.save(adminToCreate);
-        } else {
-            log.info("Человек с username=" + defaultAdminUsername + " уже существует");
-        }
     }
 
     private Person encodePersonsPassword(Person person) {

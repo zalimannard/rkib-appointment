@@ -12,10 +12,6 @@ import org.hibernate.validator.constraints.Length;
 @Builder(toBuilder = true)
 public class PersonRequestDto {
 
-    @JsonProperty("username")
-    @NotBlank(message = "Не указано имя пользователя")
-    String username;
-
     @JsonProperty("password")
     @NotBlank(message = "Не указан пароль")
     @Pattern(regexp = "[a-zA-Z0-9!@#%?_]*", message = "Недопустимые символы в пароле")
@@ -37,8 +33,7 @@ public class PersonRequestDto {
     @Length(min = 1)
     String patronymic;
 
-    public PersonRequestDto(String username, String password, String email, String lastName, String firstName, String patronymic) {
-        this.username = username != null ? username.trim() : null;
+    public PersonRequestDto(String password, String email, String lastName, String firstName, String patronymic) {
         this.password = password;
         this.email = email != null ? email.trim() : null;
         this.lastName = lastName != null ? lastName.trim() : null;

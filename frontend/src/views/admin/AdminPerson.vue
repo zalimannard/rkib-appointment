@@ -55,7 +55,7 @@ export default defineComponent({
       lastName: "",
       firstName: "",
       patronymic: "",
-      username: "",
+      email: "",
       patient: {
         id: "",
         birthdate: "",
@@ -78,6 +78,7 @@ export default defineComponent({
     let setData: ((arg: PersonResponse) => Promise<void>) | undefined;
 
     const onPersonCreated = () => {
+      console.log("onPersonCreated")
       closeDialog();
       if (requestPerson) {
         requestPerson();
@@ -97,7 +98,6 @@ export default defineComponent({
     };
 
     const openCreateDialog = () => {
-      console.log(searchInput.value)
       if (setData) {
         setData(searchInput.value)
       }

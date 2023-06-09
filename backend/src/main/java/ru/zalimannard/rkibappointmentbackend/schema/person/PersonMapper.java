@@ -16,7 +16,7 @@ public class PersonMapper {
 
     public Person toEntity(PersonRequestDto personRequestDto) {
         return Person.builder()
-                .username(personRequestDto.getUsername())
+                .email(personRequestDto.getEmail())
                 .password(personRequestDto.getPassword())
                 .lastName(personRequestDto.getLastName())
                 .firstName(personRequestDto.getFirstName())
@@ -32,7 +32,7 @@ public class PersonMapper {
         }
         return PersonResponseDto.builder()
                 .id(person.getId())
-                .username(person.getUsername())
+                .email(person.getEmail())
                 .lastName(person.getLastName())
                 .firstName(person.getFirstName())
                 .patronymic(person.getPatronymic())

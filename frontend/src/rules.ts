@@ -28,13 +28,6 @@ export const requiredRule = (value: string) => {
     return !!value || "Обязательное поле";
 };
 
-export const usernameRule = (value: string) => {
-    if (value == null || value === '') return "Обязательное поле";
-    const pattern = /^[a-zA-Z0-9]+$/;
-    if (!pattern.test(value)) return "Недопустимые символы";
-    return true;
-};
-
 export const passwordRule = (value: string) => {
     if (value == null || value === '') return "Обязательное поле";
     const pattern = /^[a-zA-Z0-9!@#$%^&*]+$/;

@@ -22,8 +22,8 @@ public class Person {
     @Column(name = "id")
     private String id;
 
-    @Column(name = "username", nullable = false, unique = true)
-    private String username;
+    @Column(name = "email", unique = true)
+    private String email;
 
     @Column(name = "password", nullable = false)
     private String password;

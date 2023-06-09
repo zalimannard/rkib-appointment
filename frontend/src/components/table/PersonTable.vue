@@ -35,10 +35,10 @@
         </th>
         <th class="text-left" scope="col">
           <masked-text-field
-              v-model="personRequest.username"
+              v-model="personRequest.email"
               class="header-cell"
               density="comfortable"
-              label="Логин"
+              label="Email"
               @input="updateSearch"
           />
         </th>
@@ -88,7 +88,7 @@
         <td>{{ item.lastName }}</td>
         <td>{{ item.firstName }}</td>
         <td>{{ item.patronymic }}</td>
-        <td>{{ item.username }}</td>
+        <td>{{ item.email }}</td>
         <td>{{ item.patient?.birthdate ? masks.dateMask(utils.fromIsoToDefault(item.patient.birthdate)) : "" }}</td>
         <td>{{ item.patient?.phoneNumber ? masks.phoneMask(item.patient.phoneNumber) : "" }}</td>
         <td>{{ calcRolesToShow(item) }}</td>
@@ -126,7 +126,7 @@ export default defineComponent({
       lastName: "",
       firstName: "",
       patronymic: "",
-      username: "",
+      email: "",
       password: ""
     });
     const patientRequest = ref<PatientRequest>({
@@ -218,7 +218,7 @@ export default defineComponent({
           checkFilter(person.lastName, personRequest.value.lastName) &&
           checkFilter(person.firstName, personRequest.value.firstName) &&
           checkFilter(person.patronymic, personRequest.value.patronymic) &&
-          checkFilter(person.username, personRequest.value.username) &&
+          checkFilter(person.email, personRequest.value.email) &&
           (person.patient
               ? (checkFilter(utils.fromIsoToDefault(person.patient.birthdate), patientRequest.value.birthdate))
               : !patientRequest.value.birthdate) &&
@@ -235,7 +235,7 @@ export default defineComponent({
         lastName: "",
         firstName: "",
         patronymic: "",
-        username: "",
+        email: "",
         password: ""
       }
       patientRequest.value = {

@@ -10,12 +10,12 @@
           >
 
             <base-text-field
-                id="username"
-                v-model="username"
+                id="email"
+                v-model="email"
                 :readonly="loading"
-                :rules="[rules.required, rules.username]"
+                :rules="[rules.required]"
                 autofocus
-                label="Логин"
+                label="Электорнная почта"
             />
 
             <password-text-field
@@ -61,7 +61,7 @@ import BaseButton from "@/components/button/CustomButton.vue";
 import {defineComponent, inject, ref} from "vue";
 import {showAlert} from "@/components/alert/AlertState";
 import {useRouter} from "vue-router";
-import {passwordRule, requiredRule, usernameRule} from "@/rules";
+import {passwordRule, requiredRule} from "@/rules";
 
 interface Role {
   key: string;
@@ -77,7 +77,7 @@ export default defineComponent({
   setup() {
     const alertState = inject('alertState');
 
-    const username = ref("");
+    const email = ref("");
     const password = ref("");
     const passwordShow = ref(false);
     const role = ref<Role>({key: "Врач", value: "DOCTOR"});
@@ -94,7 +94,6 @@ export default defineComponent({
 
     const rules = {
       required: requiredRule,
-      username: usernameRule,
       password: passwordRule
     };
 
@@ -106,7 +105,7 @@ export default defineComponent({
 
       if (!form.value) return;
 
-      let basicAuth = btoa(username.value + ":" + password.value);
+      let basicAuth = btoa(email.value + ":" + password.value);
       try {
         const response = await axios.get(import.meta.env.VITE_API_URL + "/api/v1/people/me", {
           headers: {"Authorization": "Basic " + basicAuth}
@@ -134,7 +133,7 @@ export default defineComponent({
 
     return {
       alertState,
-      username,
+      email,
       password,
       passwordShow,
       role,

@@ -35,6 +35,14 @@
         </v-col>
       </v-row>
       <v-row no-gutters>
+        <v-col class="pr-2" cols="8">
+          <masked-text-field
+              v-model="personEmail"
+              label="Email"
+          />
+        </v-col>
+      </v-row>
+      <v-row no-gutters>
         <v-col>
           <role-select
               :multiple="true"
@@ -52,7 +60,6 @@
               :handle-backspace="backspaceHandlers.handleBackspaceForDate"
               :mask="masks.dateMask"
               :rules="[rules.birthdate]"
-              capitalize-first-letter
               label="Дата рождения"
           />
         </v-col>
@@ -72,7 +79,6 @@
         <v-col>
           <masked-text-field
               v-model="patientAddress"
-              capitalize-first-letter
               label="Адрес"
           />
         </v-col>
@@ -101,6 +107,9 @@ import {onMounted, provide} from "vue-demi";
 import RoleSelect from "@/components/select/RoleSelect.vue";
 import {dateMask, phoneMask} from "@/masks";
 import {handleBackspaceForDate, handleBackspaceForPhoneNumber} from "@/backspaceHandlers";
+import axios from "axios";
+import {showAlert} from "@/components/alert/AlertState";
+import {fromDefaultToIso, fromIsoToDefault, roleCodeToString} from "@/utils";
 
 export default defineComponent({
   components: {
@@ -133,6 +142,11 @@ export default defineComponent({
       handleBackspaceForDate,
       handleBackspaceForPhoneNumber
     };
+    const utils = {
+      fromIsoToDefault,
+      fromDefaultToIso,
+      roleCodeToString
+    }
 
     const setData = (data: PersonResponse) => {
       person.value = {
@@ -140,10 +154,9 @@ export default defineComponent({
         lastName: data.lastName,
         firstName: data.firstName,
         patronymic: data.patronymic,
-        username: data.username,
+        email: data.email,
         password: ""
       };
-      console.log(data.patient)
       patient.value = {
         ...patient.value,
         personId: "",
@@ -154,19 +167,19 @@ export default defineComponent({
       }
     };
 
-    const selectedRoles = ref([]);
+    const selectedRoles = ref<string[]>([]);
 
     const personLastName = computed({
       get: () => person.value?.lastName || "",
       set: (value) => {
         let firstNameValue = "";
         let patronymicValue = "";
-        let usernameValue = "";
+        let emailValue = "";
         let passwordValue = "";
         if (person.value) {
           firstNameValue = person.value?.firstName;
           patronymicValue = person.value?.patronymic;
-          usernameValue = person.value?.username;
+          emailValue = person.value?.email;
           passwordValue = person.value?.password;
         }
         person.value = {
@@ -174,7 +187,7 @@ export default defineComponent({
           lastName: value,
           firstName: firstNameValue,
           patronymic: patronymicValue,
-          username: usernameValue,
+          email: emailValue,
           password: passwordValue
         };
       }
@@ -185,12 +198,12 @@ export default defineComponent({
       set: (value) => {
         let lastNameValue = "";
         let patronymicValue = "";
-        let usernameValue = "";
+        let emailValue = "";
         let passwordValue = "";
         if (person.value) {
           lastNameValue = person.value?.lastName;
           patronymicValue = person.value?.patronymic;
-          usernameValue = person.value?.username;
+          emailValue = person.value?.email;
           passwordValue = person.value?.password;
         }
         person.value = {
@@ -198,7 +211,7 @@ export default defineComponent({
           lastName: lastNameValue,
           firstName: value,
           patronymic: patronymicValue,
-          username: usernameValue,
+          email: emailValue,
           password: passwordValue
         };
       }
@@ -209,12 +222,12 @@ export default defineComponent({
       set: (value) => {
         let lastNameValue = "";
         let firstNameValue = "";
-        let usernameValue = "";
+        let emailValue = "";
         let passwordValue = "";
         if (person.value) {
           lastNameValue = person.value?.lastName;
           firstNameValue = person.value?.firstName;
-          usernameValue = person.value?.username;
+          emailValue = person.value?.email;
           passwordValue = person.value?.password;
         }
         person.value = {
@@ -222,7 +235,31 @@ export default defineComponent({
           lastName: lastNameValue,
           firstName: firstNameValue,
           patronymic: value,
-          username: usernameValue,
+          email: emailValue,
+          password: passwordValue
+        };
+      }
+    });
+
+    const personEmail = computed({
+      get: () => person.value?.email || "",
+      set: (value) => {
+        let lastNameValue = "";
+        let firstNameValue = "";
+        let patronymicValue = "";
+        let passwordValue = "";
+        if (person.value) {
+          lastNameValue = person.value?.lastName;
+          firstNameValue = person.value?.firstName;
+          patronymicValue = person.value?.patronymic;
+          passwordValue = person.value?.password;
+        }
+        person.value = {
+          ...person.value,
+          lastName: lastNameValue,
+          firstName: firstNameValue,
+          patronymic: patronymicValue,
+          email: value,
           password: passwordValue
         };
       }
@@ -326,8 +363,77 @@ export default defineComponent({
 
     function createPerson() {
       let basicAuth = localStorage.getItem("auth");
+      axios({
+        method: "post",
+        url: import.meta.env.VITE_API_URL + "/api/v1/people",
+        headers: {"Authorization": "Basic " + basicAuth},
+        data: {
+          password: "password",
+          email: person.value?.email === ""
+              ? null
+              : person.value?.email,
+          lastName: person.value?.lastName,
+          firstName: person.value?.firstName,
+          patronymic: person.value?.patronymic === ""
+              ? null
+              : person.value?.patronymic
+        }
+      }).then((value) => {
+        if (selectedRoles.value.includes('PATIENT')) {
+          let phoneNumber = (patient.value?.phoneNumber || "")
+              .split("(").join("")
+              .split(")").join("")
+              .split("-").join("");
+          axios({
+            method: "post",
+            url: import.meta.env.VITE_API_URL + "/api/v1/patients",
+            headers: {"Authorization": "Basic " + basicAuth},
+            data: {
+              personId: value.data.id,
+              phoneNumber: phoneNumber,
+              birthdate: utils.fromDefaultToIso(patient.value?.birthdate || ""),
+              address: patient.value?.address === ""
+                  ? null
+                  : patient.value?.address,
+              occupation: patient.value?.occupation === ""
+                  ? null
+                  : patient.value?.occupation,
+            }
+          }).then(() => {
+            showAlert("success", "Пациент успешно создан");
+            emit("personCreated")
+          }).catch((error) => {
+            console.log(error)
+            showAlert("error", "Ошибка при добавлении пациента");
+          });
+        }
 
-      console.log(selectedRoles.value);
+        let employeeRoles = selectedRoles.value.filter(role => role !== 'PATIENT');
+        if (employeeRoles.length != 0) {
+          axios({
+            method: "post",
+            url: import.meta.env.VITE_API_URL + "/api/v1/employees",
+            headers: {"Authorization": "Basic " + basicAuth},
+            data: {
+              personId: value.data.id,
+              roles: employeeRoles
+            }
+          }).then(() => {
+            showAlert("success", "Сотрудник успешно создан");
+            emit("personCreated")
+          }).catch((error) => {
+            console.log(error)
+            showAlert("error", "Ошибка при добавлении сотрудника");
+          });
+        }
+
+        showAlert("success", "Человек успешно создан");
+        emit("personCreated")
+      }).catch((error) => {
+        console.log(error)
+        showAlert("error", "Ошибка при добавлении человека");
+      });
+      emit("updateSearchInput", person.value);
     }
 
     function nothing() {
@@ -354,6 +460,7 @@ export default defineComponent({
       personLastName,
       personFirstName,
       personPatronymic,
+      personEmail,
       createPerson,
       internalValue,
       nothing,

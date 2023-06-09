@@ -5,7 +5,7 @@ export interface PersonRequest {
     lastName: string;
     firstName: string;
     patronymic: string;
-    username: string;
+    email: string;
     password: string;
 }
 
@@ -14,7 +14,7 @@ export interface PersonResponse {
     lastName: string;
     firstName: string;
     patronymic: string;
-    username: string;
+    email: string;
     patient: PatientResponse;
     employee: EmployeeResponse;
 }

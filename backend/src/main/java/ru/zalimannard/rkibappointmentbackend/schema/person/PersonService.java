@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
 import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.person.dto.PersonResponseDto;
-import ru.zalimannard.rkibappointmentbackend.schema.person.employees.Employee;
 
 import java.util.List;
 

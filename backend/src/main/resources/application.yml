@@ -18,7 +18,7 @@ springdoc:
 
 application:
   default:
-    adminUsername: ${ADMIN_USERNAME}
+    adminEmail: ${ADMIN_EMAIL}
     adminPassword: ${ADMIN_PASSWORD}
   constant:
     defaultSort: id,asc
