@@ -154,12 +154,14 @@ export default defineComponent({
         const response = await axios.get(import.meta.env.VITE_API_URL + "/api/v1/people", {
           headers: {"Authorization": "Basic " + basicAuth}
         });
-        people.value = response.data;
+
+        people.value = response.data.filter((person: PersonResponse) => "patient" in person);
         onEditFilter();
       } catch (error) {
         showAlert("error", "Не удалось получить данные")
       }
     }
+
 
     onMounted(() => {
       emit("provideRequestPerson", requestPerson);

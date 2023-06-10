@@ -33,6 +33,23 @@
       </tr>
       </thead>
     </template>
+    <template v-slot:body>
+      <tbody>
+      <tr
+          v-for="(item, index) in filteredAppointments"
+          :key="item.id"
+          :class="{ 'light-row': index % 2 === 0, 'dark-row': index % 2 !== 0 }"
+          class="table-row"
+      >
+        <td>{{
+            calcPersonPresentation(item.patient.person) + (item.patient.phoneNumber ? (item.patient.phoneNumber) : "")
+          }}
+        </td>
+        <td>{{ item.institution.name }}</td>
+        <td>{{ item.status.name }}</td>
+      </tr>
+      </tbody>
+    </template>
   </custom-table>
 
   <v-dialog v-model="isPatientDialogOpened" max-width="1152px">
@@ -71,6 +88,11 @@ import type {PersonResponse} from "@/types/person";
 import PersonTable from "@/components/table/PersonTable.vue";
 import AppointmentStatusTable from "@/components/table/AppointmentStatusTable.vue";
 import PatientTable from "@/components/table/PatientTable.vue";
+import axios from "axios";
+import {showAlert} from "@/components/alert/AlertState";
+import {onMounted} from "vue-demi";
+import type {AppointmentResponse} from "@/types/appointment";
+import {checkFilter} from "@/utils";
 
 export default defineComponent({
   components: {
@@ -81,7 +103,7 @@ export default defineComponent({
     InstitutionTable,
     MaskedTextField
   },
-  setup() {
+  setup(props, {emit}) {
     const isPatientDialogOpened = ref(false);
     const isInstitutionDialogOpened = ref(false);
     const isStatusDialogOpened = ref(false);
@@ -118,23 +140,74 @@ export default defineComponent({
     const handlePersonRowClicked = (row: PersonResponse) => {
       selectedPerson.value = row;
       isPatientDialogOpened.value = false;
-      selectedInstitutionPerson.value = row.lastName + " "
-      + row.firstName[0] + "."
-      + (row.patronymic ? (row.patronymic[0] + ". ") : " ")
-      + (row.patient.phoneNumber ? (row.patient.phoneNumber) : "");
+      selectedInstitutionPerson.value = calcPersonPresentation(row)
+          + (row.patient.phoneNumber ? (row.patient.phoneNumber) : "");
+      updateSearch();
     };
 
     const handleInstitutionRowClicked = (row: InstitutionResponse) => {
       selectedInstitution.value = row;
       isInstitutionDialogOpened.value = false;
       selectedInstitutionName.value = row.name;
+      updateSearch();
     };
 
     const handleAppointmentStatusRowClicked = (row: AppointmentStatusResponse) => {
       selectedStatus.value = row;
       isStatusDialogOpened.value = false;
       selectedInstitutionStatus.value = row.name;
+      updateSearch();
     };
+
+    const appointments = ref<AppointmentResponse[]>([]);
+    const filteredAppointments = ref<AppointmentResponse[]>([]);
+
+    const requestAppointment = async () => {
+      try {
+        let basicAuth = localStorage.getItem("auth");
+        const response = await axios.get(import.meta.env.VITE_API_URL + "/api/v1/appointments", {
+          headers: {"Authorization": "Basic " + basicAuth}
+        });
+        appointments.value = response.data;
+        onEditFilter();
+      } catch (error) {
+        showAlert("error", "Не удалось получить данные")
+      }
+    }
+
+    function onEditFilter() {
+      filteredAppointments.value = filterPeople(appointments.value);
+    }
+
+    function filterPeople(appointments: AppointmentResponse[]) {
+      return appointments.filter(filterPerson);
+    }
+
+    function filterPerson(appointment: AppointmentResponse) {
+      console.log(appointment.patient.id + "  ;  " + (selectedPerson.value?.patient.id ?? ""))
+      console.log(appointment.institution.id + "  ;  " + (selectedInstitution.value?.id ?? ""))
+      console.log(appointment.status.id + "  ;  " + (selectedStatus.value?.id ?? ""))
+      return (
+          checkFilter(appointment.patient.id, selectedPerson.value?.patient.id ?? "") &&
+          checkFilter(appointment.institution.id, selectedInstitution.value?.id ?? "") &&
+          checkFilter(appointment.status.id, selectedStatus.value?.id ?? "")
+      );
+    }
+
+    onMounted(() => {
+      emit("provideRequestPerson", requestAppointment);
+      requestAppointment();
+    });
+
+    function calcPersonPresentation(item: PersonResponse) {
+      return item.lastName + " "
+          + item.firstName[0] + "."
+          + (item.patronymic ? (item.patronymic[0] + ". ") : " ");
+    }
+
+    function updateSearch() {
+      onEditFilter();
+    }
 
     return {
       isPatientDialogOpened,
@@ -147,6 +220,8 @@ export default defineComponent({
       searchInputPerson,
       searchInputInstitution,
       searchInputStatus,
+      filteredAppointments,
+      calcPersonPresentation,
       handlePersonRowClicked,
       handleInstitutionRowClicked,
       handleAppointmentStatusRowClicked,
