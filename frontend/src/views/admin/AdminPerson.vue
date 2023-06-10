@@ -74,7 +74,6 @@ export default defineComponent({
     let setData: ((arg: PersonResponse) => Promise<void>) | undefined;
 
     const onPersonCreated = () => {
-      console.log("onPersonCreated")
       closeDialog();
       if (requestPerson) {
         requestPerson();

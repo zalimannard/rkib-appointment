@@ -1,4 +1,11 @@
 <template>
+  <create-appointment-dialog
+      v-model="showCreateDialog"
+      :close-dialog="closeDialog"
+      :on-create-entity="onAppointmentCreated"
+      @appointmentCreated="onAppointmentCreated"
+  />
+
   <v-container class="container">
     <v-col>
       <v-row>
@@ -9,10 +16,8 @@
       </v-row>
       <v-row>
         <appointment-table
-            ref="personAdminTable"
-            @provideRequestPerson="onProvideRequestAppointment"
-            @requestPerson="onAppointmentCreated"
-            @updateSearchInput="updateSearchInput"
+            ref="appointmentAdminTable"
+            @provideRequestAppointment="onProvideRequestAppointment"
         />
       </v-row>
     </v-col>
@@ -23,69 +28,41 @@
 import EntityTableActions from "@/components/table/EntityTableActions.vue";
 import AppointmentTable from "@/components/table/AppointmentTable.vue";
 import {defineComponent, ref} from "vue";
-import CreateAppointmentDialog from "@/components/dialog/CreateAppointmentDialog.vue";
+import CreateAppointmentDialog from "@/components/dialog/AppointmentCreateDialog.vue";
+import CreatePersonDialog from "@/components/dialog/PersonCreateDialog.vue";
+import PersonTable from "@/components/table/PersonTable.vue";
 
 export default defineComponent({
   components: {
+    PersonTable,
+    CreatePersonDialog,
     AppointmentTable,
     CreateAppointmentDialog,
     EntityTableActions
   },
   setup() {
     const showCreateDialog = ref(false);
-    // const searchInput = ref({
-    //   id: "",
-    //   lastName: "",
-    //   firstName: "",
-    //   patronymic: "",
-    //   email: "",
-    //   patient: {
-    //     id: "",
-    //     birthdate: "",
-    //     phoneNumber: "",
-    //     address: "",
-    //     occupation: ""
-    //   } as PatientResponse,
-    //   employee: {
-    //     id: "",
-    //     roles: []
-    //   } as EmployeeResponse
-    // } as PersonResponse);
-    const valid = ref(true);
-
-    // const updateSearchInput = (value: PersonResponse) => {
-    //   searchInput.value = value;
-    // };
 
     let requestPerson: (() => Promise<void>) | undefined;
-    // let setData: ((arg: PersonResponse) => Promise<void>) | undefined;
 
-    const onPersonCreated = () => {
-      console.log("onPersonCreated")
+    const onAppointmentCreated = () => {
       closeDialog();
       if (requestPerson) {
         requestPerson();
       }
     };
 
-    const onProvideRequestPerson = (func: () => Promise<void>) => {
+    const onProvideRequestAppointment = (func: () => Promise<void>) => {
       requestPerson = func;
     };
-
-    // const onProvideSetData = (func: () => Promise<void>) => {
-    //   setData = func;
-    // };
 
     const handleRowClick = (item: any) => {
       console.log(item);
     };
 
-    // const openCreateDialog = () => {
-    //   if (setData) {
-    //     setData(searchInput.value)
-    //   }
-    //   showCreateDialog.value = true;
-    // };
+    const openCreateDialog = () => {
+      showCreateDialog.value = true;
+    };
 
     const closeDialog = () => {
       showCreateDialog.value = false;
@@ -93,19 +70,14 @@ export default defineComponent({
 
     return {
       showCreateDialog,
-      // searchInput,
-      valid,
-      // updateSearchInput,
       handleRowClick,
-      // openCreateDialog,
+      openCreateDialog,
       closeDialog,
-      onPersonCreated,
-      onProvideRequestPerson,
-      // onProvideSetData
+      onAppointmentCreated,
+      onProvideRequestAppointment
     };
   }
 });
-
 </script>
 
 <style scoped>

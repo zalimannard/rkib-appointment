@@ -5,7 +5,7 @@
       <tr>
         <th class="text-left" scope="col">
           <masked-text-field
-              v-model="selectedInstitutionPerson"
+              v-model="selectedAppointmentPerson"
               class="header-cell"
               density="comfortable"
               label="Пациент"
@@ -14,7 +14,7 @@
         </th>
         <th class="text-left" scope="col">
           <masked-text-field
-              v-model="selectedInstitutionName"
+              v-model="selectedAppointmentInstitutionName"
               class="header-cell"
               density="comfortable"
               label="Учреждение"
@@ -23,7 +23,7 @@
         </th>
         <th class="text-left" scope="col">
           <masked-text-field
-              v-model="selectedInstitutionStatus"
+              v-model="selectedAppointmentStatus"
               class="header-cell"
               density="comfortable"
               label="Статус"
@@ -133,14 +133,14 @@ export default defineComponent({
       }, 100);
     };
 
-    const selectedInstitutionPerson = ref("Не выбрано");
-    const selectedInstitutionName = ref("Не выбрано");
-    const selectedInstitutionStatus = ref("Не выбрано");
+    const selectedAppointmentPerson = ref("Не выбрано");
+    const selectedAppointmentInstitutionName = ref("Не выбрано");
+    const selectedAppointmentStatus = ref("Не выбрано");
 
     const handlePersonRowClicked = (row: PersonResponse) => {
       selectedPerson.value = row;
       isPatientDialogOpened.value = false;
-      selectedInstitutionPerson.value = calcPersonPresentation(row)
+      selectedAppointmentPerson.value = calcPersonPresentation(row)
           + (row.patient.phoneNumber ? (row.patient.phoneNumber) : "");
       updateSearch();
     };
@@ -148,14 +148,14 @@ export default defineComponent({
     const handleInstitutionRowClicked = (row: InstitutionResponse) => {
       selectedInstitution.value = row;
       isInstitutionDialogOpened.value = false;
-      selectedInstitutionName.value = row.name;
+      selectedAppointmentInstitutionName.value = row.name;
       updateSearch();
     };
 
     const handleAppointmentStatusRowClicked = (row: AppointmentStatusResponse) => {
       selectedStatus.value = row;
       isStatusDialogOpened.value = false;
-      selectedInstitutionStatus.value = row.name;
+      selectedAppointmentStatus.value = row.name;
       updateSearch();
     };
 
@@ -184,9 +184,6 @@ export default defineComponent({
     }
 
     function filterPerson(appointment: AppointmentResponse) {
-      console.log(appointment.patient.id + "  ;  " + (selectedPerson.value?.patient.id ?? ""))
-      console.log(appointment.institution.id + "  ;  " + (selectedInstitution.value?.id ?? ""))
-      console.log(appointment.status.id + "  ;  " + (selectedStatus.value?.id ?? ""))
       return (
           checkFilter(appointment.patient.id, selectedPerson.value?.patient.id ?? "") &&
           checkFilter(appointment.institution.id, selectedInstitution.value?.id ?? "") &&
@@ -195,7 +192,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      emit("provideRequestPerson", requestAppointment);
+      emit("provideRequestAppointment", requestAppointment);
       requestAppointment();
     });
 
@@ -214,9 +211,9 @@ export default defineComponent({
       isInstitutionDialogOpened,
       isStatusDialogOpened,
       selectedInstitution,
-      selectedInstitutionPerson,
-      selectedInstitutionName,
-      selectedInstitutionStatus,
+      selectedAppointmentPerson,
+      selectedAppointmentInstitutionName,
+      selectedAppointmentStatus,
       searchInputPerson,
       searchInputInstitution,
       searchInputStatus,
