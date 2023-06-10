@@ -37,4 +37,8 @@ export default {
 .dark-row {
   background-color: #ECEFF1;
 }
+
+.table-row {
+  cursor: pointer;
+}
 </style>

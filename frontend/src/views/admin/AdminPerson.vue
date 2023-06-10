@@ -34,16 +34,12 @@ import {defineComponent, ref} from 'vue';
 import EntityTableActions from "@/components/table/EntityTableActions.vue";
 import PersonTable from "@/components/table/PersonTable.vue";
 import CreatePersonDialog from "@/components/dialog/PersonCreateDialog.vue";
-import CreateAppointmentStatusDialog from "@/components/dialog/AppointmentStatusCreateDialog.vue";
-import AppointmentStatusTable from "@/components/table/AppointmentStatusTable.vue";
 import type {PersonResponse} from "@/types/person";
 import type {PatientResponse} from "@/types/patient";
 import type {EmployeeResponse} from "@/types/employee";
 
 export default defineComponent({
   components: {
-    AppointmentStatusTable,
-    CreateAppointmentStatusDialog,
     CreatePersonDialog,
     PersonTable,
     EntityTableActions

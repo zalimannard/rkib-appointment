@@ -22,6 +22,8 @@
           v-for="(item, index) in filteredInstitutions"
           :key="item.id"
           :class="{ 'light-row': index % 2 === 0, 'dark-row': index % 2 !== 0 }"
+          class="table-row"
+          @click="handleRowClick(item)"
       >
         <td>{{ item.name }}</td>
       </tr>
@@ -110,12 +112,17 @@ export default defineComponent({
       onEditFilter();
     }
 
+    const handleRowClick = (item: InstitutionResponse) => {
+      emit("row-clicked", item);
+    };
+
     provide("requestInstitution", requestInstitution);
 
     return {
       institutionRequest,
       institutions,
       filteredInstitutions,
+      handleRowClick,
       updateSearch,
       requestInstitution,
       onEditFilter,
