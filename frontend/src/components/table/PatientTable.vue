@@ -64,17 +64,6 @@
               @input="updateSearch"
           />
         </th>
-        <th class="text-left role-field" scope="col">
-          <role-select
-              :update-search-input="updateSearch"
-              class="header-cell"
-              density="comfortable"
-              include-none
-              include-patient
-              roles="employeeRequest.roles"
-              @update:roles="employeeRequest.roles = $event"
-          />
-        </th>
       </tr>
       </thead>
     </template>
@@ -93,7 +82,6 @@
         <td>{{ item.email }}</td>
         <td>{{ item.patient?.birthdate ? masks.dateMask(utils.fromIsoToDefault(item.patient.birthdate)) : "" }}</td>
         <td>{{ item.patient?.phoneNumber ? masks.phoneMask(item.patient.phoneNumber) : "" }}</td>
-        <td>{{ calcRolesToShow(item) }}</td>
       </tr>
       </tbody>
     </template>

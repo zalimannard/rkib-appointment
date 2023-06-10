@@ -60,7 +60,7 @@ export default {
         return [];
       }
       return this.selected.map(item => {
-        if (item.value) {
+        if (item && item.value) { // Добавьте проверку на наличие item
           return this.items.find(availableItem => availableItem.value === item.value)
         }
         return null;

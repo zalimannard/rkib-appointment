@@ -54,12 +54,12 @@ export function roleCodeToString(value: string): string {
     }
 }
 
-export function checkFilter(fieldValue: string, filterValue: string): boolean {
+export function checkFilter(fieldValue: string | undefined, filterValue: string | undefined): boolean {
+    filterValue = filterValue || "";
+    fieldValue = fieldValue || "";
     if (filterValue === "") {
         return true;
     }
-    if (!fieldValue && filterValue !== "") {
-        return false;
-    }
     return fieldValue.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1;
 }
+

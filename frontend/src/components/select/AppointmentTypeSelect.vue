@@ -20,6 +20,7 @@ export default defineComponent({
     status: {
       type: String,
       required: true,
+      default: "",
     },
     includeNone: {
       type: Boolean,

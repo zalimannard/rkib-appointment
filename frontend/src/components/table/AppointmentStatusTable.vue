@@ -32,6 +32,8 @@
           v-for="(item, index) in filteredAppointmentStatuses"
           :key="item.id"
           :class="{ 'light-row': index % 2 === 0, 'dark-row': index % 2 !== 0 }"
+          class="table-row"
+          @click="handleRowClick(item)"
       >
         <td>{{ item.name }}</td>
         <td>{{ item.type }}</td>
@@ -112,12 +114,12 @@ export default defineComponent({
       return appointmentStatuses.filter(filterAppointmentStatus);
     }
 
+
     function filterAppointmentStatus(appointmentStatus: AppointmentStatusResponse) {
-      return (
-          checkFilter(appointmentStatus.name, appointmentStatusRequest.value.name) &&
-          checkFilter(appointmentStatus.type, appointmentStatusRequest.value.type)
-      );
+      return checkFilter(appointmentStatus.name, appointmentStatusRequest.value.name) &&
+          checkFilter(appointmentStatus.type, appointmentStatusRequest.value.type);
     }
+
 
     function resetFilters() {
       appointmentStatusRequest.value = {
@@ -127,12 +129,17 @@ export default defineComponent({
       onEditFilter();
     }
 
+    const handleRowClick = (item: AppointmentStatusResponse) => {
+      emit("row-clicked", item);
+    };
+
     provide("requestAppointmentStatus", requestAppointmentStatus);
 
     return {
       appointmentStatusRequest,
       appointmentStatuses,
       filteredAppointmentStatuses,
+      handleRowClick,
       updateSearch,
       requestAppointmentStatus,
       onEditFilter,
