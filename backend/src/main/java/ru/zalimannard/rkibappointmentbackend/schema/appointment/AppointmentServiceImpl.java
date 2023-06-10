@@ -14,6 +14,8 @@ import ru.zalimannard.rkibappointmentbackend.schema.institution.InstitutionServi
 import ru.zalimannard.rkibappointmentbackend.schema.person.patient.Patient;
 import ru.zalimannard.rkibappointmentbackend.schema.person.patient.PatientService;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AppointmentServiceImpl implements AppointmentService {
@@ -55,6 +57,17 @@ public class AppointmentServiceImpl implements AppointmentService {
     public Appointment readEntity(String id) {
         return repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("aps-02", "Не найден Appointment с id=" + id, null));
+    }
+
+    @Override
+    public List<AppointmentResponseDto> readAll() {
+        List<Appointment> appointments = readAllEntities();
+        return mapper.toDtoList(appointments);
+    }
+
+    @Override
+    public List<Appointment> readAllEntities() {
+        return repository.findAll();
     }
 
     @Override

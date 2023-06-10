@@ -118,7 +118,10 @@ export default defineComponent({
     const handlePersonRowClicked = (row: PersonResponse) => {
       selectedPerson.value = row;
       isPatientDialogOpened.value = false;
-      selectedInstitutionPerson.value = row.lastName;
+      selectedInstitutionPerson.value = row.lastName + " "
+      + row.firstName[0] + "."
+      + (row.patronymic ? (row.patronymic[0] + ". ") : " ")
+      + (row.patient.phoneNumber ? (row.patient.phoneNumber) : "");
     };
 
     const handleInstitutionRowClicked = (row: InstitutionResponse) => {

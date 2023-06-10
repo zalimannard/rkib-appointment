@@ -11,6 +11,8 @@ import ru.zalimannard.rkibappointmentbackend.schema.institution.InstitutionMappe
 import ru.zalimannard.rkibappointmentbackend.schema.person.patient.Patient;
 import ru.zalimannard.rkibappointmentbackend.schema.person.patient.PatientMapper;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class AppointmentMapper {
@@ -43,6 +45,10 @@ public class AppointmentMapper {
                 .diagnosis(appointment.getDiagnosis())
                 .commentary(appointment.getCommentary())
                 .build();
+    }
+
+    public List<AppointmentResponseDto> toDtoList(List<Appointment> appointments) {
+        return appointments.stream().map(this::toDto).toList();
     }
 
 }
