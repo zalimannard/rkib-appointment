@@ -131,11 +131,11 @@ export default defineComponent({
           localStorage.setItem("auth", basicAuth);
           localStorage.setItem("role-api-name", role.value.value);
           if (role.value.value === "DOCTOR") {
-            await router.push({name: "DoctorView"});
+            await router.push({path: "/doctor/home"});
           } else if (role.value.value === "REGISTRAR") {
-            await router.push({name: "RegistrarView"});
+            await router.push({path: "/registrar/doctor"});
           } else if (role.value.value === "ADMIN") {
-            await router.push({name: "AdminView"});
+            await router.push({path: "/admin/person"});
           }
 
         } else {

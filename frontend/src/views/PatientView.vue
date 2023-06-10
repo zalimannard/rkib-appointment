@@ -7,12 +7,13 @@
   </v-app>
 </template>
 
-<script>
+<script lang="ts">
 import Navbar from "@/views/doctor/DoctorNavbar.vue";
+import {defineComponent} from "vue";
 
-export default {
+export default defineComponent({
   components: {
     Navbar
   }
-};
+});
 </script>

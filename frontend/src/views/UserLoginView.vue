@@ -115,7 +115,7 @@ export default defineComponent({
           localStorage.setItem("auth", basicAuth);
           localStorage.setItem("role-api-name", "PATIENT");
           console.log("aboba")
-          await router.push({name: "PatientView"});
+          await router.push({path: "/patient/home"});
         } else {
           showAlert("error", "У вас нет такой роли");
         }
