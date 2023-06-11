@@ -13,6 +13,8 @@ import ru.zalimannard.rkibappointmentbackend.schema.schedule.dto.ScheduleRespons
 import ru.zalimannard.rkibappointmentbackend.schema.schedule.status.ScheduleStatus;
 import ru.zalimannard.rkibappointmentbackend.schema.schedule.status.ScheduleStatusMapper;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class ScheduleMapper {
@@ -48,6 +50,10 @@ public class ScheduleMapper {
                 .appointmentTime(schedule.getAppointmentTime())
                 .commentary(schedule.getCommentary())
                 .build();
+    }
+
+    public List<ScheduleResponseDto> toDtoList(List<Schedule> schedules) {
+        return schedules.stream().map(this::toDto).toList();
     }
 
 }

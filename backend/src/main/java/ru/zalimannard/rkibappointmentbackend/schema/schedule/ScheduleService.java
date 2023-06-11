@@ -6,6 +6,8 @@ import org.springframework.validation.annotation.Validated;
 import ru.zalimannard.rkibappointmentbackend.schema.schedule.dto.ScheduleRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.schedule.dto.ScheduleResponseDto;
 
+import java.util.List;
+
 @Validated
 public interface ScheduleService {
 
@@ -17,6 +19,10 @@ public interface ScheduleService {
     ScheduleResponseDto read(@NotNull String id);
 
     Schedule readEntity(@NotNull String id);
+
+    List<ScheduleResponseDto> readAll();
+
+    List<Schedule> readAllEntities();
 
 
     ScheduleResponseDto update(@NotNull String id, @NotNull @Valid ScheduleRequestDto scheduleDto);

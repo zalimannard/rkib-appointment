@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.zalimannard.rkibappointmentbackend.schema.schedule.dto.ScheduleRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.schedule.dto.ScheduleResponseDto;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("${application.baseApi}${application.apiV1}${application.endpoint.schedules}")
 @Tag(name = "Элемент расписания")
@@ -20,6 +22,12 @@ public class ScheduleController {
     @Operation(summary = "Получение элемента расписания")
     public ScheduleResponseDto get(@PathVariable String id) {
         return scheduleService.read(id);
+    }
+
+    @GetMapping
+    @Operation(summary = "Получение всех элементов расписания")
+    public List<ScheduleResponseDto> getAll() {
+        return scheduleService.readAll();
     }
 
     @PostMapping

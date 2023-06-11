@@ -32,6 +32,8 @@
           v-for="(item, index) in filteredScheduleStatuses"
           :key="item.id"
           :class="{ 'light-row': index % 2 === 0, 'dark-row': index % 2 !== 0 }"
+          class="table-row"
+          @click="handleRowClick(item)"
       >
         <td>{{ item.name }}</td>
         <td>{{ item.type }}</td>
@@ -129,6 +131,10 @@ export default defineComponent({
 
     provide("requestScheduleStatus", requestScheduleStatus);
 
+    const handleRowClick = (item: ScheduleStatusResponse) => {
+      emit("row-clicked", item);
+    };
+
     return {
       scheduleStatusRequest,
       scheduleStatuses,
@@ -136,7 +142,8 @@ export default defineComponent({
       updateSearch,
       requestScheduleStatus,
       onEditFilter,
-      resetFilters
+      resetFilters,
+      handleRowClick
     }
   }
 });

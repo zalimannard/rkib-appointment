@@ -9,7 +9,7 @@ import ru.zalimannard.rkibappointmentbackend.schema.person.employees.Employee;
 import ru.zalimannard.rkibappointmentbackend.schema.procedures.Procedure;
 import ru.zalimannard.rkibappointmentbackend.schema.schedule.status.ScheduleStatus;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -43,7 +43,7 @@ public class Schedule {
     ScheduleStatus status;
 
     @JsonProperty("appointmentTime")
-    Date appointmentTime;
+    LocalDate appointmentTime;
 
     @JsonProperty("commentary")
     String commentary;

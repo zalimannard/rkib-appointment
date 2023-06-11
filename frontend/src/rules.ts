@@ -11,8 +11,17 @@ export const dateRule = (value: string) => {
         date.getMonth() !== parseInt(month) - 1 ||
         date.getDate() !== parseInt(day)
     ) {
-        return "Некорректная дата.";
+        return "Некорректная дата";
     }
+    return true;
+};
+
+export const timeRule = (value: string) => {
+    if (!value) return true;
+    const pattern = /^(\d{2}):(\d{2}):(\d{2})$/;
+    if (!pattern.test(value)) return "Неполное время";
+    const match = value.match(pattern);
+    if (!match) return "Неправильный формат времени";
     return true;
 };
 

@@ -22,6 +22,8 @@
           v-for="(item, index) in filteredProcedures"
           :key="item.id"
           :class="{ 'light-row': index % 2 === 0, 'dark-row': index % 2 !== 0 }"
+          class="table-row"
+          @click="handleRowClick(item)"
       >
         <td>{{ item.name }}</td>
       </tr>
@@ -112,6 +114,10 @@ export default defineComponent({
 
     provide("requestProcedure", requestProcedure);
 
+    const handleRowClick = (item: ProcedureResponse) => {
+      emit("row-clicked", item);
+    };
+
     return {
       procedureRequest,
       procedures,
@@ -119,7 +125,8 @@ export default defineComponent({
       updateSearch,
       requestProcedure,
       onEditFilter,
-      resetFilters
+      resetFilters,
+      handleRowClick
     };
   },
 });

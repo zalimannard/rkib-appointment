@@ -40,6 +40,7 @@
           :key="item.id"
           :class="{ 'light-row': index % 2 === 0, 'dark-row': index % 2 !== 0 }"
           class="table-row"
+          @click="handleRowClick(item)"
       >
         <td>{{
             calcPersonPresentation(item.patient.person) + (item.patient.phoneNumber ? (item.patient.phoneNumber) : "")
@@ -206,6 +207,10 @@ export default defineComponent({
       onEditFilter();
     }
 
+    const handleRowClick = (item: AppointmentResponse) => {
+      emit("row-clicked", item);
+    };
+
     return {
       isPatientDialogOpened,
       isInstitutionDialogOpened,
@@ -224,7 +229,8 @@ export default defineComponent({
       handleAppointmentStatusRowClicked,
       openPatientDialog,
       openInstitutionDialog,
-      openStatusDialog
+      openStatusDialog,
+      handleRowClick
     };
   },
 });

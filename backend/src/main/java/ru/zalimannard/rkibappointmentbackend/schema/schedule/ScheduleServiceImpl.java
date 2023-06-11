@@ -16,6 +16,8 @@ import ru.zalimannard.rkibappointmentbackend.schema.schedule.dto.ScheduleRespons
 import ru.zalimannard.rkibappointmentbackend.schema.schedule.status.ScheduleStatus;
 import ru.zalimannard.rkibappointmentbackend.schema.schedule.status.ScheduleStatusService;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ScheduleServiceImpl implements ScheduleService {
@@ -59,6 +61,17 @@ public class ScheduleServiceImpl implements ScheduleService {
     public Schedule readEntity(String id) {
         return repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("scs-02", "Не найден Schedule с id=" + id, null));
+    }
+
+    @Override
+    public List<ScheduleResponseDto> readAll() {
+        List<Schedule> schedules = readAllEntities();
+        return mapper.toDtoList(schedules);
+    }
+
+    @Override
+    public List<Schedule> readAllEntities() {
+        return repository.findAll();
     }
 
     @Override

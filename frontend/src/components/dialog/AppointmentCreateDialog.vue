@@ -8,7 +8,7 @@
   >
     <v-col class="ma-0 pa-0">
       <v-row no-gutters>
-        <v-col class="pr-4" cols="7">
+        <v-col class="pr-3" cols="7">
           <masked-text-field
               v-model="selectedAppointmentPerson"
               label="Пациент"
@@ -16,7 +16,7 @@
               @focus="openPatientDialog"
           />
         </v-col>
-        <v-col class="pl-4" cols="5">
+        <v-col class="pl-3" cols="5">
           <masked-text-field
               v-model="selectedAppointmentStatus"
               label="Статус"
@@ -37,7 +37,7 @@
       <v-row no-gutters>
         <v-col>
           <masked-text-field
-              v-model="doctorNode"
+              v-model="doctorNote"
               label="Направление"
           />
         </v-col>
@@ -218,7 +218,7 @@ export default defineComponent({
     }
 
     return {
-      doctorNode: doctorNote,
+      doctorNote,
       diagnosis,
       comment,
       internalValue,

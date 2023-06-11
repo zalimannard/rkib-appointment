@@ -23,6 +23,31 @@ export function dateMask(value: string): string {
     return formattedValue;
 }
 
+export function timeMask(value: string): string {
+    if (!value) return "";
+    const numValue = value.replace(/\D+/g, "").split("");
+    const mask = ["#", "#", ":", "#", "#", ":", "#", "#"];
+
+    let formattedValue = "";
+    let index = 0;
+    for (const char of mask) {
+        if (!numValue.length) break;
+
+        if (char === "#") {
+            formattedValue += numValue.shift();
+            index++;
+        } else if (index === 2 || index === 5) {
+            formattedValue += char;
+            index++;
+        }
+    }
+
+    if (numValue.length === 0 && (formattedValue.length === 2 || formattedValue.length === 5)) {
+        formattedValue += ":";
+    }
+    return formattedValue;
+}
+
 export function phoneMask(value: string): string {
     if (!value) return "+7(";
     const numValue = value
