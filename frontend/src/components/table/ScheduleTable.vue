@@ -116,7 +116,7 @@ import type {ScheduleStatusResponse} from "@/types/schedulestatus";
 import type {ScheduleResponse} from "@/types/schedule";
 import axios from "axios";
 import {showAlert} from "@/components/alert/AlertState";
-import {checkFilter, fromDefaultToIso, fromIsoToDefault, roleCodeToString, fromDateTimeToIsoDate} from "@/utils";
+import {checkFilter, fromDateTimeToIsoDate, fromDefaultToIso, fromIsoToDefault, roleCodeToString} from "@/utils";
 import {onMounted} from "vue-demi";
 import PatientTable from "@/components/table/PatientTable.vue";
 import ScheduleStatusTable from "@/components/table/ScheduleStatusTable.vue";
