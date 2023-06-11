@@ -24,6 +24,17 @@ export function fromDefaultToIso(value: string): string {
     }
 }
 
+export function fromDateTimeToIsoDate(value: string): string {
+    if (!value) {
+        return "";
+    }
+    try {
+        return value.split("T")[0];
+    } catch (e) {
+        return "";
+    }
+}
+
 export function roleStringToCode(value: string): string {
     switch (value) {
         case "Админ":

@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Value;
 import org.hibernate.validator.constraints.Length;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Value
 @Builder(toBuilder = true)
@@ -30,13 +30,13 @@ public class ScheduleRequestDto {
 
     @JsonProperty("appointmentTime")
     @NotNull(message = "Не указано время приёма")
-    LocalDate appointmentTime;
+    LocalDateTime appointmentTime;
 
     @JsonProperty("commentary")
     @Length(min = 1)
     String commentary;
 
-    public ScheduleRequestDto(String doctorId, String procedureId, String appointmentId, String statusId, LocalDate appointmentTime, String commentary) {
+    public ScheduleRequestDto(String doctorId, String procedureId, String appointmentId, String statusId, LocalDateTime appointmentTime, String commentary) {
         this.doctorId = doctorId;
         this.procedureId = procedureId;
         this.appointmentId = appointmentId;

@@ -8,7 +8,7 @@ import ru.zalimannard.rkibappointmentbackend.schema.person.employees.dto.Employe
 import ru.zalimannard.rkibappointmentbackend.schema.procedures.dto.ProcedureResponseDto;
 import ru.zalimannard.rkibappointmentbackend.schema.schedule.status.dto.ScheduleStatusResponseDto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Value
 @Builder(toBuilder = true)
@@ -30,7 +30,7 @@ public class ScheduleResponseDto {
     ScheduleStatusResponseDto status;
 
     @JsonProperty("appointmentTime")
-    LocalDate appointmentTime;
+    LocalDateTime appointmentTime;
 
     @JsonProperty("commentary")
     String commentary;

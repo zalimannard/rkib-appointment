@@ -116,7 +116,7 @@ import type {ScheduleStatusResponse} from "@/types/schedulestatus";
 import type {ScheduleResponse} from "@/types/schedule";
 import axios from "axios";
 import {showAlert} from "@/components/alert/AlertState";
-import {checkFilter, fromDefaultToIso, fromIsoToDefault, roleCodeToString} from "@/utils";
+import {checkFilter, fromDefaultToIso, fromIsoToDefault, roleCodeToString, fromDateTimeToIsoDate} from "@/utils";
 import {onMounted} from "vue-demi";
 import PatientTable from "@/components/table/PatientTable.vue";
 import ScheduleStatusTable from "@/components/table/ScheduleStatusTable.vue";
@@ -234,7 +234,13 @@ export default defineComponent({
         const response = await axios.get(import.meta.env.VITE_API_URL + "/api/v1/schedules", {
           headers: {"Authorization": "Basic " + basicAuth}
         });
-        schedules.value = response.data;
+        schedules.value = response.data.map((schedule: ScheduleResponse) => {
+          return {
+            ...schedule,
+            appointmentTime: fromDateTimeToIsoDate(schedule.appointmentTime),
+          };
+        });
+        console.log(schedules.value)
         onEditFilter();
       } catch (error) {
         showAlert("error", "Не удалось получить данные")
@@ -273,7 +279,7 @@ export default defineComponent({
 
     function calcAppointmentPresentation(item: AppointmentResponse) {
       return calcPersonPresentation(item.patient.person)
-          + " / " + item.doctorNote
+          + (item.doctorNote != null ? " / " + item.doctorNote : "")
           + " / Статус: " + item.status.name;
     }
 
