@@ -16,6 +16,7 @@
           >
 
             <base-text-field
+                id="email"
                 v-model="email"
                 :readonly="loading"
                 :rules="[rules.required]"
@@ -24,6 +25,7 @@
             />
 
             <password-text-field
+                id="password"
                 v-model="password"
                 :readonly="loading"
                 :rules="[rules.required, rules.password]"
