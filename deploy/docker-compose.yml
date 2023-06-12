@@ -1,0 +1,41 @@
+version: "3.9"
+services:
+  database:
+    image: postgres:latest
+    container_name: rkib-appointment-db
+    ports:
+      - "5432:5432"
+    volumes:
+      - /var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=rkib-appointment
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+    restart: unless-stopped
+
+  backend:
+    container_name: rkib-appointment-backend
+    image: zalimannard/rkib-appointment-backend
+    ports:
+      - "8116:8116"
+    environment:
+      - DB_URL=jdbc:postgresql://database:5432/rkib-appointment
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - DDL_BEHAVIOUR=update
+      - ADMIN_EMAIL=admin@admin.ru
+      - ADMIN_PASSWORD=admin
+    restart: unless-stopped
+    depends_on:
+      - database
+  
+  frontend:
+    container_name: rkib-appointment-frontend
+    image: zalimannard/rkib-appointment-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://backend:8116
+    restart: unless-stopped
+    depends_on:
+      - backend

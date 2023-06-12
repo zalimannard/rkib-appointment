@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  rkib-appointment-backend:
+    container_name: rkib-appointment-backend
+    build:
+      context: .
+    image: zalimannard/rkib-appointment-backend
+    environment:
+        - DB_URL=jdbc:postgresql://localhost:5432/rkib-appointment
+        - DB_USER=user
+        - DB_PASSWORD=password
+        - DDL_BEHAVIOUR=update
+        - ADMIN_EMAIL=admin@admin.ru
+        - ADMIN_PASSWORD=admin
+    restart: unless-stopped

@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  rkib-appointment-frontend:
+    container_name: rkib-appointment-frontend
+    build:
+      context: .
+    image: zalimannard/rkib-appointment-frontend
+    ports:
+      - "5173:5173"
+    environment:
+        - VITE_API_URL=http://backend:8116
+    volumes:
+      - .:/app
+      - /app/node_modules
+    restart: unless-stopped
