@@ -33,7 +33,7 @@ services:
     container_name: rkib-appointment-frontend
     image: zalimannard/rkib-appointment-frontend
     ports:
-      - "5173:5173"
+      - "4173:4173"
     environment:
       - VITE_API_URL=http://backend:8116
     restart: unless-stopped
