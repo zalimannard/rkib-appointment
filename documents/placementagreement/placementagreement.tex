@@ -1,0 +1,141 @@
+\documentclass[a4paper,article]{article}
+
+% Шрифты
+\usepackage{fontspec}
+\usepackage[14pt]{extsizes}
+\setmainfont{Times New Roman}
+
+% Языки
+% Русский обязательно идёт вторым. Иначе не работают переносы
+\usepackage[russian, english]{babel}
+
+% Параметры страницы
+\usepackage[left=3cm, top=2cm, right=1.5cm, bottom=2cm]{geometry}
+
+% Параметры текста
+% По умолчанию LaTeX не делает отступ после \section. Вроде как оно и не надо, но в тексте ВКР пусть лучше будет. В требованиях отступ описан. Этот пакет своим наличием добавляет этот отступ
+\usepackage{indentfirst}
+% По умолчанию абзацный отстум меньше требуемого. Задаём конкретный
+\setlength{\parindent}{1.25cm}
+
+% Ссылки
+\usepackage{color}
+\definecolor{Black}{RGB}{0,0,0}
+% Без colorlinks вокруг ссылок появляются рамки, недопустимые в ВКР
+% Если не зачернить ссылки, то в оглавлении и в других местах будут яркие цвета
+\usepackage[colorlinks, allcolors=Black]{hyperref}
+% Шрифт для URL
+\urlstyle{rm}
+
+% Пункты оглавления
+\usepackage{titlesec}
+\titleformat{\section}
+{\centering\normalfont\bfseries}{\thesection. }{0em}{}
+\titleformat{\subsection}
+{\centering\normalfont\bfseries}{\thesubsection. }{0em}{}
+\titleformat{\subsubsection}
+{\centering\normalfont\bfseries}{\thesubsubsection. }{0em}{}
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries\centering}{\theparagraph. }{0em}{}
+% Список использованных источников
+\addto\captionsrussian{\def\refname{Список использованных источников}}
+
+% Нумерация
+\setcounter{secnumdepth}{4}
+
+% Таблицы
+\usepackage{multicol}
+\usepackage{xltabular}
+
+% Перечисления
+\usepackage{enumitem}
+% Выравнивание списков
+\setlist[itemize]{leftmargin=1.25cm}
+\setlist[enumerate]{leftmargin=1.25cm}
+
+% Картинки
+% Вставка картинок правильная
+\usepackage{graphicx}
+% "Плавающие" картинки
+\usepackage{float}
+% Обтекание фигур (таблиц, картинок и прочего)
+\usepackage{wrapfig}
+% Папка для всех картинок файла
+\graphicspath{{images/}}
+% Точка в конце названий объекта вместо двоеточия. Например, для Рисунков
+\usepackage[labelsep=period]{caption}
+% Заменяет 'Рис. 1' на 'Рисунок 1'
+\makeatletter
+\renewcommand{\fnum@figure}{Рисунок \thefigure}
+\makeatother
+% Рамка
+\usepackage{adjustbox}
+
+% Листинги
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{xcolor}
+\definecolor{intellijgreen}{RGB}{106,135,89}
+\definecolor{intellijorange}{RGB}{204,120,50}
+\lstset{
+    frame=single,
+    breaklines=true,
+    captionpos=t,
+    numbersep=-14pt,
+    numbers=left,
+    numberstyle=\fontsize{12}{14}\selectfont,
+    stepnumber=1,
+    language=Java,
+    basicstyle=\fontsize{12}{14}\selectfont\ttfamily,
+    keywordstyle=\color{intellijorange},
+    commentstyle=\color{gray},
+    stringstyle=\color{intellijgreen},
+    showstringspaces=false,
+}
+
+% Переносы
+\usepackage{microtype}
+
+% Приложения
+\usepackage{appendix}
+
+\pagestyle{empty}
+
+\begin{document}
+\begin{sloppypar}
+    \begin{center}
+        \textbf{РАЗРЕШЕНИЕ \\
+        на размещение выпускной квалификационной работы \\
+        в электронно-библиотечной системе КФУ} \\
+    \end{center}
+    
+    \vspace{-1em}
+    
+    \noindent
+    1. Я, \hfill \underline{\hspace{15.9cm}} являющийся обучающимся \hfill \underline{\hspace{11cm}} \noindent\underline{\hspace{\textwidth}} федерального государственного автономного образовательного учреждения высшего образования «Казанский (Приволжский) федеральный университет» (далее – КФУ), разрешаю КФУ безвозмездно воспроизводить и размещать выпускную квалификационную работу в сети Интернет в электронно – библиотечной системе КФУ, на официальном портале КФУ на тему:
+    
+    \noindent
+    <<\underline{\hspace{16cm}}
+    \underline{\hspace{16cm}}>>
+    
+    
+    \begin{itemize}[nolistsep]
+        \item в полном объёме;
+        \item с изъятием, содержащих производственные, технические, экономические, организационные и другие сведения, в том числе о результатах интеллектуальной деятельности в научно-технической сфере, которые имеют действительную или потенциальную коммерческую ценность в силу неизвестности их третьим лицам. \newline
+    \end{itemize}
+    
+    \noindent
+    2. В случае непредставления мною в установленные сроки электронной копии ВКР с изъятием, содержащих производственные, технические, экономические, организационные и другие сведения, в том числе о результатах интеллектуальной деятельности в научно-технической сфере, которые имеют действительную или потенциальную коммерческую ценность в силу неизвестности их третьим лицам в формате PDF уведомлен, что в электронно-библиотечной системе будет размещена полная версия ВКР. \newline
+    
+    \noindent
+    3. Я подтверждаю, что выпускная квалификационная работа написана мною лично, в соответствии с правилами академической этики и не нарушает авторских прав иных лиц. \newline
+    
+    \noindent
+    4. Я разрешаю размещение выпускной квалификационной работы в электронно-библиотечной системе КФУ с момента подписания мною настоящего разрешения.
+    
+    \vfill
+    
+    \noindent
+    <<\underline{\hspace{1cm}}>>\underline{\hspace{3cm}} 2023 г. \hfill \underline{\hspace{3cm}}/\underline{\hspace{3cm}}
+\end{sloppypar}
+\end{document}
