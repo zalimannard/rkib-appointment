@@ -34,7 +34,12 @@ public class ScheduleServiceImpl implements ScheduleService {
     public ScheduleResponseDto create(ScheduleRequestDto scheduleDto) {
         Employee doctor = employeeService.readEntity(scheduleDto.getDoctorId());
         Procedure procedure = procedureService.readEntity(scheduleDto.getProcedureId());
-        Appointment appointment = appointmentService.readEntity(scheduleDto.getAppointmentId());
+        Appointment appointment = null;
+        try {
+            appointment = appointmentService.readEntity(scheduleDto.getAppointmentId());
+        } catch (Exception ignored) {
+
+        }
         ScheduleStatus status = scheduleStatusService.readEntity(scheduleDto.getStatusId());
 
         Schedule scheduleToCreate = mapper.toEntity(scheduleDto, doctor, procedure, appointment, status);
@@ -78,7 +83,12 @@ public class ScheduleServiceImpl implements ScheduleService {
     public ScheduleResponseDto update(String id, ScheduleRequestDto scheduleDto) {
         Employee doctor = employeeService.readEntity(scheduleDto.getDoctorId());
         Procedure procedure = procedureService.readEntity(scheduleDto.getProcedureId());
-        Appointment appointment = appointmentService.readEntity(scheduleDto.getAppointmentId());
+        Appointment appointment = null;
+        try {
+            appointment = appointmentService.readEntity(scheduleDto.getAppointmentId());
+        } catch (Exception ignored) {
+
+        }
         ScheduleStatus status = scheduleStatusService.readEntity(scheduleDto.getStatusId());
 
         Schedule scheduleToUpdate = mapper.toEntity(scheduleDto, doctor, procedure, appointment, status);

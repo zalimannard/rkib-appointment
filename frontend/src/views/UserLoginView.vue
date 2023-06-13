@@ -111,10 +111,8 @@ export default defineComponent({
           headers: {"Authorization": "Basic " + basicAuth}
         });
         if (response.data.patient != null) {
-          console.log(response.data.patient)
           localStorage.setItem("auth", basicAuth);
           localStorage.setItem("role-api-name", "PATIENT");
-          console.log("aboba")
           await router.push({path: "/patient/home"});
         } else {
           showAlert("error", "У вас нет такой роли");

@@ -240,7 +240,6 @@ export default defineComponent({
             appointmentTime: fromDateTimeToIsoDate(schedule.appointmentTime),
           };
         });
-        console.log(schedules.value)
         onEditFilter();
       } catch (error) {
         showAlert("error", "Не удалось получить данные")
@@ -259,7 +258,7 @@ export default defineComponent({
       return (
           checkFilter(schedule.doctor.id, selectedDoctor.value?.employee.id ?? "") &&
           checkFilter(schedule.procedure.id, selectedProcedure.value?.id ?? "") &&
-          checkFilter(schedule.appointment.id, selectedAppointment.value?.id ?? "") &&
+          (schedule.appointment == null || checkFilter(schedule.appointment.id, selectedAppointment.value?.id ?? "")) &&
           checkFilter(schedule.status.id, selectedStatus.value?.id ?? "") &&
           checkFilter(utils.fromIsoToDefault(schedule.appointmentTime),
               selectedScheduleDate.value)
@@ -278,6 +277,9 @@ export default defineComponent({
     }
 
     function calcAppointmentPresentation(item: AppointmentResponse) {
+      if (item == null) {
+        return "";
+      }
       return calcPersonPresentation(item.patient.person)
           + (item.doctorNote != null ? " / " + item.doctorNote : "")
           + " / Статус: " + item.status.name;

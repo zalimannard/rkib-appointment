@@ -88,7 +88,7 @@ export default defineComponent({
     };
 
     const handleRowClick = (item: any) => {
-      console.log(item);
+
     };
 
     const openCreateDialog = () => {

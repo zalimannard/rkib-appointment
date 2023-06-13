@@ -4,7 +4,6 @@ import DoctorView from "../views/DoctorView.vue";
 import RegistrarView from "../views/RegistrarView.vue";
 import AdminView from "../views/AdminView.vue";
 import DoctorHome from "@/views/doctor/DoctorHome.vue";
-import DoctorSchedule from "@/views/doctor/DoctorSchedule.vue";
 import RegistrarDoctor from "@/views/registrar/RegistrarDoctor.vue";
 import RegistrarPatient from "@/views/registrar/RegistrarPatient.vue";
 import AdminAppointment from "@/views/admin/AdminAppointment.vue";
@@ -40,10 +39,6 @@ const router = createRouter({
                 {
                     path: "home",
                     component: DoctorHome
-                },
-                {
-                    path: "schedule",
-                    component: DoctorSchedule
                 }
             ]
         },

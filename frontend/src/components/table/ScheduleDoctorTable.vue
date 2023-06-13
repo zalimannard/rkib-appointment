@@ -5,15 +5,6 @@
       <tr>
         <th class="text-left" scope="col">
           <masked-text-field
-              v-model="selectedScheduleDoctor"
-              class="header-cell"
-              density="comfortable"
-              label="Доктор"
-              @focus="openDoctorDialog"
-          />
-        </th>
-        <th class="text-left" scope="col">
-          <masked-text-field
               v-model="selectedScheduleProcedure"
               class="header-cell"
               density="comfortable"
@@ -43,6 +34,17 @@
         </th>
         <th class="text-left" scope="col">
           <masked-text-field
+              v-model="selectedScheduleTime"
+              :handle-backspace="backspaceHandlers.handleBackspaceForTime"
+              :mask="masks.timeMask"
+              class="header-cell"
+              density="comfortable"
+              label="Время"
+              @input="updateSearch"
+          />
+        </th>
+        <th class="text-left" scope="col">
+          <masked-text-field
               v-model="selectedScheduleStatus"
               class="header-cell"
               density="comfortable"
@@ -62,10 +64,10 @@
           class="table-row"
           @click="handleRowClick(item)"
       >
-        <td>{{ calcPersonPresentation(item.doctor.person) }}</td>
         <td>{{ item.procedure.name }}</td>
         <td>{{ calcAppointmentPresentation(item.appointment) }}</td>
         <td>{{ calcDate(item) }}</td>
+        <td>{{ calcTime(item) }}</td>
         <td>{{ item.status.name }}</td>
       </tr>
       </tbody>
@@ -124,8 +126,8 @@ import ScheduleStatusTable from "@/components/table/ScheduleStatusTable.vue";
 import AppointmentTable from "@/components/table/AppointmentTable.vue";
 import ProcedureTable from "@/components/table/ProcedureTable.vue";
 import DoctorTable from "@/components/table/DoctorTable.vue";
-import {dateMask, phoneMask} from "@/masks";
-import {handleBackspaceForDate, handleBackspaceForPhoneNumber} from "@/backspaceHandlers";
+import {dateMask, phoneMask, timeMask} from "@/masks";
+import {handleBackspaceForDate, handleBackspaceForPhoneNumber, handleBackspaceForTime} from "@/backspaceHandlers";
 
 export default defineComponent({
   components: {
@@ -183,6 +185,7 @@ export default defineComponent({
     const selectedScheduleAppointment = ref("Не выбрано");
     const selectedScheduleStatus = ref("Не выбрано");
     const selectedScheduleDate = ref("");
+    const selectedScheduleTime = ref("");
 
     const handleDoctorRowClicked = (row: PersonResponse) => {
       selectedDoctor.value = row;
@@ -217,10 +220,12 @@ export default defineComponent({
 
     const masks = {
       dateMask,
+      timeMask,
       phoneMask
     };
     const backspaceHandlers = {
       handleBackspaceForDate,
+      handleBackspaceForTime,
       handleBackspaceForPhoneNumber
     };
     const utils = {
@@ -230,20 +235,28 @@ export default defineComponent({
     }
 
     const requestSchedule = async () => {
+
+      let basicAuth = localStorage.getItem("auth");
+
       try {
-        let basicAuth = localStorage.getItem("auth");
-        const response = await axios.get(import.meta.env.VITE_API_URL + "/api/v1/schedules", {
+        const responsePerson = await axios.get(import.meta.env.VITE_API_URL + "/api/v1/employees/me", {
           headers: {"Authorization": "Basic " + basicAuth}
         });
-        schedules.value = response.data.map((schedule: ScheduleResponse) => {
-          return {
-            ...schedule,
-            appointmentTime: fromDateTimeToIsoDate(schedule.appointmentTime),
-          };
-        });
-        onEditFilter();
+        let myId = responsePerson.data.person.id;
+
+        try {
+          const response = await axios.get(import.meta.env.VITE_API_URL + "/api/v1/schedules", {
+            headers: {"Authorization": "Basic " + basicAuth}
+          });
+          schedules.value = response.data.filter((schedule: ScheduleResponse) => {
+            return schedule.doctor.person.id === myId
+          });
+          onEditFilter();
+        } catch (error) {
+          showAlert("error", "Не удалось получить данные")
+        }
       } catch (error) {
-        showAlert("error", "Не удалось получить данные")
+        console.error("Ошибка при получении данных пользователя:", error);
       }
     }
 
@@ -261,8 +274,8 @@ export default defineComponent({
           checkFilter(schedule.procedure.id, selectedProcedure.value?.id ?? "") &&
           (schedule.appointment == null || checkFilter(schedule.appointment.id, selectedAppointment.value?.id ?? "")) &&
           checkFilter(schedule.status.id, selectedStatus.value?.id ?? "") &&
-          checkFilter(utils.fromIsoToDefault(schedule.appointmentTime),
-              selectedScheduleDate.value)
+          checkFilter(calcDate(schedule), selectedScheduleDate.value) &&
+          checkFilter(calcTime(schedule), selectedScheduleTime.value)
       );
     }
 
@@ -287,7 +300,11 @@ export default defineComponent({
     }
 
     function calcDate(item: ScheduleResponse) {
-      return utils.fromIsoToDefault(item.appointmentTime)
+      return utils.fromIsoToDefault(fromDateTimeToIsoDate(item.appointmentTime))
+    }
+
+    function calcTime(item: ScheduleResponse) {
+      return item.appointmentTime.split("T")[1];
     }
 
     function updateSearch() {
@@ -317,11 +334,13 @@ export default defineComponent({
       selectedScheduleAppointment,
       selectedScheduleStatus,
       selectedScheduleDate,
+      selectedScheduleTime,
       handleRowClick,
       updateSearch,
       calcPersonPresentation,
       calcAppointmentPresentation,
       calcDate,
+      calcTime,
       handleDoctorRowClicked,
       handleProcedureRowClicked,
       handleAppointmentRowClicked,

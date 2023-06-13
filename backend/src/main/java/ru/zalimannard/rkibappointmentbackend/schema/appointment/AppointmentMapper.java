@@ -36,6 +36,9 @@ public class AppointmentMapper {
     }
 
     public AppointmentResponseDto toDto(Appointment appointment) {
+        if (appointment == null) {
+            return null;
+        }
         return AppointmentResponseDto.builder()
                 .id(appointment.getId())
                 .patient(patientMapper.toDto(appointment.getPatient()))

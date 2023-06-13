@@ -1,18 +1,27 @@
 <template>
-  <v-app-bar app>
-    <v-spacer></v-spacer>
-    <v-tabs v-model="activeTab">
-      <v-tab to="/doctor/home">Главная</v-tab>
-      <v-tab to="/doctor/schedule">Расписание</v-tab>
-    </v-tabs>
-    <v-spacer></v-spacer>
-    <v-menu offset-y>
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn v-bind="attrs" v-on="on">{{ formattedName }}</v-btn>
+  <v-app-bar
+      app
+      color="indigo">
+    <v-spacer>
+
+    </v-spacer>
+
+    <v-menu>
+      <template
+          v-slot:activator="{ props }">
+        <v-btn
+            color="white"
+            dark
+            v-bind="props">
+          {{ formattedName }}
+        </v-btn>
       </template>
+
       <v-list>
-        <v-list-item @click="changeRole">Сменить роль</v-list-item>
-        <v-list-item @click="logout">Выйти</v-list-item>
+        <v-list-item
+            @click="logout">
+          Выйти
+        </v-list-item>
       </v-list>
     </v-menu>
   </v-app-bar>
@@ -31,11 +40,9 @@ export default {
     };
   },
   methods: {
-    changeRole() {
-      // Реализуйте смену роли здесь
-    },
     logout() {
-      // Реализуйте выход из системы здесь
+      localStorage.clear();
+      this.$router.push({name: "LoginView"});
     },
     async fetchUserData() {
       let basicAuth = localStorage.getItem("auth");
