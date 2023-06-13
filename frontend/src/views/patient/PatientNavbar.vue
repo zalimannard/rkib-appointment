@@ -60,12 +60,9 @@ export default {
     };
   },
   methods: {
-    changeRole() {
-      // Реализуйте смену роли здесь
-    },
     logout() {
       localStorage.clear();
-      this.$router.push({name: "LoginView"});
+      this.$router.push({name: "UserLoginView"});
     },
     async fetchUserData() {
       let basicAuth = localStorage.getItem("auth");
