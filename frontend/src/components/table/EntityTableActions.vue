@@ -2,9 +2,9 @@
   <v-row justify="end">
     <custom-button
         class="button-margin"
-        size="compact"
+        size="comfortable"
         type="confirm"
-        width="200"
+        width="240"
         @click="$emit('openCreateDialog')"
     >
       Создать
@@ -12,9 +12,9 @@
 
     <custom-button
         class="button-margin"
-        size="compact"
+        size="comfortable"
         type="regular"
-        width="200"
+        width="240"
         @click="$emit('resetFilters')"
     >
       Очистить фильтры

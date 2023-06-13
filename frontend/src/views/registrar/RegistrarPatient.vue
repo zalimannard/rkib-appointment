@@ -119,5 +119,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
+.container {
+  display: grid;
+  margin: 20pt auto 0;
+}
 </style>
