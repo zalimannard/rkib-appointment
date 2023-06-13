@@ -4,7 +4,7 @@
       :close-dialog="closeDialog"
       :on-create-entity="onPersonCreated"
       :search-person="searchInput"
-      @personCreated="onPersonCreated"
+      @scheduleCreated="onPersonCreated"
       @provideSetData="onProvideSetData"
   />
 
@@ -70,7 +70,7 @@ export default defineComponent({
     };
 
     const onScheduleCreated = () => {
-      closeDialog();
+      closeScheduleDialog();
       if (requestPerson) {
         requestPerson();
       }
