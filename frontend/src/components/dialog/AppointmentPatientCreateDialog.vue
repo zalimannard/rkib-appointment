@@ -82,6 +82,8 @@ import type {InstitutionResponse} from "@/types/institution";
 import type {PersonResponse} from "@/types/person";
 import axios from "axios";
 import {showAlert} from "@/components/alert/AlertState";
+import type {ScheduleResponse} from "@/types/schedule";
+import {onMounted, provide} from "vue-demi";
 
 export default defineComponent({
   components: {
@@ -106,6 +108,8 @@ export default defineComponent({
     const selectedPerson = ref<PersonResponse | null>(null);
     const selectedInstitution = ref<InstitutionResponse | null>(null);
     const selectedStatus = ref<AppointmentStatusResponse | null>(null);
+
+    const schedule = ref<ScheduleResponse | null>(null);
 
     const searchInputPerson = ref({name: ""});
     const searchInputInstitution = ref({name: ""});
@@ -192,8 +196,29 @@ export default defineComponent({
                 ? null
                 : comment.value,
           }
-        }).then(() => {
+        }).then((resp) => {
           showAlert("success", "Обращение успешно создано");
+
+          axios({
+            method: "put",
+            url: import.meta.env.VITE_API_URL + "/api/v1/schedules/" + schedule.value?.id,
+            headers: {"Authorization": "Basic " + basicAuth},
+            data: {
+              doctorId: schedule.value?.doctor.id,
+              procedureId: schedule.value?.procedure.id,
+              appointmentId: resp.data.id,
+              statusId: schedule.value?.status.id,
+              appointmentTime: schedule.value?.appointmentTime,
+              commentary: schedule.value?.commentary
+            }
+          }).then(() => {
+            showAlert("success", "Обращение успешно создано");
+            emit("appointmentCreated");
+          }).catch((error) => {
+            console.error(error)
+            showAlert("error", "Ошибка при добавлении обращения");
+          });
+
           emit("appointmentCreated");
         }).catch((error) => {
           console.error(error)
@@ -210,6 +235,24 @@ export default defineComponent({
           + item.firstName[0] + "."
           + (item.patronymic ? (item.patronymic[0] + ". ") : " ");
     }
+
+    const setData = async (data: string) => {
+      try {
+        let basicAuth = localStorage.getItem("auth");
+        const response = await axios.get(import.meta.env.VITE_API_URL + "/api/v1/schedules/" + data, {
+          headers: {"Authorization": "Basic " + basicAuth}
+        });
+        schedule.value = response.data;
+      } catch (error) {
+        showAlert("error", "Не удалось получить данные")
+      }
+    };
+
+    onMounted(() => {
+      emit("provideSetData", setData);
+    });
+
+    provide("setData", setData);
 
     return {
       doctorNote,
