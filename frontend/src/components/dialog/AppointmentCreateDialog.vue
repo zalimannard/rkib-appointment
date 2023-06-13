@@ -101,7 +101,9 @@ import {showAlert} from "@/components/alert/AlertState";
 
 export default defineComponent({
   components: {
-    InstitutionTable, PatientTable, AppointmentStatusTable,
+    InstitutionTable,
+    PatientTable,
+    AppointmentStatusTable,
     BaseDialog,
     MaskedTextField
   },
