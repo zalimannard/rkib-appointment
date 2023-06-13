@@ -8,13 +8,13 @@ import java.util.List;
 public interface ScheduleRepository extends JpaRepository<Schedule, String> {
 
     @Query("""
-    SELECT
-        s
-    FROM
-        Schedule s
-    ORDER BY
-        s.appointmentTime DESC
-    """)
+            SELECT
+                s
+            FROM
+                Schedule s
+            ORDER BY
+                s.appointmentTime DESC
+            """)
     List<Schedule> findAllSortByTime();
 
 }

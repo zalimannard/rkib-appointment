@@ -1,5 +1,6 @@
 package ru.zalimannard.rkibappointmentbackend.schema.schedule.status;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -7,6 +8,7 @@ import ru.zalimannard.rkibappointmentbackend.exception.ConflictException;
 import ru.zalimannard.rkibappointmentbackend.exception.NotFoundException;
 import ru.zalimannard.rkibappointmentbackend.schema.schedule.status.dto.ScheduleStatusRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.schedule.status.dto.ScheduleStatusResponseDto;
+import ru.zalimannard.rkibappointmentbackend.schema.schedule.status.type.ScheduleStatusType;
 
 import java.util.List;
 
@@ -80,6 +82,29 @@ public class ScheduleStatusServiceImpl implements ScheduleStatusService {
             repository.delete(scheduleStatus);
         } catch (DataIntegrityViolationException e) {
             throw new ConflictException("sss-04", "Конфликт при удалении ScheduleStatus из базы данных", e.getMessage());
+        }
+    }
+
+    @PostConstruct
+    public void initDefaultStatus() {
+        try {
+            ScheduleStatus scheduleStatusActive = ScheduleStatus.builder()
+                    .name("Активно")
+                    .type(ScheduleStatusType.ACTIVE)
+                    .build();
+            createEntity(scheduleStatusActive);
+            ScheduleStatus scheduleStatusPending = ScheduleStatus.builder()
+                    .name("Ожидает")
+                    .type(ScheduleStatusType.PENDING)
+                    .build();
+            createEntity(scheduleStatusPending);
+            ScheduleStatus scheduleStatusCanceled = ScheduleStatus.builder()
+                    .name("Отменено")
+                    .type(ScheduleStatusType.CANCELED)
+                    .build();
+            createEntity(scheduleStatusCanceled);
+        } catch (ConflictException ignored) {
+
         }
     }
 

@@ -4,8 +4,8 @@
       :close-dialog="closeDialog"
       :on-create-entity="onPersonCreated"
       :search-person="searchInput"
-      @scheduleCreated="onPersonCreated"
       @provideSetData="onProvideSetData"
+      @scheduleCreated="onPersonCreated"
   />
 
   <schedule-create-dialog

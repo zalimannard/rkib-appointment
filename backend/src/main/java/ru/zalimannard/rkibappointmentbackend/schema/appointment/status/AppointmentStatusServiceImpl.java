@@ -1,5 +1,6 @@
 package ru.zalimannard.rkibappointmentbackend.schema.appointment.status;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -7,6 +8,7 @@ import ru.zalimannard.rkibappointmentbackend.exception.ConflictException;
 import ru.zalimannard.rkibappointmentbackend.exception.NotFoundException;
 import ru.zalimannard.rkibappointmentbackend.schema.appointment.status.dto.AppointmentStatusRequestDto;
 import ru.zalimannard.rkibappointmentbackend.schema.appointment.status.dto.AppointmentStatusResponseDto;
+import ru.zalimannard.rkibappointmentbackend.schema.appointment.status.type.AppointmentStatusType;
 
 import java.util.List;
 
@@ -81,6 +83,29 @@ public class AppointmentStatusServiceImpl implements AppointmentStatusService {
             repository.delete(appointmentStatus);
         } catch (DataIntegrityViolationException e) {
             throw new ConflictException("ass-04", "Конфликт при удалении AppointmentStatus из базы данных", e.getMessage());
+        }
+    }
+
+    @PostConstruct
+    public void initDefaultStatus() {
+        try {
+            AppointmentStatus appointmentStatusActive = AppointmentStatus.builder()
+                    .name("Активно")
+                    .type(AppointmentStatusType.ACTIVE)
+                    .build();
+            createEntity(appointmentStatusActive);
+            AppointmentStatus appointmentStatusPending = AppointmentStatus.builder()
+                    .name("Ожидает")
+                    .type(AppointmentStatusType.PENDING)
+                    .build();
+            createEntity(appointmentStatusPending);
+            AppointmentStatus appointmentStatusCanceled = AppointmentStatus.builder()
+                    .name("Отменено")
+                    .type(AppointmentStatusType.CANCELED)
+                    .build();
+            createEntity(appointmentStatusCanceled);
+        } catch (ConflictException ignored) {
+
         }
     }
 

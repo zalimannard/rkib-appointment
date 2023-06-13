@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import Navbar from "@/views/doctor/DoctorNavbar.vue";
+import Navbar from "@/views/patient/PatientNavbar.vue";
 import {defineComponent} from "vue";
 
 export default defineComponent({

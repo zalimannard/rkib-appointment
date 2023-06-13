@@ -1,17 +1,25 @@
 <template>
-  <div class="about">
-    <h1>ВРАЧ. ДОМАШНЯЯ</h1>
-  </div>
+  <v-container class="container">
+    <v-col>
+      <v-row>
+        <schedule-patient-own-table
+            ref="personAdminTable"
+            @provideRequestPerson="onProvideRequestPerson"
+            @requestPerson="onPersonCreated"
+            @row-clicked="handlePatientRowClicked"
+        />
+      </v-row>
+    </v-col>
+  </v-container>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
+<script lang="ts" setup>
+import SchedulePatientOwnTable from "@/components/table/SchedulePatientOwnTable.vue";
+</script>
+
+<style scoped>
+.container {
+  display: grid;
+  margin: 20pt auto 0;
 }
 </style>
-<script lang="ts" setup>
-</script>
