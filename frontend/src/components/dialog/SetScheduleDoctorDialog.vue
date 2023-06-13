@@ -10,31 +10,11 @@
       <v-row no-gutters>
         <v-col>
           <masked-text-field
-              v-model="doctor"
-              label="Доктор"
-              readonly
-              required-asterisk
-              @focus="openDoctorDialog"
-          />
-        </v-col>
-      </v-row>
-      <v-row no-gutters>
-        <v-col>
-          <masked-text-field
               v-model="procedure"
               label="Услуга"
               readonly
               required-asterisk
               @focus="openProcedureDialog"
-          />
-        </v-col>
-      </v-row>
-      <v-row no-gutters>
-        <v-col>
-          <masked-text-field
-              v-model="selectedScheduleAppointment"
-              label="Обращение"
-              @focus="openAppointmentDialog"
           />
         </v-col>
       </v-row>
@@ -53,28 +33,6 @@
           <masked-text-field
               v-model="comment"
               label="Комментарий"
-          />
-        </v-col>
-      </v-row>
-      <v-row no-gutters>
-        <v-col class="pr-3" cols="6">
-          <masked-text-field
-              v-model="scheduleDate"
-              :handle-backspace="backspaceHandlers.handleBackspaceForDate"
-              :mask="masks.dateMask"
-              label="Дата"
-              readonly
-              required-asterisk
-          />
-        </v-col>
-        <v-col class="pl-3" cols="6">
-          <masked-text-field
-              v-model="scheduleTime"
-              :handle-backspace="backspaceHandlers.handleBackspaceForDate"
-              :mask="masks.timeMask"
-              label="Время"
-              readonly
-              required-asterisk
           />
         </v-col>
       </v-row>
@@ -229,27 +187,11 @@ export default defineComponent({
       }, 100);
     };
 
-    const selectedScheduleDoctor = ref("Не выбрано");
-    const selectedScheduleProcedure = ref("Не выбрано");
-    const selectedScheduleAppointment = ref("Не выбрано");
     const selectedScheduleStatus = ref("Не выбрано");
-
-    const handleDoctorRowClicked = (row: PersonResponse) => {
-      selectedDoctor.value = row;
-      isDoctorDialogOpened.value = false;
-      selectedScheduleDoctor.value = calcPersonPresentation(row);
-    };
-
-    const handleProcedureRowClicked = (row: ProcedureResponse) => {
-      selectedProcedure.value = row;
-      isProcedureDialogOpened.value = false;
-      selectedScheduleProcedure.value = row.name;
-    };
 
     const handleAppointmentRowClicked = (row: AppointmentResponse) => {
       selectedAppointment.value = row;
       isAppointmentDialogOpened.value = false;
-      selectedScheduleAppointment.value = calcAppointmentPresentation(row);
     };
 
     const handleStatusRowClicked = (row: ScheduleStatusResponse) => {
@@ -274,9 +216,9 @@ export default defineComponent({
         data: {
           doctorId: schedule.value?.doctor.id,
           procedureId: schedule.value?.procedure.id,
-          appointmentId: selectedAppointment.value?.id === ""
-              ? null
-              : selectedAppointment.value?.id,
+          appointmentId: schedule.value?.appointment != null
+              ? schedule.value?.appointment.id
+              : null,
           statusId: selectedStatus.value?.id,
           appointmentTime: schedule.value?.appointmentTime,
           commentary: schedule.value?.commentary
@@ -328,16 +270,12 @@ export default defineComponent({
       searchInputProcedure,
       searchInputAppointment,
       searchInputStatus,
-      selectedScheduleDoctor,
-      selectedScheduleProcedure,
-      selectedScheduleAppointment,
       selectedScheduleStatus,
       internalValue,
+      schedule,
       createSchedule,
       calcPersonPresentation,
       calcAppointmentPresentation,
-      handleDoctorRowClicked,
-      handleProcedureRowClicked,
       handleAppointmentRowClicked,
       handleStatusRowClicked,
       openDoctorDialog,

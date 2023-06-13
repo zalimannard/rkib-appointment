@@ -6,7 +6,15 @@
       :search-person="searchInput"
       @personCreated="onPersonCreated"
       @provideSetData="onProvideSetData"
-      @updateSearchInput="updateSearchInput"
+  />
+
+  <set-schedule-doctor-dialog
+      v-model="showCreateScheduleDialog"
+      :close-dialog="closeScheduleDialog"
+      :on-create-entity="onPersonCreated"
+      :search-person="searchInput"
+      @provideSetData="onProvideSetData"
+      @scheduleCreated="onPersonCreated"
   />
 
   <v-container class="container">
@@ -21,7 +29,7 @@
             ref="personAdminTable"
             @provideRequestPerson="onProvideRequestPerson"
             @requestPerson="onPersonCreated"
-            @updateSearchInput="updateSearchInput"
+            @row-clicked="handlePatientRowClicked"
         />
       </v-row>
     </v-col>
@@ -39,9 +47,16 @@ import PatientTable from "@/components/table/PatientTable.vue";
 import PatientCreateDialog from "@/components/dialog/PatientCreateDialog.vue";
 import ScheduleDoctorTable from "@/components/table/ScheduleDoctorTable.vue";
 import ScheduleCreateDoctorDialog from "@/components/dialog/ScheduleCreateDoctorDialog.vue";
+import SetScheduleDialog from "@/components/dialog/SetScheduleDialog.vue";
+import SetScheduleDoctorDialog from "@/components/dialog/SetScheduleDoctorDialog.vue";
+import ScheduleRegistrarTable from "@/components/table/ScheduleRegistrarTable.vue";
+import type {ScheduleResponse} from "@/types/schedule";
 
 export default defineComponent({
   components: {
+    ScheduleRegistrarTable,
+    SetScheduleDoctorDialog,
+    SetScheduleDialog,
     ScheduleCreateDoctorDialog,
     ScheduleDoctorTable,
     PatientCreateDialog,
@@ -52,6 +67,7 @@ export default defineComponent({
   },
   setup() {
     const showCreateDialog = ref(false);
+    const showCreateScheduleDialog = ref(false);
     const searchInput = ref({
       id: "",
       lastName: "",
@@ -73,7 +89,7 @@ export default defineComponent({
     };
 
     let requestPerson: (() => Promise<void>) | undefined;
-    let setData: ((arg: PersonResponse) => Promise<void>) | undefined;
+    let setData: ((arg: string) => Promise<void>) | undefined;
 
     const onPersonCreated = () => {
       closeDialog();
@@ -95,24 +111,35 @@ export default defineComponent({
     };
 
     const openCreateDialog = () => {
-      if (setData) {
-        setData(searchInput.value)
-      }
       showCreateDialog.value = true;
     };
 
+    const handlePatientRowClicked = (item: ScheduleResponse) => {
+      if (setData) {
+        setData(item.id)
+      }
+      showCreateScheduleDialog.value = true;
+    };
+
     const closeDialog = () => {
+      showCreateScheduleDialog.value = false;
+    };
+
+    const closeScheduleDialog = () => {
       showCreateDialog.value = false;
     };
 
     return {
       showCreateDialog,
+      showCreateScheduleDialog,
       searchInput,
       valid,
+      handlePatientRowClicked,
       updateSearchInput,
       handleRowClick,
       openCreateDialog,
       closeDialog,
+      closeScheduleDialog,
       onPersonCreated,
       onProvideRequestPerson,
       onProvideSetData

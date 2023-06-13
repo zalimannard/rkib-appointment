@@ -76,7 +76,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public List<Schedule> readAllEntities() {
-        return repository.findAll();
+        return repository.findAllSortByTime();
     }
 
     @Override
