@@ -17,6 +17,7 @@ import PatientView from "@/views/PatientView.vue";
 import PatientHome from "@/views/patient/PatientHome.vue";
 import PatientSchedule from "@/views/patient/PatientSchedule.vue";
 import UserLoginView from "@/views/UserLoginView.vue";
+import ChangePasswordView from "@/views/ChangePasswordView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,6 +31,11 @@ const router = createRouter({
             path: "/employeelogin",
             name: "LoginView",
             component: LoginView
+        },
+        {
+            path: "/changepassword",
+            name: "ChangePasswordView",
+            component: ChangePasswordView
         },
         {
             path: "/doctor",

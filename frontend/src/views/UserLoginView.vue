@@ -110,13 +110,19 @@ export default defineComponent({
         const response = await axios.get(import.meta.env.VITE_API_URL + "/api/v1/people/me", {
           headers: {"Authorization": "Basic " + basicAuth}
         });
-        if (response.data.patient != null) {
-          localStorage.setItem("auth", basicAuth);
-          localStorage.setItem("role-api-name", "PATIENT");
-          await router.push({path: "/patient/home"});
+        localStorage.setItem("auth", basicAuth);
+        localStorage.setItem("role-api-name", "PATIENT");
+
+        if (password.value === "password") {
+          await router.push({path: "/changepassword"});
         } else {
-          showAlert("error", "У вас нет такой роли");
+          if (response.data.patient != null) {
+            await router.push({path: "/patient/home"});
+          } else {
+            showAlert("error", "У вас нет такой роли");
+          }
         }
+
       } catch (error) {
         if (error instanceof Error) {
           const axiosError = error as AxiosError;

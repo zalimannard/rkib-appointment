@@ -128,21 +128,25 @@ export default defineComponent({
         const response = await axios.get(import.meta.env.VITE_API_URL + "/api/v1/employees/me", {
           headers: {"Authorization": "Basic " + basicAuth}
         });
+        localStorage.setItem("auth", basicAuth);
+        localStorage.setItem("role-api-name", role.value.value);
 
-        if (response.data.roles.includes(role.value.value)) {
-          localStorage.setItem("auth", basicAuth);
-          localStorage.setItem("role-api-name", role.value.value);
-          if (role.value.value === "DOCTOR") {
-            await router.push({path: "/doctor/home"});
-          } else if (role.value.value === "REGISTRAR") {
-            await router.push({path: "/registrar/doctor"});
-          } else if (role.value.value === "ADMIN") {
-            await router.push({path: "/admin/person"});
-          }
-
+        if (password.value === "password") {
+          await router.push({path: "/changepassword"});
         } else {
-          showAlert("error", "У вас нет такой роли");
+          if (response.data.roles.includes(role.value.value)) {
+            if (role.value.value === "DOCTOR") {
+              await router.push({path: "/doctor/home"});
+            } else if (role.value.value === "REGISTRAR") {
+              await router.push({path: "/registrar/doctor"});
+            } else if (role.value.value === "ADMIN") {
+              await router.push({path: "/admin/person"});
+            }
+          } else {
+            showAlert("error", "У вас нет такой роли");
+          }
         }
+
       } catch (error) {
         const axiosError = error as AxiosError;
         try {
